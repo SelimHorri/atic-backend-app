@@ -1,0 +1,11 @@
+
+version: '3'
+services:
+  cita-backend-app-container:
+    image: selimhorri/cita-backend-app:v0.0.1
+    ports:
+      - 8080:8080
+    environment:
+      - SPRING_PROFILES_ACTIVE=dev
+
+
