@@ -13,7 +13,7 @@
 	<groupId>tn.cita</groupId>
 	<artifactId>cita-backend-app</artifactId>
 	<version>0.0.1</version>
-	<name>cita-backend-app</name>
+	<name>cita backend app</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>jar</packaging>
 	
@@ -22,7 +22,7 @@
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
 		<sonar.organization>selimhorri</sonar.organization>
-  	<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	
 	<dependencies>
@@ -136,6 +136,31 @@
 		<dependency>
 			<groupId>org.testcontainers</groupId>
 			<artifactId>mysql</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webflux</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>rest-assured</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>json-schema-validator</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>spring-mock-mvc</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.rest-assured</groupId>
+			<artifactId>spring-web-test-client</artifactId>
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
