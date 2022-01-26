@@ -1,8 +1,8 @@
-package tn.cita.app;
+package tn.cita.app.container;
 
 import org.testcontainers.containers.MySQLContainer;
 
-public abstract class AbstractTestSharedContainer {
+public abstract class AbstractTestSharedMySQLContainer {
 	
 	protected static final MySQLContainer<?> MYSQL_CONTAINER;
 	
