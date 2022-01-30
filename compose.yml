@@ -1,11 +1,57 @@
 
-version: '3'
+# https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-docker.html
+
+version: '3.9'
 services:
+  zipkin-container:
+    image: openzipkin/zipkin
+    ports:
+      - 9411:9411
+    networks:
+      - net
   cita-backend-app-container:
     image: selimhorri/cita-backend-app:v0.0.1
     ports:
       - 8080:8080
     environment:
       - SPRING_PROFILES_ACTIVE=dev
+    networks:
+      - net
+  prometheus-container:
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - './prometheus.yml'
+    networks:
+      - net
+  elasticsearch-container:
+    image: elasticsearch:7.16.3
+    ports:
+      - 9200:9200
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    #volumes:
+      #- data:/usr/share/elasticsearch/data
+    networks:
+      - net
+  kibana-container:
+    image: kibana:7.16.3
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch-container:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch-container:9200"]'
+    depends_on:
+      - elasticsearch-container
+    networks:
+      - net
+networks:
+  net:
+    driver: bridge
+
+
+
 
 
