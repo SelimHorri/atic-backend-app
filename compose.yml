@@ -3,13 +3,13 @@
 
 version: '3.9'
 services:
-  zipkin-container:
+  zipkin:
     image: openzipkin/zipkin
     ports:
       - 9411:9411
     networks:
       - net
-  cita-backend-app-container:
+  cita-backend-app:
     image: selimhorri/cita-backend-app:v0.0.1
     ports:
       - 8080:8080
@@ -17,15 +17,23 @@ services:
       - SPRING_PROFILES_ACTIVE=dev
     networks:
       - net
-  prometheus-container:
+  prometheus:
     image: prom/prometheus
     ports:
       - 9090:9090
     volumes:
-      - './prometheus.yml'
+      - ./:/ect/prometheus/
     networks:
       - net
-  elasticsearch-container:
+  grafana:
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    links:
+      - prometheus:prometheus
+    networks:
+      - net
+  elasticsearch:
     image: elasticsearch:7.16.3
     ports:
       - 9200:9200
@@ -33,18 +41,18 @@ services:
       discovery.type: single-node
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     #volumes:
-      #- data:/usr/share/elasticsearch/data
+      #- ./:/usr/share/elasticsearch/data
     networks:
       - net
-  kibana-container:
+  kibana:
     image: kibana:7.16.3
     ports:
       - "5601:5601"
     environment:
-      ELASTICSEARCH_URL: http://elasticsearch-container:9200
-      ELASTICSEARCH_HOSTS: '["http://elasticsearch-container:9200"]'
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
     depends_on:
-      - elasticsearch-container
+      - elasticsearch
     networks:
       - net
 networks:

@@ -25,12 +25,12 @@ scrape_configs:
     # metrics_path defaults to '/metrics'
     # scheme defaults to 'http'.
     static_configs:
-      - targets: ["prometheus-container:9090"]
+      - targets: ["localhost:9090"]
   - job_name: "cita-actuator-prometheus"
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
     static_configs:
-      - targets: ["cita-backend-app-container:8080"]
+      - targets: ["localhost:8080"]
 
 
 
