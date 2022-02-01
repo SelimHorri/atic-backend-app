@@ -25,7 +25,7 @@ services:
     ports:
       - 9090:9090
     volumes:
-      - ./:/ect/prometheus/
+      - ./:/etc/prometheus/
     networks:
       - net
   grafana:
