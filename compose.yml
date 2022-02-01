@@ -5,12 +5,14 @@ version: '3.9'
 services:
   zipkin:
     image: openzipkin/zipkin
+    container_name: zipkin
     ports:
       - 9411:9411
     networks:
       - net
   cita-backend-app:
-    image: selimhorri/cita-backend-app:v0.0.1
+    image: selimhorri/cita-backend-app
+    container_name: cita-backend-app
     ports:
       - 8080:8080
     environment:
@@ -19,6 +21,7 @@ services:
       - net
   prometheus:
     image: prom/prometheus
+    container_name: prometheus
     ports:
       - 9090:9090
     volumes:
@@ -27,6 +30,7 @@ services:
       - net
   grafana:
     image: grafana/grafana
+    container_name: grafana
     ports:
       - 3000:3000
     links:
@@ -35,6 +39,7 @@ services:
       - net
   elasticsearch:
     image: elasticsearch:7.16.3
+    container_name: elasticsearch
     ports:
       - 9200:9200
     environment:
@@ -46,6 +51,7 @@ services:
       - net
   kibana:
     image: kibana:7.16.3
+    container_name: kibana
     ports:
       - "5601:5601"
     environment:
