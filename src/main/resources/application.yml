@@ -10,7 +10,7 @@ spring:
     active:
     - dev
   zipkin:
-    base-url: http://${SPRING_ZIPKIN_BASE_URL:localhost}:9411/
+    base-url: http://${SPRING_ZIPKIN_BASE-URL:localhost}:9411/
 
 management:
   endpoint:

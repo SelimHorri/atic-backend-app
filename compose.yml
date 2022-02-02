@@ -10,22 +10,21 @@ services:
       - 9411:9411
     networks:
       - net
-#  cita-backend-app:
-#    image: selimhorri/cita-backend-app
-#    container_name: cita-backend-app
-#    ports:
-#      - 8400:8400
-#    environment:
-#      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
-#      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-mysql}
-#    depends_on:
-#      - zipkin
-#      - mysql
-#      - redis
-#      - elasticsearch
-#      - prometheus
-#    networks:
-#      - net
+  cita-backend-app:
+    image: selimhorri/cita-backend-app
+    container_name: cita-backend-app
+    ports:
+      - 8400:8400
+    environment:
+      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
+    depends_on:
+      - zipkin
+      - mysql
+      - redis
+      - elasticsearch
+      - prometheus
+    networks:
+      - net
   mysql:
     image: mysql
     container_name: mysql
@@ -34,8 +33,6 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
-#      - MYSQL_USER=${MYSQL_USER}
-#      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql/
       #- mysql-secret:/run/secrets/

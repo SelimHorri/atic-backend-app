@@ -26,7 +26,6 @@ spring:
     locations:
     - classpath:db/migration/test
   
-
 logging:
   file:
     name: script/test_log.log
