@@ -1,0 +1,55 @@
+
+server:
+  port: 8400
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info, health, metrics, prometheus
+
+spring:
+  datasource:
+    url: jdbc:mysql://${SPRING_DATASOURCE_URL:localhost}:3306/cita_prod_db?createDatabaseIfNotExist=true
+    username: ${SPRING_DATASOURCE_USERNAME:root}
+    password: ${SPRING_DATASOURCE_PASSWORD:toor}
+  jpa:
+    show-sql: false
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5InnoDBDialect
+        use_sql_comments: true
+        format_sql: true
+  flyway:
+    locations:
+    - classpath:db/migration/prod
+
+logging:
+  file:
+    name: script/prod_log.log
+    clean-history-on-start: false
+  level:
+    org:
+      hibernate:
+        SQL: INFO
+      springframework:
+        web: INFO
+        data: INFO
+      boot:
+        autoconfigure:
+          data:
+            rest: INFO
+            jpa: INFO
+            orm: INFO
+
+
+
+
+
+
+
+
+
+

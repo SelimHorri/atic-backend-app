@@ -10,31 +10,44 @@ services:
       - 9411:9411
     networks:
       - net
-  cita-backend-app:
-    image: selimhorri/cita-backend-app
-    container_name: cita-backend-app
-    ports:
-      - 8080:8080
-    environment:
-      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
-    depends_on:
-      - zipkin
-      - mysql
-      - elasticsearch
-      - prometheus
-    networks:
-      - net
+#  cita-backend-app:
+#    image: selimhorri/cita-backend-app
+#    container_name: cita-backend-app
+#    ports:
+#      - 8400:8400
+#    environment:
+#      - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
+#      - SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-mysql}
+#    depends_on:
+#      - zipkin
+#      - mysql
+#      - redis
+#      - elasticsearch
+#      - prometheus
+#    networks:
+#      - net
   mysql:
-    image: mysql:5.7.33
+    image: mysql
     container_name: mysql
     ports: 
       - 3306:3306
     environment:
-      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD:-toor}
-      - MYSQL_DATABASE=${MYSQL_DATABASE:-cita}
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
+#      - MYSQL_USER=${MYSQL_USER}
+#      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
       - mysql-data:/var/lib/mysql/
       #- mysql-secret:/run/secrets/
+    networks:
+      - net
+  redis:
+    image: redis
+    container_name: redis
+    ports: 
+      - 6379:6379
+#    volumes:
+#      - redis-data:/usr/local/etc/redis
     networks:
       - net
   prometheus:
