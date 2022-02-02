@@ -1,13 +1,13 @@
 
-CREATE TABLE saloons (
+CREATE TABLE customers (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	code VARCHAR(255) NOT NULL,
-	name VARCHAR(255) NOT NULL,
-	is_primary BOOLEAN NOT NULL DEFAULT false,
-	opening_date DATE,
-	full_adr VARCHAR(255),
+	firstname VARCHAR(255),
+	lastname VARCHAR(255),
 	email VARCHAR(255) DEFAULT '@gmail.com',
-	location_id INT NOT NULL,
+	phone VARCHAR(255) DEFAULT '+21622125144',
+	birthdate DATE,
+	image_lob BLOB DEFAULT '',
+	credential_id INT,
 	created_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
 	updated_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT
 );
