@@ -1,9 +1,10 @@
 
-CREATE TABLE locations (
+CREATE TABLE categories (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	zipcode VARCHAR(255),
-	city VARCHAR(255),
-	state VARCHAR(255),
+	name VARCHAR(255) NOT NULL DEFAULT 'others',
+	-- image_lob BLOB DEFAULT '',
+	parent_category_id INT,
+	saloon_id INT NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
 );
