@@ -7,7 +7,7 @@ CREATE TABLE employees (
 	phone VARCHAR(255) DEFAULT '+21622125144',
 	birthdate DATE,
 	hiredate DATE,
-	image_lob BLOB NOT NULL DEFAULT '',
+	user_images_id INT,
 	manager_id INT,
 	credential_id INT,
 	saloon_id INT,
