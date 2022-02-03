@@ -27,11 +27,11 @@ scrape_configs:
     static_configs:
       - targets: ["prometheus:9090", "localhost:9090"]
   - job_name: "cita-actuator-prometheus"
-    metrics_path: '/actuator/prometheus'
+    metrics_path: '/app/actuator/prometheus'
     scrape_interval: 5s
     #bearer_token:
     static_configs:
-      - targets: ["cita-backend-app:8080", "localhost:8080"]
+      - targets: ["cita-backend-app:8400", "localhost:8400"]
 
 
 
