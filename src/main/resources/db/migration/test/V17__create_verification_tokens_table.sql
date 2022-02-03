@@ -1,9 +1,9 @@
 
-CREATE TABLE locations (
+CREATE TABLE verification_tokens (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-	zipcode VARCHAR(255),
-	city VARCHAR(255),
-	state VARCHAR(255),
+	token VARCHAR(255),
+	expire_date TIMESTAMP,
+	credential_id INT NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP()
 );
