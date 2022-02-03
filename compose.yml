@@ -33,61 +33,61 @@ services:
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
-#    volumes:
-#      - mysql-data:/var/lib/mysql/
+    volumes:
+      - mysql-data:/var/lib/mysql/
     networks:
       - net
-#  redis:
-#    image: redis
-#    container_name: redis
-#    ports: 
-#      - 6379:6379
-##    volumes:
-##      - redis-data:/usr/local/etc/redis
-#    networks:
-#      - net
-#  prometheus:
-#    image: prom/prometheus
-#    container_name: prometheus
-#    ports:
-#      - 9090:9090
+  redis:
+    image: redis
+    container_name: redis
+    ports: 
+      - 6379:6379
 #    volumes:
-#      - ./:/etc/prometheus/
-#    networks:
-#      - net
-#  grafana:
-#    image: grafana/grafana
-#    container_name: grafana
-#    ports:
-#      - 3000:3000
-#    links:
-#      - prometheus:prometheus
-#    networks:
-#      - net
-#  elasticsearch:
-#    image: elasticsearch:7.16.3
-#    container_name: elasticsearch
-#    ports:
-#      - 9200:9200
-#    environment:
-#      discovery.type: single-node
-#      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-#    volumes:
-#      - elasticsearch-data:/usr/share/elasticsearch/data
-#    networks:
-#      - net
-#  kibana:
-#    image: kibana:7.16.3
-#    container_name: kibana
-#    ports:
-#      - "5601:5601"
-#    environment:
-#      ELASTICSEARCH_URL: http://elasticsearch:9200
-#      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
-#    depends_on:
-#      - elasticsearch
-#    networks:
-#      - net
+#      - redis-data:/usr/local/etc/redis
+    networks:
+      - net
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./:/etc/prometheus/
+    networks:
+      - net
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - 3000:3000
+    links:
+      - prometheus:prometheus
+    networks:
+      - net
+  elasticsearch:
+    image: elasticsearch:7.16.3
+    container_name: elasticsearch
+    ports:
+      - 9200:9200
+    environment:
+      discovery.type: single-node
+      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - net
+  kibana:
+    image: kibana:7.16.3
+    container_name: kibana
+    ports:
+      - "5601:5601"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+    depends_on:
+      - elasticsearch
+    networks:
+      - net
 
 volumes:
   mysql-data:
