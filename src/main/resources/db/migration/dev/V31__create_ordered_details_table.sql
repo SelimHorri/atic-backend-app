@@ -1,0 +1,12 @@
+
+CREATE TABLE ordered_details (
+	reservation_id INT NOT NULL,
+	service_details_id INT NOT NULL,
+	ordered_date TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
+	created_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
+	updated_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
+	PRIMARY KEY (reservation_id, service_details_id, ordered_date)
+);
+
+
+
