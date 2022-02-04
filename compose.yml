@@ -15,6 +15,7 @@ services:
       - 8400:8400
     environment:
       - SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
+      - MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
     depends_on:
       - zipkin
       - mysql
@@ -28,7 +29,6 @@ services:
     container_name: mysql
     ports:
       - 3306:3306
-      - 3307:3307
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
