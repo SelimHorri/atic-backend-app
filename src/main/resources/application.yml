@@ -1,8 +1,4 @@
 
-server:
-  servlet:
-    context-path: /app
-
 spring:
   application:
     name: CITA-BACKEND-APP
@@ -11,6 +7,9 @@ spring:
     - dev
   zipkin:
     base-url: http://${SPRING_ZIPKIN_BASE-URL:localhost}:9411/
+  jackson:
+    serialization:
+      indent-output: true
 
 management:
   endpoint:
