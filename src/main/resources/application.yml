@@ -7,6 +7,12 @@ spring:
     - dev
   zipkin:
     base-url: http://${SPRING_ZIPKIN_BASE-URL:localhost}:9411/
+#  elasticsearch:
+#    uris:
+#    - http://${SPRING_ELASTICSEARCH_HOST:localhost}:9200/
+  redis:
+    host: ${SPRING_REDIS_HOST:localhost}
+    port: 6379
   jackson:
     serialization:
       indent-output: true
