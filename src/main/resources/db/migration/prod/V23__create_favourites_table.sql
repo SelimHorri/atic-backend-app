@@ -1,0 +1,12 @@
+
+CREATE TABLE favourites (
+	customer_id INT NOT NULL,
+	saloon_id INT NOT NULL,
+	favourite_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	PRIMARY KEY (customer_id, saloon_id)
+);
+
+
+
