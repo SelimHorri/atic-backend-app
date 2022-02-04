@@ -1,6 +1,4 @@
 
-# https://www.elastic.co/guide/en/elastic-stack-get-started/current/get-started-docker.html
-
 version: '3.9'
 services:
   zipkin:
@@ -28,13 +26,27 @@ services:
   mysql:
     image: mysql
     container_name: mysql
-    ports: 
+    ports:
       - 3306:3306
+      - 3307:3307
     environment:
       - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
     volumes:
       - mysql-data:/var/lib/mysql/
+    networks:
+      - net
+  phpmyadmin:
+    image: phpmyadmin
+    container_name: phpmyadmin
+    ports:
+      - 8090:80
+    environment:
+      PMA_ARBITRARY: 1
+      PMA_HOST: mysql
+      PMA_PORT: 3306
+    depends_on:
+      - mysql
     networks:
       - net
   redis:
