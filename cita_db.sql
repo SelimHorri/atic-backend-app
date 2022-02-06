@@ -11,7 +11,7 @@ CREATE TABLE categories (
   parent_category_id INT DEFAULT NULL,
   saloon_id INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO categories (id, name, parent_category_id, saloon_id, created_at, updated_at) VALUES
@@ -58,7 +58,7 @@ CREATE TABLE credentials (
   is_account_non_locked BOOLEAN DEFAULT true,
   is_credentials_non_expired BOOLEAN DEFAULT true,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO credentials (id, username, password, role, is_enabled, is_account_non_expired, is_account_non_locked, is_credentials_non_expired, created_at, updated_at) VALUES
@@ -95,7 +95,7 @@ CREATE TABLE customers (
   user_images_id INT DEFAULT NULL,
   credential_id INT DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO customers (id, firstname, lastname, email, phone, birthdate, user_images_id, credential_id, created_at, updated_at) VALUES
@@ -125,7 +125,7 @@ CREATE TABLE employees (
   credential_id INT DEFAULT NULL,
   saloon_id INT DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO employees (id, firstname, lastname, email, phone, birthdate, hiredate, user_images_id, manager_id, credential_id, saloon_id, created_at, updated_at) VALUES
@@ -147,7 +147,7 @@ CREATE TABLE favourites (
   saloon_id INT NOT NULL,
   favourite_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO favourites (customer_id, saloon_id, favourite_date, created_at, updated_at) VALUES
@@ -169,7 +169,7 @@ CREATE TABLE locations (
   city VARCHAR(255) DEFAULT NULL,
   state VARCHAR(255) DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO locations (id, zipcode, city, state, created_at, updated_at) VALUES
@@ -1182,7 +1182,7 @@ CREATE TABLE ordered_details (
   service_details_id INT NOT NULL,
   ordered_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO ordered_details (reservation_id, service_details_id, ordered_date, created_at, updated_at) VALUES
@@ -1208,7 +1208,7 @@ CREATE TABLE ratings (
   rate decimal(2,1) NOT NULL,
   rate_description VARCHAR(255) DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO ratings (employee_id, customer_id, rate_date, rate, rate_description, created_at, updated_at) VALUES
@@ -1233,7 +1233,7 @@ CREATE TABLE reservations (
   status VARCHAR(255) NOT NULL DEFAULT 'NOT_STARTED',
   customer_id INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO reservations (id, code, description, start_date, status, customer_id, created_at, updated_at) VALUES
@@ -1258,7 +1258,7 @@ CREATE TABLE saloons (
   email VARCHAR(255) DEFAULT '@gmail.com',
   location_id INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO saloons (id, code, name, is_primary, opening_date, full_adr, email, location_id, created_at, updated_at) VALUES
@@ -1280,7 +1280,7 @@ CREATE TABLE saloon_images (
   image_lob blob,
   saloon_id INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO saloon_images (id, image_lob, saloon_id, created_at, updated_at) VALUES
@@ -1299,7 +1299,7 @@ CREATE TABLE saloon_tags (
   tag_id INT NOT NULL,
   tagged_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO saloon_tags (saloon_id, tag_id, tagged_date, created_at, updated_at) VALUES
@@ -1328,7 +1328,7 @@ CREATE TABLE service_details (
   price_unit decimal(6,3) DEFAULT NULL,
   category_id INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO service_details (id, name, description, is_available, duration, price_unit, category_id, created_at, updated_at) VALUES
@@ -1356,7 +1356,7 @@ CREATE TABLE tags (
   name VARCHAR(255) DEFAULT NULL,
   description VARCHAR(255) DEFAULT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO tags (id, name, description, created_at, updated_at) VALUES
@@ -1369,7 +1369,7 @@ CREATE TABLE user_images (
   id INT NOT NULL,
   image_lob blob,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 CREATE TABLE verification_tokens (
@@ -1378,7 +1378,7 @@ CREATE TABLE verification_tokens (
   expire_date TIMESTAMP NULL DEFAULT NULL,
   credential_id INT NOT NULL,
   created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+  updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
 
 INSERT INTO verification_tokens (id, token, expire_date, credential_id, created_at, updated_at) VALUES
