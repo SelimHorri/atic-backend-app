@@ -1,0 +1,49 @@
+package tn.cita.app.domain.entity;
+
+import java.io.Serializable;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Entity
+@Table(name = "saloon_images")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = true, exclude = {"saloon"})
+@SuperBuilder
+public class SaloonImage extends AbstractMappedEntity implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Lob
+	@Column(name = "image_lob", columnDefinition = "BLOB")
+	private String imageLob;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	private Saloon saloon;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
