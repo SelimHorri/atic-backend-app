@@ -1,5 +1,5 @@
 
-INSERT INTO ordered_details (reservation_id, service_details_id) VALUES
+INSERT INTO ordered_details (reservation_id, service_detail_id) VALUES
 (1, 1),
 (1, 3),
 (2, 8),
