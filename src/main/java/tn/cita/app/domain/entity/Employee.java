@@ -65,6 +65,7 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
 	private UserImage userImage;

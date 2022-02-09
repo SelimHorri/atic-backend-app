@@ -27,44 +27,46 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
-import tn.cita.app.domain.id.FavouriteId;
+import tn.cita.app.domain.id.SaloonTagId;
 
 @Entity
-@Table(name = "favourites")
-@IdClass(FavouriteId.class)
+@Table(name = "saloon_tags")
+@IdClass(SaloonTagId.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"customer", "saloon"})
+@EqualsAndHashCode(callSuper = true, exclude = {"saloon", "tag"})
 @SuperBuilder
-public class Favourite extends AbstractAuditingMappedEntity implements Serializable {
+public class SaloonTag extends AbstractAuditingMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	
-	@Id
-	@Column(name = "customer_id", nullable = false, insertable = false, updatable = false)
-	private Integer customerId;
 	
 	@Id
 	@Column(name = "saloon_id", nullable = false, insertable = false, updatable = false)
 	private Integer saloonId;
 	
+	@Id
+	@Column(name = "tag_id", nullable = false, insertable = false, updatable = false)
+	private Integer tagId;
+	
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@Column(name = "favourite_date", nullable = false)
-	private LocalDateTime favouriteDate;
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customer_id", referencedColumnName = "id")
-	private Customer customer;
+	@Column(name = "tagged_date", nullable = false)
+	private LocalDateTime taggedDate;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
 	private Saloon saloon;
 	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "tag_id", referencedColumnName = "id")
+	private Tag tag;
+	
 }
+
+
 
 
 

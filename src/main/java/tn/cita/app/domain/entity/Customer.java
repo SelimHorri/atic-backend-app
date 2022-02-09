@@ -37,7 +37,7 @@ import tn.cita.app.constant.AppConstant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"userImage", "credential", "ratings", "favourites"})
+@EqualsAndHashCode(callSuper = true, exclude = {"userImage", "credential", "ratings", "favourites", "reservations"})
 @SuperBuilder
 public class Customer extends AbstractMappedEntity implements Serializable {
 	
@@ -62,6 +62,7 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
 	
+	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
 	private UserImage userImage;
@@ -78,6 +79,10 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<Favourite> favourites;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
+	private Set<Reservation> reservations;
 	
 }
 
