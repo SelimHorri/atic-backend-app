@@ -4,7 +4,7 @@ CREATE TABLE service_details (
 	name VARCHAR(255),
 	description VARCHAR(255),
 	is_available BOOLEAN DEFAULT true,
-	duration INT DEFAULT 15, -- in min
+	duration DECIMAL(6, 1), -- in min
 	price_unit DECIMAL(6, 3),
 	category_id INT NOT NULL,
 	created_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
