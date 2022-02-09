@@ -1,0 +1,70 @@
+package tn.cita.app.domain.entity;
+
+import java.io.Serializable;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
+
+@Entity
+@Table(name = "service_details")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@EqualsAndHashCode(callSuper = true, exclude = {"category", "orderedDetails"})
+@SuperBuilder
+public class ServiceDetail extends AbstractMappedEntity implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@Column(nullable = false)
+	private String name;
+	
+	@Column(nullable = true)
+	private String description;
+	
+	@Column(name = "is_available", nullable = false)
+	private Boolean isAvailable;
+	
+	@Column(columnDefinition = "DECIMAL")
+	private Double duration;
+	
+	@Column(name = "price_unit", columnDefinition = "DECIMAL")
+	private Double priceUnit;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "category_id", referencedColumnName = "id")
+	private Category category;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "serviceDetail")
+	private Set<OrderedDetail> orderedDetails;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
