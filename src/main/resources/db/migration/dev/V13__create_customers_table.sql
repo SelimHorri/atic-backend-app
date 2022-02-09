@@ -6,7 +6,7 @@ CREATE TABLE customers (
 	email VARCHAR(255) DEFAULT '@gmail.com',
 	phone VARCHAR(255) DEFAULT '+21622125144',
 	birthdate DATE,
-	user_images_id INT,
+	user_image_id INT,
 	credential_id INT,
 	created_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
 	updated_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT
