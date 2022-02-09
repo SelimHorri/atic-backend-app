@@ -46,7 +46,10 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Column(nullable = false)
 	private String firstname;
+	
+	@Column(nullable = false)
 	private String lastname;
 	
 	@Email(message = "Input must be in email format")
@@ -67,7 +70,7 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	private UserImage userImage;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "manager_id", referencedColumnName = "id")
+	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = true)
 	private Employee manager;
 	
 	@JsonIgnore
@@ -79,7 +82,9 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@JoinColumn(name = "credential_id", referencedColumnName = "id")
 	private Credential credential;
 	
-	// private Saloon saloon;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	private Saloon saloon;
 	
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")

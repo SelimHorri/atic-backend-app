@@ -4,7 +4,9 @@ import java.io.Serializable;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.AllArgsConstructor;
@@ -18,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"employee", "customer"})
 @SuperBuilder
 public class UserImage extends AbstractMappedEntity implements Serializable {
 	
@@ -27,6 +29,12 @@ public class UserImage extends AbstractMappedEntity implements Serializable {
 	@Lob
 	@Column(name = "image_lob", columnDefinition = "BLOB", nullable = true)
 	private String imageLob;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "userImage")
+	private Employee employee;
+	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy = "userImage")
+	private Customer customer;
 	
 }
 

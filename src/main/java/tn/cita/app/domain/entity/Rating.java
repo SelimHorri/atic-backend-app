@@ -66,11 +66,11 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	private String description;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
 	private Employee employee;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false)
+	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, updatable = false)
 	private Customer customer;
 	
 }

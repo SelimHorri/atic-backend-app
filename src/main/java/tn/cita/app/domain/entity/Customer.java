@@ -37,13 +37,16 @@ import tn.cita.app.constant.AppConstant;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"userImage", "credential"})
+@EqualsAndHashCode(callSuper = true, exclude = {"userImage", "credential", "ratings", "favourites"})
 @SuperBuilder
 public class Customer extends AbstractMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Column(nullable = false)
 	private String firstname;
+	
+	@Column(nullable = false)
 	private String lastname;
 	
 	@Email(message = "Input must be in email format")
@@ -71,6 +74,10 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
 	private Set<Rating> ratings;
+	
+	@JsonIgnore
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	private Set<Favourite> favourites;
 	
 }
 

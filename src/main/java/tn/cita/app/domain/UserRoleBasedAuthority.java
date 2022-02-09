@@ -9,7 +9,8 @@ public enum UserRoleBasedAuthority {
 	
 	CUSTOMER("ROLE_CUSTOMER"),
 	EMPLOYEE("ROLE_EMPLOYEE"),
-	MANAGER("ROLE_MANAGER");
+	MANAGER("ROLE_MANAGER"),
+	OWNER("ROLE_OWNER");
 	
 	private final String role;
 	

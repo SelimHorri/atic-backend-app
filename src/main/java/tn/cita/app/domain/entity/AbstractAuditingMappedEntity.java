@@ -12,6 +12,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -32,12 +36,16 @@ public abstract class AbstractAuditingMappedEntity implements Serializable {
 	@CreatedDate
 	@JsonFormat(pattern = AppConstant.INSTANT_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.INSTANT_FORMAT)
+	@JsonSerialize(using = InstantSerializer.class)
+	@JsonDeserialize(using = InstantDeserializer.class)
 	@Column(name = "created_at", nullable = false)
 	private Instant createdAt;
 	
 	@LastModifiedDate
 	@JsonFormat(pattern = AppConstant.INSTANT_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.INSTANT_FORMAT)
+	@JsonSerialize(using = InstantSerializer.class)
+	@JsonDeserialize(using = InstantDeserializer.class)
 	@Column(name = "updated_at", nullable = false)
 	private Instant updatedAt;
 	

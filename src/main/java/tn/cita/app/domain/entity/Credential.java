@@ -27,7 +27,7 @@ import tn.cita.app.domain.UserRoleBasedAuthority;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
+@EqualsAndHashCode(callSuper = true, exclude = {"customer", "employee", "verificationTokens"})
 @SuperBuilder
 public class Credential extends AbstractMappedEntity implements Serializable {
 	
