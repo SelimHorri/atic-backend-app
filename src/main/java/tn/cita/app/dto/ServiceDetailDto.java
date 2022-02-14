@@ -52,4 +52,3 @@ public final class ServiceDetailDto extends AbstractMappedDto implements Seriali
 
 
 
-

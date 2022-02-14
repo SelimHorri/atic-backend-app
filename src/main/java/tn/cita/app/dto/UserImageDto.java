@@ -40,4 +40,3 @@ public final class UserImageDto extends AbstractMappedDto implements Serializabl
 
 
 
-

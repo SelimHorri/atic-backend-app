@@ -36,4 +36,3 @@ public final class SaloonImageDto extends AbstractMappedDto implements Serializa
 
 
 
-

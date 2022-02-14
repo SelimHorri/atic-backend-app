@@ -66,4 +66,3 @@ public final class RatingDto implements Serializable {
 
 
 
-
