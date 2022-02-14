@@ -14,21 +14,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
-import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.config.annotation.LocalDateTimeCustomFormat;
 import tn.cita.app.domain.UserRating;
 import tn.cita.app.domain.id.RatingId;
 
@@ -54,10 +45,7 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@Id
 	@Column(name = "rate_date", nullable = false, insertable = false, updatable = false)
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
-	@JsonSerialize(using = LocalDateTimeSerializer.class)
-	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@LocalDateTimeCustomFormat
 	private LocalDateTime rateDate;
 	
 	@Enumerated(EnumType.STRING)
