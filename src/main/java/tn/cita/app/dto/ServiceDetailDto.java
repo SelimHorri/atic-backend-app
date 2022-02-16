@@ -8,6 +8,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
@@ -33,6 +34,7 @@ public final class ServiceDetailDto extends AbstractMappedDto implements Seriali
 	private Double priceUnit;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("category")
 	@NotNull(message = "Input category should not be null")
 	private CategoryDto categoryDto;
 	

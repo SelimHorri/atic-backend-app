@@ -15,6 +15,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -57,18 +58,22 @@ public final class EmployeeDto extends AbstractMappedDto implements Serializable
 	private LocalDate birthdate;
 	
 	@JsonIgnore
+	@JsonProperty("userImage")
 	private UserImageDto userImageDto;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("manager")
 	private EmployeeDto managerDto;
 	
 	@JsonIgnore
 	private Set<EmployeeDto> workerDtos;
 	
+	@JsonProperty("credential")
 	@NotNull(message = "Input credential should not be null")
 	private CredentialDto credentialDto;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("saloon")
 	@NotNull(message = "Input saloon should not be null")
 	private SaloonDto saloonDto;
 	

@@ -14,6 +14,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -55,9 +56,11 @@ public final class CustomerDto extends AbstractMappedDto implements Serializable
 	private LocalDate birthdate;
 	
 	@JsonIgnore
+	@JsonProperty("userImage")
 	private UserImageDto userImageDto;
 	
 	@NotNull(message = "Input credential should not be null")
+	@JsonProperty("credential")
 	private CredentialDto credentialDto;
 	
 	@JsonIgnore

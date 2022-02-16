@@ -9,6 +9,7 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
@@ -41,9 +42,11 @@ public final class CredentialDto extends AbstractMappedDto implements Serializab
 	private Boolean isCredentialsNonExpired;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("customer")
 	private CustomerDto customerDto;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("employee")
 	private EmployeeDto employeeDto;
 	
 	@JsonIgnore

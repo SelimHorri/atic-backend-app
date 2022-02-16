@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
@@ -55,6 +56,7 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	private String email;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("location")
 	@NotNull(message = "Input location should not be null")
 	private LocationDto locationDto;
 	
