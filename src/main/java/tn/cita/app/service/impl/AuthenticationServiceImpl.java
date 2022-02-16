@@ -33,7 +33,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 					new UsernamePasswordAuthenticationToken(loginRequest.getUsername().strip(), loginRequest.getPassword()));
 		}
 		catch (BadCredentialsException e) {
-			throw new IllegalCredentialsException("Bad credentials!");
+			throw new IllegalCredentialsException("Bad credentials");
 		}
 		
 		final var userDetails = this.userDetailsService.loadUserByUsername(loginRequest.getUsername().toLowerCase());
