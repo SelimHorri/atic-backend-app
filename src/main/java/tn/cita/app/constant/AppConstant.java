@@ -1,5 +1,9 @@
 package tn.cita.app.constant;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
+
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AppConstant {
 	
 	public static final String LOCAL_DATE_FORMAT = "dd-MM-yyyy";

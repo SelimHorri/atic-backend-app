@@ -26,7 +26,7 @@ import tn.cita.app.domain.id.FavouriteId;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"customer", "saloon"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Favourite extends AbstractAuditingMappedEntity implements Serializable {
 	
