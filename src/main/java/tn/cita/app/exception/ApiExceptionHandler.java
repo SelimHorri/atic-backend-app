@@ -1,10 +1,13 @@
 package tn.cita.app.exception;
 
+import java.util.Optional;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -39,9 +42,13 @@ public class ApiExceptionHandler {
 		
 		log.info("**ApiExceptionHandler controller, handle validation exception*\n");
 		
+		final var fieldError = Optional
+				.ofNullable(e.getBindingResult().getFieldError())
+				.orElseGet(() -> new FieldError(null, null, "Validation error happened, check again"));
+		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg("*" + e.getBindingResult().getFieldError().getDefaultMessage() + "!**")
+				.errorMsg("*" + fieldError.getDefaultMessage() + "!**")
 				.httpStatus(httpStatus)
 				.build();
 		final var apiResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
