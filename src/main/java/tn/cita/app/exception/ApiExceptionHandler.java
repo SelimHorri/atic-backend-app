@@ -20,6 +20,7 @@ import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
+import tn.cita.app.exception.wrapper.IllegalCredentialsException;
 import tn.cita.app.exception.wrapper.LocationNotFoundException;
 import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
 import tn.cita.app.exception.wrapper.RatingNotFoundException;
@@ -74,6 +75,7 @@ public class ApiExceptionHandler {
 		ServiceDetailNotFoundException.class,
 		TagNotFoundException.class,
 		VerificationTokenNotFoundException.class,
+		IllegalCredentialsException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e) {
 		
