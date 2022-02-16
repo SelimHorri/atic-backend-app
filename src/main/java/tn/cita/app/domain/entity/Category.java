@@ -12,8 +12,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -25,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"parentCategory", "subCategories", "saloon", "serviceDetails"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Category extends AbstractMappedEntity implements Serializable {
 	
@@ -38,7 +36,6 @@ public class Category extends AbstractMappedEntity implements Serializable {
 	@JoinColumn(name = "parent_category_id", referencedColumnName = "id", nullable = true)
 	private Category parentCategory;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "parentCategory")
 	private Set<Category> subCategories;
 	
@@ -46,7 +43,6 @@ public class Category extends AbstractMappedEntity implements Serializable {
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
 	private Saloon saloon;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
 	private Set<ServiceDetail> serviceDetails;
 	

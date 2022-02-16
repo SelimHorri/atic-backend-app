@@ -22,7 +22,7 @@ import tn.cita.app.config.annotation.LocalDateTimeCustomFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"credential"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class VerificationToken extends AbstractMappedEntity implements Serializable {
 	

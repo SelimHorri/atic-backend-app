@@ -15,7 +15,13 @@ import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
 
 import tn.cita.app.constant.AppConstant;
 
-@Target(value = {ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target(value = {
+		ElementType.ANNOTATION_TYPE, 
+		ElementType.TYPE, 
+		ElementType.FIELD, 
+		ElementType.METHOD, 
+		ElementType.PARAMETER
+})
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @JsonFormat(pattern = AppConstant.ZONED_DATE_TIME_FORMAT, shape = Shape.STRING)

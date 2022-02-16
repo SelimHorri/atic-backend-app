@@ -15,8 +15,6 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Size;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -29,7 +27,7 @@ import tn.cita.app.config.annotation.LocalDateCustomFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"userImage", "credential", "ratings", "favourites", "reservations"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Customer extends AbstractMappedEntity implements Serializable {
 	
@@ -51,25 +49,20 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	@LocalDateCustomFormat
 	private LocalDate birthdate;
 	
-	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
 	private UserImage userImage;
 	
-	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	@JoinColumn(name = "credential_id", referencedColumnName = "id")
 	private Credential credential;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
 	private Set<Rating> ratings;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<Favourite> favourites;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
 	private Set<Reservation> reservations;
 	
