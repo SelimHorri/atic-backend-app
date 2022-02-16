@@ -3,6 +3,7 @@ package tn.cita.app.dto;
 import java.io.Serializable;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 
 import lombok.AllArgsConstructor;
@@ -23,6 +24,7 @@ public final class SaloonImageDto extends AbstractMappedDto implements Serializa
 	private String imageLob;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("saloon")
 	private SaloonDto saloonDto;
 	
 }

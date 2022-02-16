@@ -13,8 +13,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,7 +25,7 @@ import tn.cita.app.domain.UserRoleBasedAuthority;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"customer", "employee", "verificationTokens"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Credential extends AbstractMappedEntity implements Serializable {
 	
@@ -59,7 +57,6 @@ public class Credential extends AbstractMappedEntity implements Serializable {
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
 	private Employee employee;
 	
-	@JsonIgnore
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credential")
 	private Set<VerificationToken> verificationTokens;
 	

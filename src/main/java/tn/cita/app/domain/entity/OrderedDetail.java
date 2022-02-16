@@ -26,7 +26,7 @@ import tn.cita.app.domain.id.OrderedDetailId;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"reservation", "serviceDetail"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class OrderedDetail extends AbstractAuditingMappedEntity implements Serializable {
 	
