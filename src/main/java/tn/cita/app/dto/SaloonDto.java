@@ -8,21 +8,30 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.config.annotation.LocalDateCustomFormat;
+import tn.cita.app.constant.AppConstant;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	
@@ -35,7 +44,10 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	private String name;
 	private Boolean isPrimary;
 	
-	@LocalDateCustomFormat
+	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate openingDate;
 	private String fullAdr;
 	
@@ -44,6 +56,7 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	private String email;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("location")
 	@NotNull(message = "Input location should not be null")
 	private LocationDto locationDto;
 	

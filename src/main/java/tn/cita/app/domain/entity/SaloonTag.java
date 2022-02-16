@@ -26,7 +26,7 @@ import tn.cita.app.domain.id.SaloonTagId;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"saloon", "tag"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class SaloonTag extends AbstractAuditingMappedEntity implements Serializable {
 	

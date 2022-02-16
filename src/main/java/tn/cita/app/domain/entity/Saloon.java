@@ -14,8 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -28,9 +26,7 @@ import tn.cita.app.config.annotation.LocalDateCustomFormat;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {
-	"location", "employees", "favourites", "saloonImage", "saloonTags", "categories"
-})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Saloon extends AbstractMappedEntity implements Serializable {
 	
@@ -59,23 +55,18 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	@JoinColumn(name = "location_id", referencedColumnName = "id")
 	private Location location;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<Employee> employees;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<Favourite> favourites;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<SaloonImage> saloonImage;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<SaloonTag> saloonTags;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<Category> categories;
 	
