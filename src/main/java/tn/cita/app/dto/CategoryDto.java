@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public final class CategoryDto extends AbstractMappedDto implements Serializable {
 	
@@ -28,12 +29,14 @@ public final class CategoryDto extends AbstractMappedDto implements Serializable
 	private String name;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("parentCategory")
 	private CategoryDto parentCategoryDto;
 	
 	@JsonIgnore
 	private Set<CategoryDto> subCategoryDtos;
 	
 	@JsonInclude(Include.NON_NULL)
+	@JsonProperty("saloon")
 	private SaloonDto saloonDto;
 	
 	@JsonIgnore
