@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"saloon"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class SaloonImage extends AbstractMappedEntity implements Serializable {
 	

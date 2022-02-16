@@ -29,7 +29,7 @@ import tn.cita.app.domain.id.RatingId;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"employee", "customer"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Rating extends AbstractAuditingMappedEntity implements Serializable {
 	

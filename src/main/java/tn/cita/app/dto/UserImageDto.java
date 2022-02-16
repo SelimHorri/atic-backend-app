@@ -14,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public final class UserImageDto extends AbstractMappedDto implements Serializable {
 	

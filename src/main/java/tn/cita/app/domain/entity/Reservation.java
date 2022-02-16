@@ -16,8 +16,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +29,7 @@ import tn.cita.app.domain.ReservationStatus;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"customer", "orderedDetails"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Reservation extends AbstractMappedEntity implements Serializable {
 	
@@ -60,7 +58,6 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
 	private Customer customer;
 	
-	@JsonIgnore
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
 	private Set<OrderedDetail> orderedDetails;
 	
