@@ -12,7 +12,7 @@
 	</parent>
 	<groupId>tn.cita</groupId>
 	<artifactId>cita-backend-app</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<name>cita backend app</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>jar</packaging>
@@ -28,10 +28,13 @@
 		<testcontainers.version>1.16.2</testcontainers.version>
 		<sonar.organization>selimhorri</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		<sonar.exclusions>**/config/**/*.java</sonar.exclusions>
-		<sonar.exclusions>**/constant/**/*.java</sonar.exclusions>
-		<sonar.exclusions>**/domain/**/*.java</sonar.exclusions>
-		<sonar.exclusions>**/dto/**/*.java</sonar.exclusions>
+<!-- 		<sonar.exclusions>**/config/**/*.java</sonar.exclusions> -->
+<!-- 		<sonar.exclusions>**/constant/**/*.java</sonar.exclusions> -->
+<!-- 		<sonar.exclusions>**/domain/**/*.java</sonar.exclusions> -->
+<!-- 		<sonar.exclusions>**/dto/**/*.java</sonar.exclusions> -->
+		<sonar.inclusions>**/repository/**/*.java</sonar.inclusions>
+		<sonar.inclusions>**/service/**/*.java</sonar.inclusions>
+		<sonar.inclusions>**/resource/**/*.java</sonar.inclusions>
 	</properties>
 	
 	<dependencies>

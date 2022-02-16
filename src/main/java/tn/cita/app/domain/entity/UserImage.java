@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true, exclude = {"employee", "customer"})
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class UserImage extends AbstractMappedEntity implements Serializable {
 	

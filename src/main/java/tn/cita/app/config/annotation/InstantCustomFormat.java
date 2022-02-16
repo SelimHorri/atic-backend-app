@@ -17,7 +17,13 @@ import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 
 import tn.cita.app.constant.AppConstant;
 
-@Target(value = {ElementType.FIELD, ElementType.METHOD, ElementType.PARAMETER})
+@Target(value = {
+		ElementType.ANNOTATION_TYPE, 
+		ElementType.TYPE, 
+		ElementType.FIELD, 
+		ElementType.METHOD, 
+		ElementType.PARAMETER
+})
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
 @JsonFormat(pattern = AppConstant.INSTANT_FORMAT, shape = Shape.STRING)
