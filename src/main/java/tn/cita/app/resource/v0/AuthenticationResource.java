@@ -11,13 +11,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.ApiResponse;
 import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.service.AuthenticationService;
 
 @RestController
-@RequestMapping("/api/v0/authenticate")
+@RequestMapping(AppConstant.API_CONTEXT_V0 + "/authenticate")
 @RequiredArgsConstructor
 public class AuthenticationResource {
 	
