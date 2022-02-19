@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.response.ApiResponse;
+import tn.cita.app.dto.response.api.ApiExceptionHandlerExceptionMsgApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
@@ -39,7 +40,7 @@ public class ApiExceptionHandler {
 		MethodArgumentNotValidException.class,
 		HttpMessageNotReadableException.class,
 	})
-	public <T extends BindException> ResponseEntity<ApiResponse<ExceptionMsg>> handleValidationException(final T e) {
+	public <T extends BindException> ResponseEntity<ApiExceptionHandlerExceptionMsgApiResponse> handleValidationException(final T e) {
 		
 		log.info("**ApiExceptionHandler controller, handle validation exception*\n");
 		
@@ -52,7 +53,7 @@ public class ApiExceptionHandler {
 				.errorMsg("*" + fieldError.getDefaultMessage() + "!**")
 				.httpStatus(httpStatus)
 				.build();
-		final var apiResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
+		final var apiResponse = new ApiExceptionHandlerExceptionMsgApiResponse(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -60,6 +61,8 @@ public class ApiExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = {
+		BadCredentialsException.class,
+		IllegalCredentialsException.class,
 		IllegalStateException.class,
 		CategoryNotFoundException.class,
 		CredentialNotFoundException.class,
@@ -75,9 +78,8 @@ public class ApiExceptionHandler {
 		ServiceDetailNotFoundException.class,
 		TagNotFoundException.class,
 		VerificationTokenNotFoundException.class,
-		IllegalCredentialsException.class,
 	})
-	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e) {
+	public <T extends RuntimeException> ResponseEntity<ApiExceptionHandlerExceptionMsgApiResponse> handleApiRequestException(final T e) {
 		
 		log.info("**ApiExceptionHandler controller, handle API request*\n");
 		
@@ -86,7 +88,7 @@ public class ApiExceptionHandler {
 				.errorMsg("#### " + e.getMessage() + "! ####")
 				.httpStatus(httpStatus)
 				.build();
-		final var apiResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
+		final var apiResponse = new ApiExceptionHandlerExceptionMsgApiResponse(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)
