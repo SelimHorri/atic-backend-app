@@ -12,7 +12,7 @@ import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
 import tn.cita.app.service.AuthenticationService;
-import tn.cita.app.service.JwtService;
+import tn.cita.app.util.JwtUtil;
 
 @Service
 @Slf4j
@@ -21,7 +21,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	private final AuthenticationManager authenticationManager;
 	private final UserDetailsService userDetailsService;
-	private final JwtService jwtService;
+	private final JwtUtil jwtUtil;
 	
 	@Override
 	public LoginResponse login(final LoginRequest loginRequest) {
@@ -37,7 +37,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		}
 		
 		final var userDetails = this.userDetailsService.loadUserByUsername(loginRequest.getUsername().toLowerCase());
-		return new LoginResponse(userDetails.getUsername(), this.jwtService.generateToken(userDetails));
+		return new LoginResponse(userDetails.getUsername(), this.jwtUtil.generateToken(userDetails));
 	}
 	
 	

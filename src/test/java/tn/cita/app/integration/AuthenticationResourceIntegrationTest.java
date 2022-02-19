@@ -1,8 +1,7 @@
-package tn.cita.app.resource.v0;
+package tn.cita.app.integration;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.mockito.Mockito.when;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -10,12 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.container.AbstractTestSharedMySQLContainer;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.dto.response.api.AuthenticationLoginApiResponse;
@@ -23,9 +22,9 @@ import tn.cita.app.service.AuthenticationService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
-class AuthenticationResourceTest {
+class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLContainer {
 	
-	@MockBean
+	@Autowired
 	private AuthenticationService authenticationService;
 	
 	@Autowired
@@ -34,19 +33,16 @@ class AuthenticationResourceTest {
 	private LoginResponse loginResponse;
 	
 	@BeforeEach
-	void setUp() throws Exception {
-		
+	void setUp() {
 		loginRequest = new LoginRequest("selimhorri", "0000");
-		loginResponse = new LoginResponse("selimhorri", "userJwtToken");
-		
-		when(this.authenticationService.login(loginRequest))
-				.thenReturn(loginResponse);
 	}
 	
 	@Test
 	void givenLoginApiUrl_whenRequestIsValid_thenLoginShouldLoginResponseShouldBeReturned() {
 		
+		this.loginResponse = this.authenticationService.login(loginRequest);
 		final var apiResponse = new AuthenticationLoginApiResponse(1, HttpStatus.OK, true, loginResponse);
+		
 		this.webTestClient
 				.post()
 				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
@@ -57,21 +53,19 @@ class AuthenticationResourceTest {
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectHeader()
-					.contentType(MediaType.APPLICATION_JSON_VALUE)
+					.contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
 					.jsonPath("$.totalResult").value(is(apiResponse.getTotalResult()))
 					.jsonPath("$.httpStatus").value(is(apiResponse.getHttpStatus().name()))
 					.jsonPath("$.acknowledge").value(is(apiResponse.getAcknowledge()))
 					.jsonPath("$.loginResponse").value(notNullValue())
-					.jsonPath("$.loginResponse.username").value(is(apiResponse.getLoginResponse().getUsername()))
-					.jsonPath("$.loginResponse.jwtToken").value(is(apiResponse.getLoginResponse().getJwtToken()));
+					.jsonPath("$.loginResponse.username").value(is(apiResponse.getLoginResponse().getUsername()));
 	}
 	
 	
 	
 }
-
 
 
 
