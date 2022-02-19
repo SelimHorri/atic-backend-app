@@ -26,15 +26,17 @@
 		<springdoc.version>1.6.5</springdoc.version>
 		<spring-cloud.version>2021.0.0</spring-cloud.version>
 		<testcontainers.version>1.16.2</testcontainers.version>
+		<jacoco.version>0.8.6</jacoco.version>
 		<sonar.organization>selimhorri</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-<!-- 		<sonar.exclusions>**/config/**/*.java</sonar.exclusions> -->
-<!-- 		<sonar.exclusions>**/constant/**/*.java</sonar.exclusions> -->
-<!-- 		<sonar.exclusions>**/domain/**/*.java</sonar.exclusions> -->
-<!-- 		<sonar.exclusions>**/dto/**/*.java</sonar.exclusions> -->
 		<sonar.inclusions>**/repository/**/*.java</sonar.inclusions>
 		<sonar.inclusions>**/service/**/*.java</sonar.inclusions>
 		<sonar.inclusions>**/resource/**/*.java</sonar.inclusions>
+		<sonar.language>java</sonar.language>
+		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
+		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-it/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
+		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 	</properties>
 	
 	<dependencies>
@@ -58,10 +60,10 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-mail</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-thymeleaf</artifactId>
@@ -86,10 +88,10 @@
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-starter-sleuth</artifactId>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.thymeleaf.extras</groupId>
 			<artifactId>thymeleaf-extras-springsecurity5</artifactId>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -121,11 +123,11 @@
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.version}</version>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-security</artifactId>
 			<version>${springdoc.version}</version>
-		</dependency> -->
+		</dependency>
 		<dependency>
 			<groupId>javax.interceptor</groupId>
 			<artifactId>javax.interceptor-api</artifactId>
@@ -233,7 +235,7 @@
 			<plugin>
 				<groupId>org.jacoco</groupId>
 				<artifactId>jacoco-maven-plugin</artifactId>
-				<version>0.8.5</version>
+				<version>${jacoco.version}</version>
 				<configuration>
 					<excludes>
 						<exclude>**/config/**/*.class</exclude>
@@ -291,6 +293,26 @@
 							<outputDirectory>${project.reporting.outputDirectory}/jacoco-it</outputDirectory>
 						</configuration>
 					</execution>
+					<execution>
+						<id>check</id>
+						<goals>
+							<goal>check</goal>
+						</goals>
+						<configuration>
+							<rules>
+								<rule>
+									<element>PACKAGE</element>
+									<limits>
+										<limit>
+											<counter>CLASS</counter>
+											<value>COVEREDRATIO</value>
+											<minimum>0.60</minimum>
+										</limit>
+									</limits>
+								</rule>
+							</rules>
+						</configuration>
+					</execution>
 				</executions>
 			</plugin>
 			<plugin>
@@ -298,9 +320,11 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<configuration>
 					<argLine>${surefireArgLine}</argLine>
+					<!--
 					<excludes>
 						<exclude>**/*IntegrationTest.java</exclude>
 					</excludes>
+					-->
 				</configuration>
 			</plugin>
 			<plugin>
