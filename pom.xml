@@ -307,12 +307,12 @@
 						<configuration>
 							<rules>
 								<rule>
-									<element>CLASS</element>
+									<element>PACKAGE</element>
 									<limits>
 										<limit>
-											<counter>BRANCH</counter>
+											<counter>CLASS</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.60</minimum>
+											<minimum>0</minimum>
 										</limit>
 									</limits>
 								</rule>
