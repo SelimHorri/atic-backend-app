@@ -30,7 +30,7 @@ class CredentialRepositoryTest extends AbstractTestSharedMySQLContainer {
 		final var optionalCredential = this.credentialRepository.findByUsernameIgnoreCase(username.toUpperCase());
 		
 		assertThat(optionalCredential).isNotNull();
-		assertThat(optionalCredential.isPresent()).isTrue();
+		assertThat(optionalCredential).isPresent();
 		assertThat(optionalCredential.get()).isNotNull();
 		assertThat(optionalCredential.get()).isInstanceOf(Credential.class);
 		assertThat(optionalCredential.get().getUsername()).isEqualTo(username);
