@@ -1,4 +1,4 @@
-package tn.cita.app.config;
+package tn.cita.app.config.marshal;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 @Configuration
-public class SerializationConfig {
+public class MarshalConfig {
 	
 	@Bean
 	public ObjectMapper objectMapperBean() {
@@ -19,8 +19,6 @@ public class SerializationConfig {
 	
 	
 }
-
-
 
 
 

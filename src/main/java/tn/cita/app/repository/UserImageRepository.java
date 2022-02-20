@@ -18,4 +18,3 @@ public interface UserImageRepository extends JpaRepository<UserImage, Integer> {
 
 
 
-
