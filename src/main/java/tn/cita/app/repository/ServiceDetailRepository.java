@@ -18,4 +18,3 @@ public interface ServiceDetailRepository extends JpaRepository<ServiceDetail, In
 
 
 
-

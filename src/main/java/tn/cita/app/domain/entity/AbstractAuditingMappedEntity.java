@@ -8,15 +8,23 @@ import javax.persistence.MappedSuperclass;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.config.annotation.InstantCustomFormat;
 
 @MappedSuperclass
+@EnableJpaAuditing
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
@@ -26,17 +34,20 @@ public abstract class AbstractAuditingMappedEntity implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@CreatedDate
-	@InstantCustomFormat
 	@Column(name = "created_at", nullable = false)
+	@JsonFormat(shape = Shape.STRING)
+	@JsonSerialize(using = InstantSerializer.class)
+	@JsonDeserialize(using = InstantDeserializer.class)
 	private Instant createdAt;
 	
 	@LastModifiedDate
-	@InstantCustomFormat
 	@Column(name = "updated_at", nullable = false)
+	@JsonFormat(shape = Shape.STRING)
+	@JsonSerialize(using = InstantSerializer.class)
+	@JsonDeserialize(using = InstantDeserializer.class)
 	private Instant updatedAt;
 	
 }
-
 
 
 

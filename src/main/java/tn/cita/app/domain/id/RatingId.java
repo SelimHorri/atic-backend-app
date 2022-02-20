@@ -45,4 +45,3 @@ public class RatingId implements Serializable {
 
 
 
-
