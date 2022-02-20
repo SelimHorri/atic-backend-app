@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public final class ExceptionMsg  implements Serializable {
+public final class ExceptionMsg implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -27,6 +27,7 @@ public final class ExceptionMsg  implements Serializable {
 	private final String errorMsg;
 	
 }
+
 
 
 
