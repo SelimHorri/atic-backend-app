@@ -14,12 +14,21 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.config.annotation.LocalDateCustomFormat;
+import tn.cita.app.constant.AppConstant;
 
 @Entity
 @Table(name = "saloons")
@@ -38,17 +47,21 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	@Column(nullable = false)
 	private String name;
 	
-	@Column(name = "is_primary")
+	@Column(name = "is_primary", nullable = false)
 	private Boolean isPrimary;
 	
-	@LocalDateCustomFormat
 	@Column(name = "opening_date", nullable = true)
+	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate openingDate;
 	
 	@Column(name = "full_adr", nullable = true)
 	private String fullAdr;
 	
 	@Email(message = "Input must be in email format")
+	@Column(nullable = false)
 	private String email;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
