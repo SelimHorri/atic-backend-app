@@ -12,7 +12,7 @@ RUN mkdir -p /home/app
 WORKDIR /home/app
 
 ##################### ARGS #####################
-ARG APP_VERSION=0.0.4
+ARG APP_VERSION=0.0.5
 
 ##################### ENVS #####################
 ENV SPRING_DATASOURCE_URL mysql
