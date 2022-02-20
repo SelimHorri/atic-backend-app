@@ -2,6 +2,8 @@ package tn.cita.app.exception;
 
 import java.util.Optional;
 
+import javax.validation.ConstraintViolationException;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -39,6 +41,7 @@ public class ApiExceptionHandler {
 	@ExceptionHandler(value = {
 		MethodArgumentNotValidException.class,
 		HttpMessageNotReadableException.class,
+		ConstraintViolationException.class,
 	})
 	public <T extends BindException> ResponseEntity<ApiExceptionHandlerExceptionMsgApiResponse> handleValidationException(final T e) {
 		
