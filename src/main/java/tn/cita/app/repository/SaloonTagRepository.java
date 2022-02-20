@@ -20,4 +20,3 @@ public interface SaloonTagRepository extends JpaRepository<SaloonTag, SaloonTagI
 
 
 
-

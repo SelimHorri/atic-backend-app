@@ -28,7 +28,7 @@ public final class CredentialDto extends AbstractMappedDto implements Serializab
 	
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank(message = "Input username should not be blank")
+	@NotBlank(message = "Input username should be unique & not blank")
 	private String username;
 	
 	@NotEmpty(message = "Input password should not be empty")

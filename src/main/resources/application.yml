@@ -16,6 +16,8 @@ spring:
   jackson:
     serialization:
       indent-output: true
+  jpa:
+    open-in-view: false
 
 management:
   endpoint:

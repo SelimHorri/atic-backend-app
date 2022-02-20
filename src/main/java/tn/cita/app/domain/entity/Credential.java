@@ -31,24 +31,26 @@ public class Credential extends AbstractMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Column(unique = true)
+	@Column(unique = true, nullable = false)
 	private String username;
+	
+	@Column(nullable = false)
 	private String password;
 	
 	@Enumerated(EnumType.STRING)
-	@Column(name = "role")
+	@Column(name = "role", nullable = false)
 	private UserRoleBasedAuthority userRoleBasedAuthority;
 	
-	@Column(name = "is_enabled")
+	@Column(name = "is_enabled", nullable = false)
 	private Boolean isEnabled;
 	
-	@Column(name = "is_account_non_expired")
+	@Column(name = "is_account_non_expired", nullable = false)
 	private Boolean isAccountNonExpired;
 	
-	@Column(name = "is_account_non_locked")
+	@Column(name = "is_account_non_locked", nullable = false)
 	private Boolean isAccountNonLocked;
 	
-	@Column(name = "is_credentials_non_expired")
+	@Column(name = "is_credentials_non_expired", nullable = false)
 	private Boolean isCredentialsNonExpired;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
@@ -61,6 +63,7 @@ public class Credential extends AbstractMappedEntity implements Serializable {
 	private Set<VerificationToken> verificationTokens;
 	
 }
+
 
 
 

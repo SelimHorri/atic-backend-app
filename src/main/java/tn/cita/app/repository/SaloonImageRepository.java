@@ -18,4 +18,3 @@ public interface SaloonImageRepository extends JpaRepository<SaloonImage, Intege
 
 
 
-
