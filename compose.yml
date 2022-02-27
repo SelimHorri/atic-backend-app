@@ -6,6 +6,7 @@ services:
     container_name: zipkin
     ports:
       - 9411:9411
+    restart: always
     networks:
       - net
   cita-backend-app:
@@ -22,6 +23,7 @@ services:
       - redis
       - elasticsearch
       - prometheus
+    restart: always
     networks:
       - net
   mysql:
@@ -34,6 +36,7 @@ services:
       - MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
     volumes:
       - mysql-data:/var/lib/mysql/
+    restart: always
     networks:
       - net
   phpmyadmin:
@@ -47,6 +50,7 @@ services:
       PMA_PORT: 3306
     depends_on:
       - mysql
+    restart: always
     networks:
       - net
   redis:
@@ -56,6 +60,7 @@ services:
       - 6379:6379
 #    volumes:
 #      - redis-data:/usr/local/etc/redis
+    restart: always
     networks:
       - net
   prometheus:
@@ -65,6 +70,7 @@ services:
       - 9090:9090
     volumes:
       - ./:/etc/prometheus/
+    restart: always
     networks:
       - net
   grafana:
@@ -74,6 +80,7 @@ services:
       - 3000:3000
     links:
       - prometheus:prometheus
+    restart: always
     networks:
       - net
   elasticsearch:
@@ -86,6 +93,7 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
+    restart: always
     networks:
       - net
   kibana:
@@ -98,6 +106,7 @@ services:
       ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
     depends_on:
       - elasticsearch
+    restart: always
     networks:
       - net
 
