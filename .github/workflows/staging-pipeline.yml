@@ -1,15 +1,15 @@
 
-name: test cita-backend-app workflow CI/CD pipeline
+name: staging cita-backend-app workflow CI/CD pipeline
 
 on:
   pull_request:
-    branches: [ test ]
+    branches: [ staging ]
     types: [ opened, synchronize, reopened ]
   push:
-    branches: [ test ]
+    branches: [ staging ]
 
 jobs:
-  test-build:
+  staging-build:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -66,7 +66,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
-        tags: v${{ secrets.APP_VERSION }}-test, test
+        tags: v${{ secrets.APP_VERSION }}-staging, staging
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
