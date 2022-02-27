@@ -1,7 +1,8 @@
 
 trigger:
 - develop
-- test
+- staging
+- preprod
 - master
 
 pool:
