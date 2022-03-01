@@ -32,6 +32,7 @@
 		<sonar.inclusions>**/repository/**/*.java</sonar.inclusions>
 		<sonar.inclusions>**/service/**/*.java</sonar.inclusions>
 		<sonar.inclusions>**/resource/**/*.java</sonar.inclusions>
+		<sonar.exclusions>**/resource/ApiExceptionHandler.java</sonar.exclusions>
 		<sonar.language>java</sonar.language>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-it/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
@@ -243,6 +244,7 @@
 						<exclude>**/domain/**/*.class</exclude>
 						<exclude>**/dto/**/*.class</exclude>
 						<exclude>**/exception/**/*.class</exclude>
+						<exclude>**/resource/ApiExceptionHandler.class</exclude>
 						<exclude>**/mapper/**/*.class</exclude>
 						<exclude>**/security/**/*.class</exclude>
 						<exclude>**/util/**/*.class</exclude>
