@@ -1,4 +1,4 @@
-package tn.cita.app.exception;
+package tn.cita.app.resource;
 
 import java.util.Optional;
 
