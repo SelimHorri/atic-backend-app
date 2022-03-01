@@ -243,6 +243,7 @@
 						<exclude>**/domain/**/*.class</exclude>
 						<exclude>**/dto/**/*.class</exclude>
 						<exclude>**/exception/**/*.class</exclude>
+						<exclude>**/resource/ApiExceptionHandler.class</exclude>
 						<exclude>**/mapper/**/*.class</exclude>
 						<exclude>**/security/**/*.class</exclude>
 						<exclude>**/util/**/*.class</exclude>
