@@ -14,6 +14,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
@@ -43,7 +44,7 @@ public class ApiExceptionHandler {
 		HttpMessageNotReadableException.class,
 		ConstraintViolationException.class,
 	})
-	public <T extends BindException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleValidationException(final T e) {
+	public <T extends BindException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleValidationException(final T e, final WebRequest webRequest) {
 		
 		log.info("**ApiExceptionHandler controller, handle validation exception*\n");
 		
@@ -54,7 +55,6 @@ public class ApiExceptionHandler {
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
 				.errorMsg("*" + fieldError.getDefaultMessage() + "!**")
-				.httpStatus(httpStatus)
 				.build();
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		
@@ -82,14 +82,12 @@ public class ApiExceptionHandler {
 		TagNotFoundException.class,
 		VerificationTokenNotFoundException.class,
 	})
-	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e) {
-		
+	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, final WebRequest webRequest) {
 		log.info("**ApiExceptionHandler controller, handle API request*\n");
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
 				.errorMsg("#### " + e.getMessage() + "! ####")
-				.httpStatus(httpStatus)
 				.build();
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		
