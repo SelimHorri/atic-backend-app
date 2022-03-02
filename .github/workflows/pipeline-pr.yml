@@ -1,28 +1,14 @@
 
-name: develop cita-backend-app workflow CI/CD pipeline
+name: onPR, Sonar and Build, cita-backend-app workflow CI/CD pipeline
 
 on:
   pull_request:
-    branches: [ develop ]
+    branches: [ develop, staging, preprod, master ]
     types: [ opened, synchronize, reopened ]
-  push:
-    branches: [ develop ]
 
 jobs:
-  test-build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-  
-  build:
-    name: Build
+  sonar:
+    name: Sonar
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -50,8 +36,8 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
   
-  push:
-    needs: build
+  Build:
+    needs: sonar
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
@@ -62,11 +48,3 @@ jobs:
         distribution: 'adopt'
     - name: Build with Maven
       run: mvn -B package --file pom.xml
-    - name: Push Docker image
-      uses: mr-smithers-excellent/docker-build-push@v5
-      with:
-        image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
-        tags: v${{ secrets.APP_VERSION }}-develop, develop
-        registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }} 
