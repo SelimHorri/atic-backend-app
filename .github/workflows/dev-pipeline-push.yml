@@ -1,9 +1,9 @@
 
-name: onPUSH dev cita-backend-app workflow CI/CD pipeline
+name: on PR, PUSH dev cita-backend-app workflow CI/CD pipeline
 
 on:
   pull_request:
-#    branches: [ develop ]
+    branches: [ develop ]
     types: [ opened, synchronize, reopened ]
   push:
     branches: [ develop ]

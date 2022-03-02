@@ -1,9 +1,9 @@
 
-name: onPUSH staging cita-backend-app workflow CI/CD pipeline
+name: on PR, PUSH staging cita-backend-app workflow CI/CD pipeline
 
 on:
   pull_request:
-#    branches: [ staging ]
+    branches: [ staging ]
     types: [ opened, synchronize, reopened ]
   push:
     branches: [ staging ]
