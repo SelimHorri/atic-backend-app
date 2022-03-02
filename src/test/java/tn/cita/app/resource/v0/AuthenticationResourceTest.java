@@ -18,7 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.AuthenticationService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -46,7 +46,7 @@ class AuthenticationResourceTest {
 	@Test
 	void givenLoginApiUrl_whenRequestIsValid_thenLoginResponseShouldBeReturned() {
 		
-		final var apiResponse = new ApiResponse<>(1, HttpStatus.OK, true, this.loginResponse);
+		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.loginResponse);
 		this.webTestClient
 				.post()
 				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
@@ -60,12 +60,12 @@ class AuthenticationResourceTest {
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.username").value(is(apiResponse.getResponseBody().getUsername()))
-					.jsonPath("$.responseBody.jwtToken").value(is(apiResponse.getResponseBody().getJwtToken()));
+					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().getUsername()))
+					.jsonPath("$.responseBody.jwtToken").value(is(apiPayloadResponse.getResponseBody().getJwtToken()));
 	}
 	
 	

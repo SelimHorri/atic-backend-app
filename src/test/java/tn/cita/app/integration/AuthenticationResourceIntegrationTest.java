@@ -19,7 +19,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.container.AbstractTestSharedMySQLContainer;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.AuthenticationService;
 import tn.cita.app.util.JwtUtil;
 
@@ -50,7 +50,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 	void givenLoginApiUrl_whenRequestIsValid_thenLoginResponseShouldBeReturned() {
 		
 		this.loginResponse = this.authenticationService.login(loginRequest);
-		final var apiResponse = new ApiResponse<>(1, HttpStatus.OK, true, loginResponse);
+		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, loginResponse);
 		
 		this.webTestClient
 				.post()
@@ -65,11 +65,11 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 					.contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.username").value(is(apiResponse.getResponseBody().getUsername()));
+					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().getUsername()));
 		
 		final boolean validateToken = this.jwtUtil.validateToken(this.loginResponse.getJwtToken(), 
 				this.userDetailsService.loadUserByUsername(this.loginResponse.getUsername()));

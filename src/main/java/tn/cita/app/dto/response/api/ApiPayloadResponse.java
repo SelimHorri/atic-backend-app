@@ -21,7 +21,7 @@ import lombok.ToString;
 @Getter
 @EqualsAndHashCode
 @ToString
-public final class ApiResponse<T> implements Serializable {
+public final class ApiPayloadResponse<T> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
