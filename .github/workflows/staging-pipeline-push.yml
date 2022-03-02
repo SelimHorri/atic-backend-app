@@ -1,28 +1,16 @@
 
-name: preprod cita-backend-app workflow CI/CD pipeline
+name: on PR, PUSH staging cita-backend-app workflow CI/CD pipeline
 
 on:
   pull_request:
-    branches: [ preprod ]
+    branches: [ staging ]
     types: [ opened, synchronize, reopened ]
   push:
-    branches: [ preprod ]
+    branches: [ staging ]
 
 jobs:
-  preprod-build:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Set up JDK 11
-      uses: actions/setup-java@v2
-      with:
-        java-version: '11'
-        distribution: 'adopt'
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
-  
-  build:
-    name: Build
+  sonar:
+    name: Sonar
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
@@ -50,9 +38,24 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
   
-  push:
-    needs: build
+  build:
+    needs: sonar
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'pull_request' }}
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 11
+      uses: actions/setup-java@v2
+      with:
+        java-version: '11'
+        distribution: 'adopt'
+    - name: Build with Maven
+      run: mvn -B package --file pom.xml
+  
+  push:
+    needs: sonar
+    runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' }}
     steps:
     - uses: actions/checkout@v2
     - name: Set up JDK 11
@@ -66,7 +69,7 @@ jobs:
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
-        tags: v${{ secrets.APP_VERSION }}-preprod, preprod
+        tags: v${{ secrets.APP_VERSION }}-staging, staging
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
