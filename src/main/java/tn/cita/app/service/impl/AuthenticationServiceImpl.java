@@ -30,7 +30,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		
 		try {
 			this.authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(loginRequest.getUsername().strip(), loginRequest.getPassword()));
+					new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 		}
 		catch (BadCredentialsException e) {
 			throw new IllegalCredentialsException("Bad credentials");

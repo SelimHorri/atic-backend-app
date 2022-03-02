@@ -14,9 +14,10 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.context.request.WebRequest;
 
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.response.api.ApiExceptionHandlerExceptionMsgApiResponse;
+import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
@@ -43,7 +44,7 @@ public class ApiExceptionHandler {
 		HttpMessageNotReadableException.class,
 		ConstraintViolationException.class,
 	})
-	public <T extends BindException> ResponseEntity<ApiExceptionHandlerExceptionMsgApiResponse> handleValidationException(final T e) {
+	public <T extends BindException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleValidationException(final T e, final WebRequest webRequest) {
 		
 		log.info("**ApiExceptionHandler controller, handle validation exception*\n");
 		
@@ -54,13 +55,12 @@ public class ApiExceptionHandler {
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
 				.errorMsg("*" + fieldError.getDefaultMessage() + "!**")
-				.httpStatus(httpStatus)
 				.build();
-		final var apiResponse = new ApiExceptionHandlerExceptionMsgApiResponse(1, httpStatus, false, exceptionMsg);
+		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(apiResponse);
+				.body(apiPayloadResponse);
 	}
 	
 	@ExceptionHandler(value = {
@@ -82,20 +82,18 @@ public class ApiExceptionHandler {
 		TagNotFoundException.class,
 		VerificationTokenNotFoundException.class,
 	})
-	public <T extends RuntimeException> ResponseEntity<ApiExceptionHandlerExceptionMsgApiResponse> handleApiRequestException(final T e) {
-		
+	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, final WebRequest webRequest) {
 		log.info("**ApiExceptionHandler controller, handle API request*\n");
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
 				.errorMsg("#### " + e.getMessage() + "! ####")
-				.httpStatus(httpStatus)
 				.build();
-		final var apiResponse = new ApiExceptionHandlerExceptionMsgApiResponse(1, httpStatus, false, exceptionMsg);
+		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(apiResponse);
+				.body(apiPayloadResponse);
 	}
 	
 	

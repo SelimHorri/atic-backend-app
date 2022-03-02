@@ -15,6 +15,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.config.filter.JwtRequestFilter;
+import tn.cita.app.constant.AppConstant;
 
 @Configuration
 @EnableWebSecurity
@@ -36,9 +37,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().disable()
 			.csrf().disable()
 			.authorizeRequests()
-				.antMatchers("/", "/api/authentication/**").permitAll()
+				.antMatchers(AppConstant.WHITELIST_URLS).permitAll()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				// .anyRequest().authenticated()
+				.anyRequest().authenticated()
 			.and()
 			.headers()
 				.frameOptions()
