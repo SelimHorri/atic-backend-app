@@ -31,6 +31,11 @@ public final class AppConstant {
 			"/api/v**/authentication/**",
 	};
 	
+	/**
+	 * page size for Pageable objects
+	 */
+	public static final int PAGE_SIZE = 50;
+	
 }
 
 
