@@ -51,8 +51,9 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public void deleteById(final Integer id) {
+	public boolean deleteById(final Integer id) {
 		this.employeeRepository.deleteById(id);
+		return !this.employeeRepository.existsById(id);
 	}
 	
 	

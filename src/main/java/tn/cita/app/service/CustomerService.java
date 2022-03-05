@@ -10,7 +10,7 @@ public interface CustomerService {
 	CustomerDto findById(final Integer id);
 	CustomerDto save(final CustomerDto customerDto);
 	CustomerDto update(final CustomerDto customerDto);
-	void deleteById(final Integer id);
+	boolean deleteById(final Integer id);
 	
 }
 

@@ -10,7 +10,7 @@ public interface EmployeeService {
 	EmployeeDto findById(final Integer id);
 	EmployeeDto save(final EmployeeDto employeeDto);
 	EmployeeDto update(final EmployeeDto employeeDto);
-	void deleteById(final Integer id);
+	boolean deleteById(final Integer id);
 	
 }
 

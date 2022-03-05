@@ -23,6 +23,9 @@ public interface EmployeeMapper {
 		final var manager = Optional
 				.ofNullable(employee.getManager())
 				.orElseGet(Employee::new);
+		final var saloon = Optional
+				.ofNullable(employee.getSaloon())
+				.orElseGet(Saloon::new);
 		
 		return EmployeeDto.builder()
 				.id(employee.getId())
@@ -58,13 +61,13 @@ public interface EmployeeMapper {
 						.build())
 				.saloonDto(
 					SaloonDto.builder()
-						.id(employee.getSaloon().getId())
-						.code(employee.getSaloon().getCode())
-						.name(employee.getSaloon().getName())
-						.isPrimary(employee.getSaloon().getIsPrimary())
-						.openingDate(employee.getSaloon().getOpeningDate())
-						.fullAdr(employee.getSaloon().getFullAdr())
-						.email(employee.getSaloon().getEmail())
+						.id(saloon.getId())
+						.code(saloon.getCode())
+						.name(saloon.getName())
+						.isPrimary(saloon.getIsPrimary())
+						.openingDate(saloon.getOpeningDate())
+						.fullAdr(saloon.getFullAdr())
+						.email(saloon.getEmail())
 						.build())
 				.build();
 	}
@@ -77,6 +80,9 @@ public interface EmployeeMapper {
 		final var managerDto = Optional
 				.ofNullable(employeeDto.getManagerDto())
 				.orElseGet(EmployeeDto::new);
+		final var saloonDto = Optional
+				.ofNullable(employeeDto.getSaloonDto())
+				.orElseGet(SaloonDto::new);
 		
 		return Employee.builder()
 				.id(employeeDto.getId())
@@ -112,13 +118,13 @@ public interface EmployeeMapper {
 						.build())
 				.saloon(
 					Saloon.builder()
-						.id(employeeDto.getSaloonDto().getId())
-						.code(employeeDto.getSaloonDto().getCode())
-						.name(employeeDto.getSaloonDto().getName())
-						.isPrimary(employeeDto.getSaloonDto().getIsPrimary())
-						.openingDate(employeeDto.getSaloonDto().getOpeningDate())
-						.fullAdr(employeeDto.getSaloonDto().getFullAdr())
-						.email(employeeDto.getSaloonDto().getEmail())
+						.id(saloonDto.getId())
+						.code(saloonDto.getCode())
+						.name(saloonDto.getName())
+						.isPrimary(saloonDto.getIsPrimary())
+						.openingDate(saloonDto.getOpeningDate())
+						.fullAdr(saloonDto.getFullAdr())
+						.email(saloonDto.getEmail())
 						.build())
 				.build();
 	}
