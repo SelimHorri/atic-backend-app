@@ -135,7 +135,7 @@ class EmployeeServiceImplTest {
 		final var findAll = this.employeeService.findAll(pageOffset);
 		
 		assertThat(findAll).isNotNull().isNotEmpty();
-		assertThat(findAll.size()).isEqualTo(expectedFindAllEmployeeDtos.size());
+		assertThat(findAll).hasSameSizeAs(expectedFindAllEmployeeDtos);
 		assertThat(findAll).allSatisfy(c -> {
 			assertThat(c.getId()).isNotNull();
 			assertThat(c.getEmail()).isEqualTo("@gmail.com");

@@ -135,7 +135,7 @@ class CustomerServiceImplTest {
 		final var findAll = this.customerService.findAll(pageOffset);
 		
 		assertThat(findAll).isNotNull().isNotEmpty();
-		assertThat(findAll.size()).isEqualTo(expectedFindAllCustomerDtos.size());
+		assertThat(findAll).hasSameSizeAs(expectedFindAllCustomerDtos);
 		assertThat(findAll).allSatisfy(c -> {
 			assertThat(c.getId()).isNotNull();
 			assertThat(c.getEmail()).isEqualTo("@gmail.com");
