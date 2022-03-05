@@ -4,6 +4,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.mail.javamail.MimeMessagePreparator;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
@@ -17,6 +18,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 	
 	private final JavaMailSender javaMailSender;
 	
+	@Async
 	@Override
 	public boolean sendMail(final MailNotification mailNotification) {
 		
@@ -43,6 +45,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 		return isSent;
 	}
 	
+	@Async
 	@Override
 	public boolean sendSms() {
 		return false;

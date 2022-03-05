@@ -58,7 +58,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		// TODO: send email with saved verification token
 		final boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomerDto.getEmail(), null, 
-				String.format("Verification token to validate your SignUp: %s/%s", 
+				String.format("Verification token to validate your Registration: %s/%s", 
 						ServletUriComponentsBuilder.fromCurrentContextPath(), 
 						savedVerificationTokenDto.getToken())));
 		
@@ -66,7 +66,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new MailNotificationNotProcessedException("Mail not sent");
 		
 		return new RegisterResponse(isMailSent, String
-				.format("Customer with username %s saved successfully", savedCustomerDto.getCredentialDto().getUsername()));
+				.format("Customer with username %s has been saved successfully", savedCustomerDto.getCredentialDto().getUsername()));
 	}
 	
 	@Override
