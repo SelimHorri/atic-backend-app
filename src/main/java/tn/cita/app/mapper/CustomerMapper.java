@@ -4,12 +4,14 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
+import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.UserImage;
 import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.UserImageDto;
+import tn.cita.app.dto.request.RegisterRequest;
 
 public interface CustomerMapper {
 	
@@ -73,6 +75,24 @@ public interface CustomerMapper {
 						.isAccountNonExpired(customerDto.getCredentialDto().getIsAccountNonExpired())
 						.isAccountNonLocked(customerDto.getCredentialDto().getIsAccountNonLocked())
 						.isCredentialsNonExpired(customerDto.getCredentialDto().getIsCredentialsNonExpired())
+						.build())
+				.build();
+	}
+	
+	public static CustomerDto map(final RegisterRequest registerRequest) {
+		return CustomerDto.builder()
+				.firstname(registerRequest.getFirstname())
+				.lastname(registerRequest.getLastname())
+				.email(registerRequest.getEmail())
+				.phone(registerRequest.getPhone())
+				.birthdate(registerRequest.getBirthdate())
+				.userImageDto(null)
+				.credentialDto(
+					CredentialDto.builder()
+						.username(registerRequest.getUsername())
+						.password(registerRequest.getPassword())
+						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
+						.isEnabled(false)
 						.build())
 				.build();
 	}

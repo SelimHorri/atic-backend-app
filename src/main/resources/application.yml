@@ -18,12 +18,37 @@ spring:
       indent-output: true
   jpa:
     open-in-view: false
+  mail:
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    username: ${SPRING_MAIL_USERNAME:cita.team.mail@gmail.com}
+    password: ${SPRING_MAIL_PASSWORD:CITA0123456789team}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enabled: true
+            required: true
 
 management:
   endpoint:
     health:
       show-details: when-authorized
 
+
+
+
+
+
+
+#spring.mail.host=smtp.gmail.com
+#spring.mail.port=587
+#spring.mail.username=springabcxyzboot@gmail.com
+#spring.mail.password=A4815162342z
+#spring.mail.properties.mail.smtp.starttls.enable=true
+#spring.mail.properties.mail.smtp.starttls.required=true
+#spring.mail.properties.mail.smtp.auth=true
 
 
 

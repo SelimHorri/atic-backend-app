@@ -25,8 +25,11 @@ import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
+import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.LocationNotFoundException;
+import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
+import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.RatingNotFoundException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
@@ -81,6 +84,9 @@ public class ApiExceptionHandler {
 		ServiceDetailNotFoundException.class,
 		TagNotFoundException.class,
 		VerificationTokenNotFoundException.class,
+		IllegalRegistrationRoleTypeException.class,
+		PasswordNotMatchException.class,
+		MailNotificationNotProcessedException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, final WebRequest webRequest) {
 		log.info("**ApiExceptionHandler controller, handle API request*\n");

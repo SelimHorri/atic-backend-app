@@ -36,6 +36,8 @@ public final class AppConstant {
 	 */
 	public static final int PAGE_SIZE = 50;
 	
+	public static final String MAIL_SOURCE = "cita.team.mail@gmail.com";
+	
 }
 
 

@@ -17,6 +17,7 @@ public class CredentialServiceImpl implements CredentialService {
 	
 	private final CredentialRepository credentialRepository;
 	
+	@Transactional(readOnly = true)
 	@Override
 	public CredentialDto findByUsername(final String username) {
 		return this.credentialRepository.findByUsernameIgnoreCase(username)
