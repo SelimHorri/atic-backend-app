@@ -4,8 +4,8 @@ import tn.cita.app.dto.notif.MailNotification;
 
 public interface NotificationUtil {
 	
-	boolean sendMail(final MailNotification mailNotification);
-	boolean sendSms();
+	Boolean sendMail(final MailNotification mailNotification);
+	Boolean sendSms();
 	
 }
 

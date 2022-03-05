@@ -5,6 +5,8 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,6 +43,16 @@ public class RegistrationResource {
 			@Valid final RegisterRequest registerRequest) {
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.registrationService.registerEmployee(registerRequest));
+		return ResponseEntity.ok(apiPayloadResponse);
+	}
+	
+	@GetMapping("/customer/register/{token}")
+	public ResponseEntity<ApiPayloadResponse<String>> validateVerificationToken(
+			@PathVariable("token") 
+			@NotNull(message = "Input token should not be null") 
+			final String token) {
+		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.registrationService.validateTokenCustmoer(token));
 		return ResponseEntity.ok(apiPayloadResponse);
 	}
 	

@@ -16,6 +16,7 @@ import tn.cita.app.dto.VerificationTokenDto;
 import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
+import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
@@ -50,19 +51,25 @@ public class RegistrationServiceImpl implements RegistrationService {
 		registerRequest.setPassword(this.passwordEncoder.encode(registerRequest.getConfirmPassword()));
 		final var savedCustomerDto = this.customerService.save(CustomerMapper.map(registerRequest));
 		
+		System.err.println(savedCustomerDto);
+		
 		// TODO: create verification token dto to be persisted
 		final var verificationTokenDto = new VerificationTokenDto(UUID.randomUUID().toString(), 
 				LocalDateTime.now().plusMinutes(Duration.ofMinutes(30).toMinutes()), 
 				savedCustomerDto.getCredentialDto());
 		final var savedVerificationTokenDto = this.verificationTokenService.save(verificationTokenDto);
 		
+		System.err.println(savedVerificationTokenDto);
+		
 		// TODO: send email with saved verification token
-		final boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomerDto.getEmail(), null, 
-				String.format("Verification token to validate your Registration: %s/%s", 
-						ServletUriComponentsBuilder.fromCurrentContextPath(), 
+		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomerDto.getEmail(), 
+				"Registration", 
+				String.format("Hi %s, \nClick this link to activate your account: %s/%s", 
+						savedVerificationTokenDto.getCredentialDto().getUsername(), 
+						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
 						savedVerificationTokenDto.getToken())));
 		
-		if (!isMailSent)
+		if (isMailSent != null && !isMailSent)
 			throw new MailNotificationNotProcessedException("Mail not sent");
 		
 		return new RegisterResponse(isMailSent, String
@@ -84,6 +91,26 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		
 		return null;
+	}
+	
+	@Override
+	public String validateTokenCustmoer(final String token) {
+		
+		final var verificationTokenDto = this.verificationTokenService.findByToken(token);
+		if (verificationTokenDto.getExpireDate().isEqual(LocalDateTime.now()) 
+				|| verificationTokenDto.getExpireDate().isBefore(LocalDateTime.now())) {
+			
+			this.verificationTokenService.deleteByToken(token);
+			throw new ExpiredVerificationTokenException("Verification token has been expired");
+		}
+		
+		// activate user
+		verificationTokenDto.getCredentialDto().setIsEnabled(true);
+		this.verificationTokenService.save(verificationTokenDto);
+		
+		// token should be deleted also after activating user to prevent reaccess to url token
+		
+		return "User has been activated successfully, go and login!";
 	}
 	
 	

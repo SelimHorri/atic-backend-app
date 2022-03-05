@@ -28,7 +28,9 @@ public final class AppConstant {
 	 */
 	public static final String[] WHITELIST_URLS = {
 			"/", 
+			"/h2-console/**", 
 			"/api/v**/authentication/**",
+			"/api/v**/registration/**",
 	};
 	
 	/**

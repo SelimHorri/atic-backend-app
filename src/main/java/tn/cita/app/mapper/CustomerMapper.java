@@ -93,6 +93,9 @@ public interface CustomerMapper {
 						.password(registerRequest.getPassword())
 						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
 						.isEnabled(false)
+						.isAccountNonExpired(true)
+						.isAccountNonLocked(true)
+						.isCredentialsNonExpired(true)
 						.build())
 				.build();
 	}

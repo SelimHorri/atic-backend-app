@@ -23,6 +23,7 @@ import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
+import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
@@ -87,6 +88,7 @@ public class ApiExceptionHandler {
 		IllegalRegistrationRoleTypeException.class,
 		PasswordNotMatchException.class,
 		MailNotificationNotProcessedException.class,
+		ExpiredVerificationTokenException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, final WebRequest webRequest) {
 		log.info("**ApiExceptionHandler controller, handle API request*\n");

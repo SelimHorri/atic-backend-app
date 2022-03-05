@@ -20,9 +20,9 @@ public class NotificationUtilImpl implements NotificationUtil {
 	
 	@Async
 	@Override
-	public boolean sendMail(final MailNotification mailNotification) {
+	public Boolean sendMail(final MailNotification mailNotification) {
 		
-		boolean isSent = false;
+		Boolean isSent = false;
 		
 		final MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
 			final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -47,7 +47,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 	
 	@Async
 	@Override
-	public boolean sendSms() {
+	public Boolean sendSms() {
 		return false;
 	}
 	

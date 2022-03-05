@@ -31,6 +31,12 @@ public class VerificationTokenImpl implements VerificationTokenService {
 		return VerificationTokenMapper.map(this.verificationTokenRepository.save(VerificationTokenMapper.map(verificationTokenDto)));
 	}
 	
+	@Override
+	public boolean deleteByToken(final String token) {
+		this.verificationTokenRepository.deleteByToken(token);
+		return true;
+	}
+	
 	
 	
 }
