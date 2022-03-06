@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.time.Instant;
 
 import javax.persistence.Column;
+import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
 
 import org.springframework.data.annotation.CreatedDate;
@@ -22,9 +23,11 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import tn.cita.app.domain.listener.AuditingEntityListener;
 
 @MappedSuperclass
 @EnableJpaAuditing
+@EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
