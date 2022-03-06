@@ -11,6 +11,8 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.UserRoleBasedAuthority;
+import tn.cita.app.domain.entity.Customer;
+import tn.cita.app.domain.entity.Employee;
 import tn.cita.app.domain.entity.VerificationToken;
 import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.dto.request.RegisterRequest;
@@ -22,11 +24,14 @@ import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
+import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
+import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.service.RegistrationService;
 import tn.cita.app.util.NotificationUtil;
+import tn.cita.app.util.RegistrationUtils;
 
 @Service
 @Transactional
@@ -34,7 +39,7 @@ import tn.cita.app.util.NotificationUtil;
 public class RegistrationServiceImpl implements RegistrationService {
 	
 	private final CustomerRepository customerRepository;
-	// private final EmployeeRepository employeeRepository;
+	private final EmployeeRepository employeeRepository;
 	private final CredentialRepository credentialRepository;
 	private final VerificationTokenRepository verificationTokenRepository;
 	private final PasswordEncoder passwordEncoder;
@@ -44,20 +49,27 @@ public class RegistrationServiceImpl implements RegistrationService {
 	 * @param RegisterRequest
 	 * @return RegisterResponse
 	 * This method contains 7 steps to achieve registration
+	 * 
 	 * Step1: check Role validation
+	 * 
 	 * Step2: check username duplication!
-	 * Step3: check password confirmation
+	 * 
+	 * Step3: check password confirmation 
+	 * 
 	 * Step4: encode valid password and save User
+	 * 
 	 * Step5: create verification token dto to be persisted for saved User
+	 * 
 	 * Step6: send email with saved verification token
+	 * 
 	 * Step7: check if mail sent or not
 	 */
 	@Override
-	public RegisterResponse registerCustomer(final RegisterRequest registerRequest) {
+	public RegisterResponse register(final RegisterRequest registerRequest) {
 		
 		// Step1
 		if (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.CUSTOMER.name()))
-			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer role");
+			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role");
 		
 		// Step2
 		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()).ifPresent((c) -> {
@@ -71,9 +83,18 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		// Step4
 		registerRequest.setPassword(this.passwordEncoder.encode(registerRequest.getConfirmPassword()));
-		final var savedCustomer = this.customerRepository.save(CustomerMapper.map(registerRequest));
+		
+		Customer savedCustomer = null;
+		Employee savedEmployee = null;
+		if (RegistrationUtils.isCustomerRole(registerRequest.getRole()))
+			savedCustomer = this.customerRepository.save(CustomerMapper.map(registerRequest));
+		if (RegistrationUtils.isWorkerRole(registerRequest.getRole())
+				|| RegistrationUtils.isManagerRole(registerRequest.getRole())
+				|| RegistrationUtils.isOwnerRole(registerRequest.getRole()))
+			savedEmployee = this.employeeRepository.save(EmployeeMapper.map(registerRequest));
 		
 		System.err.println(savedCustomer);
+		System.err.println(savedEmployee);
 		
 		// Step5
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
@@ -96,24 +117,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new MailNotificationNotProcessedException("Mail not sent");
 		
 		return new RegisterResponse(isMailSent, String
-				.format("Customer with username %s has been saved successfully", savedCustomer.getCredential().getUsername()));
-	}
-	
-	@Override
-	public RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
-		
-		final boolean isUserRoleBasedAuthorityValid = (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.EMPLOYEE.name()))
-				|| (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.MANAGER.name()))
-				|| (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.OWNER.name()));
-		
-		if (isUserRoleBasedAuthorityValid)
-			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, should be Employee/Manager/Owner");
-		if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword()))
-			throw new PasswordNotMatchException("Unmatched passwords! please check again");
-		
-		
-		
-		return null;
+				.format("User with username %s has been saved successfully", savedCustomer.getCredential().getUsername()));
 	}
 	
 	@Override

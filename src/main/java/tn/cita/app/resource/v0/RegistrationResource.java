@@ -32,17 +32,7 @@ public class RegistrationResource {
 			@NotNull(message = "Input should not be null") 
 			@Valid final RegisterRequest registerRequest) {
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.registrationService.registerCustomer(registerRequest));
-		return ResponseEntity.ok(apiPayloadResponse);
-	}
-	
-	@PostMapping("/employee/register")
-	public ResponseEntity<ApiPayloadResponse<RegisterResponse>> registerEmployee(
-			@RequestBody 
-			@NotNull(message = "Input should not be null") 
-			@Valid final RegisterRequest registerRequest) {
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.registrationService.registerEmployee(registerRequest));
+				this.registrationService.register(registerRequest));
 		return ResponseEntity.ok(apiPayloadResponse);
 	}
 	

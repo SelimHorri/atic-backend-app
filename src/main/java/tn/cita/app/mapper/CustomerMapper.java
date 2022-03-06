@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.UserImage;
@@ -12,6 +11,7 @@ import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.UserImageDto;
 import tn.cita.app.dto.request.RegisterRequest;
+import tn.cita.app.util.RegistrationUtils;
 
 public interface CustomerMapper {
 	
@@ -91,7 +91,7 @@ public interface CustomerMapper {
 						Credential.builder()
 						.username(registerRequest.getUsername())
 						.password(registerRequest.getPassword())
-						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
+						.userRoleBasedAuthority(RegistrationUtils.checkUserRoleBasedAuthority(registerRequest.getRole()))
 						.isEnabled(false)
 						.isAccountNonExpired(true)
 						.isAccountNonLocked(true)
