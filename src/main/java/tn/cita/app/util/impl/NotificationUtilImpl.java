@@ -39,7 +39,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 		catch (MailException e) {
 			e.printStackTrace();
 			throw new MailNotificationNotProcessedException(String
-					.format("Mail to %s not processed as expected", mailNotification.getTo()));
+					.format("Sending mail to %s not processed as expected", mailNotification.getTo()));
 		}
 		
 		return isSent;

@@ -32,12 +32,12 @@ public final class AppConstant {
 	public static final String[] WHITELIST_URLS = {
 			"/", 
 			"/h2-console/**", 
-			"/api/v**/authentication/**",
-			"/api/v**/registration/**",
+			"/api/v**/authenticate/**",
+			"/api/v**/register/**",
 	};
 	
 	/**
-	 * page size for Pageable objects
+	 * Default page size for Pageable objects
 	 */
 	public static final int PAGE_SIZE = 50;
 	

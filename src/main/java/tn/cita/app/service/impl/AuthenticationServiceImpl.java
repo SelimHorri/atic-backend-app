@@ -26,7 +26,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	private final JwtUtil jwtUtil;
 	
 	@Override
-	public LoginResponse login(final LoginRequest loginRequest) {
+	public LoginResponse authenticate(final LoginRequest loginRequest) {
 		
 		log.info("** AuthenticationResponse, authenticate user service*\n");
 		

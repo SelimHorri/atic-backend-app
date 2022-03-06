@@ -1,11 +1,8 @@
 package tn.cita.app.util;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public abstract class RegistrationUtils {
+public interface RegistrationUtils {
 	
 	public static boolean isCustomerRole(final String role) {
 		return role.equals(UserRoleBasedAuthority.CUSTOMER.name());

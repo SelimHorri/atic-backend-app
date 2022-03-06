@@ -20,14 +20,14 @@ import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.RegistrationService;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/registration")
+@RequestMapping(AppConstant.API_CONTEXT_V0 + "/register")
 @RequiredArgsConstructor
 public class RegistrationResource {
 	
 	private final RegistrationService registrationService;
 	
-	@PostMapping("/customer/register")
-	public ResponseEntity<ApiPayloadResponse<RegisterResponse>> registerCustomer(
+	@PostMapping
+	public ResponseEntity<ApiPayloadResponse<RegisterResponse>> register(
 			@RequestBody 
 			@NotNull(message = "Input should not be null") 
 			@Valid final RegisterRequest registerRequest) {
@@ -36,13 +36,13 @@ public class RegistrationResource {
 		return ResponseEntity.ok(apiPayloadResponse);
 	}
 	
-	@GetMapping("/customer/register/{token}")
-	public ResponseEntity<ApiPayloadResponse<String>> validateVerificationToken(
+	@GetMapping("/{token}")
+	public ResponseEntity<ApiPayloadResponse<String>> validateToken(
 			@PathVariable("token") 
 			@NotNull(message = "Input token should not be null") 
 			final String token) {
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.registrationService.validateTokenCustmoer(token));
+				this.registrationService.validateToken(token));
 		return ResponseEntity.ok(apiPayloadResponse);
 	}
 	

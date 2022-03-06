@@ -39,7 +39,7 @@ class AuthenticationResourceTest {
 		loginRequest = new LoginRequest("selimhorri", "0000");
 		loginResponse = new LoginResponse("selimhorri", "userJwtToken");
 		
-		when(this.authenticationService.login(loginRequest))
+		when(this.authenticationService.authenticate(loginRequest))
 				.thenReturn(loginResponse);
 	}
 	

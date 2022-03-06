@@ -18,19 +18,19 @@ import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.AuthenticationService;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/authentication")
+@RequestMapping(AppConstant.API_CONTEXT_V0 + "/authenticate")
 @RequiredArgsConstructor
 public class AuthenticationResource {
 	
 	private final AuthenticationService authenticationService;
 	
-	@PostMapping("/login")
-	public ResponseEntity<ApiPayloadResponse<LoginResponse>> login(
+	@PostMapping
+	public ResponseEntity<ApiPayloadResponse<LoginResponse>> authenticate(
 			@RequestBody 
 			@NotNull(message = "Input login should not be null") 
 			@Valid final LoginRequest loginRequest) {
 		
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.authenticationService.login(loginRequest));
+		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.authenticationService.authenticate(loginRequest));
 		
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(apiPayloadResponse);

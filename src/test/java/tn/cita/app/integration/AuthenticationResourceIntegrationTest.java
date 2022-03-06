@@ -53,7 +53,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 	@Test
 	void givenLoginApiUrl_whenRequestIsValid_thenLoginResponseShouldBeReturned() {
 		
-		this.loginResponse = this.authenticationService.login(loginRequest);
+		this.loginResponse = this.authenticationService.authenticate(loginRequest);
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, loginResponse);
 		
 		this.webTestClient

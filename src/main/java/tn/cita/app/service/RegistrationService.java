@@ -6,7 +6,7 @@ import tn.cita.app.dto.response.RegisterResponse;
 public interface RegistrationService {
 	
 	RegisterResponse register(final RegisterRequest registerRequest);
-	String validateTokenCustmoer(final String token);
+	String validateToken(final String token);
 	
 }
 

@@ -107,7 +107,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		// Step6
 		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomer.getEmail(), 
 				"Registration", 
-				String.format("Hi %s, \nClick this link to activate your account: %s/%s", 
+				String.format("Hi %s,\nClick this link to activate your account: %s/%s \n"
+						+ "Kindest,\nCita\n", 
 						savedVerificationToken.getCredential().getUsername(), 
 						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
 						savedVerificationToken.getToken())));
@@ -117,11 +118,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new MailNotificationNotProcessedException("Mail not sent");
 		
 		return new RegisterResponse(isMailSent, String
-				.format("User with username %s has been saved successfully", savedCustomer.getCredential().getUsername()));
+				.format("User with username %s has been saved successfully.\n"
+						+ "Check your email to enbale your account.", savedCustomer.getCredential().getUsername()));
 	}
 	
 	@Override
-	public String validateTokenCustmoer(final String token) {
+	public String validateToken(final String token) {
 		
 		// fetch verificationToken by provided token
 		final var verificationToken = this.verificationTokenRepository.findByToken(token)

@@ -5,7 +5,7 @@ import tn.cita.app.dto.response.LoginResponse;
 
 public interface AuthenticationService {
 	
-	LoginResponse login(final LoginRequest loginRequest);
+	LoginResponse authenticate(final LoginRequest loginRequest);
 	
 }
 
