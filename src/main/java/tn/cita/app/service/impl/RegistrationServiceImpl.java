@@ -19,8 +19,10 @@ import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
+import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
+import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.service.RegistrationService;
@@ -32,7 +34,8 @@ import tn.cita.app.util.NotificationUtil;
 public class RegistrationServiceImpl implements RegistrationService {
 	
 	private final CustomerRepository customerRepository;
-	// private final EmployeeService employeeService;
+	// private final EmployeeRepository employeeRepository;
+	private final CredentialRepository credentialRepository;
 	private final VerificationTokenRepository verificationTokenRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final NotificationUtil notificationUtil;
@@ -44,6 +47,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer role");
 		
 		// TODO: check username duplication!
+		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()).ifPresent((c) -> {
+			throw new UsernameAlreadyExistsException(String
+					.format("Account with username: %s already exists", c.getUsername()));
+		});
 		
 		if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword()))
 			throw new PasswordNotMatchException("Unmatched passwords! please check again");
