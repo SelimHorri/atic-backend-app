@@ -40,27 +40,42 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private final PasswordEncoder passwordEncoder;
 	private final NotificationUtil notificationUtil;
 	
+	/**
+	 * @param RegisterRequest
+	 * @return RegisterResponse
+	 * This method contains 7 steps to achieve registration
+	 * Step1: check Role validation
+	 * Step2: check username duplication!
+	 * Step3: check password confirmation
+	 * Step4: encode valid password and save User
+	 * Step5: create verification token dto to be persisted for saved User
+	 * Step6: send email with saved verification token
+	 * Step7: check if mail sent or not
+	 */
 	@Override
 	public RegisterResponse registerCustomer(final RegisterRequest registerRequest) {
 		
+		// Step1
 		if (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.CUSTOMER.name()))
 			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer role");
 		
-		// TODO: check username duplication!
+		// Step2
 		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()).ifPresent((c) -> {
 			throw new UsernameAlreadyExistsException(String
 					.format("Account with username: %s already exists", c.getUsername()));
 		});
 		
+		// Step3
 		if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword()))
 			throw new PasswordNotMatchException("Unmatched passwords! please check again");
 		
+		// Step4
 		registerRequest.setPassword(this.passwordEncoder.encode(registerRequest.getConfirmPassword()));
 		final var savedCustomer = this.customerRepository.save(CustomerMapper.map(registerRequest));
 		
 		System.err.println(savedCustomer);
 		
-		// TODO: create verification token dto to be persisted
+		// Step5
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
 				AppConstant.EXPIRES_AT_FROM_NOW, 
 				savedCustomer.getCredential());
@@ -68,7 +83,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		System.err.println(savedVerificationToken);
 		
-		// TODO: send email with saved verification token
+		// Step6
 		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomer.getEmail(), 
 				"Registration", 
 				String.format("Hi %s, \nClick this link to activate your account: %s/%s", 
@@ -76,6 +91,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
 						savedVerificationToken.getToken())));
 		
+		// Step7
 		if (isMailSent != null && !isMailSent)
 			throw new MailNotificationNotProcessedException("Mail not sent");
 		
@@ -103,9 +119,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public String validateTokenCustmoer(final String token) {
 		
+		// fetch verificationToken by provided token
 		final var verificationToken = this.verificationTokenRepository.findByToken(token)
 				.orElseThrow(() -> new VerificationTokenNotFoundException(String
 						.format("Link has been disactivated")));
+		
+		// check if token expired => if expired, then flush out token and throw exception
 		if (verificationToken.getExpireDate().isEqual(LocalDateTime.now()) 
 				|| verificationToken.getExpireDate().isBefore(LocalDateTime.now())) {
 			
