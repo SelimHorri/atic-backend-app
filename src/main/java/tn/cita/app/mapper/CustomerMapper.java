@@ -79,16 +79,16 @@ public interface CustomerMapper {
 				.build();
 	}
 	
-	public static CustomerDto map(final RegisterRequest registerRequest) {
-		return CustomerDto.builder()
+	public static Customer map(final RegisterRequest registerRequest) {
+		return Customer.builder()
 				.firstname(registerRequest.getFirstname())
 				.lastname(registerRequest.getLastname())
 				.email(registerRequest.getEmail())
 				.phone(registerRequest.getPhone())
 				.birthdate(registerRequest.getBirthdate())
-				.userImageDto(null)
-				.credentialDto(
-					CredentialDto.builder()
+				.userImage(null)
+				.credential(
+						Credential.builder()
 						.username(registerRequest.getUsername())
 						.password(registerRequest.getPassword())
 						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)

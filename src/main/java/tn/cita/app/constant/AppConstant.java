@@ -1,6 +1,7 @@
 package tn.cita.app.constant;
 
 import java.time.Duration;
+import java.time.LocalDateTime;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -45,7 +46,7 @@ public final class AppConstant {
 	/**
 	 * Verification Token expires after specified minutes from localdatetime.now
 	 */
-	public static final long EXPIRES_AT_FROM_NOW = Duration.ofMinutes(30).toMinutes();
+	public static final LocalDateTime EXPIRES_AT_FROM_NOW = LocalDateTime.now().plusMinutes(Duration.ofMinutes(30).toMinutes());
 	
 }
 

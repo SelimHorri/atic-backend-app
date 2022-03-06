@@ -11,7 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.dto.VerificationTokenDto;
+import tn.cita.app.domain.entity.VerificationToken;
 import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
@@ -19,10 +19,11 @@ import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
+import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
-import tn.cita.app.service.CustomerService;
+import tn.cita.app.repository.CustomerRepository;
+import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.service.RegistrationService;
-import tn.cita.app.service.VerificationTokenService;
 import tn.cita.app.util.NotificationUtil;
 
 @Service
@@ -30,9 +31,9 @@ import tn.cita.app.util.NotificationUtil;
 @RequiredArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
 	
-	private final CustomerService customerService;
+	private final CustomerRepository customerRepository;
 	// private final EmployeeService employeeService;
-	private final VerificationTokenService verificationTokenService;
+	private final VerificationTokenRepository verificationTokenRepository;
 	private final PasswordEncoder passwordEncoder;
 	private final NotificationUtil notificationUtil;
 	
@@ -48,31 +49,31 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new PasswordNotMatchException("Unmatched passwords! please check again");
 		
 		registerRequest.setPassword(this.passwordEncoder.encode(registerRequest.getConfirmPassword()));
-		final var savedCustomerDto = this.customerService.save(CustomerMapper.map(registerRequest));
+		final var savedCustomer = this.customerRepository.save(CustomerMapper.map(registerRequest));
 		
-		System.err.println(savedCustomerDto);
+		System.err.println(savedCustomer);
 		
 		// TODO: create verification token dto to be persisted
-		final var verificationTokenDto = new VerificationTokenDto(UUID.randomUUID().toString(), 
-				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
-				savedCustomerDto.getCredentialDto());
-		final var savedVerificationTokenDto = this.verificationTokenService.save(verificationTokenDto);
+		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
+				AppConstant.EXPIRES_AT_FROM_NOW, 
+				savedCustomer.getCredential());
+		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		
-		System.err.println(savedVerificationTokenDto);
+		System.err.println(savedVerificationToken);
 		
 		// TODO: send email with saved verification token
-		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomerDto.getEmail(), 
+		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomer.getEmail(), 
 				"Registration", 
 				String.format("Hi %s, \nClick this link to activate your account: %s/%s", 
-						savedVerificationTokenDto.getCredentialDto().getUsername(), 
+						savedVerificationToken.getCredential().getUsername(), 
 						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
-						savedVerificationTokenDto.getToken())));
+						savedVerificationToken.getToken())));
 		
 		if (isMailSent != null && !isMailSent)
 			throw new MailNotificationNotProcessedException("Mail not sent");
 		
 		return new RegisterResponse(isMailSent, String
-				.format("Customer with username %s has been saved successfully", savedCustomerDto.getCredentialDto().getUsername()));
+				.format("Customer with username %s has been saved successfully", savedCustomer.getCredential().getUsername()));
 	}
 	
 	@Override
@@ -95,22 +96,24 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public String validateTokenCustmoer(final String token) {
 		
-		final var verificationTokenDto = this.verificationTokenService.findByToken(token);
-		if (verificationTokenDto.getExpireDate().isEqual(LocalDateTime.now()) 
-				|| verificationTokenDto.getExpireDate().isBefore(LocalDateTime.now())) {
+		final var verificationToken = this.verificationTokenRepository.findByToken(token)
+				.orElseThrow(() -> new VerificationTokenNotFoundException(String
+						.format("Link has been disactivated")));
+		if (verificationToken.getExpireDate().isEqual(LocalDateTime.now()) 
+				|| verificationToken.getExpireDate().isBefore(LocalDateTime.now())) {
 			
-			this.verificationTokenService.deleteByToken(token);
+			this.verificationTokenRepository.deleteByToken(token);
 			throw new ExpiredVerificationTokenException("Verification token has been expired");
 		}
 		
 		// activate user
-		var credentialDto = verificationTokenDto.getCredentialDto();
-		credentialDto.setIsEnabled(true);
-		verificationTokenDto.setCredentialDto(credentialDto);
-		final var updatedVerificationTokenDto = this.verificationTokenService.save(verificationTokenDto);
-		System.err.println(updatedVerificationTokenDto);
+		var credential = verificationToken.getCredential();
+		credential.setIsEnabled(true);
+		verificationToken.setCredential(credential);
+		this.verificationTokenRepository.save(verificationToken);
 		
 		// token should be deleted also after activating user to prevent reaccess to url token
+		this.verificationTokenRepository.deleteByToken(token);
 		
 		return "User has been activated successfully, go and login!";
 	}
