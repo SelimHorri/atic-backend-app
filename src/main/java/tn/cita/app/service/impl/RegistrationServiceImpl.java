@@ -1,6 +1,5 @@
 package tn.cita.app.service.impl;
 
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -55,7 +54,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		// TODO: create verification token dto to be persisted
 		final var verificationTokenDto = new VerificationTokenDto(UUID.randomUUID().toString(), 
-				LocalDateTime.now().plusMinutes(Duration.ofMinutes(30).toMinutes()), 
+				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
 				savedCustomerDto.getCredentialDto());
 		final var savedVerificationTokenDto = this.verificationTokenService.save(verificationTokenDto);
 		
@@ -105,8 +104,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 		}
 		
 		// activate user
-		verificationTokenDto.getCredentialDto().setIsEnabled(true);
-		this.verificationTokenService.save(verificationTokenDto);
+		var credentialDto = verificationTokenDto.getCredentialDto();
+		credentialDto.setIsEnabled(true);
+		verificationTokenDto.setCredentialDto(credentialDto);
+		final var updatedVerificationTokenDto = this.verificationTokenService.save(verificationTokenDto);
+		System.err.println(updatedVerificationTokenDto);
 		
 		// token should be deleted also after activating user to prevent reaccess to url token
 		

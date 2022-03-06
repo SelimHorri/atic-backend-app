@@ -1,5 +1,7 @@
 package tn.cita.app.constant;
 
+import java.time.Duration;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -39,6 +41,11 @@ public final class AppConstant {
 	public static final int PAGE_SIZE = 50;
 	
 	public static final String MAIL_SOURCE = "cita.team.mail@gmail.com";
+	
+	/**
+	 * Verification Token expires after specified minutes from localdatetime.now
+	 */
+	public static final long EXPIRES_AT_FROM_NOW = Duration.ofMinutes(30).toMinutes();
 	
 }
 
