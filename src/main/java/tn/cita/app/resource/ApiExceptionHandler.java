@@ -61,7 +61,7 @@ public class ApiExceptionHandler {
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg("*" + fieldError.getDefaultMessage() + "!**")
+				.errorMsg(String.format("*%s!**", fieldError.getDefaultMessage()))
 				.build();
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		
@@ -101,7 +101,7 @@ public class ApiExceptionHandler {
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg("#### " + e.getMessage() + "! ####")
+				.errorMsg(String.format("#### %s! ####", e.getMessage()))
 				.build();
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		

@@ -1,4 +1,4 @@
-package tn.cita.app.config.marshal;
+package tn.cita.app.config.parsing;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

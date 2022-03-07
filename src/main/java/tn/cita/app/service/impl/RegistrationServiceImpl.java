@@ -105,7 +105,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		System.err.println(savedVerificationToken);
 		
 		// Step6
-		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(AppConstant.MAIL_SOURCE, savedCustomer.getEmail(), 
+		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(savedCustomer.getEmail(), 
 				"Registration", 
 				String.format("Hi %s,\nClick this link to activate your account: %s/%s \n"
 						+ "Kindest,\nCita\n", 
@@ -118,8 +118,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 			throw new MailNotificationNotProcessedException("Mail not sent");
 		
 		return new RegisterResponse(isMailSent, String
-				.format("User with username %s has been saved successfully.\n"
-						+ "Check your email to enbale your account.", savedCustomer.getCredential().getUsername()));
+				.format("User with username %s has been saved successfully. "
+						+ "Check your email to enbale your account. "
+						+ "Please consider that link will expire after 30min from registration", 
+						savedCustomer.getCredential().getUsername()));
 	}
 	
 	@Override
