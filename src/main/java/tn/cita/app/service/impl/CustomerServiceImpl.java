@@ -42,16 +42,6 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public CustomerDto save(final CustomerDto customerDto) {
-		return CustomerMapper.map(this.customerRepository.save(CustomerMapper.map(customerDto)));
-	}
-	
-	@Override
-	public CustomerDto update(final CustomerDto customerDto) {
-		return CustomerMapper.map(this.customerRepository.save(CustomerMapper.map(customerDto)));
-	}
-	
-	@Override
 	public boolean deleteById(final Integer id) {
 		this.customerRepository.deleteById(id);
 		return !this.customerRepository.existsById(id);

@@ -15,7 +15,7 @@ public final class RegisterResponse implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	private final Boolean isSuccess;
+	private Boolean isSuccess = true;
 	private final String msg;
 	
 }

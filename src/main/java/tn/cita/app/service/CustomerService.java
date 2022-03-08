@@ -8,8 +8,6 @@ public interface CustomerService {
 	
 	List<CustomerDto> findAll(final int pageOffset);
 	CustomerDto findById(final Integer id);
-	CustomerDto save(final CustomerDto customerDto);
-	CustomerDto update(final CustomerDto customerDto);
 	boolean deleteById(final Integer id);
 	
 }

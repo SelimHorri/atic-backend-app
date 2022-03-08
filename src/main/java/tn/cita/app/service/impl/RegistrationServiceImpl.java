@@ -19,7 +19,6 @@ import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
 import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
-import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
@@ -61,8 +60,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 	 * Step5: create verification token dto to be persisted for saved User
 	 * 
 	 * Step6: send email with saved verification token
-	 * 
-	 * Step7: check if mail sent or not
 	 */
 	@Override
 	public RegisterResponse register(final RegisterRequest registerRequest) {
@@ -105,7 +102,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		System.err.println(savedVerificationToken);
 		
 		// Step6
-		final Boolean isMailSent = this.notificationUtil.sendMail(new MailNotification(savedCustomer.getEmail(), 
+		this.notificationUtil.sendMail(new MailNotification(savedCustomer.getEmail(), 
 				"Registration", 
 				String.format("Hi %s,\nClick this link to activate your account: %s/%s \n"
 						+ "Kindest,\nCita\n", 
@@ -113,11 +110,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
 						savedVerificationToken.getToken())));
 		
-		// Step7
-		if (isMailSent != null && !isMailSent)
-			throw new MailNotificationNotProcessedException("Mail not sent");
-		
-		return new RegisterResponse(isMailSent, String
+		return new RegisterResponse(String
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after 30min from registration", 
@@ -141,7 +134,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		}
 		
 		// activate user
-		var credential = verificationToken.getCredential();
+		final var credential = verificationToken.getCredential();
 		credential.setIsEnabled(true);
 		verificationToken.setCredential(credential);
 		this.verificationTokenRepository.save(verificationToken);

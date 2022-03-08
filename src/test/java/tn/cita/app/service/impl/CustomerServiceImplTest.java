@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,120 +203,6 @@ class CustomerServiceImplTest {
 				.isEqualTo(String.format("Customer with id: %d not found", wrongId));
 	}
 	
-	@Disabled
-	@Test
-	void givenValidCustomerDto_whenSave_thenSavedCustomerDtoShouldBeReturned() {
-		
-		final var inputCustomerDto = CustomerDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-							.isEnabled(true)
-							.build())
-				.build();
-		final var expectedCustomerDto = CustomerDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-							.isEnabled(true)
-							.build())
-				.build();
-		
-		when(this.customerRepository.save(this.customer))
-				.thenReturn(this.customer);
-		
-		final var customerDto = this.customerService.save(inputCustomerDto);
-		
-		assertThat(customerDto).isNotNull();
-		assertThat(customerDto.getId()).isNotNull();
-		assertThat(customerDto.getFirstname()).isEqualTo(expectedCustomerDto.getFirstname());
-		assertThat(customerDto.getLastname()).isEqualTo(expectedCustomerDto.getLastname());
-		assertThat(customerDto.getEmail()).isEqualTo(expectedCustomerDto.getEmail());
-		assertThat(customerDto.getPhone()).isEqualTo(expectedCustomerDto.getPhone());
-		assertThat(customerDto.getBirthdate()).isEqualTo(expectedCustomerDto.getBirthdate());
-		assertThat(customerDto.getUserImageDto()).isNotNull();
-		assertThat(customerDto.getCredentialDto()).isNotNull();
-		assertThat(customerDto.getCredentialDto().getUsername())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getUsername());
-		assertThat(customerDto.getCredentialDto().getUserRoleBasedAuthority())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getUserRoleBasedAuthority());
-		assertThat(customerDto.getCredentialDto().getIsEnabled())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getIsEnabled());
-	}
-	
-	@Disabled
-	@Test
-	void givenValidCustomerDto_whenUpdate_thenUpdatedCustomerDtoShouldBeReturned() {
-		
-		final var inputCustomerDto = CustomerDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-							.isEnabled(true)
-							.build())
-				.build();
-		final var expectedCustomerDto = CustomerDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-							.isEnabled(true)
-							.build())
-				.build();
-		
-		when(this.customerRepository.save(this.customer))
-				.thenReturn(this.customer);
-		
-		final var customerDto = this.customerService.update(inputCustomerDto);
-		
-		assertThat(customerDto).isNotNull();
-		assertThat(customerDto.getId()).isNotNull();
-		assertThat(customerDto.getFirstname()).isEqualTo(expectedCustomerDto.getFirstname());
-		assertThat(customerDto.getLastname()).isEqualTo(expectedCustomerDto.getLastname());
-		assertThat(customerDto.getEmail()).isEqualTo(expectedCustomerDto.getEmail());
-		assertThat(customerDto.getPhone()).isEqualTo(expectedCustomerDto.getPhone());
-		assertThat(customerDto.getBirthdate()).isEqualTo(expectedCustomerDto.getBirthdate());
-		assertThat(customerDto.getUserImageDto()).isNotNull();
-		assertThat(customerDto.getCredentialDto()).isNotNull();
-		assertThat(customerDto.getCredentialDto().getUsername())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getUsername());
-		assertThat(customerDto.getCredentialDto().getUserRoleBasedAuthority())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getUserRoleBasedAuthority());
-		assertThat(customerDto.getCredentialDto().getIsEnabled())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getIsEnabled());
-	}
-	
 	@Test
 	void givenValidAndInvalidCustomerId_whenDeleteById_thenCustomerShouldBeDeleted() {
 		
@@ -339,7 +224,6 @@ class CustomerServiceImplTest {
 	
 	
 }
-
 
 
 

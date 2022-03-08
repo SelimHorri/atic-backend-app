@@ -58,7 +58,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(loginRequest)
@@ -89,7 +89,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongUsernameLoginRequest)
@@ -120,7 +120,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)
@@ -150,7 +150,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)
@@ -180,7 +180,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)

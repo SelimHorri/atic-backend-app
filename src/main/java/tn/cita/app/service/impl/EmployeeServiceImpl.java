@@ -42,16 +42,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public EmployeeDto save(final EmployeeDto employeeDto) {
-		return EmployeeMapper.map(this.employeeRepository.save(EmployeeMapper.map(employeeDto)));
-	}
-	
-	@Override
-	public EmployeeDto update(final EmployeeDto employeeDto) {
-		return EmployeeMapper.map(this.employeeRepository.save(EmployeeMapper.map(employeeDto)));
-	}
-	
-	@Override
 	public boolean deleteById(final Integer id) {
 		this.employeeRepository.deleteById(id);
 		return !this.employeeRepository.existsById(id);
