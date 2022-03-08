@@ -1,10 +1,10 @@
 package tn.cita.app.service;
 
-import tn.cita.app.domain.entity.Credential;
+import tn.cita.app.dto.CredentialDto;
 
 public interface CredentialService {
 	
-	Credential findByUsername(final String username);
+	CredentialDto findByUsername(final String username);
 	
 }
 
