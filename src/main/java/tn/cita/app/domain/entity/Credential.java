@@ -6,6 +6,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -19,9 +20,11 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.domain.UserRoleBasedAuthority;
+import tn.cita.app.domain.listener.CredentialEntityListener;
 
 @Entity
 @Table(name = "credentials")
+@EntityListeners(CredentialEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data

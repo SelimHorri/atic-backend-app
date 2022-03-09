@@ -12,6 +12,8 @@ import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.dto.UserImageDto;
+import tn.cita.app.dto.request.RegisterRequest;
+import tn.cita.app.util.RegistrationUtils;
 
 public interface EmployeeMapper {
 	
@@ -125,6 +127,27 @@ public interface EmployeeMapper {
 						.openingDate(saloonDto.getOpeningDate())
 						.fullAdr(saloonDto.getFullAdr())
 						.email(saloonDto.getEmail())
+						.build())
+				.build();
+	}
+	
+	public static Employee map(final RegisterRequest registerRequest) {
+		return Employee.builder()
+				.firstname(registerRequest.getFirstname())
+				.lastname(registerRequest.getLastname())
+				.email(registerRequest.getEmail())
+				.phone(registerRequest.getPhone())
+				.birthdate(registerRequest.getBirthdate())
+				.userImage(null)
+				.credential(
+						Credential.builder()
+						.username(registerRequest.getUsername())
+						.password(registerRequest.getPassword())
+						.userRoleBasedAuthority(RegistrationUtils.checkUserRoleBasedAuthority(registerRequest.getRole()))
+						.isEnabled(false)
+						.isAccountNonExpired(true)
+						.isAccountNonLocked(true)
+						.isCredentialsNonExpired(true)
 						.build())
 				.build();
 	}

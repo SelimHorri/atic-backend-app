@@ -38,7 +38,7 @@ class AuthenticationServiceImplTest {
 	@Test
 	void givenValidLoginRequest_whenCredentialsAreValid_thenLoginResponseShouldProcessed() {
 		
-		final var expectedLoginResponse = this.authenticationService.login(this.loginRequest);
+		final var expectedLoginResponse = this.authenticationService.authenticate(this.loginRequest);
 		assertThat(expectedLoginResponse).isNotNull();
 		assertThat(expectedLoginResponse.getUsername()).isEqualTo(loginRequest.getUsername());
 		
@@ -51,7 +51,7 @@ class AuthenticationServiceImplTest {
 	void givenInvalidLoginRequest_whenCredentialsAreInvalid_thenShouldThrowIllegalCredentialsException() {
 		this.loginRequest = new LoginRequest("selimhorri", "1111");
 		final var illegalCredentialsException = assertThrows(IllegalCredentialsException.class, 
-				() -> this.authenticationService.login(this.loginRequest));
+				() -> this.authenticationService.authenticate(this.loginRequest));
 		assertThat(illegalCredentialsException).isNotNull();
 		assertThat(illegalCredentialsException.getMessage()).isEqualTo("Bad credentials");
 	}

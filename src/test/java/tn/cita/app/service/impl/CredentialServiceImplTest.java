@@ -37,7 +37,7 @@ class CredentialServiceImplTest {
 		this.credential = Credential.builder()
 				.id(null)
 				.username(username)
-				.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+				.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 				.isEnabled(true)
 				.employee(
 						Employee.builder()

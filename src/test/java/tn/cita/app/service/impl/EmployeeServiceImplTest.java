@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ class EmployeeServiceImplTest {
 				.credential(
 						Credential.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build();
@@ -77,7 +76,7 @@ class EmployeeServiceImplTest {
 				.credential(
 						Credential.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build(), 
@@ -92,7 +91,7 @@ class EmployeeServiceImplTest {
 				.credential(
 						Credential.builder()
 							.username("amineladjimi")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build());
@@ -108,7 +107,7 @@ class EmployeeServiceImplTest {
 				.credentialDto(
 						CredentialDto.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build(), 
@@ -123,7 +122,7 @@ class EmployeeServiceImplTest {
 				.credentialDto(
 						CredentialDto.builder()
 							.username("amineladjimi")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build());
@@ -141,7 +140,7 @@ class EmployeeServiceImplTest {
 			assertThat(c.getEmail()).isEqualTo("@gmail.com");
 			assertThat(c.getPhone()).isEqualTo("22125144");
 			assertThat(c.getCredentialDto()).isNotNull();
-			assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.EMPLOYEE.name());
+			assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.WORKER.name());
 			assertThat(c.getCredentialDto().getIsEnabled()).isTrue();
 		});
 		
@@ -166,7 +165,7 @@ class EmployeeServiceImplTest {
 				.credentialDto(
 						CredentialDto.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build();
@@ -205,120 +204,6 @@ class EmployeeServiceImplTest {
 				.isEqualTo(String.format("Employee with id: %d not found", wrongId));
 	}
 	
-	@Disabled
-	@Test
-	void givenValidEmployeeDto_whenSave_thenSavedEmployeeDtoShouldBeReturned() {
-		
-		final var inputEmployeeDto = EmployeeDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
-							.isEnabled(true)
-							.build())
-				.build();
-		final var expectedEmployeeDto = EmployeeDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
-							.isEnabled(true)
-							.build())
-				.build();
-		
-		when(this.employeeRepository.save(this.employee))
-				.thenReturn(this.employee);
-		
-		final var employeeDto = this.employeeService.save(inputEmployeeDto);
-		
-		assertThat(employeeDto).isNotNull();
-		assertThat(employeeDto.getId()).isNotNull();
-		assertThat(employeeDto.getFirstname()).isEqualTo(expectedEmployeeDto.getFirstname());
-		assertThat(employeeDto.getLastname()).isEqualTo(expectedEmployeeDto.getLastname());
-		assertThat(employeeDto.getEmail()).isEqualTo(expectedEmployeeDto.getEmail());
-		assertThat(employeeDto.getPhone()).isEqualTo(expectedEmployeeDto.getPhone());
-		assertThat(employeeDto.getBirthdate()).isEqualTo(expectedEmployeeDto.getBirthdate());
-		assertThat(employeeDto.getUserImageDto()).isNotNull();
-		assertThat(employeeDto.getCredentialDto()).isNotNull();
-		assertThat(employeeDto.getCredentialDto().getUsername())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getUsername());
-		assertThat(employeeDto.getCredentialDto().getUserRoleBasedAuthority())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getUserRoleBasedAuthority());
-		assertThat(employeeDto.getCredentialDto().getIsEnabled())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getIsEnabled());
-	}
-	
-	@Disabled
-	@Test
-	void givenValidEmployeeDto_whenUpdate_thenUpdatedEmployeeDtoShouldBeReturned() {
-		
-		final var inputEmployeeDto = EmployeeDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
-							.isEnabled(true)
-							.build())
-				.build();
-		final var expectedEmployeeDto = EmployeeDto.builder()
-				.id(1)
-				.firstname("selim")
-				.lastname("horri")
-				.email("@gmail.com")
-				.phone("22125144")
-				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
-							.isEnabled(true)
-							.build())
-				.build();
-		
-		when(this.employeeRepository.save(this.employee))
-				.thenReturn(this.employee);
-		
-		final var employeeDto = this.employeeService.update(inputEmployeeDto);
-		
-		assertThat(employeeDto).isNotNull();
-		assertThat(employeeDto.getId()).isNotNull();
-		assertThat(employeeDto.getFirstname()).isEqualTo(expectedEmployeeDto.getFirstname());
-		assertThat(employeeDto.getLastname()).isEqualTo(expectedEmployeeDto.getLastname());
-		assertThat(employeeDto.getEmail()).isEqualTo(expectedEmployeeDto.getEmail());
-		assertThat(employeeDto.getPhone()).isEqualTo(expectedEmployeeDto.getPhone());
-		assertThat(employeeDto.getBirthdate()).isEqualTo(expectedEmployeeDto.getBirthdate());
-		assertThat(employeeDto.getUserImageDto()).isNotNull();
-		assertThat(employeeDto.getCredentialDto()).isNotNull();
-		assertThat(employeeDto.getCredentialDto().getUsername())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getUsername());
-		assertThat(employeeDto.getCredentialDto().getUserRoleBasedAuthority())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getUserRoleBasedAuthority());
-		assertThat(employeeDto.getCredentialDto().getIsEnabled())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getIsEnabled());
-	}
-	
 	@Test
 	void givenValidAndInvalidEmployeeId_whenDeleteById_thenEmployeeShouldBeDeleted() {
 		
@@ -340,7 +225,6 @@ class EmployeeServiceImplTest {
 	
 	
 }
-
 
 
 
