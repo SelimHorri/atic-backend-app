@@ -8,7 +8,7 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.databind.json.JsonMapper;
 
 @Configuration
-public class MarshalConfig {
+public class ParsingConfig {
 	
 	@Bean
 	public ObjectMapper objectMapperBean() {
