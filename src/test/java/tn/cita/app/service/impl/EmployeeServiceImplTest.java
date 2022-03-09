@@ -55,7 +55,7 @@ class EmployeeServiceImplTest {
 				.credential(
 						Credential.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build();
@@ -76,7 +76,7 @@ class EmployeeServiceImplTest {
 				.credential(
 						Credential.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build(), 
@@ -91,7 +91,7 @@ class EmployeeServiceImplTest {
 				.credential(
 						Credential.builder()
 							.username("amineladjimi")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build());
@@ -107,7 +107,7 @@ class EmployeeServiceImplTest {
 				.credentialDto(
 						CredentialDto.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build(), 
@@ -122,7 +122,7 @@ class EmployeeServiceImplTest {
 				.credentialDto(
 						CredentialDto.builder()
 							.username("amineladjimi")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build());
@@ -140,7 +140,7 @@ class EmployeeServiceImplTest {
 			assertThat(c.getEmail()).isEqualTo("@gmail.com");
 			assertThat(c.getPhone()).isEqualTo("22125144");
 			assertThat(c.getCredentialDto()).isNotNull();
-			assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.EMPLOYEE.name());
+			assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.WORKER.name());
 			assertThat(c.getCredentialDto().getIsEnabled()).isTrue();
 		});
 		
@@ -165,7 +165,7 @@ class EmployeeServiceImplTest {
 				.credentialDto(
 						CredentialDto.builder()
 							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 							.isEnabled(true)
 							.build())
 				.build();

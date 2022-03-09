@@ -10,9 +10,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.Employee;
 import tn.cita.app.domain.entity.VerificationToken;
 import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.dto.request.RegisterRequest;
@@ -57,15 +54,19 @@ public class RegistrationServiceImpl implements RegistrationService {
 	 * 
 	 * Step4: encode valid password and save User
 	 * 
-	 * Step5: create verification token dto to be persisted for saved User
-	 * 
-	 * Step6: send email with saved verification token
+	 * Step5: check role type and process to the right roletype
 	 */
 	@Override
 	public RegisterResponse register(final RegisterRequest registerRequest) {
 		
 		// Step1
-		if (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.CUSTOMER.name()))
+		//if (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.CUSTOMER.name()))
+		//	throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role");
+		
+		if (!RegistrationUtils.isCustomerRole(registerRequest.getRole())
+				&& !RegistrationUtils.isWorkerRole(registerRequest.getRole())
+				&& !RegistrationUtils.isManagerRole(registerRequest.getRole())
+				&& !RegistrationUtils.isOwnerRole(registerRequest.getRole()))
 			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role");
 		
 		// Step2
@@ -81,27 +82,27 @@ public class RegistrationServiceImpl implements RegistrationService {
 		// Step4
 		registerRequest.setPassword(this.passwordEncoder.encode(registerRequest.getConfirmPassword()));
 		
-		Customer savedCustomer = null;
-		Employee savedEmployee = null;
+		// Step 5
 		if (RegistrationUtils.isCustomerRole(registerRequest.getRole()))
-			savedCustomer = this.customerRepository.save(CustomerMapper.map(registerRequest));
-		if (RegistrationUtils.isWorkerRole(registerRequest.getRole())
+			return this.registerCustomer(registerRequest);
+		else if (RegistrationUtils.isWorkerRole(registerRequest.getRole())
 				|| RegistrationUtils.isManagerRole(registerRequest.getRole())
 				|| RegistrationUtils.isOwnerRole(registerRequest.getRole()))
-			savedEmployee = this.employeeRepository.save(EmployeeMapper.map(registerRequest));
+			return this.registerEmployee(registerRequest);
+		else 
+			return null;
 		
-		System.err.println(savedCustomer);
-		System.err.println(savedEmployee);
+	}
+	
+	private RegisterResponse registerCustomer(final RegisterRequest registerRequest) {
 		
-		// Step5
+		final var savedCustomer = this.customerRepository.save(CustomerMapper.map(registerRequest));
+		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
 				AppConstant.EXPIRES_AT_FROM_NOW, 
 				savedCustomer.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		
-		System.err.println(savedVerificationToken);
-		
-		// Step6
 		this.notificationUtil.sendMail(new MailNotification(savedCustomer.getEmail(), 
 				"Registration", 
 				String.format("Hi %s,\nClick this link to activate your account: %s/%s \n"
@@ -115,6 +116,30 @@ public class RegistrationServiceImpl implements RegistrationService {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after 30min from registration", 
 						savedCustomer.getCredential().getUsername()));
+	}
+	
+	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
+		
+		final var savedEmployee = this.employeeRepository.save(EmployeeMapper.map(registerRequest));
+		
+		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
+				AppConstant.EXPIRES_AT_FROM_NOW, 
+				savedEmployee.getCredential());
+		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
+		
+		this.notificationUtil.sendMail(new MailNotification(savedEmployee.getEmail(), 
+				"Registration", 
+				String.format("Hi %s,\nClick this link to activate your account: %s/%s \n"
+						+ "Kindest,\nCita\n", 
+						savedVerificationToken.getCredential().getUsername(), 
+						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
+						savedVerificationToken.getToken())));
+		
+		return new RegisterResponse(String
+				.format("User with username %s has been saved successfully. "
+						+ "Check your email to enbale your account. "
+						+ "Please consider that link will expire after 30min from registration", 
+						savedEmployee.getCredential().getUsername()));
 	}
 	
 	@Override

@@ -9,7 +9,7 @@ public interface RegistrationUtils {
 	}
 	
 	public static boolean isWorkerRole(final String role) {
-		return role.equals(UserRoleBasedAuthority.EMPLOYEE.name());
+		return role.equals(UserRoleBasedAuthority.WORKER.name());
 	}
 	
 	public static boolean isManagerRole(final String role) {
@@ -23,7 +23,7 @@ public interface RegistrationUtils {
 	public static UserRoleBasedAuthority checkUserRoleBasedAuthority(final String role) {
 		
 		final var CUSTOMER = UserRoleBasedAuthority.CUSTOMER;
-		final var EMPLOYEE = UserRoleBasedAuthority.EMPLOYEE;
+		final var EMPLOYEE = UserRoleBasedAuthority.WORKER;
 		final var MANAGER = UserRoleBasedAuthority.MANAGER;
 		final var OWNER = UserRoleBasedAuthority.OWNER;
 		
