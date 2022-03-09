@@ -60,9 +60,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 	public RegisterResponse register(final RegisterRequest registerRequest) {
 		
 		// Step1
-		//if (!registerRequest.getRole().equalsIgnoreCase(UserRoleBasedAuthority.CUSTOMER.name()))
-		//	throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role");
-		
 		if (!RegistrationUtils.isCustomerRole(registerRequest.getRole())
 				&& !RegistrationUtils.isWorkerRole(registerRequest.getRole())
 				&& !RegistrationUtils.isManagerRole(registerRequest.getRole())
@@ -91,7 +88,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 			return this.registerEmployee(registerRequest);
 		else 
 			return null;
-		
 	}
 	
 	private RegisterResponse registerCustomer(final RegisterRequest registerRequest) {
@@ -154,6 +150,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		if (verificationToken.getExpireDate().isEqual(LocalDateTime.now()) 
 				|| verificationToken.getExpireDate().isBefore(LocalDateTime.now())) {
 			
+			// TODO: instead of just removing the verification token, we need to remove the whole user chain on cascade: User->Credential->VerificationToken
 			this.verificationTokenRepository.deleteByToken(token);
 			throw new ExpiredVerificationTokenException("Verification token has been expired");
 		}
