@@ -39,7 +39,7 @@ class AuthenticationResourceTest {
 		loginRequest = new LoginRequest("selimhorri", "0000");
 		loginResponse = new LoginResponse("selimhorri", "userJwtToken");
 		
-		when(this.authenticationService.login(loginRequest))
+		when(this.authenticationService.authenticate(loginRequest))
 				.thenReturn(loginResponse);
 	}
 	
@@ -49,7 +49,7 @@ class AuthenticationResourceTest {
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.loginResponse);
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(loginRequest)
