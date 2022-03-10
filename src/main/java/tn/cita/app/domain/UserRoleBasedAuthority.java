@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
 public enum UserRoleBasedAuthority {
 	
 	CUSTOMER("ROLE_CUSTOMER"),
-	EMPLOYEE("ROLE_EMPLOYEE"),
+	WORKER("ROLE_WORKER"),
 	MANAGER("ROLE_MANAGER"),
 	OWNER("ROLE_OWNER");
 	

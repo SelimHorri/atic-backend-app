@@ -12,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
@@ -28,9 +27,6 @@ class CredentialServiceImplTest {
 	private CredentialRepository credentialRepository;
 	
 	@Autowired
-	private PasswordEncoder passwordEncoder;
-	
-	@Autowired
 	private CredentialService credentialService;
 	private Credential credential;
 	
@@ -41,8 +37,7 @@ class CredentialServiceImplTest {
 		this.credential = Credential.builder()
 				.id(null)
 				.username(username)
-				.password(this.passwordEncoder.encode("0000"))
-				.userRoleBasedAuthority(UserRoleBasedAuthority.EMPLOYEE)
+				.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
 				.isEnabled(true)
 				.employee(
 						Employee.builder()
@@ -62,7 +57,6 @@ class CredentialServiceImplTest {
 		
 		assertThat(credentialDtoExpected).isNotNull();
 		assertThat(credentialDtoExpected.getUsername()).isEqualTo(this.credential.getUsername());
-		assertThat(credentialDtoExpected.getPassword()).isEqualTo(this.credential.getPassword());
 		assertThat(credentialDtoExpected.getIsEnabled()).isTrue();
 	}
 	
@@ -74,10 +68,10 @@ class CredentialServiceImplTest {
 				() -> this.credentialService.findByUsername(newUsername));
 		
 		assertThat(credentialNotFoundException).isNotNull();
-		assertThat(credentialNotFoundException.getMessage()).startsWith("Credential ");
-		assertThat(credentialNotFoundException.getMessage()).endsWith(" not found");
-		assertThat(credentialNotFoundException.getMessage()).isEqualTo(String
-				.format("Credential with username %s not found", newUsername));
+		assertThat(credentialNotFoundException.getMessage())
+				.startsWith("Credential ")
+				.endsWith(" not found")
+				.isEqualTo(String.format("Credential with username %s not found", newUsername));
 	}
 	
 	

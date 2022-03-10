@@ -1,5 +1,8 @@
 package tn.cita.app.constant;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -28,8 +31,22 @@ public final class AppConstant {
 	 */
 	public static final String[] WHITELIST_URLS = {
 			"/", 
-			"/api/v**/authentication/**",
+			"/h2-console/**", 
+			"/api/v**/authenticate/**",
+			"/api/v**/register/**",
 	};
+	
+	/**
+	 * Default page size for Pageable objects
+	 */
+	public static final int PAGE_SIZE = 50;
+	
+	public static final String MAIL_SOURCE = "cita.team.mail@gmail.com";
+	
+	/**
+	 * Verification Token expires after specified minutes from localdatetime.now
+	 */
+	public static final LocalDateTime EXPIRES_AT_FROM_NOW = LocalDateTime.now().plusMinutes(Duration.ofMinutes(30).toMinutes());
 	
 }
 

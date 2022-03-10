@@ -9,6 +9,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,16 +24,22 @@ import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
+import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
+import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
+import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.exception.wrapper.LocationNotFoundException;
+import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
+import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.RatingNotFoundException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
+import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 
 @RestControllerAdvice
@@ -54,7 +61,7 @@ public class ApiExceptionHandler {
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg("*" + fieldError.getDefaultMessage() + "!**")
+				.errorMsg(String.format("*%s!**", fieldError.getDefaultMessage()))
 				.build();
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		
@@ -81,13 +88,20 @@ public class ApiExceptionHandler {
 		ServiceDetailNotFoundException.class,
 		TagNotFoundException.class,
 		VerificationTokenNotFoundException.class,
+		IllegalRegistrationRoleTypeException.class,
+		PasswordNotMatchException.class,
+		MailNotificationNotProcessedException.class,
+		ExpiredVerificationTokenException.class,
+		DisabledException.class,
+		IllegalUserDetailsStateException.class,
+		UsernameAlreadyExistsException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, final WebRequest webRequest) {
 		log.info("**ApiExceptionHandler controller, handle API request*\n");
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg("#### " + e.getMessage() + "! ####")
+				.errorMsg(String.format("#### %s! ####", e.getMessage()))
 				.build();
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
 		

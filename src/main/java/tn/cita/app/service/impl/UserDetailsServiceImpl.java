@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.UserDetailsImpl;
+import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.service.CredentialService;
 
 @Service
@@ -18,7 +19,23 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
-		return new UserDetailsImpl(this.credentialService.findByUsername(username.strip()));
+		
+		final UserDetails userDetails = new UserDetailsImpl(this.credentialService.findByUsername(username.strip()));
+		
+		if (!userDetails.isEnabled())
+			throw new IllegalUserDetailsStateException(String
+					.format("User with username: %s is disabled, checkout your mail to activate", userDetails.getUsername()));
+		if (!userDetails.isAccountNonExpired())
+			throw new IllegalUserDetailsStateException(String
+					.format("User account with username: %s is expired", userDetails.getUsername()));
+		if (!userDetails.isAccountNonLocked())
+			throw new IllegalUserDetailsStateException(String
+					.format("User account with username: %s is locked", userDetails.getUsername()));
+		if (!userDetails.isCredentialsNonExpired())
+			throw new IllegalUserDetailsStateException(String
+					.format("User credentials with username: %s are expired", userDetails.getUsername()));
+		
+		return userDetails;
 	}
 	
 	

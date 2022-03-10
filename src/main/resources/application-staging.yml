@@ -32,9 +32,6 @@ logging:
     name: script/staging_log.log
     clean-history-on-start: true
   level:
-    org:
-      hibernate:
-        SQL: DEBUG
       springframework:
         web: DEBUG
         data: DEBUG
