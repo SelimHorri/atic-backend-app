@@ -312,6 +312,28 @@ class RegistrationResourceIntegrationTest extends AbstractTestSharedMySQLContain
 					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.getResponseBody().getErrorMsg()));
 	}
 	
+	@Test
+	void givenValidToken_whenValidateToken_thenConfirmationMsgStringShouldBeReturned() {
+		
+		final var token = "c856b457-ed66-4dd4-bc1a-f0be552a28e5";
+		
+		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				"User has been activated successfully, go and login!");
+		
+		this.webTestClient
+				.get()
+				.uri(AppConstant.API_CONTEXT_V0 + "/register/" + token)
+				.exchange()
+				.expectStatus()
+					.is2xxSuccessful()
+				.expectBody()
+					.jsonPath("$").value(notNullValue())
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.responseBody").value(notNullValue())
+					.jsonPath("$.responseBody").value(is(expectedApiPayloadResponse.getResponseBody()));
+	}
+	
 	
 	
 }
