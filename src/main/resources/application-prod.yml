@@ -32,9 +32,6 @@ logging:
     name: script/prod_log.log
     clean-history-on-start: false
   level:
-    org:
-      hibernate:
-        SQL: INFO
       springframework:
         web: INFO
         data: INFO

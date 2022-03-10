@@ -53,12 +53,12 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 	@Test
 	void givenLoginApiUrl_whenRequestIsValid_thenLoginResponseShouldBeReturned() {
 		
-		this.loginResponse = this.authenticationService.login(loginRequest);
+		this.loginResponse = this.authenticationService.authenticate(loginRequest);
 		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, loginResponse);
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(loginRequest)
@@ -89,7 +89,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongUsernameLoginRequest)
@@ -120,7 +120,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)
@@ -150,7 +150,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)
@@ -180,7 +180,7 @@ class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authentication/login")
+				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)

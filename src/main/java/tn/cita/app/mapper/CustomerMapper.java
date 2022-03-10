@@ -10,6 +10,8 @@ import tn.cita.app.domain.entity.UserImage;
 import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.UserImageDto;
+import tn.cita.app.dto.request.RegisterRequest;
+import tn.cita.app.util.RegistrationUtils;
 
 public interface CustomerMapper {
 	
@@ -73,6 +75,27 @@ public interface CustomerMapper {
 						.isAccountNonExpired(customerDto.getCredentialDto().getIsAccountNonExpired())
 						.isAccountNonLocked(customerDto.getCredentialDto().getIsAccountNonLocked())
 						.isCredentialsNonExpired(customerDto.getCredentialDto().getIsCredentialsNonExpired())
+						.build())
+				.build();
+	}
+	
+	public static Customer map(final RegisterRequest registerRequest) {
+		return Customer.builder()
+				.firstname(registerRequest.getFirstname())
+				.lastname(registerRequest.getLastname())
+				.email(registerRequest.getEmail())
+				.phone(registerRequest.getPhone())
+				.birthdate(registerRequest.getBirthdate())
+				.userImage(null)
+				.credential(
+						Credential.builder()
+						.username(registerRequest.getUsername())
+						.password(registerRequest.getPassword())
+						.userRoleBasedAuthority(RegistrationUtils.checkUserRoleBasedAuthority(registerRequest.getRole()))
+						.isEnabled(false)
+						.isAccountNonExpired(true)
+						.isAccountNonLocked(true)
+						.isCredentialsNonExpired(true)
 						.build())
 				.build();
 	}
