@@ -19,7 +19,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
 import tn.cita.app.constant.AppConstant;
-import tn.cita.app.container.AbstractTestSharedMySQLContainer;
+import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
@@ -29,7 +29,7 @@ import tn.cita.app.util.JwtUtil;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
-class AuthenticationResourceIntegrationTest extends AbstractTestSharedMySQLContainer {
+class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 	
 	@Autowired
 	private AuthenticationService authenticationService;

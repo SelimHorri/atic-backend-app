@@ -7,12 +7,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
-import tn.cita.app.container.AbstractTestSharedMySQLContainer;
+import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.entity.VerificationToken;
 
 @DataJpaTest(showSql = true)
 @AutoConfigureDataJpa
-class VerificationTokenRepositoryTest extends AbstractTestSharedMySQLContainer {
+class VerificationTokenRepositoryTest extends AbstractSharedMySQLTestContainer {
 	
 	@Autowired
 	private VerificationTokenRepository verificationTokenRepository;
