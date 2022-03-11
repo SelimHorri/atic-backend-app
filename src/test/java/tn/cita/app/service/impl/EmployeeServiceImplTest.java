@@ -120,11 +120,11 @@ class EmployeeServiceImplTest {
 				.birthdate(LocalDate.of(1995, 1, 9))
 				.userImageDto(new UserImageDto())
 				.credentialDto(
-						CredentialDto.builder()
-							.username("amineladjimi")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
-							.isEnabled(true)
-							.build())
+					CredentialDto.builder()
+						.username("amineladjimi")
+						.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
+						.isEnabled(true)
+						.build())
 				.build());
 		
 		final int pageOffset = 1;
@@ -133,16 +133,18 @@ class EmployeeServiceImplTest {
 		
 		final var findAll = this.employeeService.findAll(pageOffset);
 		
-		assertThat(findAll).isNotNull().isNotEmpty();
-		assertThat(findAll).hasSameSizeAs(expectedFindAllEmployeeDtos);
-		assertThat(findAll).allSatisfy(c -> {
-			assertThat(c.getId()).isNotNull();
-			assertThat(c.getEmail()).isEqualTo("@gmail.com");
-			assertThat(c.getPhone()).isEqualTo("22125144");
-			assertThat(c.getCredentialDto()).isNotNull();
-			assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.WORKER.name());
-			assertThat(c.getCredentialDto().getIsEnabled()).isTrue();
-		});
+		assertThat(findAll)
+				.isNotNull()
+				.isNotEmpty()
+				.hasSameSizeAs(expectedFindAllEmployeeDtos)
+				.allSatisfy(c -> {
+					assertThat(c.getId()).isNotNull();
+					assertThat(c.getEmail()).isEqualTo("@gmail.com");
+					assertThat(c.getPhone()).isEqualTo("22125144");
+					assertThat(c.getCredentialDto()).isNotNull();
+					assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.WORKER.name());
+					assertThat(c.getCredentialDto().getIsEnabled()).isTrue();
+				});
 		
 	}
 	
@@ -163,11 +165,11 @@ class EmployeeServiceImplTest {
 				.birthdate(LocalDate.of(1995, 1, 9))
 				.userImageDto(new UserImageDto())
 				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
-							.isEnabled(true)
-							.build())
+					CredentialDto.builder()
+						.username("selimhorri")
+						.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
+						.isEnabled(true)
+						.build())
 				.build();
 		
 		final var employeeDto = this.employeeService.findById(id);

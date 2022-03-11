@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
@@ -46,9 +45,6 @@ class RegistrationServiceImplTest {
 	
 	@MockBean
 	private VerificationTokenRepository verificationTokenRepository;
-	
-	@MockBean
-	private PasswordEncoder passwordEncoder;
 	
 	@MockBean
 	private NotificationUtil notificationUtil;

@@ -189,7 +189,7 @@ class UserDetailsServiceImplTest {
 				.build();
 		
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
-		.thenReturn(credentialDto);
+				.thenReturn(credentialDto);
 		
 		final var userDetails = new UserDetailsImpl(credentialDto);
 		
