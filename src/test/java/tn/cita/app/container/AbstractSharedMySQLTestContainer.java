@@ -4,7 +4,7 @@ import java.util.Optional;
 
 import org.testcontainers.containers.MySQLContainer;
 
-public abstract class AbstractTestSharedMySQLContainer {
+public abstract class AbstractSharedMySQLTestContainer {
 	
 	private static final MySQLContainer<?> MYSQL_CONTAINER;
 	

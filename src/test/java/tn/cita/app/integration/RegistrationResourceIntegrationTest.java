@@ -22,7 +22,7 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tn.cita.app.constant.AppConstant;
-import tn.cita.app.container.AbstractTestSharedMySQLContainer;
+import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
@@ -31,7 +31,7 @@ import tn.cita.app.exception.payload.ExceptionMsg;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
-class RegistrationResourceIntegrationTest extends AbstractTestSharedMySQLContainer {
+class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 	
 	@Autowired
 	private WebTestClient webTestClient;
@@ -61,8 +61,9 @@ class RegistrationResourceIntegrationTest extends AbstractTestSharedMySQLContain
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
-								+ "Please consider that link will expire after 30min from registration", 
-								registerRequest.getUsername())));
+								+ "Please consider that link will expire after %dmin from registration", 
+								registerRequest.getUsername(), 
+								AppConstant.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()
@@ -101,8 +102,9 @@ class RegistrationResourceIntegrationTest extends AbstractTestSharedMySQLContain
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
-								+ "Please consider that link will expire after 30min from registration", 
-								registerRequest.getUsername())));
+								+ "Please consider that link will expire after %dmin from registration", 
+								registerRequest.getUsername(), 
+								AppConstant.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()
@@ -141,8 +143,9 @@ class RegistrationResourceIntegrationTest extends AbstractTestSharedMySQLContain
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
-								+ "Please consider that link will expire after 30min from registration", 
-								registerRequest.getUsername())));
+								+ "Please consider that link will expire after %dmin from registration", 
+								registerRequest.getUsername(), 
+								AppConstant.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()
@@ -181,8 +184,9 @@ class RegistrationResourceIntegrationTest extends AbstractTestSharedMySQLContain
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
-								+ "Please consider that link will expire after 30min from registration", 
-								registerRequest.getUsername())));
+								+ "Please consider that link will expire after %dmin from registration", 
+								registerRequest.getUsername(), 
+								AppConstant.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()

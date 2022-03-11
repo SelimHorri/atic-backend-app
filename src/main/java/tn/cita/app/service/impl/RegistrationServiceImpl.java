@@ -104,7 +104,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Customer saved successfully! *");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
-				AppConstant.EXPIRES_AT_FROM_NOW, 
+				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
 				savedCustomer.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *");
@@ -121,8 +121,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return new RegisterResponse(String
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
-						+ "Please consider that link will expire after 30min from registration", 
-						savedCustomer.getCredential().getUsername()));
+						+ "Please consider that link will expire after %dmin from registration", 
+						savedCustomer.getCredential().getUsername(), 
+						AppConstant.EXPIRES_AT_FROM_NOW));
 	}
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
@@ -133,7 +134,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Employee saved successfully! *");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
-				AppConstant.EXPIRES_AT_FROM_NOW, 
+				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
+				// AppConstant.EXPIRES_AT_FROM_NOW, 
 				savedEmployee.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *");
@@ -150,8 +152,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return new RegisterResponse(String
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
-						+ "Please consider that link will expire after 30min from registration", 
-						savedEmployee.getCredential().getUsername()));
+						+ "Please consider that link will expire after %dmin from registration", 
+						savedEmployee.getCredential().getUsername(), 
+						AppConstant.EXPIRES_AT_FROM_NOW));
 	}
 	
 	@Override
