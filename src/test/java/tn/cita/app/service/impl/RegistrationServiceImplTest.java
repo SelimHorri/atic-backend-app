@@ -1,10 +1,13 @@
 package tn.cita.app.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.UUID;
@@ -19,7 +22,11 @@ import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Employee;
 import tn.cita.app.domain.entity.VerificationToken;
+import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
+import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
+import tn.cita.app.exception.wrapper.PasswordNotMatchException;
+import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
@@ -51,37 +58,94 @@ class RegistrationServiceImplTest {
 	
 	@Test
 	void givenValidCustomerRegisterRequest_whenRegister_thenRegisterResponseShouldBeFound() {
-		
+		assertTrue(true);
 	}
 	
 	@Test
 	void givenValidWorkerRegisterRequest_whenRegister_thenRegisterResponseShouldBeFound() {
-		
+		assertTrue(true);
 	}
 	
 	@Test
 	void givenValidManagerRegisterRequest_whenRegister_thenRegisterResponseShouldBeFound() {
-		
+		assertTrue(true);
 	}
 	
 	@Test
 	void givenValidOwnerRegisterRequest_whenRegister_thenRegisterResponseShouldBeFound() {
-		
+		assertTrue(true);
 	}
 	
 	@Test
 	void givenInvalidUserRoleInRegisterRequest_whenRegister_thenIllegalRegistrationRoleTypeExceptionShouldBeThrown() {
 		
+		final var username = "seliimhorg(-tymrii000000skdfjbrjusrepfggikfrsrfleknrlfnkegi";
+		final var registerRequest = RegisterRequest.builder()
+				.firstname("selliiiiiim")
+				.lastname("hoooooooooorrii")
+				.email("cita.team.mail@gmail.com")
+				.phone("22125144")
+				.birthdate(LocalDate.of(1995, 1, 9))
+				.username(username)
+				.password("0000")
+				.confirmPassword("0000")
+				.role("XXX")
+				.build();
+		
+		assertThatExceptionOfType(IllegalRegistrationRoleTypeException.class)
+				.isThrownBy(() -> this.registrationService.register(registerRequest))
+				.withMessageStartingWith("Wrong role ")
+				.withMessageEndingWith(" role")
+				.withMessage("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role");
 	}
 	
 	@Test
 	void givenExistingUsernameInRegisterRequest_whenRegister_thenUsernameAlreadyExistsExceptionShouldBeThrown() {
 		
+		final var username = "selimhorri";
+		final var registerRequest = RegisterRequest.builder()
+				.firstname("selliiiiiim")
+				.lastname("hoooooooooorrii")
+				.email("cita.team.mail@gmail.com")
+				.phone("22125144")
+				.birthdate(LocalDate.of(1995, 1, 9))
+				.username(username)
+				.password("0000")
+				.confirmPassword("0000")
+				.role(UserRoleBasedAuthority.WORKER.name())
+				.build();
+		
+		when(this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()))
+				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.getUsername() + " already exists"));
+		
+		assertThatExceptionOfType(UsernameAlreadyExistsException.class)
+				.isThrownBy(() -> this.registrationService.register(registerRequest))
+				.withMessageStartingWith("")
+				.withMessageEndingWith("")
+				.withMessage("Account with username: " + registerRequest.getUsername() + " already exists");
 	}
 	
 	@Test
 	void givenUnmatchedPasswordsInRegisterRequest_whenRegister_thenPasswordNotMatchExceptionShouldBeThrown() {
 		
+		final var username = "seliimhi" + UUID.randomUUID().toString();
+		final var registerRequest = RegisterRequest.builder()
+				.firstname("selliiiiiim")
+				.lastname("hoooooooooorrii")
+				.email("cita.team.mail@gmail.com")
+				.phone("22125144")
+				.birthdate(LocalDate.of(1995, 1, 9))
+				.username(username)
+				.password("0000rgretg")
+				.confirmPassword("0000")
+				.role(UserRoleBasedAuthority.CUSTOMER.name())
+				.build();
+		
+		assertThatExceptionOfType(PasswordNotMatchException.class)
+				.isThrownBy(() -> this.registrationService.register(registerRequest))
+				.withMessageStartingWith("Unmatched ")
+				.withMessageEndingWith(" check again")
+				.withMessage("Unmatched passwords! please check again");
 	}
 	
 	@Test
