@@ -61,6 +61,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Override
 	public RegisterResponse register(final RegisterRequest registerRequest) {
 		
+		log.info("** RegistrationServiceImpl; RegisterResponse; register service...*\n");
+		
 		// Step1
 		if (!RegistrationUtils.isCustomerRole(registerRequest.getRole())
 				&& !RegistrationUtils.isWorkerRole(registerRequest.getRole())
@@ -159,6 +161,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	@Override
 	public String validateToken(final String token) {
+		
+		log.info("** RegistrationServiceImpl; String; validate registration token service...*\n");
 		
 		// fetch verificationToken by provided token
 		final var verificationToken = this.verificationTokenRepository.findByToken(token)

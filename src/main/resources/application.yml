@@ -1,4 +1,10 @@
 
+app:
+  security:
+    secretKey: ${random.uuid}
+  client:
+    domains: http://localhost:4200/, http://cita-frontend-app:4200/
+
 spring:
   application:
     name: CITA-BACKEND-APP
