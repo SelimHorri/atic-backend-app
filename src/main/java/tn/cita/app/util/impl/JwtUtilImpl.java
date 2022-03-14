@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Function;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
@@ -16,7 +17,8 @@ import tn.cita.app.util.JwtUtil;
 @Component
 public class JwtUtilImpl implements JwtUtil {
 	
-	private static final String SECRET_KEY = "secret";
+	@Value("${app.security.secretKey:secret*$_key$*}")
+	private String secretKey;
 	
 	@Override
 	public String extractUsername(final String token) {
@@ -35,7 +37,7 @@ public class JwtUtilImpl implements JwtUtil {
 	}
 	
 	private Claims extractAllClaims(final String token) {
-		return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
+		return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
 	}
 	
 	public Boolean isTokenExpired(final String token) {
@@ -54,7 +56,7 @@ public class JwtUtilImpl implements JwtUtil {
 				.setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-				.signWith(SignatureAlgorithm.HS256, SECRET_KEY)
+				.signWith(SignatureAlgorithm.HS256, secretKey)
 				.compact();
 	}
 	

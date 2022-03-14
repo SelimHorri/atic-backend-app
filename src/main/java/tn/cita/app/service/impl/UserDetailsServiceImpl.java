@@ -6,12 +6,13 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.UserDetailsImpl;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.service.CredentialService;
 
 @Service
-// @Slf4j
+@Slf4j
 @RequiredArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
 	
@@ -19,6 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+		
+		log.info("** UserDetailsServiceImpl; UserDetails; load user by username service...*\n");
 		
 		final UserDetails userDetails = new UserDetailsImpl(this.credentialService.findByUsername(username.strip()));
 		

@@ -28,7 +28,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	@Override
 	public LoginResponse authenticate(final LoginRequest loginRequest) {
 		
-		log.info("** AuthenticationResponse, authenticate user service*\n");
+		log.info("** AuthenticationServiceImpl; AuthenticationResponse; authenticate user service*\n");
 		
 		try {
 			this.authenticationManager.authenticate(

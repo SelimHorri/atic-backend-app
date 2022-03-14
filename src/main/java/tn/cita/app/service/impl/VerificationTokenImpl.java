@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.VerificationTokenDto;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.mapper.VerificationTokenMapper;
@@ -12,6 +13,7 @@ import tn.cita.app.service.VerificationTokenService;
 
 @Service
 @Transactional
+@Slf4j
 @RequiredArgsConstructor
 public class VerificationTokenImpl implements VerificationTokenService {
 	
@@ -20,6 +22,7 @@ public class VerificationTokenImpl implements VerificationTokenService {
 	@Transactional(readOnly = true)
 	@Override
 	public VerificationTokenDto findByToken(final String token) {
+		log.info("** VerificationTokenImpl; VerificationTokenDto; find by token service...*\n");
 		return this.verificationTokenRepository.findByToken(token)
 				.map(VerificationTokenMapper::map)
 				.orElseThrow(() -> new VerificationTokenNotFoundException(String
@@ -28,6 +31,7 @@ public class VerificationTokenImpl implements VerificationTokenService {
 	
 	@Override
 	public boolean deleteByToken(final String token) {
+		log.info("** VerificationTokenImpl; boolean; delete by token service...*\n");
 		this.verificationTokenRepository.deleteByToken(token);
 		return true;
 	}
