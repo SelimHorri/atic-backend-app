@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
@@ -17,6 +18,7 @@ import tn.cita.app.service.EmployeeService;
 
 @Service
 @Transactional
+@Slf4j
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 	
@@ -25,7 +27,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = true)
 	@Override
 	public List<EmployeeDto> findAll(final int pageOffset) {
-		return this.employeeRepository.findAll(PageRequest.of(pageOffset, AppConstant.PAGE_SIZE))
+		log.info("** EmployeeServiceImpl; EmployeeDto; find all with pageOffset service...*\n");
+		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE))
 				.stream()
 					.map(EmployeeMapper::map)
 					.distinct()
@@ -35,6 +38,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional(readOnly = true)
 	@Override
 	public EmployeeDto findById(final Integer id) {
+		log.info("** EmployeeServiceImpl; EmployeeDto; find user by id service...*\n");
 		return this.employeeRepository.findById(id)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
@@ -43,6 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public boolean deleteById(final Integer id) {
+		log.info("** EmployeeServiceImpl; boolean; delete user by id service...*\n");
 		this.employeeRepository.deleteById(id);
 		return !this.employeeRepository.existsById(id);
 	}

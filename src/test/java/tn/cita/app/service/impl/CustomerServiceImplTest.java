@@ -128,7 +128,7 @@ class CustomerServiceImplTest {
 				.build());
 		
 		final int pageOffset = 1;
-		when(this.customerRepository.findAll(PageRequest.of(pageOffset, AppConstant.PAGE_SIZE)))
+		when(this.customerRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE)))
 				.thenReturn(new PageImpl<>(mockFindAllCustomers));
 		
 		final var findAll = this.customerService.findAll(pageOffset);

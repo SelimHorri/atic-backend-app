@@ -128,7 +128,7 @@ class EmployeeServiceImplTest {
 				.build());
 		
 		final int pageOffset = 1;
-		when(this.employeeRepository.findAll(PageRequest.of(pageOffset, AppConstant.PAGE_SIZE)))
+		when(this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE)))
 				.thenReturn(new PageImpl<>(mockFindAllEmployees));
 		
 		final var findAll = this.employeeService.findAll(pageOffset);
