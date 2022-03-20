@@ -1,7 +1,9 @@
 package tn.cita.app.integration;
 
+import static org.hamcrest.CoreMatchers.endsWith;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.hamcrest.CoreMatchers.startsWith;
 
 import java.util.List;
 
@@ -17,6 +19,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.dto.TagDto;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.exception.payload.ExceptionMsg;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -79,6 +82,29 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.id").value(notNullValue())
 					.jsonPath("$.responseBody.name").value(is(expectedPayload.getResponseBody().getName()));
+	}
+	
+	@Test
+	void givenInvalidId_whenFindById_thenTagNotFoundExceptionShouldBeThrown() {
+		
+		final int id = 0;
+		final var expectedPayload = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false, 
+				new ExceptionMsg(String.format("%sTag with id: %d not found%s", "#### ", id, "! ####")));
+		
+		this.webTestClient
+				.get()
+				.uri(AppConstant.API_CONTEXT_V0 + "/tags/{id}", id)
+				.exchange()
+				.expectStatus()
+					.isBadRequest()
+				.expectBody()
+					.jsonPath("$").value(notNullValue())
+					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.responseBody").value(notNullValue())
+					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
+					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.getResponseBody().getErrorMsg()));
 	}
 	
 	

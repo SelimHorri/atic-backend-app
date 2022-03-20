@@ -122,7 +122,8 @@ volumes:
 
 networks:
   net:
-    driver: bridge
+    #driver: bridge
+    name: cita-net
 
 
 
