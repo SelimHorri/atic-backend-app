@@ -33,6 +33,7 @@ public final class AppConstant {
 			"/h2-console/**", 
 			"/api/v**/authenticate/**",
 			"/api/v**/register/**",
+			"/api/v**/tags/**",
 	};
 	
 	/**

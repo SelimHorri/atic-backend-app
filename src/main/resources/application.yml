@@ -3,7 +3,7 @@ app:
   security:
     secretKey: ${random.uuid}
   client:
-    domains: http://localhost:4200/, http://cita-frontend-app:4200/
+    domains: http://localhost:4200/,http://cita-frontend-app:4200/,http://cita-frontend-app:80/
 
 spring:
   application:
