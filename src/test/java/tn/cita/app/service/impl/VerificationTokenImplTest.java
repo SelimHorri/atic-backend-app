@@ -2,6 +2,7 @@ package tn.cita.app.service.impl;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 
 import java.time.LocalDateTime;
@@ -105,6 +106,17 @@ class VerificationTokenImplTest {
 				.startsWith("VerificationToken ")
 				.endsWith(" not found")
 				.isEqualTo(String.format("VerificationToken with token: %s is not found", wrongToken));
+	}
+	
+	@Test
+	void givenValidToken_whenDeleteByToken_thenShouldReturnTrue() {
+		
+		final var token = "c856b457-ed66-4dd4-bc1a-f0be552a28e5";
+		doNothing().when(this.verificationTokenRepository)
+				.deleteByToken(token);
+		
+		final boolean deleteByToken = this.verificationTokenService.deleteByToken(token);
+		assertThat(deleteByToken).isTrue();
 	}
 	
 	

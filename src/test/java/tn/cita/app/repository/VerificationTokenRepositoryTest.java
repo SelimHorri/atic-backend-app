@@ -34,6 +34,14 @@ class VerificationTokenRepositoryTest extends AbstractSharedMySQLTestContainer {
 		assertThat(optionalVerificationToken.get().getCredential().getUsername()).isEqualTo("jamesbond");
 	}
 	
+	@Test
+	void givenValidToken_whenDeleteByToken_thenOptionalOfThatTokenShouldBeEmpty() {
+		final var token = "c856b457-ed66-4dd4-bc1a-f0be552a28e5";
+		this.verificationTokenRepository.deleteByToken(token);
+		final var optionalVerificationToken = this.verificationTokenRepository.findByToken(token);
+		assertThat(optionalVerificationToken).isEmpty();
+	}
+	
 	
 	
 }
