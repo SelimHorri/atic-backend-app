@@ -8,6 +8,9 @@ on:
   push:
     branches: [ staging ]
 
+env:
+  SPRING_MAIL_PASSWORD: ${{ secrets.SPRING_MAIL_PASSWORD }}
+
 jobs:
   sonar:
     name: Sonar
@@ -21,7 +24,7 @@ jobs:
         with:
           java-version: 11
       - name: Run Docker Compose
-        run: docker-compose up -d zipkin redis
+        run: docker-compose up -d
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -52,7 +55,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Run Docker Compose
-      run: docker-compose up -d zipkin redis
+      run: docker-compose up
     - name: Build with Maven
       run: mvn -B package --file pom.xml
   
@@ -68,7 +71,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Run Docker Compose
-      run: docker-compose up -d zipkin redis
+      run: docker-compose up
     - name: Build with Maven
       run: mvn -B package --file pom.xml
     - name: Push Docker image
