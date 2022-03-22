@@ -55,7 +55,7 @@ jobs:
         java-version: '11'
         distribution: 'adopt'
     - name: Run Docker Compose
-      run: docker-compose up
+      run: docker-compose up -d
     - name: Build with Maven
       run: mvn -B package --file pom.xml
   
