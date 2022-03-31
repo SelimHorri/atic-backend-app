@@ -78,8 +78,8 @@ services:
     container_name: grafana
     ports:
       - 3000:3000
-    links:
-      - prometheus:prometheus
+    #links:
+    #  - prometheus:prometheus
     restart: always
     networks:
       - net
@@ -91,6 +91,8 @@ services:
     environment:
       discovery.type: single-node
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - mysql
     volumes:
       - elasticsearch-data:/usr/share/elasticsearch/data
     restart: always
