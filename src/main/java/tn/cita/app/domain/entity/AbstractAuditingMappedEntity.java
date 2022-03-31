@@ -9,7 +9,6 @@ import javax.persistence.MappedSuperclass;
 
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
@@ -26,7 +25,6 @@ import lombok.experimental.SuperBuilder;
 import tn.cita.app.domain.listener.AuditingEntityListener;
 
 @MappedSuperclass
-@EnableJpaAuditing
 @EntityListeners(AuditingEntityListener.class)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PROTECTED)
