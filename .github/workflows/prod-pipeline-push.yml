@@ -41,7 +41,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
+        run: mvn -B verify -Ppreprod org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
   
   build:
     needs: sonar
@@ -57,7 +57,7 @@ jobs:
     - name: Run Docker Compose
       run: docker-compose up -d
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package -Ppreprod --file pom.xml
   
   push:
     needs: sonar
@@ -73,7 +73,7 @@ jobs:
     - name: Run Docker Compose
       run: docker-compose up -d
     - name: Build with Maven
-      run: mvn -B package --file pom.xml
+      run: mvn -B package -Ppreprod --file pom.xml
     - name: Push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:

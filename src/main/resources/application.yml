@@ -3,14 +3,14 @@ app:
   security:
     secretKey: ${random.uuid}
   client:
-    domains: http://localhost:4200/,http://cita-frontend-app:4200/,http://cita-frontend-app:80/
+    domains: http://localhost:4200/, http://cita-frontend-app:4200/, http://cita-frontend-app:80/
 
 spring:
   application:
     name: CITA-BACKEND-APP
   profiles:
     active:
-    - dev
+    - '@activatedProperties@'
   zipkin:
     base-url: http://${SPRING_ZIPKIN_BASE-URL:localhost}:9411/
 #  elasticsearch:
