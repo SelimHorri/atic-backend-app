@@ -324,6 +324,40 @@
 		<finalName>${project.artifactId}-v${project.version}</finalName>
 	</build>
 	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<properties>
+				<activatedProperties>dev</activatedProperties>
+			</properties>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+		</profile>
+		<profile>
+			<id>staging</id>
+			<properties>
+				<activatedProperties>staging</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>preprod</id>
+			<properties>
+				<activatedProperties>preprod</activatedProperties>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<activatedProperties>prod</activatedProperties>
+			</properties>
+		</profile>
+	</profiles>
+	
 </project>
+
+
+
+
 
 
