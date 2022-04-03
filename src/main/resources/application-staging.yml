@@ -13,6 +13,9 @@ spring:
     url: jdbc:mysql://${SPRING_DATASOURCE_HOST:localhost}:3306/${MYSQL_DATABASE:cita_staging_db}?createDatabaseIfNotExist=true
     username: ${SPRING_DATASOURCE_USERNAME:root}
     password: ${SPRING_DATASOURCE_PASSWORD:toor}
+  config:
+    import:
+    - 'optional:secrets/db-secrets.yml'
   jpa:
     show-sql: true
     hibernate:
