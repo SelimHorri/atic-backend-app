@@ -11,12 +11,10 @@ public class CredentialEntityListener {
 	
 	@PrePersist
 	void preCreate(final Credential credential) {
-		
 		credential.setIsEnabled(false);
 		credential.setIsAccountNonExpired(true);
 		credential.setIsAccountNonLocked(true);
 		credential.setIsCredentialsNonExpired(true);
-		
 	}
 	
 	

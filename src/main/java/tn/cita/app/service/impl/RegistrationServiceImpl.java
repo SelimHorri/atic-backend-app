@@ -68,7 +68,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 				&& !RegistrationUtils.isWorkerRole(registerRequest.getRole())
 				&& !RegistrationUtils.isManagerRole(registerRequest.getRole())
 				&& !RegistrationUtils.isOwnerRole(registerRequest.getRole()))
-			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role");
+			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, "
+					+ "it should be Customer/Worker/Manager/Owner role");
 		log.info("**\n User role checked successfully! *");
 		
 		// Step2
