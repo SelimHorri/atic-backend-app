@@ -15,13 +15,13 @@ WORKDIR /home/app
 ARG APP_VERSION=0.1.0
 
 ##################### ENVS #####################
-ENV SPRING_DATASOURCE_URL mysql
-ENV SPRING_ELASTICSEARCH_HOST elasticsearch
-ENV SPRING_REDIS_HOST redis
-ENV SPRING_ZIPKIN_BASE-URL zipkin
+ENV APP_SPRING_DATASOURCE_HOST mysql
+ENV APP_SPRING_ELASTICSEARCH_HOST elasticsearch
+ENV APP_SPRING_REDIS_HOST redis
+ENV APP_SPRING_ZIPKIN_BASE_HOST zipkin
 
-ENV SPRING_PROFILES_ACTIVE staging
-ENV MYSQL_DATABASE cita_${SPRING_PROFILES_ACTIVE}_db
+ENV APP_SPRING_PROFILES_ACTIVE staging
+ENV APP_MYSQL_DATABASE cita_${APP_SPRING_PROFILES_ACTIVE}_db
 
 ##################### RUNNABLE #####################
 COPY target/*.jar .
@@ -33,11 +33,12 @@ EXPOSE 8400
 ADD target/cita-backend-app-v${APP_VERSION}.jar cita-backend-app.jar
 
 ##################### ENTRYPOINT EXECUTION #####################
-ENTRYPOINT ["java", "-Dspring.profiles.active=${SPRING_PROFILES_ACTIVE}", \ 
-					"-Dspring.datasource.url=jdbc:mysql://${SPRING_DATASOURCE_URL}:3306/${MYSQL_DATABASE}?createDatabaseIfNotExist=true", \
-					"-Dspring.zipkin.base-url=http://${SPRING_ZIPKIN_BASE-URL}:9411/", \
+ENTRYPOINT ["java", "-DSPRING_PROFILES_ACTIVE=${APP_SPRING_PROFILES_ACTIVE}", \ 
+					"-DSPRING_DATASOURCE_HOST=${APP_SPRING_DATASOURCE_HOST}", \
+					"-DMYSQL_DATABASE=${APP_MYSQL_DATABASE}", \
+					"-DSPRING_ZIPKIN_BASE_HOST=${APP_SPRING_ZIPKIN_BASE_HOST}", \
 					#"-Dspring.elasticsearch.uris[0]=http://${SPRING_ELASTICSEARCH_HOST}:9200/", \
-					"-Dspring.redis.host=${SPRING_REDIS_HOST}", \
+					"-DSPRING_REDIS_HOST=${APP_SPRING_REDIS_HOST}", \
 					"-jar", "cita-backend-app.jar"]
 
 
