@@ -15,7 +15,7 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD:toor}
   config:
     import:
-    - 'optional:secrets/db-secrets.yml'
+    - 'optional:import/secrets/db-secrets.yml'
   jpa:
     show-sql: false
     hibernate:
