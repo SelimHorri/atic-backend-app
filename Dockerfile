@@ -12,8 +12,8 @@ RUN mkdir -p /home/app
 WORKDIR /home/app
 
 ##################### ARGS #####################
-ARG APP_VERSION=0.1.0
-ARG SPRING_MAIL_PASSWORD=0000
+ARG APP_VERSION "-1"
+ARG SPRING_MAIL_PASSWORD
 
 ##################### ENVS #####################
 ENV APP_SPRING_DATASOURCE_HOST mysql

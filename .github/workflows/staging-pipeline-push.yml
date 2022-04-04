@@ -9,6 +9,7 @@ on:
     branches: [ staging ]
 
 env:
+  APP_VERSION: ${{ secrets.APP_VERSION }}
   SPRING_MAIL_PASSWORD: ${{ secrets.SPRING_MAIL_PASSWORD }}
 
 jobs:
@@ -79,7 +80,7 @@ jobs:
       with:
         image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
         tags: v${{ secrets.APP_VERSION }}-staging, staging
-        buildArgs: SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}
+        buildArgs: APP_VERSION=${APP_VERSION}, SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }} 
