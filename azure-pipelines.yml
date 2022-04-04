@@ -9,6 +9,7 @@ pool:
   vmImage: ubuntu-latest
 
 variables:
+  SPRING_MAIL_USERNAME: $(SPRING_MAIL_USERNAME)
   SPRING_MAIL_PASSWORD: $(SPRING_MAIL_PASSWORD)
 
 steps:
@@ -21,6 +22,6 @@ steps:
     jdkArchitectureOption: 'x64'
     publishJUnitResults: true
     testResultsFiles: '**/surefire-reports/TEST-*.xml'
-    goals: 'package'
+    goals: 'package -DSPRING_MAIL_PASSWORD=$(SPRING_MAIL_PASSWORD)'
 
 
