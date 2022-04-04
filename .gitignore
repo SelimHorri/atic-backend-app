@@ -34,3 +34,4 @@ build/
 
 script/
 secrets/
+.secrets.env
