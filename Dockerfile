@@ -36,6 +36,9 @@ EXPOSE 8400
 ##################### RENAME #####################
 ADD target/cita-backend-app-v${APP_VERSION}.jar cita-backend-app.jar
 
+##################### REMOVE #####################
+RUN rm cita-backend-app-v${APP_VERSION}.jar
+
 ##################### ENTRYPOINT EXECUTION #####################
 ENTRYPOINT ["java", "-DSPRING_PROFILES_ACTIVE=${APP_SPRING_PROFILES_ACTIVE}", \ 
 					"-DSPRING_MAIL_USERNAME=${APP_SPRING_MAIL_USERNAME}", \ 
