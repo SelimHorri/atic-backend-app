@@ -33,3 +33,5 @@ build/
 .vscode/
 
 script/
+secrets/
+.secrets.env

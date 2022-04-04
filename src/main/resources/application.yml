@@ -5,6 +5,7 @@ app:
   client:
     domains: http://localhost:4200/, http://cita-frontend-app:4200/, http://cita-frontend-app:80/
 
+
 spring:
   application:
     name: CITA-BACKEND-APP
@@ -28,7 +29,7 @@ spring:
     host: ${SPRING_MAIL_HOST:smtp.gmail.com}
     port: ${SPRING_MAIL_PORT:587}
     username: ${SPRING_MAIL_USERNAME:cita.team.mail@gmail.com}
-    password: ${SPRING_MAIL_PASSWORD:CITA0123456789team}
+    password: ${SPRING_MAIL_PASSWORD:@spring.mail.password@}
     properties:
       mail:
         smtp:
@@ -36,7 +37,9 @@ spring:
           starttls:
             enabled: true
             required: true
-
+  config:
+    import:
+    - 'optional:secrets/mail-secrets.yml'
 management:
   endpoint:
     health:
