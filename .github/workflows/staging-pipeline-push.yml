@@ -12,6 +12,9 @@ env:
   APP_VERSION: ${{ secrets.APP_VERSION }}
   SPRING_MAIL_USERNAME: ${{ secrets.SPRING_MAIL_USERNAME }}
   SPRING_MAIL_PASSWORD: ${{ secrets.SPRING_MAIL_PASSWORD }}
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
+  DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
 
 jobs:
   sonar:
@@ -79,12 +82,12 @@ jobs:
     - name: Push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGE }}
-        tags: v${{ secrets.APP_VERSION }}-staging, staging
+        image: ${DOCKER_USERNAME}/${DOCKER_IMAGE}
+        tags: v${APP_VERSION}-staging, staging
         buildArgs: APP_VERSION=${APP_VERSION}, SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME}, SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}
         registry: docker.io
         username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }} 
+        password: ${{ secrets.DOCKER_PASSWORD }}
 
 
 
