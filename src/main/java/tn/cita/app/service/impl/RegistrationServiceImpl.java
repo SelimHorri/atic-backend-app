@@ -70,23 +70,23 @@ public class RegistrationServiceImpl implements RegistrationService {
 				&& !RegistrationUtils.isOwnerRole(registerRequest.getRole()))
 			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, "
 					+ "it should be Customer/Worker/Manager/Owner role");
-		log.info("**\n User role checked successfully! *");
+		log.info("** User role checked successfully! *\n");
 		
 		// Step2
 		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()).ifPresent((c) -> {
 			throw new UsernameAlreadyExistsException(String
 					.format("Account with username: %s already exists", c.getUsername()));
 		});
-		log.info("**\n User not exist by username checked successfully! *");
+		log.info("** User not exist by username checked successfully! *\n");
 		
 		// Step3
 		if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword()))
 			throw new PasswordNotMatchException("Unmatched passwords! please check again");
-		log.info("**\n User password confirmation checked successfully! *");
+		log.info("** User password confirmation checked successfully! *\n");
 		
 		// Step4
 		registerRequest.setPassword(this.passwordEncoder.encode(registerRequest.getConfirmPassword()));
-		log.info("**\n User password encrypted successfully! *");
+		log.info("** User password encrypted successfully! *\n");
 		
 		// Step 5
 		if (RegistrationUtils.isCustomerRole(registerRequest.getRole()))
@@ -101,16 +101,16 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	private RegisterResponse registerCustomer(final RegisterRequest registerRequest) {
 		
-		log.info("\n** Register Customer process... ! *");
+		log.info("** Register Customer process... ! *\n");
 		
 		final var savedCustomer = this.customerRepository.save(CustomerMapper.map(registerRequest));
-		log.info("** Customer saved successfully! *");
+		log.info("** Customer saved successfully! *\n");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
 				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
 				savedCustomer.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
-		log.info("** Verification token saved successfully! *");
+		log.info("** Verification token saved successfully! *\n");
 		
 		this.notificationUtil.sendMail(new MailNotification(savedCustomer.getEmail(), 
 				"Registration", 
@@ -119,7 +119,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						savedVerificationToken.getCredential().getUsername(), 
 						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
 						savedVerificationToken.getToken())));
-		log.info("\n** Mail sent successfully to {}! *", savedCustomer.getEmail());
+		log.info("** Mail sent successfully to: {}! *\n", savedCustomer.getEmail());
 		
 		return new RegisterResponse(String
 				.format("User with username %s has been saved successfully. "
@@ -131,17 +131,17 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
 		
-		log.info("\n** Register Employee process... ! *");
+		log.info("** Register Employee process... ! *\n");
 		
 		final var savedEmployee = this.employeeRepository.save(EmployeeMapper.map(registerRequest));
-		log.info("** Employee saved successfully! *");
+		log.info("** Employee saved successfully! *\n");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
 				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
 				// AppConstant.EXPIRES_AT_FROM_NOW, 
 				savedEmployee.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
-		log.info("** Verification token saved successfully! *");
+		log.info("** Verification token saved successfully! *\n");
 		
 		this.notificationUtil.sendMail(new MailNotification(savedEmployee.getEmail(), 
 				"Registration", 
@@ -150,7 +150,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						savedVerificationToken.getCredential().getUsername(), 
 						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
 						savedVerificationToken.getToken())));
-		log.info("\n** Mail sent successfully to {}! *", savedEmployee.getEmail());
+		log.info("** Mail sent successfully to {}! *\n", savedEmployee.getEmail());
 		
 		return new RegisterResponse(String
 				.format("User with username %s has been saved successfully. "
@@ -184,9 +184,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 		credential.setIsEnabled(true);
 		verificationToken.setCredential(credential);
 		this.verificationTokenRepository.save(verificationToken);
+		log.info("** User enabled successfully! *\n");
 		
 		// token should be deleted also after activating user to prevent reaccess to url token
 		this.verificationTokenRepository.deleteByToken(token);
+		log.info("** User token has been deleted! *\n");
 		
 		return "User has been activated successfully, go and login!";
 	}
