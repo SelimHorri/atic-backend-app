@@ -46,7 +46,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify -Ppreprod -DSPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD} org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
+        run: mvn -B verify -Ppreprod -DSPRING_MAIL_PASSWORD=${{ env.SPRING_MAIL_PASSWORD }} org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
   
   build:
     needs: sonar
@@ -62,7 +62,7 @@ jobs:
     - name: Run Docker Compose
       run: docker-compose up -d
     - name: Build with Maven
-      run: mvn -B package -Ppreprod -DSPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD} --file pom.xml
+      run: mvn -B package -Ppreprod -DSPRING_MAIL_PASSWORD=${{ env.SPRING_MAIL_PASSWORD }} --file pom.xml
   
   push:
     needs: sonar
@@ -78,16 +78,16 @@ jobs:
     - name: Run Docker Compose
       run: docker-compose up -d
     - name: Build with Maven
-      run: mvn -B package -Ppreprod -DSPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD} --file pom.xml
+      run: mvn -B package -Ppreprod -DSPRING_MAIL_PASSWORD=${{ env.SPRING_MAIL_PASSWORD }} --file pom.xml
     - name: Push Docker image
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
-        image: ${DOCKER_USERNAME}/${DOCKER_IMAGE}
-        tags: v${APP_VERSION}-preprod, preprod
-        buildArgs: APP_VERSION=${APP_VERSION}, SPRING_MAIL_USERNAME=${SPRING_MAIL_USERNAME}, SPRING_MAIL_PASSWORD=${SPRING_MAIL_PASSWORD}
+        image: ${{ env.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}
+        tags: v${{ env.APP_VERSION }}-preprod, preprod
+        buildArgs: APP_VERSION=${{ env.APP_VERSION }}, SPRING_MAIL_USERNAME=${{ env.SPRING_MAIL_USERNAME }}, SPRING_MAIL_PASSWORD=${{ env.SPRING_MAIL_PASSWORD }}
         registry: docker.io
-        username: ${{ secrets.DOCKER_USERNAME }}
-        password: ${{ secrets.DOCKER_PASSWORD }}
+        username: ${{ env.DOCKER_USERNAME }}
+        password: ${{ env.DOCKER_PASSWORD }}
 
 
 

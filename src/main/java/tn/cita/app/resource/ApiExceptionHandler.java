@@ -17,9 +17,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
+import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
@@ -51,7 +54,8 @@ public class ApiExceptionHandler {
 		HttpMessageNotReadableException.class,
 		ConstraintViolationException.class,
 	})
-	public <T extends BindException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleValidationException(final T e, final WebRequest webRequest) {
+	public <T extends BindException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleValidationException(final T e, 
+			final WebRequest webRequest) {
 		
 		log.info("**ApiExceptionHandler controller; ExceptionMsg; handle validation exception*\n");
 		
@@ -95,8 +99,12 @@ public class ApiExceptionHandler {
 		DisabledException.class,
 		IllegalUserDetailsStateException.class,
 		UsernameAlreadyExistsException.class,
+		AccessTokenExpiredException.class,
+		SignatureException.class,
+		ExpiredJwtException.class,
 	})
-	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, final WebRequest webRequest) {
+	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, 
+			final WebRequest webRequest) {
 		log.info("**ApiExceptionHandler controller; ExceptionMsg; handle API request*\n");
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;

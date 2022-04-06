@@ -17,7 +17,7 @@ import tn.cita.app.util.JwtUtil;
 @Component
 public class JwtUtilImpl implements JwtUtil {
 	
-	@Value("${app.security.secretKey:secret*$_key$*}")
+	@Value("${app.security.secretKey}")
 	private String secretKey;
 	
 	@Override
@@ -56,7 +56,7 @@ public class JwtUtilImpl implements JwtUtil {
 				.setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
 				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
-				.signWith(SignatureAlgorithm.HS256, secretKey)
+				.signWith(SignatureAlgorithm.HS512, secretKey)
 				.compact();
 	}
 	
