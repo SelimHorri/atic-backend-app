@@ -17,6 +17,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
 import tn.cita.app.util.JwtUtil;
 
 @Component
@@ -40,6 +41,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		if ( authorizationHeader != null && authorizationHeader.startsWith("Bearer ") ) {
 			jwt = authorizationHeader.substring(7);
+			
+			if (this.jwtUtil.isTokenExpired(jwt))
+				throw new AccessTokenExpiredException("Account has been expired!"
+						+ "Please consider to re-Login");
+			
 			username = jwtUtil.extractUsername(jwt);
 		}
 		
