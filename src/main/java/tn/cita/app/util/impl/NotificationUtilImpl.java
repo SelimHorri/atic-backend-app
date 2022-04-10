@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
+import tn.cita.app.util.MailContentBuilder;
 import tn.cita.app.util.NotificationUtil;
 
 @Component
@@ -18,6 +19,7 @@ import tn.cita.app.util.NotificationUtil;
 public class NotificationUtilImpl implements NotificationUtil {
 	
 	private final JavaMailSender javaMailSender;
+	private final MailContentBuilder mailContentBuilder;
 	
 	@Async
 	@Override
@@ -30,7 +32,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 			mimeMessageHelper.setFrom(AppConstant.MAIL_SOURCE);
 			mimeMessageHelper.setTo(mailNotification.getTo());
 			mimeMessageHelper.setSubject(mailNotification.getSubject());
-			mimeMessageHelper.setText(mailNotification.getBody());
+			mimeMessageHelper.setText(this.mailContentBuilder.build(mailNotification.getBody()), true);
 		};
 		
 		try {
