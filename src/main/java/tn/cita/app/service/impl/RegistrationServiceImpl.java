@@ -12,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.entity.VerificationToken;
+import tn.cita.app.dto.notif.MailBodyContentBuilder;
 import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
@@ -114,11 +115,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		this.notificationUtil.sendMail(new MailNotification(savedCustomer.getEmail(), 
 				"Registration", 
-				String.format("Hi %s,\nClick this link to activate your account: %s/%s \n"
-						+ "Kindest,\nCita\n", 
-						savedVerificationToken.getCredential().getUsername(), 
-						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
-						savedVerificationToken.getToken())));
+				new MailBodyContentBuilder(savedCustomer.getCredential().getUsername(), 
+						String.format("%s/%s", 
+								ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
+								savedVerificationToken.getToken()))));
 		log.info("** Mail sent successfully to: {}! *\n", savedCustomer.getEmail());
 		
 		return new RegisterResponse(String
@@ -145,11 +145,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		this.notificationUtil.sendMail(new MailNotification(savedEmployee.getEmail(), 
 				"Registration", 
-				String.format("Hi %s,\nClick this link to activate your account: %s/%s \n"
-						+ "Kindest,\nCita\n", 
-						savedVerificationToken.getCredential().getUsername(), 
-						ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
-						savedVerificationToken.getToken())));
+				new MailBodyContentBuilder(savedEmployee.getCredential().getUsername(), 
+						String.format("%s/%s", 
+								ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
+								savedVerificationToken.getToken()))));
 		log.info("** Mail sent successfully to {}! *\n", savedEmployee.getEmail());
 		
 		return new RegisterResponse(String
