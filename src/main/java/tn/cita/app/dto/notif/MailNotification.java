@@ -13,7 +13,7 @@ public final class MailNotification implements Serializable {
 	
 	private final String to;
 	private final String subject;
-	private final String body;
+	private final MailBodyContentBuilder body;
 	
 }
 
