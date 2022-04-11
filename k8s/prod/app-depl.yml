@@ -1,0 +1,78 @@
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: cita-prod-ns
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cita-backend-app-deployment
+  namespace: cita-prod-ns
+  labels:
+    app: cita-backend-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cita-backend-app
+  template:
+    metadata:
+      labels:
+        app: cita-backend-app
+    spec:
+      containers:
+        - name: cita-backend-app
+          image: selimhorri/cita-backend-app
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 8400
+          env:
+            - name: APP_SPRING_PROFILES_ACTIVE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: MYSQL_DATABASE
+            - name: APP_MYSQL_DATABASE
+              valueFrom:
+                configMapKeyRef:
+                  name: app-configmap
+                  key: MYSQL_DATABASE
+            - name: APP_SPRING_MAIL_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: SPRING_MAIL_USERNAME
+            - name: APP_SPRING_MAIL_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-secret
+                  key: SPRING_MAIL_PASSWORD
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: cita-backend-app-service
+  namespace: cita-prod-ns
+spec:
+  selector:
+    app: cita-backend-app
+  #type: LoadBalancer
+  ports:
+    - protocol: TCP
+      port: 8400
+      targetPort: 8400
+      #nodePort: 30001
+
+
+
+
+
+
