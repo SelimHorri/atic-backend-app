@@ -1,5 +1,12 @@
 
 apiVersion: v1
+kind: Namespace
+metadata:
+  name: cita-staging-ns
+
+---
+
+apiVersion: v1
 kind: ConfigMap
 metadata:
   name: app-configmap
