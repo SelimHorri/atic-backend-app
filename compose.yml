@@ -16,7 +16,7 @@ services:
       - 8400:8400
     environment:
       - APP_SPRING_PROFILES_ACTIVE=${SPRING_PROFILES_ACTIVE:-dev}
-      - APP_MYSQL_DATABASE=${MYSQL_DATABASE:-cita_db}
+      - APP_DB_NAME=${DB_NAME:-cita_db}
     depends_on:
       - zipkin
       - mysql
