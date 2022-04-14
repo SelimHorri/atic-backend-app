@@ -15,14 +15,14 @@ import tn.cita.app.service.VerificationTokenService;
 @Transactional
 @Slf4j
 @RequiredArgsConstructor
-public class VerificationTokenImpl implements VerificationTokenService {
+public class VerificationTokenServiceImpl implements VerificationTokenService {
 	
 	private final VerificationTokenRepository verificationTokenRepository;
 	
 	@Transactional(readOnly = true)
 	@Override
 	public VerificationTokenDto findByToken(final String token) {
-		log.info("** VerificationTokenImpl; VerificationTokenDto; find by token service...*\n");
+		log.info("** VerificationTokenServiceImpl; VerificationTokenDto; find by token service...*\n");
 		return this.verificationTokenRepository.findByToken(token)
 				.map(VerificationTokenMapper::map)
 				.orElseThrow(() -> new VerificationTokenNotFoundException(String
@@ -31,7 +31,7 @@ public class VerificationTokenImpl implements VerificationTokenService {
 	
 	@Override
 	public boolean deleteByToken(final String token) {
-		log.info("** VerificationTokenImpl; boolean; delete by token service...*\n");
+		log.info("** VerificationTokenServiceImpl; boolean; delete by token service...*\n");
 		this.verificationTokenRepository.deleteByToken(token);
 		return true;
 	}
