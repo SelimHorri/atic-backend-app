@@ -24,7 +24,7 @@ import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.service.VerificationTokenService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class VerificationTokenImplTest {
+class VerificationTokenServiceImplTest {
 	
 	@Autowired
 	private VerificationTokenService verificationTokenService;

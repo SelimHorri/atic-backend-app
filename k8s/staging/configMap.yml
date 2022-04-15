@@ -14,6 +14,7 @@ metadata:
 data:
   SPRING_PROFILES_ACTIVE: staging
   MYSQL_DATABASE: cita-staging-db
+  DB_NAME: cita-staging-db
 
 
 

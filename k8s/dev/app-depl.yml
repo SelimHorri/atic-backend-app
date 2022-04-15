@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
         - name: cita-backend-app
-          image: selimhorri/cita-backend-app:dev
+          image: selimhorri/cita-backend-app
           resources:
             limits:
               memory: "128Mi"
@@ -37,12 +37,12 @@ spec:
               valueFrom:
                 configMapKeyRef:
                   name: app-configmap
-                  key: MYSQL_DATABASE
-            - name: APP_MYSQL_DATABASE
+                  key: SPRING_PROFILES_ACTIVE
+            - name: APP_DB_NAME
               valueFrom:
                 configMapKeyRef:
                   name: app-configmap
-                  key: MYSQL_DATABASE
+                  key: DB_NAME
             - name: APP_SPRING_MAIL_USERNAME
               valueFrom:
                 secretKeyRef:
@@ -64,12 +64,12 @@ metadata:
 spec:
   selector:
     app: cita-backend-app
-  #type: LoadBalancer
+  type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8400
       targetPort: 8400
-      #nodePort: 30001
+      nodePort: 30001
 
 
 
