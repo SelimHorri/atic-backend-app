@@ -27,6 +27,15 @@ public class SaloonImage extends AbstractMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Column(nullable = true)
+	private String name;
+	
+	@Column(nullable = false)
+	private String type;
+	
+	@Column(nullable = false)
+	private Long size;
+	
 	@Lob
 	@Column(name = "image_lob", columnDefinition = "BLOB")
 	private String imageLob;

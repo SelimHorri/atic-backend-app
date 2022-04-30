@@ -12,6 +12,9 @@ public interface SaloonImageMapper {
 	public static SaloonImageDto map(@NotNull final SaloonImage saloonImage) {
 		return SaloonImageDto.builder()
 				.id(saloonImage.getId())
+				.name(saloonImage.getName())
+				.type(saloonImage.getType())
+				.size(saloonImage.getSize())
 				.imageLob(saloonImage.getImageLob())
 				.saloonDto(
 					SaloonDto.builder()
@@ -29,6 +32,9 @@ public interface SaloonImageMapper {
 	public static SaloonImage map(@NotNull final SaloonImageDto saloonImageDto) {
 		return SaloonImage.builder()
 				.id(saloonImageDto.getId())
+				.name(saloonImageDto.getName())
+				.type(saloonImageDto.getType())
+				.size(saloonImageDto.getSize())
 				.imageLob(saloonImageDto.getImageLob())
 				.saloon(
 					Saloon.builder()

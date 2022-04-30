@@ -51,7 +51,7 @@ public final class ReservationDto extends AbstractMappedDto implements Serializa
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	private LocalDateTime cancelledDate;
+	private LocalDateTime cancelDate;
 	
 	@NotNull(message = "Input reservationStatus should not be null")
 	private ReservationStatus reservationStatus;
