@@ -2,19 +2,15 @@ package tn.cita.app.domain.entity;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -31,57 +27,64 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
-import tn.cita.app.domain.ReservationStatus;
+import tn.cita.app.domain.id.TaskId;
 
 @Entity
-@Table(name = "reservations")
+@Table(name = "tasks")
+@IdClass(TaskId.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class Reservation extends AbstractMappedEntity implements Serializable {
+public class Task extends AbstractAuditingMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Column(nullable = false, unique = true)
-	private String code;
+	@Id
+	@Column(name = "worker_id", nullable = false, insertable = false, updatable = false)
+	private Integer workerId;
 	
-	@Column(nullable = true)
-	private String description;
+	@Id
+	@Column(name = "worker_id", nullable = false, insertable = false, updatable = false)
+	private Integer reservationId;
 	
-	@Column(name = "start_date", nullable = true)
+	@Column(name = "task_date", nullable = false)
+	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	private LocalDateTime taskDate;
+	
+	@Column(name = "start_date", nullable = false)
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime startDate;
 	
-	@Transient
+	@Column(name = "end_date", nullable = false)
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
-	@Column(name = "cancel_date", nullable = true)
-	private LocalDateTime cancelDate;
+	private LocalDateTime endDate;
 	
-	@Enumerated(EnumType.STRING)
-	@Column(name = "status", nullable = false)
-	private ReservationStatus reservationStatus;
+	@Column(name = "worker_description", nullable = true)
+	private String workerDescription;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
-	@JoinColumn(name = "customer_id", referencedColumnName = "id")
-	private Customer customer;
+	@Column(name = "manager_description", nullable = true)
+	private String managerDescription;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
-	private Set<OrderedDetail> orderedDetails;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "worker_id", referencedColumnName = "id")
+	private Employee worker;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
-	private Set<Task> tasks;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
+	private Reservation reservation;
 	
 }
-
-
 
 
 

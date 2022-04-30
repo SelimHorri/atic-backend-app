@@ -1,0 +1,16 @@
+
+CREATE TABLE tasks (
+	worker_id INT NOT NULL,
+	reservation_id INT NOT NULL,
+	task_date TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
+	start_date TIMESTAMP DEFAULT NULL,
+	end_date TIMESTAMP DEFAULT NULL,
+	worker_description VARCHAR(255),
+	manager_description VARCHAR(255),
+	created_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
+	updated_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
+	PRIMARY KEY (worker_id, reservation_id, task_date)
+);
+
+
+
