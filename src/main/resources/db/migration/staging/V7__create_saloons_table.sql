@@ -6,7 +6,7 @@ CREATE TABLE saloons (
 	is_primary BOOLEAN NOT NULL DEFAULT false,
 	opening_date DATE,
 	full_adr VARCHAR(255),
-	email VARCHAR(255) DEFAULT '@gmail.com',
+	email VARCHAR(255) DEFAULT 'cita.team.mail@gmail.com',
 	location_id INT NOT NULL,
 	created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
 	updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP() ON UPDATE CURRENT_TIMESTAMP()

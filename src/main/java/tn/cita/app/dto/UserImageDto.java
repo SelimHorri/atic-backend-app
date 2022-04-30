@@ -21,6 +21,12 @@ public final class UserImageDto extends AbstractMappedDto implements Serializabl
 	
 	private static final long serialVersionUID = 1L;
 	
+	private String name;
+	
+	private String type;
+	
+	private Long size;
+	
 	private String imageLob;
 	
 	@JsonInclude(Include.NON_NULL)
