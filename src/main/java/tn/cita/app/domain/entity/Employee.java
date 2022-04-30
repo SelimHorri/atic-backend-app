@@ -85,6 +85,9 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
 	private Set<Rating> ratings;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "worker")
+	private Set<Task> tasks;
+	
 }
 
 
