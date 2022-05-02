@@ -33,7 +33,17 @@ public final class AppConstant {
 			"/h2-console/**", 
 			"/api/v*/authenticate/**",
 			"/api/v*/register/**",
+	};
+	
+	public static final String[] WHITELIST_URLS_GET = {
 			"/api/v*/tags/**",
+			"/api/v*/saloon-tags/**",
+			"/api/v*/saloons/**",
+			"/api/v*/saloon-images/**",
+			"/api/v*/locations/**",
+			"/api/v*/categories/**",
+			"/api/v*/service-details/**",
+			"/api/v*/ratings/**",
 	};
 	
 	/**

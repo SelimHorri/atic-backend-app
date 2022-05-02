@@ -27,16 +27,16 @@ public class TagResource {
 	private final TagService tagService;
 	
 	@GetMapping("/offset/{pageOffset}")
-	public ResponseEntity<ApiPayloadResponse<List<TagDto>>> findAll(@PathVariable("pageOffset") @NotNull final Integer pageOffset) {
+	public ResponseEntity<ApiPayloadResponse<List<TagDto>>> findAll(@PathVariable("pageOffset") @NotNull final String pageOffset) {
 		log.info("** TagResource; List TagDto; find all based on pageOffset.. *\n");
-		final var tags = this.tagService.findAll(pageOffset.intValue());
+		final var tags = this.tagService.findAll(Integer.parseInt(pageOffset));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(tags.size(), HttpStatus.OK, true, tags));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<TagDto>> findById(@PathVariable("id") final Integer id) {
+	public ResponseEntity<ApiPayloadResponse<TagDto>> findById(@PathVariable("id") final String id) {
 		log.info("** TagResource; TagDto; find by id.. *\n");
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.tagService.findById(id)));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.tagService.findById(Integer.parseInt(id))));
 	}
 	
 	

@@ -102,6 +102,7 @@ public class ApiExceptionHandler {
 		AccessTokenExpiredException.class,
 		SignatureException.class,
 		ExpiredJwtException.class,
+		NumberFormatException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
