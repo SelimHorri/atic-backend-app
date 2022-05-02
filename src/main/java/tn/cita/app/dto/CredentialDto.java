@@ -34,6 +34,7 @@ public final class CredentialDto extends AbstractMappedDto implements Serializab
 	@NotEmpty(message = "Input password should not be empty")
 	private String password;
 	
+	@JsonProperty("role")
 	@NotNull(message = "Input role should not be null")
 	private UserRoleBasedAuthority userRoleBasedAuthority;
 	private Boolean isEnabled;
