@@ -55,6 +55,10 @@ public final class CustomerDto extends AbstractMappedDto implements Serializable
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
 	
+	private String facebookUrl;
+	private String instagramUrl;
+	private String linkedinUrl;
+	
 	@JsonIgnore
 	@JsonProperty("userImage")
 	private UserImageDto userImageDto;

@@ -28,6 +28,9 @@ public interface CustomerMapper {
 				.email(customer.getEmail())
 				.phone(customer.getPhone())
 				.birthdate(customer.getBirthdate())
+				.facebookUrl(customer.getFacebookUrl())
+				.instagramUrl(customer.getInstagramUrl())
+				.linkedinUrl(customer.getLinkedinUrl())
 				.userImageDto(
 					UserImageDto.builder()
 						.id(userImage.getId())
@@ -60,6 +63,9 @@ public interface CustomerMapper {
 				.email(customerDto.getEmail())
 				.phone(customerDto.getPhone())
 				.birthdate(customerDto.getBirthdate())
+				.facebookUrl(customerDto.getFacebookUrl())
+				.instagramUrl(customerDto.getInstagramUrl())
+				.linkedinUrl(customerDto.getLinkedinUrl())
 				.userImage(
 					UserImage.builder()
 						.id(userImageDto.getId())
