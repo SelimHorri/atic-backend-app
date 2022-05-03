@@ -14,6 +14,12 @@ import lombok.NoArgsConstructor;
 public final class AppConstant {
 	
 	/**
+	 * USERNAME_AUTH_HEADER: is a custom header to be sure that 
+	 * no other user can access another user resources
+	 */
+	public static final String USERNAME_AUTH_HEADER = "UsernameAuth";
+	
+	/**
 	 * DateTime custom API formats
 	 */
 	public static final String LOCAL_DATE_FORMAT = "dd-MM-yyyy";

@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.response.CustomerProfileResponse;
+import tn.cita.app.dto.response.CustomerContainerResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.repository.CustomerRepository;
@@ -70,16 +70,29 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Transactional(readOnly = true)
 	@Override
-	public CustomerProfileResponse getCustomerProfileByUsername(final String username) {
+	public CustomerContainerResponse getProfileByUsername(final String username) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
-		return new CustomerProfileResponse(
+		return new CustomerContainerResponse(
 				this.findByCredentialUsernameIgnoringCase(username), 
 				customerDto.getCredentialDto(), 
 				this.reservationService.findAllByCustomerId(customerDto.getId()), 
 				this.favouriteService.findAllByCustomerId(customerDto.getId()),
 				this.ratingService.findAllByCustomerId(customerDto.getId()));
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public CustomerContainerResponse getFavouritesByUsername(final String username) {
+
+		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
+		
+		return CustomerContainerResponse.builder()
+				.customerDto(customerDto)
+				.credentialDto(customerDto.getCredentialDto())
+				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId()))
+				.build();
 	}
 	
 	

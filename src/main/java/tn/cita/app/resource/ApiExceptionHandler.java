@@ -43,6 +43,7 @@ import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
+import tn.cita.app.exception.wrapper.UsernameNotMatchException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 
 @RestControllerAdvice
@@ -103,6 +104,7 @@ public class ApiExceptionHandler {
 		SignatureException.class,
 		ExpiredJwtException.class,
 		NumberFormatException.class,
+		UsernameNotMatchException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {

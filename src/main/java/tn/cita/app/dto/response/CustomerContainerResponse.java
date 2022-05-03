@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,8 @@ import tn.cita.app.dto.ReservationDto;
 @ToString
 @EqualsAndHashCode
 @Getter
-public final class CustomerProfileResponse implements Serializable {
+@Builder
+public final class CustomerContainerResponse implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
