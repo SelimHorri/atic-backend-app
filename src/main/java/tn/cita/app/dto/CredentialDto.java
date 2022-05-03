@@ -9,8 +9,8 @@ import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -31,6 +31,7 @@ public final class CredentialDto extends AbstractMappedDto implements Serializab
 	@NotBlank(message = "Input username should be unique & not blank")
 	private String username;
 	
+	@JsonIgnore
 	@NotEmpty(message = "Input password should not be empty")
 	private String password;
 	

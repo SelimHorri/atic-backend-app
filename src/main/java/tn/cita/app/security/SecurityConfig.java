@@ -16,6 +16,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.config.filter.JwtRequestFilter;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.domain.UserRoleBasedAuthority;
 
 @Configuration
 @EnableWebSecurity
@@ -37,9 +38,20 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		http.cors().disable()
 			.csrf().disable()
 			.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.antMatchers(AppConstant.WHITELIST_URLS).permitAll()
 				.antMatchers(HttpMethod.GET, AppConstant.WHITELIST_URLS_GET).permitAll()
-				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+				.antMatchers("/api/v*/customers/**")
+					.hasAnyRole(UserRoleBasedAuthority.CUSTOMER.name())
+				.antMatchers("/api/v*/workers/**")
+					.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
+							UserRoleBasedAuthority.MANAGER.name(),
+							UserRoleBasedAuthority.OWNER.name())
+				.antMatchers("/api/v*/managers/**")
+					.hasAnyRole(UserRoleBasedAuthority.MANAGER.name(),
+							UserRoleBasedAuthority.OWNER.name())
+				.antMatchers("/api/v*/owners/**")
+					.hasAnyRole(UserRoleBasedAuthority.OWNER.name())
 				.anyRequest().authenticated()
 			.and()
 			.headers()

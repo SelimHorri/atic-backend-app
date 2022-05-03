@@ -11,10 +11,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.CustomerDto;
+import tn.cita.app.dto.response.CustomerProfileResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.service.CustomerService;
+import tn.cita.app.service.FavouriteService;
+import tn.cita.app.service.RatingService;
+import tn.cita.app.service.ReservationService;
 
 @Service
 @Transactional
@@ -23,6 +27,9 @@ import tn.cita.app.service.CustomerService;
 public class CustomerServiceImpl implements CustomerService {
 	
 	private final CustomerRepository customerRepository;
+	private final ReservationService reservationService;
+	private final FavouriteService favouriteService;
+	private final RatingService ratingService;
 	
 	@Transactional(readOnly = true)
 	@Override
@@ -50,6 +57,29 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** CustomerServiceImpl; boolean; delete user by id service...*\n");
 		this.customerRepository.deleteById(id);
 		return !this.customerRepository.existsById(id);
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public CustomerDto findByCredentialUsernameIgnoringCase(final String username) {
+		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::map)
+				.orElseThrow(() -> new CustomerNotFoundException(String
+						.format("Customer with username: %s not found", username)));
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public CustomerProfileResponse getCustomerProfileByUsername(final String username) {
+		
+		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
+		
+		return new CustomerProfileResponse(
+				this.findByCredentialUsernameIgnoringCase(username), 
+				customerDto.getCredentialDto(), 
+				this.reservationService.findAllByCustomerId(customerDto.getId()), 
+				this.favouriteService.findAllByCustomerId(customerDto.getId()),
+				this.ratingService.findAllByCustomerId(customerDto.getId()));
 	}
 	
 	
