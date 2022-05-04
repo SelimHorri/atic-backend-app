@@ -2,19 +2,15 @@ package tn.cita.app.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -54,27 +50,11 @@ public final class CustomerDto extends AbstractMappedDto implements Serializable
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
-	
 	private String facebookUrl;
 	private String instagramUrl;
 	private String linkedinUrl;
-	
-	@JsonIgnore
-	@JsonProperty("userImage")
-	private UserImageDto userImageDto;
-	
-	@NotNull(message = "Input credential should not be null")
-	@JsonProperty("credential")
-	private CredentialDto credentialDto;
-	
-	@JsonIgnore
-	private Set<RatingDto> ratingDtos;
-	
-	@JsonIgnore
-	private Set<FavouriteDto> favouriteDtos;
-	
-	@JsonIgnore
-	private Set<ReservationDto> reservationDtos;
+	private Integer userImageId;
+	private Integer credentialId;
 	
 }
 

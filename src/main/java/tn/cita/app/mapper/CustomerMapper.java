@@ -7,9 +7,7 @@ import javax.validation.constraints.NotNull;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.UserImageDto;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.util.RegistrationUtils;
 
@@ -31,31 +29,12 @@ public interface CustomerMapper {
 				.facebookUrl(customer.getFacebookUrl())
 				.instagramUrl(customer.getInstagramUrl())
 				.linkedinUrl(customer.getLinkedinUrl())
-				.userImageDto(
-					UserImageDto.builder()
-						.id(userImage.getId())
-						.imageLob(userImage.getImageLob())
-						.build())
-				.credentialDto(
-					CredentialDto.builder()
-						.id(customer.getId())
-						.username(customer.getCredential().getUsername())
-						.password(customer.getCredential().getPassword())
-						.userRoleBasedAuthority(customer.getCredential().getUserRoleBasedAuthority())
-						.isEnabled(customer.getCredential().getIsEnabled())
-						.isAccountNonExpired(customer.getCredential().getIsAccountNonExpired())
-						.isAccountNonLocked(customer.getCredential().getIsAccountNonLocked())
-						.isCredentialsNonExpired(customer.getCredential().getIsCredentialsNonExpired())
-						.build())
+				.userImageId(userImage.getId())
+				.credentialId(customer.getCredential().getId())
 				.build();
 	}
 	
 	public static Customer map(@NotNull final CustomerDto customerDto) {
-		
-		final var userImageDto = Optional
-				.ofNullable(customerDto.getUserImageDto())
-				.orElseGet(UserImageDto::new);
-		
 		return Customer.builder()
 				.id(customerDto.getId())
 				.firstname(customerDto.getFirstname())
@@ -68,19 +47,11 @@ public interface CustomerMapper {
 				.linkedinUrl(customerDto.getLinkedinUrl())
 				.userImage(
 					UserImage.builder()
-						.id(userImageDto.getId())
-						.imageLob(userImageDto.getImageLob())
+						.id(customerDto.getUserImageId())
 						.build())
 				.credential(
 					Credential.builder()
-						.id(customerDto.getId())
-						.username(customerDto.getCredentialDto().getUsername())
-						.password(customerDto.getCredentialDto().getPassword())
-						.userRoleBasedAuthority(customerDto.getCredentialDto().getUserRoleBasedAuthority())
-						.isEnabled(customerDto.getCredentialDto().getIsEnabled())
-						.isAccountNonExpired(customerDto.getCredentialDto().getIsAccountNonExpired())
-						.isAccountNonLocked(customerDto.getCredentialDto().getIsAccountNonLocked())
-						.isCredentialsNonExpired(customerDto.getCredentialDto().getIsCredentialsNonExpired())
+						.id(customerDto.getCredentialId())
 						.build())
 				.build();
 	}

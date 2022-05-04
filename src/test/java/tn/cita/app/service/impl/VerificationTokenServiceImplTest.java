@@ -17,7 +17,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.VerificationToken;
-import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.VerificationTokenDto;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.repository.VerificationTokenRepository;
@@ -60,16 +59,7 @@ class VerificationTokenServiceImplTest {
 				.id(null)
 				.token(token)
 				.expireDate(LocalDateTime.of(2023, 11, 6, 10, 50, 9))
-				.credentialDto(
-					CredentialDto.builder()
-						.id(null)
-						.username("jamesbond")
-						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-						.isEnabled(true)
-						.isAccountNonExpired(true)
-						.isAccountNonLocked(true)
-						.isCredentialsNonExpired(true)
-						.build())
+				.credentialId(null)
 				.build();
 		
 		final var verificationTokenDto = this.verificationTokenService.findByToken(expectedVerificationTokenDto.getToken());
@@ -79,15 +69,6 @@ class VerificationTokenServiceImplTest {
 				.isInstanceOf(VerificationTokenDto.class);
 		assertThat(verificationTokenDto.getToken()).isEqualTo(expectedVerificationTokenDto.getToken());
 		assertThat(verificationTokenDto.getExpireDate()).isEqualTo(expectedVerificationTokenDto.getExpireDate());
-		assertThat(verificationTokenDto.getCredentialDto())
-				.isNotNull()
-				.isInstanceOf(CredentialDto.class);
-		assertThat(verificationTokenDto.getCredentialDto().getUsername())
-				.isEqualTo(expectedVerificationTokenDto.getCredentialDto().getUsername());
-		assertThat(verificationTokenDto.getCredentialDto().getIsEnabled()).isTrue();
-		assertThat(verificationTokenDto.getCredentialDto().getIsAccountNonExpired()).isTrue();
-		assertThat(verificationTokenDto.getCredentialDto().getIsAccountNonLocked()).isTrue();
-		assertThat(verificationTokenDto.getCredentialDto().getIsCredentialsNonExpired()).isTrue();
 	}
 	
 	@Test

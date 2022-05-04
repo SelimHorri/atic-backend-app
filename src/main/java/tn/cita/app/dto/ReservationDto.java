@@ -2,7 +2,6 @@ package tn.cita.app.dto;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -11,10 +10,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -55,14 +50,7 @@ public final class ReservationDto extends AbstractMappedDto implements Serializa
 	
 	@NotNull(message = "Input reservationStatus should not be null")
 	private ReservationStatus reservationStatus;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("customer")
-	@NotNull(message = "Input customer should not be null")
-	private CustomerDto customerDto;
-	
-	@JsonIgnore
-	private Set<OrderedDetailDto> orderedDetailDtos;
+	private Integer customerId;
 	
 }
 

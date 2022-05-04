@@ -1,15 +1,8 @@
 package tn.cita.app.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,14 +25,7 @@ public final class ServiceDetailDto extends AbstractMappedDto implements Seriali
 	private Boolean isAvailable;
 	private Double duration;
 	private Double priceUnit;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("category")
-	@NotNull(message = "Input category should not be null")
-	private CategoryDto categoryDto;
-	
-	@JsonIgnore
-	private Set<OrderedDetailDto> orderedDetailDtos;
+	private Integer categoryId;
 	
 }
 

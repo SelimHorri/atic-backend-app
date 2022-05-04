@@ -1,15 +1,12 @@
 package tn.cita.app.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import lombok.AllArgsConstructor;
@@ -42,17 +39,6 @@ public final class CredentialDto extends AbstractMappedDto implements Serializab
 	private Boolean isAccountNonExpired;
 	private Boolean isAccountNonLocked;
 	private Boolean isCredentialsNonExpired;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("customer")
-	private CustomerDto customerDto;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("employee")
-	private EmployeeDto employeeDto;
-	
-	@JsonIgnore
-	private Set<VerificationTokenDto> verificationTokenDtos;
 	
 }
 

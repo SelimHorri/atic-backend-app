@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.Reservation;
-import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.ReservationDto;
 
 public interface ReservationMapper {
@@ -17,15 +16,7 @@ public interface ReservationMapper {
 				.startDate(reservation.getStartDate())
 				.cancelDate(reservation.getCancelDate())
 				.reservationStatus(reservation.getReservationStatus())
-				.customerDto(
-					CustomerDto.builder()
-						.id(reservation.getCustomer().getId())
-						.firstname(reservation.getCustomer().getFirstname())
-						.lastname(reservation.getCustomer().getLastname())
-						.email(reservation.getCustomer().getEmail())
-						.phone(reservation.getCustomer().getPhone())
-						.birthdate(reservation.getCustomer().getBirthdate())
-						.build())
+				.customerId(reservation.getCustomer().getId())
 				.build();
 	}
 	
@@ -39,12 +30,7 @@ public interface ReservationMapper {
 				.reservationStatus(reservationDto.getReservationStatus())
 				.customer(
 					Customer.builder()
-						.id(reservationDto.getCustomerDto().getId())
-						.firstname(reservationDto.getCustomerDto().getFirstname())
-						.lastname(reservationDto.getCustomerDto().getLastname())
-						.email(reservationDto.getCustomerDto().getEmail())
-						.phone(reservationDto.getCustomerDto().getPhone())
-						.birthdate(reservationDto.getCustomerDto().getBirthdate())
+						.id(reservationDto.getCustomerId())
 						.build())
 				.build();
 	}

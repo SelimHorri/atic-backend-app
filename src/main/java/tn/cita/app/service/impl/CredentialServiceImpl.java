@@ -19,6 +19,15 @@ public class CredentialServiceImpl implements CredentialService {
 	
 	private final CredentialRepository credentialRepository;
 	
+	@Override
+	public CredentialDto findById(final Integer id) {
+		log.info("** CredentialServiceImpl; CredentialDto; find user by id service...*\n");
+		return this.credentialRepository.findById(id)
+				.map(CredentialMapper::map)
+				.orElseThrow(() -> new CredentialNotFoundException(String
+						.format("Credential with id %d not found", id)));
+	}
+	
 	@Transactional(readOnly = true)
 	@Override
 	public CredentialDto findByUsername(final String username) {
