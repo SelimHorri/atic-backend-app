@@ -2,6 +2,7 @@ package tn.cita.app.resource.v0;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,21 +21,22 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 @RequiredArgsConstructor
 public class CustomerResource {
 	
+	@Qualifier("customerRequestExtractorUtil")
+	private final UserRequestExtractorUtil userRequestExtractorUtil;
 	private final CustomerService customerService;
-	private final UserRequestExtractorUtil requestExtractorUtil;
 	
 	@GetMapping("/profile")
 	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getProfile(
 			final HttpServletRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getProfileByUsername(this.requestExtractorUtil.extractUsername(request))));
+				this.customerService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
 	@GetMapping("/favourites")
 	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getFavourites(
 			final HttpServletRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getFavouritesByUsername(this.requestExtractorUtil.extractUsername(request))));
+				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
 	
