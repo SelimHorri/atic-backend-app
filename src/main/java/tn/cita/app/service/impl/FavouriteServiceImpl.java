@@ -13,13 +13,12 @@ import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.service.FavouriteService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class FavouriteServiceImpl implements FavouriteService {
 	
 	private final FavouriteRepository favouriteRepository;
 	
-	@Transactional(readOnly = true)
 	@Override
 	public List<FavouriteDto> findAllByCustomerId(final Integer customerId) {
 		return this.favouriteRepository.findAllByCustomerId(customerId)

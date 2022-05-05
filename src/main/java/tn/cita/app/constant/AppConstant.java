@@ -2,6 +2,8 @@ package tn.cita.app.constant;
 
 import java.time.Duration;
 
+import org.springframework.http.HttpHeaders;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -18,6 +20,7 @@ public final class AppConstant {
 	 * no other user can access another user resources
 	 */
 	public static final String USERNAME_AUTH_HEADER = "UsernameAuth";
+	public static final String AUTHORIZATION_HEADER = HttpHeaders.AUTHORIZATION;
 	
 	/**
 	 * DateTime custom API formats

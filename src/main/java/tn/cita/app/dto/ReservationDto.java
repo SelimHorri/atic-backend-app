@@ -49,7 +49,7 @@ public final class ReservationDto extends AbstractMappedDto implements Serializa
 	private LocalDateTime cancelDate;
 	
 	@NotNull(message = "Input reservationStatus should not be null")
-	private ReservationStatus reservationStatus;
+	private ReservationStatus status;
 	private Integer customerId;
 	
 }

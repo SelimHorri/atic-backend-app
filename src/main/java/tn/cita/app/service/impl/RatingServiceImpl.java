@@ -13,13 +13,12 @@ import tn.cita.app.repository.RatingRepository;
 import tn.cita.app.service.RatingService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
 	
 	private final RatingRepository ratingRepository;
 	
-	@Transactional(readOnly = true)
 	@Override
 	public List<RatingDto> findAllByCustomerId(final Integer customerId) {
 		return this.ratingRepository.findAllByCustomerId(customerId)

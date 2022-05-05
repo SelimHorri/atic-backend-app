@@ -12,7 +12,7 @@ import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.service.CredentialService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class CredentialServiceImpl implements CredentialService {
@@ -28,7 +28,6 @@ public class CredentialServiceImpl implements CredentialService {
 						.format("Credential with id %d not found", id)));
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
 	public CredentialDto findByUsername(final String username) {
 		log.info("** CredentialServiceImpl; CredentialDto; find user by username service...*\n");

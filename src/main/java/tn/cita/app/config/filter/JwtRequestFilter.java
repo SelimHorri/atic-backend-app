@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,10 +15,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tn.cita.app.constant.AppConstant;
 import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
+import tn.cita.app.exception.wrapper.UnauthorizedUserException;
 import tn.cita.app.util.JwtUtil;
 
 @Component
@@ -25,16 +29,19 @@ import tn.cita.app.util.JwtUtil;
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 	
+	@Qualifier("handlerExceptionResolver")
+	private final HandlerExceptionResolver exceptionResolver;
 	private final UserDetailsService userDetailsService;
 	private final JwtUtil jwtUtil;
 	
 	@Override
-	protected void doFilterInternal(final HttpServletRequest request, final HttpServletResponse response, final FilterChain filterChain) 
-			throws ServletException, IOException {
+	protected void doFilterInternal(final HttpServletRequest request, 
+									final HttpServletResponse response, 
+									final FilterChain filterChain) throws ServletException, IOException {
 		
 		log.info("**JwtRequestFilter, once per request, validating and extracting token*\n");
 		
-		final var authorizationHeader = request.getHeader("Authorization");
+		final var authorizationHeader = request.getHeader(AppConstant.AUTHORIZATION_HEADER);
 		
 		String username = null;
 		String jwt = null;
@@ -42,18 +49,28 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		if ( authorizationHeader != null && authorizationHeader.startsWith("Bearer ") ) {
 			jwt = authorizationHeader.substring(7);
 			
-			if (this.jwtUtil.isTokenExpired(jwt))
-				throw new AccessTokenExpiredException("Account has been expired!"
-						+ "Please consider to re-Login");
+			try {
+				username = this.jwtUtil.extractUsername(jwt);
+			}
+			catch (RuntimeException e) {
+				this.exceptionResolver.resolveException(request, response, null, 
+						new AccessTokenExpiredException("Account has been expired! "
+								+ "Please consider to re-Login"));
+				return;
+			}
 			
-			username = jwtUtil.extractUsername(jwt);
 		}
 		
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			
 			final UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 			
-			if (this.jwtUtil.validateToken(jwt, userDetails)) {
+			if (!this.jwtUtil.validateToken(jwt, userDetails)) {
+				this.exceptionResolver.resolveException(request, response, null, 
+						new UnauthorizedUserException("UnauthorizedUserException"));
+				return;
+			}
+			else {
 				final UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = 
 						new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));

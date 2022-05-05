@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
@@ -22,14 +21,14 @@ public class CustomerRequestExtractorUtil implements UserRequestExtractorUtil {
 	@Override
 	public String extractUsername(final HttpServletRequest request) {
 		
-		final var username = (Optional.ofNullable(request.getHeader(AppConstant.USERNAME_AUTH_HEADER)).isPresent())? 
-				request.getHeader("UsernameAuth") : "";
+		final var usernameAuthHeader = (Optional.ofNullable(request.getHeader(AppConstant.USERNAME_AUTH_HEADER)).isPresent()) ? 
+				request.getHeader(AppConstant.USERNAME_AUTH_HEADER) : "";
 		
 		final var authenticatedUsername = this.jwtUtil
-				.extractUsername(request.getHeader(HttpHeaders.AUTHORIZATION).substring(7));
+				.extractUsername(request.getHeader(AppConstant.AUTHORIZATION_HEADER).substring(7));
 		
-		if (!username.isBlank())
-			if (!authenticatedUsername.equalsIgnoreCase(username))
+		if (!usernameAuthHeader.isBlank())
+			if (!authenticatedUsername.equalsIgnoreCase(usernameAuthHeader))
 				throw new UsernameNotMatchException(String
 						.format("Authenticated user is not allowed to access another user resources"));
 		

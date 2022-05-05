@@ -22,7 +22,7 @@ import tn.cita.app.service.RatingService;
 import tn.cita.app.service.ReservationService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class CustomerServiceImpl implements CustomerService {
@@ -33,7 +33,6 @@ public class CustomerServiceImpl implements CustomerService {
 	private final FavouriteService favouriteService;
 	private final RatingService ratingService;
 	
-	@Transactional(readOnly = true)
 	@Override
 	public List<CustomerDto> findAll(final int pageOffset) {
 		log.info("** CustomerServiceImpl; List CustomerDto; find All with pageOffset service...*\n");
@@ -44,7 +43,6 @@ public class CustomerServiceImpl implements CustomerService {
 					.collect(Collectors.toUnmodifiableList());
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
 	public CustomerDto findById(final Integer id) {
 		log.info("** CustomerServiceImpl; CustomerDto; find user by id service...*\n");
@@ -54,6 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 						.format("Customer with id: %d not found", id)));
 	}
 	
+	@Transactional
 	@Override
 	public boolean deleteById(final Integer id) {
 		log.info("** CustomerServiceImpl; boolean; delete user by id service...*\n");
@@ -61,7 +60,6 @@ public class CustomerServiceImpl implements CustomerService {
 		return !this.customerRepository.existsById(id);
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
 	public CustomerDto findByCredentialUsernameIgnoringCase(final String username) {
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
@@ -70,7 +68,6 @@ public class CustomerServiceImpl implements CustomerService {
 						.format("Customer with username: %s not found", username)));
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
 	public CustomerContainerResponse getProfileByUsername(final String username) {
 		
@@ -84,7 +81,6 @@ public class CustomerServiceImpl implements CustomerService {
 				this.ratingService.findAllByCustomerId(customerDto.getId()));
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
 	public CustomerContainerResponse getFavouritesByUsername(final String username) {
 

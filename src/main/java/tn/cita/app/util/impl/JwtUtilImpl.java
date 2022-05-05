@@ -17,8 +17,11 @@ import tn.cita.app.util.JwtUtil;
 @Component
 public class JwtUtilImpl implements JwtUtil {
 	
-	@Value("${app.security.secretKey}")
+	@Value("${app.security.jwt.secret-key}")
 	private String secretKey;
+	
+	@Value("${app.security.jwt.token-expires-after:36000000}")
+	private Integer jwtTokenExpiresAfter;
 	
 	@Override
 	public String extractUsername(final String token) {
@@ -50,12 +53,12 @@ public class JwtUtilImpl implements JwtUtil {
 		return this.createToken(claims, userDetails.getUsername());
 	}
 	
-	private String createToken(final Map<String, Object> claims, final String subject) {
+	private String createToken(final Map<String, Object> claims, final String subject) throws NumberFormatException {
 		return Jwts.builder()
 				.setClaims(claims)
 				.setSubject(subject)
 				.setIssuedAt(new Date(System.currentTimeMillis()))
-				.setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10))
+				.setExpiration(new Date(System.currentTimeMillis() + this.jwtTokenExpiresAfter.intValue()))
 				.signWith(SignatureAlgorithm.HS512, secretKey)
 				.compact();
 	}

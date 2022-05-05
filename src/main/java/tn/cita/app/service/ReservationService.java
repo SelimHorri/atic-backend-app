@@ -7,6 +7,8 @@ import tn.cita.app.dto.ReservationDto;
 public interface ReservationService {
 	
 	List<ReservationDto> findAllByCustomerId(final Integer customerId);
+	ReservationDto findById(final Integer id);
+	ReservationDto findByCode(final String code);
 	
 }
 
