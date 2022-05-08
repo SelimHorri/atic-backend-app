@@ -3,10 +3,12 @@ package tn.cita.app.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.mapper.SaloonMapper;
@@ -19,6 +21,15 @@ import tn.cita.app.service.SaloonService;
 public class SaloonServiceImpl implements SaloonService {
 	
 	private final SaloonRepository saloonRepository;
+	
+	@Override
+	public List<SaloonDto> findAll(final int offset) {
+		return this.saloonRepository.findAll(PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
+				.stream()
+					.map(SaloonMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
+	}
 	
 	@Override
 	public SaloonDto findById(final Integer id) {

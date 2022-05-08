@@ -39,6 +39,20 @@ public class CustomerResource {
 				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
+	@GetMapping("/reservations")
+	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getReservations(
+			final HttpServletRequest request) {
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+	}
+	
+	@GetMapping("/ratings")
+	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getRatings(
+			final HttpServletRequest request) {
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.customerService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+	}
+	
 	
 	
 }

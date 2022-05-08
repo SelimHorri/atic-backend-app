@@ -93,6 +93,30 @@ public class CustomerServiceImpl implements CustomerService {
 				.build();
 	}
 	
+	@Override
+	public CustomerContainerResponse getReservationsByUsername(final String username) {
+		
+		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
+		
+		return CustomerContainerResponse.builder()
+				.customerDto(customerDto)
+				.credentialDto(this.credentialService.findById(customerDto.getCredentialId()))
+				.reservationDtos(this.reservationService.findAllByCustomerId(customerDto.getId()))
+				.build();
+	}
+	
+	@Override
+	public CustomerContainerResponse getRatingsByUsername(final String username) {
+		
+		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
+		
+		return CustomerContainerResponse.builder()
+				.customerDto(customerDto)
+				.credentialDto(this.credentialService.findById(customerDto.getCredentialId()))
+				.ratingDtos(this.ratingService.findAllByCustomerId(customerDto.getId()))
+				.build();
+	}
+	
 	
 	
 }
