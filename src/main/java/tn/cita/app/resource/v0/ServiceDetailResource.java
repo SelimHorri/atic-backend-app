@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ServiceDetailDto;
+import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.ServiceDetailService;
 
@@ -21,9 +22,22 @@ public class ServiceDetailResource {
 	private final ServiceDetailService serviceDetailService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<ServiceDetailDto>> findById(@PathVariable("id") final String id) {
+	public ResponseEntity<ApiPayloadResponse<ServiceDetailDto>> findById(@PathVariable final String id) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.serviceDetailService.findById(Integer.parseInt(id))));
+	}
+	
+	/**
+	 * Secured Resource
+	 * Added WHITE_BLACKLISTED_URLS_GET
+	 * @param reservationId
+	 * @return related services by a reservation
+	 */
+	@GetMapping("/reservationId/{reservationId}")
+	public ResponseEntity<ApiPayloadResponse<ServiceDetailsReservationContainerResponse>> getOrderedServiceDetailsByReservationId(
+			@PathVariable final String reservationId) {
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.serviceDetailService.getOrderedServiceDetailsByReservationId(Integer.parseInt(reservationId))));
 	}
 	
 	

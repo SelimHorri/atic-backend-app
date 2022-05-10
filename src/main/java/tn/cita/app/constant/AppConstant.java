@@ -55,6 +55,10 @@ public final class AppConstant {
 			"/api/v*/ratings/**",
 	};
 	
+	public static final String[] WHITE_BLACKLISTED_URLS_GET = {
+			"/api/v*/service-details/reservationId/**",
+	};
+	
 	/**
 	 * Default page size for Pageable objects
 	 */

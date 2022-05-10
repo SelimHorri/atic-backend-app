@@ -40,6 +40,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 				.antMatchers(AppConstant.WHITELIST_URLS).permitAll()
+				.antMatchers(HttpMethod.GET, AppConstant.WHITE_BLACKLISTED_URLS_GET).authenticated()
 				.antMatchers(HttpMethod.GET, AppConstant.WHITELIST_URLS_GET).permitAll()
 				.antMatchers("/api/v*/customers/**")
 					.hasRole(UserRoleBasedAuthority.CUSTOMER.name())

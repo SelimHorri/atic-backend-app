@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import tn.cita.app.dto.CategoryDto;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.ServiceDetailDto;
 
@@ -19,18 +18,18 @@ import tn.cita.app.dto.ServiceDetailDto;
 @EqualsAndHashCode
 @Getter
 @Builder
-public final class ServiceDetailContainerResponse implements Serializable {
+public final class ServiceDetailsReservationContainerResponse implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@JsonProperty("serviceDetail")
-	private final ServiceDetailDto serviceDetailDto;
-	
-	@JsonProperty("category")
-	private final CategoryDto categoryDto;
-	
 	@JsonProperty("orderedDetails")
 	private final List<OrderedDetailDto> orderedDetailDtos;
+	
+	@JsonProperty("serviceDetails")
+	private final List<ServiceDetailDto> serviceDetailDtos;
+	
+	// @JsonProperty("category")
+	// private final CategoryDto categoryDto;
 	
 }
 

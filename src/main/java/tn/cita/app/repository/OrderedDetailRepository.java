@@ -10,7 +10,7 @@ import tn.cita.app.domain.id.OrderedDetailId;
 public interface OrderedDetailRepository extends JpaRepository<OrderedDetail, OrderedDetailId> {
 	
 	List<OrderedDetail> findAllByReservationId(final Integer reservationId);
-	// List<OrderedDetail> findAllByServiceDetailId(final Integer serviceDetailId);
+	List<OrderedDetail> findAllByServiceDetailId(final Integer serviceDetailId);
 	
 }
 
