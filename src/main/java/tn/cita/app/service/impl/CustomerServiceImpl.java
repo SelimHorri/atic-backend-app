@@ -12,17 +12,14 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.response.CustomerContainerResponse;
-import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.service.CredentialService;
 import tn.cita.app.service.CustomerService;
 import tn.cita.app.service.FavouriteService;
-import tn.cita.app.service.OrderedDetailService;
 import tn.cita.app.service.RatingService;
 import tn.cita.app.service.ReservationService;
-import tn.cita.app.service.TaskService;
 
 @Service
 @Transactional(readOnly = true)
@@ -35,8 +32,6 @@ public class CustomerServiceImpl implements CustomerService {
 	private final ReservationService reservationService;
 	private final FavouriteService favouriteService;
 	private final RatingService ratingService;
-	private final TaskService taskService;
-	private final OrderedDetailService orderedDetailService;
 	
 	@Override
 	public List<CustomerDto> findAll(final int pageOffset) {
@@ -119,19 +114,6 @@ public class CustomerServiceImpl implements CustomerService {
 				.customerDto(customerDto)
 				.credentialDto(this.credentialService.findById(customerDto.getCredentialId()))
 				.ratingDtos(this.ratingService.findAllByCustomerId(customerDto.getId()))
-				.build();
-	}
-	
-	@Override
-	public ReservationContainerResponse getReservationDetails(final Integer reservationId) {
-		
-		final var reservationDto = this.reservationService.findById(reservationId);
-		
-		return ReservationContainerResponse.builder()
-				.reservationDto(reservationDto)
-				.customerDto(this.findById(reservationDto.getCustomerId()))
-				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))
-				.taskDtos(this.taskService.findAllByReservationId(reservationDto.getId()))
 				.build();
 	}
 	

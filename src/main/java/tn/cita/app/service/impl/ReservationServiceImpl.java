@@ -8,10 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.repository.ReservationRepository;
+import tn.cita.app.service.OrderedDetailService;
 import tn.cita.app.service.ReservationService;
+import tn.cita.app.service.TaskService;
 
 @Service
 @Transactional(readOnly = true)
@@ -19,6 +22,8 @@ import tn.cita.app.service.ReservationService;
 public class ReservationServiceImpl implements ReservationService {
 	
 	private final ReservationRepository reservationRepository;
+	private final OrderedDetailService orderedDetailService;
+	private final TaskService taskService;
 	
 	@Override
 	public List<ReservationDto> findAllByCustomerId(final Integer customerId) {
@@ -43,6 +48,18 @@ public class ReservationServiceImpl implements ReservationService {
 				.map(ReservationMapper::map)
 				.orElseThrow(() -> new ReservationNotFoundException(String
 						.format("Reservation with code: %s not found", code)));
+	}
+	
+	@Override
+	public ReservationContainerResponse getReservationDetails(final Integer reservationId) {
+		
+		final var reservationDto = this.findById(reservationId);
+		
+		return ReservationContainerResponse.builder()
+				.reservationDto(reservationDto)
+				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))
+				.taskDtos(this.taskService.findAllByReservationId(reservationDto.getId()))
+				.build();
 	}
 	
 	

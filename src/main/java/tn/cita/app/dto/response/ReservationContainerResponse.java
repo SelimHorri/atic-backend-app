@@ -31,6 +31,7 @@ public final class ReservationContainerResponse implements Serializable {
 	@JsonProperty("reservation")
 	private final ReservationDto reservationDto;
 	
+	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("customer")
 	private final CustomerDto customerDto;
 	

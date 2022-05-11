@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.ReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
@@ -40,6 +41,15 @@ public class ReservationResource {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findByCode(code)));
+	}
+	
+	@GetMapping("/details/{reservationId}")
+	public ResponseEntity<ApiPayloadResponse<ReservationContainerResponse>> getReservationDetails(
+			@PathVariable("reservationId") final String reservationId,
+			final HttpServletRequest request) {
+		this.userRequestExtractorUtil.extractUsername(request);
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.reservationService.getReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
 	
