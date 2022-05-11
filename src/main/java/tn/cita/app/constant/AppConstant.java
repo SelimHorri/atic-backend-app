@@ -42,6 +42,8 @@ public final class AppConstant {
 			"/h2-console/**", 
 			"/api/v*/authenticate/**",
 			"/api/v*/register/**",
+			"/v3/api-docs/**",
+			"/swagger-ui*/**",
 	};
 	
 	public static final String[] WHITELIST_URLS_GET = {
