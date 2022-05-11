@@ -17,14 +17,13 @@ import tn.cita.app.repository.TagRepository;
 import tn.cita.app.service.TagService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class TagServiceImpl implements TagService {
 	
 	private final TagRepository tagRepository;
 	
-	@Transactional(readOnly = true)
 	@Override
 	public List<TagDto> findAll(final int pageOffset) {
 		log.info("** TagServiceImpl; List TagDto; find all based on pageOffset.. *\n");
@@ -35,7 +34,6 @@ public class TagServiceImpl implements TagService {
 					.collect(Collectors.toUnmodifiableList());
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
 	public TagDto findById(final Integer id) {
 		log.info("** TagServiceImpl; TagDto; find by id.. *\n");

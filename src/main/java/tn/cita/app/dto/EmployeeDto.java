@@ -2,21 +2,15 @@ package tn.cita.app.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -56,29 +50,11 @@ public final class EmployeeDto extends AbstractMappedDto implements Serializable
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
-	
-	@JsonIgnore
-	@JsonProperty("userImage")
-	private UserImageDto userImageDto;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("manager")
-	private EmployeeDto managerDto;
-	
-	@JsonIgnore
-	private Set<EmployeeDto> workerDtos;
-	
-	@JsonProperty("credential")
-	@NotNull(message = "Input credential should not be null")
-	private CredentialDto credentialDto;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("saloon")
-	@NotNull(message = "Input saloon should not be null")
-	private SaloonDto saloonDto;
-	
-	@JsonIgnore
-	private Set<RatingDto> ratingDtos;
+	private LocalDate hiredate;
+	private Integer credentialId;
+	private Integer managerId;
+	private Integer userImageId;
+	private Integer saloonId;
 	
 }
 

@@ -6,8 +6,6 @@ import tn.cita.app.domain.entity.OrderedDetail;
 import tn.cita.app.domain.entity.Reservation;
 import tn.cita.app.domain.entity.ServiceDetail;
 import tn.cita.app.dto.OrderedDetailDto;
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.ServiceDetailDto;
 
 public interface OrderedDetailMapper {
 	
@@ -16,24 +14,6 @@ public interface OrderedDetailMapper {
 				.reservationId(orderedDetail.getReservationId())
 				.serviceDetailId(orderedDetail.getServiceDetailId())
 				.orderedDate(orderedDetail.getOrderedDate())
-				.reservationDto(
-					ReservationDto.builder()
-						.id(orderedDetail.getReservation().getId())
-						.code(orderedDetail.getReservation().getCode())
-						.description(orderedDetail.getReservation().getDescription())
-						.startDate(orderedDetail.getReservation().getStartDate())
-						.cancelDate(orderedDetail.getReservation().getCancelDate())
-						.reservationStatus(orderedDetail.getReservation().getReservationStatus())
-						.build())
-				.serviceDetailDto(
-					ServiceDetailDto.builder()
-						.id(orderedDetail.getServiceDetail().getId())
-						.name(orderedDetail.getServiceDetail().getName())
-						.description(orderedDetail.getServiceDetail().getDescription())
-						.isAvailable(orderedDetail.getServiceDetail().getIsAvailable())
-						.duration(orderedDetail.getServiceDetail().getDuration())
-						.priceUnit(orderedDetail.getServiceDetail().getPriceUnit())
-						.build())
 				.build();
 	}
 	
@@ -44,21 +24,11 @@ public interface OrderedDetailMapper {
 				.orderedDate(orderedDetailDto.getOrderedDate())
 				.reservation(
 						Reservation.builder()
-						.id(orderedDetailDto.getReservationDto().getId())
-						.code(orderedDetailDto.getReservationDto().getCode())
-						.description(orderedDetailDto.getReservationDto().getDescription())
-						.startDate(orderedDetailDto.getReservationDto().getStartDate())
-						.cancelDate(orderedDetailDto.getReservationDto().getCancelDate())
-						.reservationStatus(orderedDetailDto.getReservationDto().getReservationStatus())
+						.id(orderedDetailDto.getReservationId())
 						.build())
 				.serviceDetail(
 						ServiceDetail.builder()
-						.id(orderedDetailDto.getServiceDetailDto().getId())
-						.name(orderedDetailDto.getServiceDetailDto().getName())
-						.description(orderedDetailDto.getServiceDetailDto().getDescription())
-						.isAvailable(orderedDetailDto.getServiceDetailDto().getIsAvailable())
-						.duration(orderedDetailDto.getServiceDetailDto().getDuration())
-						.priceUnit(orderedDetailDto.getServiceDetailDto().getPriceUnit())
+						.id(orderedDetailDto.getServiceDetailId())
 						.build())
 				.build();
 	}

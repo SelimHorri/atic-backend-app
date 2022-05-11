@@ -1,9 +1,10 @@
 
 app:
   security:
-    secretKey: ${random.uuid}
+    jwt:
+      token-expires-after: 604800000 # weak in millis
   client:
-    domains: http://localhost:4200/, http://cita-frontend-app:4200/, http://cita-frontend-app:80/
+    domains: http://localhost:4200/, http://localhost:80/, http://cita-frontend-app:4200/, http://cita-frontend-app:80/
 
 
 spring:

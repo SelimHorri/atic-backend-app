@@ -2,6 +2,11 @@
 server:
   port: 8400
 
+app:
+  security:
+    jwt:
+      secret-key: ${APP_SECURITY_JWT_SECRET_KEY:@app.security.jwt.secret-key@}
+
 management:
   endpoints:
     web:
@@ -15,7 +20,8 @@ spring:
     password: ${SPRING_DATASOURCE_PASSWORD:toor}
   config:
     import:
-    - 'optional:import/secrets/db-secrets.yml'
+      - 'optional:import/secrets/db-secrets.yml'
+      - 'optional:import/secrets/jwt-secrets.yml'
   jpa:
     show-sql: true
     hibernate:

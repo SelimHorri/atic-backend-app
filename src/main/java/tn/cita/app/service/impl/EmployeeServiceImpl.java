@@ -17,14 +17,13 @@ import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.service.EmployeeService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
 	
 	private final EmployeeRepository employeeRepository;
 	
-	@Transactional(readOnly = true)
 	@Override
 	public List<EmployeeDto> findAll(final int pageOffset) {
 		log.info("** EmployeeServiceImpl; EmployeeDto; find all with pageOffset service...*\n");
@@ -35,7 +34,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 					.collect(Collectors.toUnmodifiableList());
 	}
 	
-	@Transactional(readOnly = true)
 	@Override
 	public EmployeeDto findById(final Integer id) {
 		log.info("** EmployeeServiceImpl; EmployeeDto; find user by id service...*\n");
@@ -45,6 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 						.format("Employee with id: %d not found", id)));
 	}
 	
+	@Transactional
 	@Override
 	public boolean deleteById(final Integer id) {
 		log.info("** EmployeeServiceImpl; boolean; delete user by id service...*\n");

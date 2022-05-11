@@ -9,9 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -42,16 +39,6 @@ public final class FavouriteDto implements Serializable {
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime favouriteDate;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("customer")
-	@NotNull(message = "Input customer should not be null")
-	private CustomerDto customerDto;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("saloon")
-	@NotNull(message = "Input saloon should not be null")
-	private SaloonDto saloonDto;
 	
 }
 

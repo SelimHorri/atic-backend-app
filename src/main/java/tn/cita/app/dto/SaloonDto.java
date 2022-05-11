@@ -2,20 +2,14 @@ package tn.cita.app.dto;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.Set;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -54,26 +48,7 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	@Email(message = "Input email should be in email format")
 	@NotBlank(message = "Input email should not be blank")
 	private String email;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("location")
-	@NotNull(message = "Input location should not be null")
-	private LocationDto locationDto;
-	
-	@JsonIgnore
-	private Set<EmployeeDto> employeeDtos;
-	
-	@JsonIgnore
-	private Set<FavouriteDto> favouriteDtos;
-	
-	@JsonIgnore
-	private Set<SaloonImageDto> saloonImageDtos;
-	
-	@JsonIgnore
-	private Set<SaloonTagDto> saloonTagDtos;
-	
-	@JsonIgnore
-	private Set<CategoryDto> categoryDtos;
+	private Integer locationId;
 	
 }
 

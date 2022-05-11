@@ -3,7 +3,7 @@ CREATE TABLE employees (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	firstname VARCHAR(255),
 	lastname VARCHAR(255),
-	email VARCHAR(255) DEFAULT '@gmail.com',
+	email VARCHAR(255) DEFAULT 'cita.team.mail@gmail.com',
 	phone VARCHAR(255) DEFAULT '+21622125144',
 	birthdate DATE,
 	hiredate DATE,

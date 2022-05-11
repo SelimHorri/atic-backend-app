@@ -23,9 +23,7 @@ import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.UserImageDto;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.service.CustomerService;
@@ -103,13 +101,8 @@ class CustomerServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-							.isEnabled(true)
-							.build())
+				.userImageId(null)
+				.credentialId(null)
 				.build(), 
 				CustomerDto.builder()
 				.id(2)
@@ -118,13 +111,8 @@ class CustomerServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-					CredentialDto.builder()
-						.username("amineladjimi")
-						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-						.isEnabled(true)
-						.build())
+				.userImageId(null)
+				.credentialId(null)
 				.build());
 		
 		final int pageOffset = 1;
@@ -141,9 +129,6 @@ class CustomerServiceImplTest {
 					assertThat(c.getId()).isNotNull();
 					assertThat(c.getEmail()).isEqualTo("@gmail.com");
 					assertThat(c.getPhone()).isEqualTo("22125144");
-					assertThat(c.getCredentialDto()).isNotNull();
-					assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.CUSTOMER.name());
-					assertThat(c.getCredentialDto().getIsEnabled()).isTrue();
 				});
 		
 	}
@@ -163,13 +148,8 @@ class CustomerServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-					CredentialDto.builder()
-						.username("selimhorri")
-						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
-						.isEnabled(true)
-						.build())
+				.userImageId(null)
+				.credentialId(null)
 				.build();
 		
 		final var customerDto = this.customerService.findById(id);
@@ -181,14 +161,6 @@ class CustomerServiceImplTest {
 		assertThat(customerDto.getEmail()).isEqualTo(expectedCustomerDto.getEmail());
 		assertThat(customerDto.getPhone()).isEqualTo(expectedCustomerDto.getPhone());
 		assertThat(customerDto.getBirthdate()).isEqualTo(expectedCustomerDto.getBirthdate());
-		assertThat(customerDto.getUserImageDto()).isNotNull();
-		assertThat(customerDto.getCredentialDto()).isNotNull();
-		assertThat(customerDto.getCredentialDto().getUsername())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getUsername());
-		assertThat(customerDto.getCredentialDto().getUserRoleBasedAuthority())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getUserRoleBasedAuthority());
-		assertThat(customerDto.getCredentialDto().getIsEnabled())
-				.isEqualTo(expectedCustomerDto.getCredentialDto().getIsEnabled());
 	}
 	
 	@Test

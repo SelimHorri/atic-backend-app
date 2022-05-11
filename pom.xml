@@ -39,6 +39,7 @@
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<spring.mail.password>${SPRING_MAIL_PASSWORD}</spring.mail.password>
+		<app.security.jwt.secret-key>${APP_SECURITY_JWT_SECRET_KEY}</app.security.jwt.secret-key>
 	</properties>
 	
 	<dependencies>

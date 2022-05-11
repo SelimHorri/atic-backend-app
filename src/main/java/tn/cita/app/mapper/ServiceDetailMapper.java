@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 
 import tn.cita.app.domain.entity.Category;
 import tn.cita.app.domain.entity.ServiceDetail;
-import tn.cita.app.dto.CategoryDto;
 import tn.cita.app.dto.ServiceDetailDto;
 
 public interface ServiceDetailMapper {
@@ -17,11 +16,7 @@ public interface ServiceDetailMapper {
 				.isAvailable(serviceDetail.getIsAvailable())
 				.duration(serviceDetail.getDuration())
 				.priceUnit(serviceDetail.getPriceUnit())
-				.categoryDto(
-					CategoryDto.builder()
-						.id(serviceDetail.getCategory().getId())
-						.name(serviceDetail.getCategory().getName())
-						.build())
+				.categoryId(serviceDetail.getCategory().getId())
 				.build();
 	}
 	
@@ -35,8 +30,7 @@ public interface ServiceDetailMapper {
 				.priceUnit(serviceDetailDto.getPriceUnit())
 				.category(
 					Category.builder()
-						.id(serviceDetailDto.getCategoryDto().getId())
-						.name(serviceDetailDto.getCategoryDto().getName())
+						.id(serviceDetailDto.getCategoryId())
 						.build())
 				.build();
 	}

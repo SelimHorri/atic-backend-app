@@ -4,7 +4,6 @@ import javax.validation.constraints.NotNull;
 
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.VerificationToken;
-import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.VerificationTokenDto;
 
 public interface VerificationTokenMapper {
@@ -14,16 +13,7 @@ public interface VerificationTokenMapper {
 				.id(verificationToken.getId())
 				.token(verificationToken.getToken())
 				.expireDate(verificationToken.getExpireDate())
-				.credentialDto(
-					CredentialDto.builder()
-						.id(verificationToken.getCredential().getId())
-						.username(verificationToken.getCredential().getUsername())
-						.password(verificationToken.getCredential().getPassword())
-						.isEnabled(verificationToken.getCredential().getIsEnabled())
-						.isAccountNonExpired(verificationToken.getCredential().getIsAccountNonExpired())
-						.isAccountNonLocked(verificationToken.getCredential().getIsAccountNonLocked())
-						.isCredentialsNonExpired(verificationToken.getCredential().getIsCredentialsNonExpired())
-						.build())
+				.credentialId(verificationToken.getCredential().getId())
 				.build();
 	}
 	
@@ -34,13 +24,7 @@ public interface VerificationTokenMapper {
 				.expireDate(verificationTokenDto.getExpireDate())
 				.credential(
 					Credential.builder()
-						.id(verificationTokenDto.getCredentialDto().getId())
-						.username(verificationTokenDto.getCredentialDto().getUsername())
-						.password(verificationTokenDto.getCredentialDto().getPassword())
-						.isEnabled(verificationTokenDto.getCredentialDto().getIsEnabled())
-						.isAccountNonExpired(verificationTokenDto.getCredentialDto().getIsAccountNonExpired())
-						.isAccountNonLocked(verificationTokenDto.getCredentialDto().getIsAccountNonLocked())
-						.isCredentialsNonExpired(verificationTokenDto.getCredentialDto().getIsCredentialsNonExpired())
+						.id(verificationTokenDto.getCredentialId())
 						.build())
 				.build();
 	}

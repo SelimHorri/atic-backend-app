@@ -9,9 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -47,16 +44,6 @@ public final class RatingDto implements Serializable {
 	@NotNull(message = "Input rate should not be null")
 	private UserRating rate;
 	private String description;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("employee")
-	@NotNull(message = "Input employee should not be null")
-	private EmployeeDto employeeDto;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("customer")
-	@NotNull(message = "Input customer should not be null")
-	private CustomerDto customerDto;
 	
 }
 
