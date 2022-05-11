@@ -1,11 +1,8 @@
 package tn.cita.app.dto;
 
 import java.io.Serializable;
-import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,9 +27,6 @@ public final class LocationDto extends AbstractMappedDto implements Serializable
 	
 	@NotBlank(message = "Input state should not be blank")
 	private String state;
-	
-	@JsonIgnore
-	private Set<SaloonDto> saloonDtos;
 	
 }
 

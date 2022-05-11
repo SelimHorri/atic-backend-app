@@ -2,6 +2,8 @@ package tn.cita.app.constant;
 
 import java.time.Duration;
 
+import org.springframework.http.HttpHeaders;
+
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
@@ -12,6 +14,13 @@ import lombok.NoArgsConstructor;
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class AppConstant {
+	
+	/**
+	 * USERNAME_AUTH_HEADER: is a custom header to be sure that 
+	 * no other user can access another user resources
+	 */
+	public static final String USERNAME_AUTH_HEADER = "UsernameAuth";
+	public static final String AUTHORIZATION_HEADER = HttpHeaders.AUTHORIZATION;
 	
 	/**
 	 * DateTime custom API formats
@@ -33,6 +42,8 @@ public final class AppConstant {
 			"/h2-console/**", 
 			"/api/v*/authenticate/**",
 			"/api/v*/register/**",
+			"/v3/api-docs/**",
+			"/swagger-ui*/**",
 	};
 	
 	public static final String[] WHITELIST_URLS_GET = {
@@ -44,6 +55,10 @@ public final class AppConstant {
 			"/api/v*/categories/**",
 			"/api/v*/service-details/**",
 			"/api/v*/ratings/**",
+	};
+	
+	public static final String[] WHITE_BLACKLISTED_URLS_GET = {
+			"/api/v*/service-details/reservationId/**",
 	};
 	
 	/**

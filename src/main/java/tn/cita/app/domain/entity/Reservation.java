@@ -14,7 +14,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -57,7 +56,6 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime startDate;
 	
-	@Transient
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
@@ -67,7 +65,7 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
-	private ReservationStatus reservationStatus;
+	private ReservationStatus status;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")

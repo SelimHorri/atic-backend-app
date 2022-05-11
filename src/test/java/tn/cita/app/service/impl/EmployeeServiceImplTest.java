@@ -23,9 +23,7 @@ import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Employee;
 import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.UserImageDto;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.service.EmployeeService;
@@ -103,13 +101,8 @@ class EmployeeServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-						CredentialDto.builder()
-							.username("selimhorri")
-							.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
-							.isEnabled(true)
-							.build())
+				.userImageId(null)
+				.credentialId(null)
 				.build(), 
 				EmployeeDto.builder()
 				.id(2)
@@ -118,13 +111,8 @@ class EmployeeServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-					CredentialDto.builder()
-						.username("amineladjimi")
-						.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
-						.isEnabled(true)
-						.build())
+				.userImageId(null)
+				.credentialId(null)
 				.build());
 		
 		final int pageOffset = 1;
@@ -141,9 +129,6 @@ class EmployeeServiceImplTest {
 					assertThat(c.getId()).isNotNull();
 					assertThat(c.getEmail()).isEqualTo("@gmail.com");
 					assertThat(c.getPhone()).isEqualTo("22125144");
-					assertThat(c.getCredentialDto()).isNotNull();
-					assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.WORKER.name());
-					assertThat(c.getCredentialDto().getIsEnabled()).isTrue();
 				});
 		
 	}
@@ -163,13 +148,8 @@ class EmployeeServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageDto(new UserImageDto())
-				.credentialDto(
-					CredentialDto.builder()
-						.username("selimhorri")
-						.userRoleBasedAuthority(UserRoleBasedAuthority.WORKER)
-						.isEnabled(true)
-						.build())
+				.userImageId(null)
+				.credentialId(null)
 				.build();
 		
 		final var employeeDto = this.employeeService.findById(id);
@@ -181,15 +161,6 @@ class EmployeeServiceImplTest {
 		assertThat(employeeDto.getEmail()).isEqualTo(expectedEmployeeDto.getEmail());
 		assertThat(employeeDto.getPhone()).isEqualTo(expectedEmployeeDto.getPhone());
 		assertThat(employeeDto.getBirthdate()).isEqualTo(expectedEmployeeDto.getBirthdate());
-		assertThat(employeeDto.getUserImageDto()).isNotNull();
-		assertThat(employeeDto.getCredentialDto()).isNotNull();
-		assertThat(employeeDto.getCredentialDto().getUsername())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getUsername());
-		assertThat(employeeDto.getCredentialDto().getUserRoleBasedAuthority())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getUserRoleBasedAuthority());
-		assertThat(employeeDto.getCredentialDto().getIsEnabled())
-				.isEqualTo(expectedEmployeeDto.getCredentialDto().getIsEnabled());
-		
 	}
 	
 	@Test

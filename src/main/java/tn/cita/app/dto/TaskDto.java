@@ -3,15 +3,10 @@ package tn.cita.app.dto;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-import javax.validation.constraints.NotNull;
-
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -51,19 +46,8 @@ public final class TaskDto implements Serializable {
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime endDate;
-	
 	private String workerDescription;
 	private String managerDescription;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("worker")
-	@NotNull(message = "Input worker should not be null")
-	private EmployeeDto workerDto;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("reservation")
-	@NotNull(message = "Input reservation should not be null")
-	private ReservationDto reservationDto;
 	
 }
 

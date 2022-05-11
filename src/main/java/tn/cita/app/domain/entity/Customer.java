@@ -66,6 +66,15 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
 	
+	@Column(name = "facebook_url", nullable = true)
+	private String facebookUrl;
+	
+	@Column(name = "instagram_url", nullable = true)
+	private String instagramUrl;
+	
+	@Column(name = "linkedin_url", nullable = true)
+	private String linkedinUrl;
+	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
 	private UserImage userImage;

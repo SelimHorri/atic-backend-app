@@ -9,9 +9,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -41,11 +38,7 @@ public final class VerificationTokenDto extends AbstractMappedDto implements Ser
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime expireDate;
-	
-	@JsonInclude(Include.NON_NULL)
-	@JsonProperty("credential")
-	@NotBlank(message = "Input credential should not be blank")
-	private CredentialDto credentialDto;
+	private Integer credentialId;
 	
 }
 

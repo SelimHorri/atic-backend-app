@@ -12,14 +12,13 @@ import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.service.VerificationTokenService;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
 public class VerificationTokenServiceImpl implements VerificationTokenService {
 	
 	private final VerificationTokenRepository verificationTokenRepository;
 	
-	@Transactional(readOnly = true)
 	@Override
 	public VerificationTokenDto findByToken(final String token) {
 		log.info("** VerificationTokenServiceImpl; VerificationTokenDto; find by token service...*\n");
@@ -29,6 +28,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 						.format("VerificationToken with token: %s is not found", token)));
 	}
 	
+	@Transactional
 	@Override
 	public boolean deleteByToken(final String token) {
 		log.info("** VerificationTokenServiceImpl; boolean; delete by token service...*\n");
