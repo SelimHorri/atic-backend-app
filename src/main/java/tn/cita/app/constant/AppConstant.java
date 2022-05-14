@@ -47,6 +47,8 @@ public final class AppConstant {
 	};
 	
 	public static final String[] WHITELIST_URLS_GET = {
+			"/actuator/info",
+			"/actuator/health/**",
 			"/api/v*/tags/**",
 			"/api/v*/saloon-tags/**",
 			"/api/v*/saloons/**",
