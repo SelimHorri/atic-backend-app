@@ -35,6 +35,18 @@ public class LocationResource {
 				this.locationService.findById(Integer.parseInt(id))));
 	}
 	
+	@GetMapping("/cities")
+	public ResponseEntity<ApiPayloadResponse<List<String>>> getAllCities() {
+		final var cities = this.locationService.getAllCities();
+		return ResponseEntity.ok(new ApiPayloadResponse<>(cities.size(), HttpStatus.OK, true, cities));
+	}
+	
+	@GetMapping("/states")
+	public ResponseEntity<ApiPayloadResponse<List<String>>> getAllStates() {
+		final var states = this.locationService.getAllStates();
+		return ResponseEntity.ok(new ApiPayloadResponse<>(states.size(), HttpStatus.OK, true, states));
+	}
+	
 	
 	
 }

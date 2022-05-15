@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.domain.entity.Location;
 import tn.cita.app.dto.LocationDto;
 import tn.cita.app.exception.wrapper.LocationNotFoundException;
 import tn.cita.app.mapper.LocationMapper;
@@ -37,6 +38,26 @@ public class LocationServiceImpl implements LocationService {
 				.map(LocationMapper::map)
 				.orElseThrow(() -> new LocationNotFoundException(String
 						.format("Location with id: %d not found", id)));
+	}
+	
+	@Override
+	public List<String> getAllCities() {
+		return this.locationRepository.findAll()
+				.stream()
+					.map(Location::getCity)
+					.map(String::toLowerCase)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
+	}
+	
+	@Override
+	public List<String> getAllStates() {
+		return this.locationRepository.findAll()
+				.stream()
+					.map(Location::getState)
+					.map(String::toLowerCase)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

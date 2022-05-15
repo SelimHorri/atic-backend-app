@@ -8,6 +8,8 @@ public interface LocationService {
 	
 	List<LocationDto> findAll(final int offset);
 	LocationDto findById(final Integer id);
+	List<String> getAllCities();
+	List<String> getAllStates();
 	
 }
 
