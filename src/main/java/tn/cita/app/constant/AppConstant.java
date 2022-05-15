@@ -67,7 +67,7 @@ public final class AppConstant {
 	/**
 	 * Default page size for Pageable objects
 	 */
-	public static final int PAGE_SIZE = 50;
+	public static final int PAGE_SIZE = 5;
 	
 	public static final String MAIL_SOURCE = "cita.team.mail@gmail.com";
 	
