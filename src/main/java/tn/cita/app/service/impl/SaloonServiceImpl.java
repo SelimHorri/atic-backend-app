@@ -32,6 +32,16 @@ public class SaloonServiceImpl implements SaloonService {
 	}
 	
 	@Override
+	public List<SaloonDto> findAllByLocationState(final String state, final int offset) {
+		return this.saloonRepository.findAllByLocationStateIgnoringCase(state.strip(), 
+				PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
+				.stream()
+					.map(SaloonMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
+	}
+	
+	@Override
 	public SaloonDto findById(final Integer id) {
 		return this.saloonRepository.findById(id)
 				.map(SaloonMapper::map)

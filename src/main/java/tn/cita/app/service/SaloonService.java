@@ -7,6 +7,7 @@ import tn.cita.app.dto.SaloonDto;
 public interface SaloonService {
 	
 	List<SaloonDto> findAll(final int offset);
+	List<SaloonDto> findAllByLocationState(final String state, final int offset);
 	SaloonDto findById(final Integer id);
 	List<SaloonDto> findAllByCode(final String code);
 	

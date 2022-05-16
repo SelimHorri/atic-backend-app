@@ -49,7 +49,6 @@ public class OrderedDetail extends AbstractAuditingMappedEntity implements Seria
 	@Column(name = "service_detail_id", nullable = false, insertable = false, updatable = false)
 	private Integer serviceDetailId;
 	
-	@Id
 	@Column(name = "ordered_date", nullable = false)
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)

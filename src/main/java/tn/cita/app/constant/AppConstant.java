@@ -47,6 +47,9 @@ public final class AppConstant {
 	};
 	
 	public static final String[] WHITELIST_URLS_GET = {
+			"/actuator/info",
+			"/actuator/health",
+			"/api/v*/actuator/health",
 			"/api/v*/tags/**",
 			"/api/v*/saloon-tags/**",
 			"/api/v*/saloons/**",
@@ -64,7 +67,7 @@ public final class AppConstant {
 	/**
 	 * Default page size for Pageable objects
 	 */
-	public static final int PAGE_SIZE = 50;
+	public static final int PAGE_SIZE = 5;
 	
 	public static final String MAIL_SOURCE = "cita.team.mail@gmail.com";
 	

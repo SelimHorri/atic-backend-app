@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.FavouriteDto;
 import tn.cita.app.mapper.FavouriteMapper;
 import tn.cita.app.repository.FavouriteRepository;
@@ -26,6 +27,13 @@ public class FavouriteServiceImpl implements FavouriteService {
 					.map(FavouriteMapper::map)
 					.distinct()
 					.collect(Collectors.toUnmodifiableList());
+	}
+	
+	@Transactional
+	@Override
+	public Boolean deleteById(final FavouriteId favouriteId) {
+		this.favouriteRepository.deleteById(favouriteId);
+		return !this.favouriteRepository.existsById(favouriteId);
 	}
 	
 	

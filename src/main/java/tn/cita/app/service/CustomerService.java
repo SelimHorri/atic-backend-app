@@ -15,6 +15,7 @@ public interface CustomerService {
 	CustomerContainerResponse getFavouritesByUsername(final String username);
 	CustomerContainerResponse getReservationsByUsername(final String username);
 	CustomerContainerResponse getRatingsByUsername(final String username);
+	Boolean deleteFavourite(final String username, final Integer saloonId);
 	
 }
 

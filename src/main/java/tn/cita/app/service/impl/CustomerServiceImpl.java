@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.response.CustomerContainerResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
@@ -115,6 +116,13 @@ public class CustomerServiceImpl implements CustomerService {
 				.credentialDto(this.credentialService.findById(customerDto.getCredentialId()))
 				.ratingDtos(this.ratingService.findAllByCustomerId(customerDto.getId()))
 				.build();
+	}
+	
+	@Transactional
+	@Override
+	public Boolean deleteFavourite(final String username, final Integer saloonId) {
+		final var favouriteId = new FavouriteId(this.findByCredentialUsernameIgnoringCase(username).getId(), saloonId);
+		return this.favouriteService.deleteById(favouriteId);
 	}
 	
 	
