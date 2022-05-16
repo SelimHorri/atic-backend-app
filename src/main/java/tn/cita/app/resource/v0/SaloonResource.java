@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,28 @@ public class SaloonResource {
 	private final SaloonService saloonService;
 	
 	@GetMapping("/offset/{offset}")
-	public ResponseEntity<ApiPayloadResponse<List<SaloonDto>>> findAll(@PathVariable("offset") final String offset) {
+	public ResponseEntity<ApiPayloadResponse<List<SaloonDto>>> findAll(@PathVariable final String offset) {
 		final var saloons = this.saloonService.findAll(Integer.parseInt(offset));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.size(), 
-				HttpStatus.OK, true, saloons));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.size(), HttpStatus.OK, true, saloons));
+	}
+	
+	@GetMapping("/locations/state/{state}")
+	public ResponseEntity<ApiPayloadResponse<List<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
+			@RequestParam(defaultValue = "1") final String offset) {
+		final var saloons = this.saloonService.findAllByLocationState(state, Integer.parseInt(offset));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.size(), HttpStatus.OK, true, saloons));
+	}
+	
+	@GetMapping("/{id}")
+	public ResponseEntity<ApiPayloadResponse<SaloonDto>> findById(@PathVariable final String id) {
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.saloonService.findById(Integer.parseInt(id))));
+	}
+	
+	@GetMapping("/code/{code}")
+	public ResponseEntity<ApiPayloadResponse<List<SaloonDto>>> findAllByCode(@PathVariable final String code) {
+		final var saloons = this.saloonService.findAllByCode(code);
+		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.size(), HttpStatus.OK, true, saloons));
 	}
 	
 	

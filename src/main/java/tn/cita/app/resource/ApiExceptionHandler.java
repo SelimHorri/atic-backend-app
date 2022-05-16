@@ -23,6 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
+import tn.cita.app.exception.wrapper.ActuatorHealthException;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
@@ -107,6 +108,7 @@ public class ApiExceptionHandler {
 		NumberFormatException.class,
 		UsernameNotMatchException.class,
 		UnauthorizedUserException.class, // already works for filter using resolver
+		ActuatorHealthException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {

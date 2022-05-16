@@ -5,7 +5,9 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -51,6 +53,14 @@ public class CustomerResource {
 			final HttpServletRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+	}
+	
+	@DeleteMapping("/favourites/{saloonId}")
+	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteFavourite(final HttpServletRequest request, 
+			@PathVariable final String saloonId) {
+		final Boolean isDeleted = this.customerService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
+				Integer.parseInt(saloonId));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, isDeleted));
 	}
 	
 	
