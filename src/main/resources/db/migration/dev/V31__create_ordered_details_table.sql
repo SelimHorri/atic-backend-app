@@ -5,7 +5,7 @@ CREATE TABLE ordered_details (
 	ordered_date TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
 	created_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
 	updated_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
-	PRIMARY KEY (reservation_id, service_detail_id, ordered_date)
+	PRIMARY KEY (reservation_id, service_detail_id)
 );
 
 
