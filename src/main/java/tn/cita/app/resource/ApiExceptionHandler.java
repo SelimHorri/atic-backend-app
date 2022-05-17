@@ -2,6 +2,7 @@ package tn.cita.app.resource;
 
 import java.util.Optional;
 
+import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
@@ -109,6 +110,7 @@ public class ApiExceptionHandler {
 		UsernameNotMatchException.class,
 		UnauthorizedUserException.class, // already works for filter using resolver
 		ActuatorHealthException.class,
+		AuthenticationException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
