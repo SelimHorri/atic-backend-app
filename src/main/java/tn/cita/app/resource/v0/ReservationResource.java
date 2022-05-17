@@ -28,7 +28,7 @@ public class ReservationResource {
 	private final ReservationService reservationService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(@PathVariable("id") final String id, 
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(@PathVariable final String id, 
 			final HttpServletRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
@@ -36,7 +36,7 @@ public class ReservationResource {
 	}
 	
 	@GetMapping("/code/{code}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(@PathVariable("code") final String code, 
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(@PathVariable final String code, 
 			final HttpServletRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
@@ -45,8 +45,7 @@ public class ReservationResource {
 	
 	@GetMapping("/details/{reservationId}")
 	public ResponseEntity<ApiPayloadResponse<ReservationContainerResponse>> getReservationDetails(
-			@PathVariable("reservationId") final String reservationId,
-			final HttpServletRequest request) {
+			@PathVariable final String reservationId, final HttpServletRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.getReservationDetails(Integer.parseInt(reservationId))));
