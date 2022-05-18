@@ -30,7 +30,7 @@ public class TaskResource {
 	
 	@GetMapping("/reservationId/{reservationId}")
 	public ResponseEntity<ApiPayloadResponse<List<TaskDto>>> findAllByReservationId(
-			@PathVariable("reservationId") final String reservationId, 
+			@PathVariable final String reservationId, 
 			final HttpServletRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var taskDtos = this.taskService.findAllByReservationId(Integer.parseInt(reservationId));

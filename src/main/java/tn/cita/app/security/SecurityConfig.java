@@ -1,5 +1,7 @@
 package tn.cita.app.security;
 
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -55,6 +57,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 					.hasRole(UserRoleBasedAuthority.OWNER.name())
 				.anyRequest().authenticated()
 			.and()
+			.exceptionHandling(e -> e.authenticationEntryPoint((request, response, authException) -> 
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, 
+						"Error: Forbidden request, unauthorized access point")))
 			.headers()
 				.frameOptions()
 				.sameOrigin()

@@ -62,6 +62,30 @@ public class ReservationServiceImpl implements ReservationService {
 				.build();
 	}
 	
+	@Transactional
+	@Override
+	public ReservationContainerResponse updateReservationDetails(final ReservationContainerResponse reservationContainerResponse) {
+		
+		// TODO: impl this method, change input to a specific request
+		
+		return null;
+	}
+	
+	@Transactional
+	@Override
+	public ReservationDto cancelReservation(final ReservationDto reservationDtoRequest) {
+		
+		final var reservation = this.reservationRepository.findById(reservationDtoRequest.getId())
+				.orElseThrow(() -> new ReservationNotFoundException(String
+						.format("Reservation with id: %s not found", reservationDtoRequest.getId())));
+		
+		// update
+		reservation.setCancelDate(reservationDtoRequest.getCancelDate());
+		reservation.setStatus(reservationDtoRequest.getStatus());
+		
+		return ReservationMapper.map(this.reservationRepository.save(reservation));
+	}
+	
 	
 	
 }
