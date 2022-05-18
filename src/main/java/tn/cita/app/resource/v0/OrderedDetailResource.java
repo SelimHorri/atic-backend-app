@@ -32,7 +32,9 @@ public class OrderedDetailResource {
 	private final OrderedDetailService orderedDetailService;
 	
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<List<OrderedDetailDto>>> findAllByReservationId(@PathVariable final String reservationId) {
+	public ResponseEntity<ApiPayloadResponse<List<OrderedDetailDto>>> findAllByReservationId(final HttpServletRequest request, 
+			@PathVariable final String reservationId) {
+		this.extractorUtil.extractUsername(request);
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(Integer.parseInt(reservationId));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(orderedDetailDtos.size(), HttpStatus.OK, true, orderedDetailDtos));
 	}

@@ -11,6 +11,8 @@ public interface ReservationService {
 	ReservationDto findById(final Integer id);
 	ReservationDto findByCode(final String code);
 	ReservationContainerResponse getReservationDetails(final Integer reservationId);
+	ReservationContainerResponse updateReservationDetails(final ReservationContainerResponse reservationContainerResponse);
+	ReservationDto cancelReservation(final ReservationDto reservationDtoRequest);
 	
 }
 

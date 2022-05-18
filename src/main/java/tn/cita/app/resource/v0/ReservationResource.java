@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -28,7 +30,7 @@ public class ReservationResource {
 	private final ReservationService reservationService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(@PathVariable("id") final String id, 
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(@PathVariable final String id, 
 			final HttpServletRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
@@ -36,7 +38,7 @@ public class ReservationResource {
 	}
 	
 	@GetMapping("/code/{code}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(@PathVariable("code") final String code, 
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(@PathVariable final String code, 
 			final HttpServletRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
@@ -45,11 +47,29 @@ public class ReservationResource {
 	
 	@GetMapping("/details/{reservationId}")
 	public ResponseEntity<ApiPayloadResponse<ReservationContainerResponse>> getReservationDetails(
-			@PathVariable("reservationId") final String reservationId,
-			final HttpServletRequest request) {
+			@PathVariable final String reservationId, final HttpServletRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.getReservationDetails(Integer.parseInt(reservationId))));
+	}
+	
+	@PutMapping("/details")
+	public ResponseEntity<ApiPayloadResponse<Boolean>> updateReservationDetails(final HttpServletRequest request, 
+			@RequestBody final ReservationContainerResponse reservationContainerResponse) {
+		
+		// TODO...
+		this.userRequestExtractorUtil.extractUsername(request);
+		this.reservationService.updateReservationDetails(reservationContainerResponse);
+		
+		return ResponseEntity.ok(null);
+	}
+	
+	@PutMapping("/cancel")
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final HttpServletRequest request, 
+			@RequestBody final ReservationDto reservationDtoRequest) {
+		this.userRequestExtractorUtil.extractUsername(request);
+		final var reservationDto = this.reservationService.cancelReservation(reservationDtoRequest);
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));
 	}
 	
 	

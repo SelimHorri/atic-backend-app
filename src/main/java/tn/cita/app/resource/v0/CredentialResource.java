@@ -23,7 +23,7 @@ public class CredentialResource {
 	private final CredentialService credentialService;
 	
 	@GetMapping("/username/{username}")
-	public ResponseEntity<ApiPayloadResponse<CredentialDto>> findByUsername(@PathVariable("username") final String username) {
+	public ResponseEntity<ApiPayloadResponse<CredentialDto>> findByUsername(@PathVariable final String username) {
 		log.info("** CredentialResource; CredentialDto; find by username.. *\n");
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.credentialService.findByUsername(username)));

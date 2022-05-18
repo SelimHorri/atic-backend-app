@@ -41,7 +41,7 @@ public class RegistrationResource {
 	
 	@GetMapping("/{token}")
 	public ResponseEntity<ApiPayloadResponse<String>> validateToken(
-			@PathVariable("token") 
+			@PathVariable
 			@NotNull(message = "Input token should not be null") 
 			final String token) {
 		log.info("**RegistrationResource controller; String; register user...*\n");
