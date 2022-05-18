@@ -7,6 +7,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -49,6 +51,25 @@ public class ReservationResource {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.getReservationDetails(Integer.parseInt(reservationId))));
+	}
+	
+	@PutMapping("/details")
+	public ResponseEntity<ApiPayloadResponse<Boolean>> updateReservationDetails(final HttpServletRequest request, 
+			@RequestBody final ReservationContainerResponse reservationContainerResponse) {
+		
+		// TODO...
+		this.userRequestExtractorUtil.extractUsername(request);
+		this.reservationService.updateReservationDetails(reservationContainerResponse);
+		
+		return ResponseEntity.ok(null);
+	}
+	
+	@PutMapping("/cancel")
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final HttpServletRequest request, 
+			@RequestBody final ReservationDto reservationDtoRequest) {
+		this.userRequestExtractorUtil.extractUsername(request);
+		final var reservationDto = this.reservationService.cancelReservation(reservationDtoRequest);
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));
 	}
 	
 	
