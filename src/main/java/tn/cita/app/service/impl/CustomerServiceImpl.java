@@ -16,7 +16,6 @@ import tn.cita.app.dto.response.CustomerContainerResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.repository.CustomerRepository;
-import tn.cita.app.service.CredentialService;
 import tn.cita.app.service.CustomerService;
 import tn.cita.app.service.FavouriteService;
 import tn.cita.app.service.RatingService;
@@ -29,7 +28,6 @@ import tn.cita.app.service.ReservationService;
 public class CustomerServiceImpl implements CustomerService {
 	
 	private final CustomerRepository customerRepository;
-	private final CredentialService credentialService;
 	private final ReservationService reservationService;
 	private final FavouriteService favouriteService;
 	private final RatingService ratingService;
@@ -76,7 +74,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return new CustomerContainerResponse(
 				this.findByCredentialUsernameIgnoringCase(username), 
-				this.credentialService.findById(customerDto.getCredentialId()), 
+				null, 
 				this.reservationService.findAllByCustomerId(customerDto.getId()), 
 				this.favouriteService.findAllByCustomerId(customerDto.getId()),
 				this.ratingService.findAllByCustomerId(customerDto.getId()));
@@ -89,7 +87,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return CustomerContainerResponse.builder()
 				.customerDto(customerDto)
-				.credentialDto(this.credentialService.findById(customerDto.getCredentialId()))
+				// .credentialDto(this.credentialService.findById(customerDto.getCredentialDto().getId()))
 				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId()))
 				.build();
 	}
@@ -101,7 +99,7 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return CustomerContainerResponse.builder()
 				.customerDto(customerDto)
-				.credentialDto(this.credentialService.findById(customerDto.getCredentialId()))
+				// .credentialDto(this.credentialService.findById(customerDto.getCredentialDto().getId()))
 				.reservationDtos(this.reservationService.findAllByCustomerId(customerDto.getId()))
 				.build();
 	}

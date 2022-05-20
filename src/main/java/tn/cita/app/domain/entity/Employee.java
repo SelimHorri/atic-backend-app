@@ -82,7 +82,7 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id", nullable = false)
 	private Saloon saloon;
 	
-	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "employee")
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "worker")
 	private Set<Rating> ratings;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "worker")

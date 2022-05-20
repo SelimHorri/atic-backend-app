@@ -46,7 +46,7 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@Id
 	@Column(name = "employee_id", nullable = false, insertable = false, updatable = false)
-	private Integer employeeId;
+	private Integer workerId;
 	
 	@Id
 	@Column(name = "customer_id", nullable = false, insertable = false, updatable = false)
@@ -69,7 +69,7 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
-	private Employee employee;
+	private Employee worker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, updatable = false)

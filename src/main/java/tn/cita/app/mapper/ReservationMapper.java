@@ -5,7 +5,9 @@ import javax.validation.constraints.NotNull;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.Reservation;
 import tn.cita.app.domain.entity.Saloon;
+import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.SaloonDto;
 
 public interface ReservationMapper {
 	
@@ -17,8 +19,25 @@ public interface ReservationMapper {
 				.startDate(reservation.getStartDate())
 				.cancelDate(reservation.getCancelDate())
 				.status(reservation.getStatus())
-				.customerId(reservation.getCustomer().getId())
-				.saloonId(reservation.getSaloon().getId())
+				.customerDto(
+					CustomerDto.builder()
+						.id(reservation.getCustomer().getId())
+						.firstname(reservation.getCustomer().getFirstname())
+						.lastname(reservation.getCustomer().getLastname())
+						.email(reservation.getCustomer().getEmail())
+						.phone(reservation.getCustomer().getPhone())
+						.birthdate(reservation.getCustomer().getBirthdate())
+						.build())
+				.saloonDto(
+					SaloonDto.builder()
+						.id(reservation.getSaloon().getId())
+						.code(reservation.getSaloon().getCode())
+						.name(reservation.getSaloon().getName())
+						.isPrimary(reservation.getSaloon().getIsPrimary())
+						.openingDate(reservation.getSaloon().getOpeningDate())
+						.fullAdr(reservation.getSaloon().getFullAdr())
+						.email(reservation.getSaloon().getEmail())
+						.build())
 				.build();
 	}
 	
@@ -32,11 +51,22 @@ public interface ReservationMapper {
 				.status(reservationDto.getStatus())
 				.customer(
 					Customer.builder()
-						.id(reservationDto.getCustomerId())
+						.id(reservationDto.getCustomerDto().getId())
+						.firstname(reservationDto.getCustomerDto().getFirstname())
+						.lastname(reservationDto.getCustomerDto().getLastname())
+						.email(reservationDto.getCustomerDto().getEmail())
+						.phone(reservationDto.getCustomerDto().getPhone())
+						.birthdate(reservationDto.getCustomerDto().getBirthdate())
 						.build())
 				.saloon(
 					Saloon.builder()
-						.id(reservationDto.getSaloonId())
+						.id(reservationDto.getSaloonDto().getId())
+						.code(reservationDto.getSaloonDto().getCode())
+						.name(reservationDto.getSaloonDto().getName())
+						.isPrimary(reservationDto.getSaloonDto().getIsPrimary())
+						.openingDate(reservationDto.getSaloonDto().getOpeningDate())
+						.fullAdr(reservationDto.getSaloonDto().getFullAdr())
+						.email(reservationDto.getSaloonDto().getEmail())
 						.build())
 				.build();
 	}

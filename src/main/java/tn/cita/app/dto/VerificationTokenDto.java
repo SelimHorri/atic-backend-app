@@ -8,7 +8,10 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -21,6 +24,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 
+@JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -38,7 +42,9 @@ public final class VerificationTokenDto extends AbstractMappedDto implements Ser
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime expireDate;
-	private Integer credentialId;
+	
+	@JsonProperty("credential")
+	private CredentialDto credentialDto;
 	
 }
 
