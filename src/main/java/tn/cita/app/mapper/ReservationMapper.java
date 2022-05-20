@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.Reservation;
+import tn.cita.app.domain.entity.Saloon;
 import tn.cita.app.dto.ReservationDto;
 
 public interface ReservationMapper {
@@ -17,6 +18,7 @@ public interface ReservationMapper {
 				.cancelDate(reservation.getCancelDate())
 				.status(reservation.getStatus())
 				.customerId(reservation.getCustomer().getId())
+				.saloonId(reservation.getSaloon().getId())
 				.build();
 	}
 	
@@ -31,6 +33,10 @@ public interface ReservationMapper {
 				.customer(
 					Customer.builder()
 						.id(reservationDto.getCustomerId())
+						.build())
+				.saloon(
+					Saloon.builder()
+						.id(reservationDto.getSaloonId())
 						.build())
 				.build();
 	}

@@ -83,6 +83,9 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
 	private Set<Category> categories;
 	
+	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	private Set<Reservation> reservations;
+	
 }
 
 

@@ -48,9 +48,10 @@ public final class ReservationDto extends AbstractMappedDto implements Serializa
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime cancelDate;
 	
-	@NotNull(message = "Input reservationStatus should not be null")
+	@NotNull(message = "Input status should not be null")
 	private ReservationStatus status;
 	private Integer customerId;
+	private Integer saloonId;
 	
 }
 

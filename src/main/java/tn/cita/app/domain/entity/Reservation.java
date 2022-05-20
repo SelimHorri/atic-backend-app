@@ -77,6 +77,10 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
 	private Set<Task> tasks;
 	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	private Saloon saloon;
+	
 }
 
 
