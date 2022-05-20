@@ -113,7 +113,6 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return CustomerContainerResponse.builder()
 				.customerDto(customerDto)
-				.credentialDto(this.credentialService.findById(customerDto.getCredentialId()))
 				.ratingDtos(this.ratingService.findAllByCustomerId(customerDto.getId()))
 				.build();
 	}

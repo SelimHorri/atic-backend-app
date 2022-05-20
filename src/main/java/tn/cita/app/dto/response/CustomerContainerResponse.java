@@ -32,6 +32,7 @@ public final class CustomerContainerResponse implements Serializable {
 	@JsonProperty("customer")
 	private final CustomerDto customerDto;
 	
+	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("credential")
 	private final CredentialDto credentialDto;
 	
