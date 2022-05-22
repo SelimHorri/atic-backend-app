@@ -1,5 +1,7 @@
 package tn.cita.app.resource.v0;
 
+import java.util.List;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -38,6 +40,12 @@ public class ServiceDetailResource {
 			@PathVariable final String reservationId) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.serviceDetailService.getOrderedServiceDetailsByReservationId(Integer.parseInt(reservationId))));
+	}
+	
+	@GetMapping("/saloonId/{saloonId}")
+	public ResponseEntity<ApiPayloadResponse<List<ServiceDetailDto>>> findAllByCategorySaloonId(@PathVariable final String saloonId) {
+		final var serviceDetails = this.serviceDetailService.findAllByCategorySaloonId(Integer.parseInt(saloonId));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(serviceDetails.size(), HttpStatus.OK, true, serviceDetails));
 	}
 	
 	

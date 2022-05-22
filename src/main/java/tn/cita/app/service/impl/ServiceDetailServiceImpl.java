@@ -57,6 +57,24 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 				.build();
 	}
 	
+	@Override
+	public List<ServiceDetailDto> findAllByCategoryId(final Integer categoryId) {
+		return this.serviceDetailRepository.findAllByCategoryId(categoryId)
+				.stream()
+					.map(ServiceDetailMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
+	}
+	
+	@Override
+	public List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
+		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId)
+				.stream()
+					.map(ServiceDetailMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
+	}
+	
 	
 	
 }

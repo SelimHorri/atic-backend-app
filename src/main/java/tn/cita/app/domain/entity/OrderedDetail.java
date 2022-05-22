@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -28,9 +29,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.OrderedDetailId;
+import tn.cita.app.domain.listener.OrderedDetailEntityListener;
 
 @Entity
 @Table(name = "ordered_details")
+@EntityListeners(OrderedDetailEntityListener.class)
 @IdClass(OrderedDetailId.class)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -56,11 +59,11 @@ public class OrderedDetail extends AbstractAuditingMappedEntity implements Seria
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime orderedDate;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
 	private Reservation reservation;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "service_detail_id", referencedColumnName = "id")
 	private ServiceDetail serviceDetail;
 	
