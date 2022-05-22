@@ -1,5 +1,6 @@
 package tn.cita.app.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,6 +66,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 		final var orderedDetail = OrderedDetail.builder()
 				.reservationId(orderedDetailId.getReservationId())
 				.serviceDetailId(orderedDetailId.getServiceDetailId())
+				.orderedDate(LocalDateTime.now())
 				.reservation(this.reservationRepository.findById(orderedDetailId.getReservationId())
 						.orElseThrow(ReservationNotFoundException::new))
 				.serviceDetail(this.serviceDetailRepository.findById(orderedDetailId.getServiceDetailId())
@@ -73,7 +75,9 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 		
 		System.err.println(OrderedDetailMapper.map(orderedDetail));
 		
-		return OrderedDetailMapper.map(this.orderedDetailRepository.save(orderedDetail));
+		this.orderedDetailRepository.saveOrderedDetail(orderedDetail.getReservationId(), orderedDetail.getServiceDetailId(), orderedDetail.getOrderedDate().toString());
+		
+		return OrderedDetailMapper.map(this.orderedDetailRepository.findById(orderedDetailId).orElseThrow());
 	}
 	
 	

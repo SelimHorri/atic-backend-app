@@ -9,6 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -28,12 +29,15 @@ public final class OrderedDetailRequest implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@JsonProperty("reservationId")
 	@NotNull(message = "Must belong to a specific reservation")
 	private Integer reservationId;
 	
+	@JsonProperty("serviceDetailId")
 	@NotNull(message = "Service must be specified")
 	private Integer serviceDetailId;
 	
+	@JsonProperty("orderedDate")
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
