@@ -9,6 +9,7 @@ import org.springframework.data.repository.query.Param;
 
 import tn.cita.app.domain.entity.OrderedDetail;
 import tn.cita.app.domain.id.OrderedDetailId;
+import tn.cita.app.dto.request.OrderedDetailRequest;
 
 public interface OrderedDetailRepository extends JpaRepository<OrderedDetail, OrderedDetailId> {
 	
@@ -17,9 +18,7 @@ public interface OrderedDetailRepository extends JpaRepository<OrderedDetail, Or
 	
 	@Modifying
 	@Query(name = "OrderedDetail.saveOrderedDetail", nativeQuery = true)
-	void saveOrderedDetail(@Param("reservationId") final Integer reservationId, 
-									@Param("serviceDetailId") final Integer serviceDetailId, 
-									@Param("orderedDate") final String orderedDate);
+	int saveOrderedDetail(@Param("orderedDetail") final OrderedDetailRequest orderedDetail);
 	
 }
 
