@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.ReservationService;
@@ -54,14 +55,11 @@ public class ReservationResource {
 	}
 	
 	@PutMapping("/details")
-	public ResponseEntity<ApiPayloadResponse<Boolean>> updateReservationDetails(final HttpServletRequest request, 
-			@RequestBody final ReservationContainerResponse reservationContainerResponse) {
-		
-		// TODO...
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> updateReservationDetails(final HttpServletRequest request, 
+			@RequestBody final ReservationDetailRequest reservationDetailRequest) {
 		this.userRequestExtractorUtil.extractUsername(request);
-		this.reservationService.updateReservationDetails(reservationContainerResponse);
-		
-		return ResponseEntity.ok(null);
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.reservationService.updateReservationDetails(reservationDetailRequest)));
 	}
 	
 	@PutMapping("/cancel")

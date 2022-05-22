@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.mapper.ReservationMapper;
@@ -64,11 +65,16 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Transactional
 	@Override
-	public ReservationContainerResponse updateReservationDetails(final ReservationContainerResponse reservationContainerResponse) {
+	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
 		
 		// TODO: impl this method, change input to a specific request
 		
-		return null;
+		final var reservation = this.reservationRepository.findById(reservationDetailRequest.getReservationId())
+				.orElseThrow(() -> new ReservationNotFoundException(String
+						.format("Reservation with id: %s not found", reservationDetailRequest.getReservationId())));
+		reservation.setDescription(reservationDetailRequest.getDescription());
+		
+		return ReservationMapper.map(reservation);
 	}
 	
 	@Transactional
