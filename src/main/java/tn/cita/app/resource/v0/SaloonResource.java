@@ -1,7 +1,6 @@
 package tn.cita.app.resource.v0;
 
-import java.util.List;
-
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,16 +23,16 @@ public class SaloonResource {
 	private final SaloonService saloonService;
 	
 	@GetMapping("/offset/{offset}")
-	public ResponseEntity<ApiPayloadResponse<List<SaloonDto>>> findAll(@PathVariable final String offset) {
+	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAll(@PathVariable final String offset) {
 		final var saloons = this.saloonService.findAll(Integer.parseInt(offset));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.size(), HttpStatus.OK, true, saloons));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
 	@GetMapping("/locations/state/{state}")
-	public ResponseEntity<ApiPayloadResponse<List<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
+	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
 			@RequestParam(defaultValue = "1") final String offset) {
 		final var saloons = this.saloonService.findAllByLocationState(state, Integer.parseInt(offset));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.size(), HttpStatus.OK, true, saloons));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
 	@GetMapping("/{id}")
@@ -43,9 +42,9 @@ public class SaloonResource {
 	}
 	
 	@GetMapping("/code/{code}")
-	public ResponseEntity<ApiPayloadResponse<List<SaloonDto>>> findAllByCode(@PathVariable final String code) {
+	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAllByCode(@PathVariable final String code) {
 		final var saloons = this.saloonService.findAllByCode(code);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.size(), HttpStatus.OK, true, saloons));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
 	

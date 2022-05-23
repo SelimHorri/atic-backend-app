@@ -1,8 +1,6 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,22 +21,16 @@ public class SaloonServiceImpl implements SaloonService {
 	private final SaloonRepository saloonRepository;
 	
 	@Override
-	public List<SaloonDto> findAll(final int offset) {
+	public Page<SaloonDto> findAll(final int offset) {
 		return this.saloonRepository.findAll(PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
-				.stream()
-					.map(SaloonMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+				.map(SaloonMapper::map);
 	}
 	
 	@Override
-	public List<SaloonDto> findAllByLocationState(final String state, final int offset) {
+	public Page<SaloonDto> findAllByLocationState(final String state, final int offset) {
 		return this.saloonRepository.findAllByLocationStateIgnoringCase(state.strip(), 
-				PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
-				.stream()
-					.map(SaloonMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+					PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
+				.map(SaloonMapper::map);
 	}
 	
 	@Override
@@ -50,12 +42,9 @@ public class SaloonServiceImpl implements SaloonService {
 	}
 	
 	@Override
-	public List<SaloonDto> findAllByCode(final String code) {
-		return this.saloonRepository.findAllByCode(code)
-				.stream()
-					.map(SaloonMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+	public Page<SaloonDto> findAllByCode(final String code) {
+		return this.saloonRepository.findAllByCode(code, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
+				.map(SaloonMapper::map);
 	}
 	
 	

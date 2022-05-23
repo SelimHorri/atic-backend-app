@@ -1,8 +1,6 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +23,10 @@ public class TagServiceImpl implements TagService {
 	private final TagRepository tagRepository;
 	
 	@Override
-	public List<TagDto> findAll(final int pageOffset) {
+	public Page<TagDto> findAll(final int pageOffset) {
 		log.info("** TagServiceImpl; List TagDto; find all based on pageOffset.. *\n");
 		return this.tagRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE))
-				.stream()
-					.map(TagMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+				.map(TagMapper::map);
 	}
 	
 	@Override

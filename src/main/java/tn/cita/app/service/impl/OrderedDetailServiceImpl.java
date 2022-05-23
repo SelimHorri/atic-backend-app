@@ -1,12 +1,12 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.OrderedDetailId;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.request.OrderedDetailRequest;
@@ -23,12 +23,9 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	private final OrderedDetailRepository orderedDetailRepository;
 	
 	@Override
-	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
-		return this.orderedDetailRepository.findAllByReservationId(reservationId)
-				.stream()
-					.map(OrderedDetailMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+	public Page<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
+		return this.orderedDetailRepository.findAllByReservationId(reservationId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
+				.map(OrderedDetailMapper::map);
 	}
 	
 	@Transactional

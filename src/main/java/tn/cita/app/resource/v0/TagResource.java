@@ -1,9 +1,8 @@
 package tn.cita.app.resource.v0;
 
-import java.util.List;
-
 import javax.validation.constraints.NotNull;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -27,10 +26,10 @@ public class TagResource {
 	private final TagService tagService;
 	
 	@GetMapping("/offset/{offset}")
-	public ResponseEntity<ApiPayloadResponse<List<TagDto>>> findAll(@PathVariable @NotNull final String offset) {
+	public ResponseEntity<ApiPayloadResponse<Page<TagDto>>> findAll(@PathVariable @NotNull final String offset) {
 		log.info("** TagResource; List TagDto; find all based on pageOffset.. *\n");
 		final var tags = this.tagService.findAll(Integer.parseInt(offset));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(tags.size(), HttpStatus.OK, true, tags));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(tags.toList().size(), HttpStatus.OK, true, tags));
 	}
 	
 	@GetMapping("/{id}")

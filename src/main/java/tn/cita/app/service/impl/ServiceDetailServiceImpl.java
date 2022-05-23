@@ -1,13 +1,16 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
@@ -34,12 +37,13 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	}
 	
 	@Override
-	public List<ServiceDetailDto> findAllByIds(final Set<Integer> ids) {
-		return this.serviceDetailRepository.findAllById(ids)
+	public Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids) {
+		final var list = this.serviceDetailRepository.findAllById(ids)
 				.stream()
 					.map(ServiceDetailMapper::map)
 					.distinct()
 					.collect(Collectors.toUnmodifiableList());
+		return new PageImpl<>(list, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE), list.size());
 	}
 	
 	@Override
@@ -58,21 +62,15 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	}
 	
 	@Override
-	public List<ServiceDetailDto> findAllByCategoryId(final Integer categoryId) {
-		return this.serviceDetailRepository.findAllByCategoryId(categoryId)
-				.stream()
-					.map(ServiceDetailMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+	public Page<ServiceDetailDto> findAllByCategoryId(final Integer categoryId) {
+		return this.serviceDetailRepository.findAllByCategoryId(categoryId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
+				.map(ServiceDetailMapper::map);
 	}
 	
 	@Override
-	public List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
-		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId)
-				.stream()
-					.map(ServiceDetailMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+	public Page<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
+		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
+				.map(ServiceDetailMapper::map);
 	}
 	
 	

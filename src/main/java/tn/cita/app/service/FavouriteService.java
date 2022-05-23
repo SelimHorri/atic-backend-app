@@ -1,13 +1,13 @@
 package tn.cita.app.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.FavouriteDto;
 
 public interface FavouriteService {
 	
-	List<FavouriteDto> findAllByCustomerId(final Integer customerId);
+	Page<FavouriteDto> findAllByCustomerId(final Integer customerId);
 	Boolean deleteById(final FavouriteId favouriteId);
 	
 }

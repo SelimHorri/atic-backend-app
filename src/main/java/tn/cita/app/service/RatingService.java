@@ -1,12 +1,12 @@
 package tn.cita.app.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import tn.cita.app.dto.RatingDto;
 
 public interface RatingService {
 	
-	List<RatingDto> findAllByCustomerId(final Integer customerId);
+	Page<RatingDto> findAllByCustomerId(final Integer customerId);
 	
 }
 

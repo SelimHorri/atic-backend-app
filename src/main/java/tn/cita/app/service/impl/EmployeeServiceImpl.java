@@ -1,8 +1,6 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,13 +23,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private final EmployeeRepository employeeRepository;
 	
 	@Override
-	public List<EmployeeDto> findAll(final int pageOffset) {
+	public Page<EmployeeDto> findAll(final int pageOffset) {
 		log.info("** EmployeeServiceImpl; EmployeeDto; find all with pageOffset service...*\n");
 		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE))
-				.stream()
-					.map(EmployeeMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+				.map(EmployeeMapper::map);
 	}
 	
 	@Override

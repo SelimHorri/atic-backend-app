@@ -1,7 +1,8 @@
 package tn.cita.app.dto.response;
 
 import java.io.Serializable;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
@@ -38,15 +39,15 @@ public final class CustomerContainerResponse implements Serializable {
 	
 	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("reservations")
-	private List<ReservationDto> reservationDtos;
+	private Page<ReservationDto> reservationDtos;
 	
 	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("favourites")
-	private List<FavouriteDto> favouriteDtos;
+	private Page<FavouriteDto> favouriteDtos;
 	
 	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("ratings")
-	private List<RatingDto> ratingDtos;
+	private Page<RatingDto> ratingDtos;
 	
 }
 

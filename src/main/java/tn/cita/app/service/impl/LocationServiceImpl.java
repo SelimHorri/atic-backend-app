@@ -3,6 +3,7 @@ package tn.cita.app.service.impl;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,12 +25,9 @@ public class LocationServiceImpl implements LocationService {
 	private final LocationRepository locationRepository;
 	
 	@Override
-	public List<LocationDto> findAll(final int offset) {
+	public Page<LocationDto> findAll(final int offset) {
 		return this.locationRepository.findAll(PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
-				.stream()
-					.map(LocationMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+				.map(LocationMapper::map);
 	}
 	
 	@Override

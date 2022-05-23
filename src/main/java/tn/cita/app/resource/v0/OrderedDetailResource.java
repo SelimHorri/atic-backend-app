@@ -1,10 +1,9 @@
 package tn.cita.app.resource.v0;
 
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,11 +33,11 @@ public class OrderedDetailResource {
 	private final OrderedDetailService orderedDetailService;
 	
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<List<OrderedDetailDto>>> findAllByReservationId(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<Page<OrderedDetailDto>>> findAllByReservationId(final HttpServletRequest request, 
 			@PathVariable final String reservationId) {
 		this.extractorUtil.extractUsername(request);
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(Integer.parseInt(reservationId));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(orderedDetailDtos.size(), HttpStatus.OK, true, orderedDetailDtos));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(orderedDetailDtos.toList().size(), HttpStatus.OK, true, orderedDetailDtos));
 	}
 	
 	@DeleteMapping

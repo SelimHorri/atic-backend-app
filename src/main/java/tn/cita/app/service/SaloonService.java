@@ -1,15 +1,15 @@
 package tn.cita.app.service;
 
-import java.util.List;
+import org.springframework.data.domain.Page;
 
 import tn.cita.app.dto.SaloonDto;
 
 public interface SaloonService {
 	
-	List<SaloonDto> findAll(final int offset);
-	List<SaloonDto> findAllByLocationState(final String state, final int offset);
+	Page<SaloonDto> findAll(final int offset);
+	Page<SaloonDto> findAllByLocationState(final String state, final int offset);
 	SaloonDto findById(final Integer id);
-	List<SaloonDto> findAllByCode(final String code);
+	Page<SaloonDto> findAllByCode(final String code);
 	
 }
 

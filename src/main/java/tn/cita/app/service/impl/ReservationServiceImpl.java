@@ -1,12 +1,12 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationContainerResponse;
@@ -27,12 +27,9 @@ public class ReservationServiceImpl implements ReservationService {
 	private final TaskService taskService;
 	
 	@Override
-	public List<ReservationDto> findAllByCustomerId(final Integer customerId) {
-		return this.reservationRepository.findAllByCustomerId(customerId)
-				.stream()
-					.map(ReservationMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+	public Page<ReservationDto> findAllByCustomerId(final Integer customerId) {
+		return this.reservationRepository.findAllByCustomerId(customerId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
+				.map(ReservationMapper::map);
 	}
 	
 	@Override
@@ -66,9 +63,6 @@ public class ReservationServiceImpl implements ReservationService {
 	@Transactional
 	@Override
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
-		
-		// TODO: impl this method, change input to a specific request
-		
 		final var reservation = this.reservationRepository.findById(reservationDetailRequest.getReservationId())
 				.orElseThrow(() -> new ReservationNotFoundException(String
 						.format("Reservation with id: %s not found", reservationDetailRequest.getReservationId())));
