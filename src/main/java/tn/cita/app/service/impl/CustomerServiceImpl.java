@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.CustomerDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerContainerResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
@@ -76,26 +77,16 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public CustomerContainerResponse getFavouritesByUsername(final String username) {
-
-		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
-		
-		return CustomerContainerResponse.builder()
-				.customerDto(customerDto)
-				// .credentialDto(this.credentialService.findById(customerDto.getCredentialDto().getId()))
-				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId()))
-				.build();
-	}
-	
-	@Override
-	public CustomerContainerResponse getFavouritesByUsername(final String username, final int offset, final int size) {
+	public CustomerContainerResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
 		return CustomerContainerResponse.builder()
 				.customerDto(customerDto)
 				// .credentialDto(this.credentialService.findById(customerDto.getCredentialDto().getId()))
-				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId(), offset, size))
+				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId(), 
+						clientPageRequest.getOffset(), 
+						clientPageRequest.getSize()))
 				.build();
 	}
 	

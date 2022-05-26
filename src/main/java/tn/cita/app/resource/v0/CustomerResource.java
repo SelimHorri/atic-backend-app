@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.CustomerService;
@@ -41,8 +42,15 @@ public class CustomerResource {
 			@RequestParam(defaultValue = "" + AppConstant.PAGE_SIZE) final String size) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
-						Integer.parseInt(offset), 
-						Integer.parseInt(size))));
+						new ClientPageRequest(Integer.parseInt(offset), Integer.parseInt(size)))));
+	}
+	
+	@DeleteMapping("/favourites/{saloonId}")
+	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteFavourite(final HttpServletRequest request, 
+			@PathVariable final String saloonId) {
+		final Boolean isDeleted = this.customerService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
+				Integer.parseInt(saloonId));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, isDeleted));
 	}
 	
 	@GetMapping("/ratings")
@@ -57,14 +65,6 @@ public class CustomerResource {
 			final HttpServletRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
-	}
-	
-	@DeleteMapping("/favourites/{saloonId}")
-	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteFavourite(final HttpServletRequest request, 
-			@PathVariable final String saloonId) {
-		final Boolean isDeleted = this.customerService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
-				Integer.parseInt(saloonId));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, isDeleted));
 	}
 	
 	

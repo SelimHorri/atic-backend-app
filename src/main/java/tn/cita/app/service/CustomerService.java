@@ -3,6 +3,7 @@ package tn.cita.app.service;
 import org.springframework.data.domain.Page;
 
 import tn.cita.app.dto.CustomerDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerContainerResponse;
 
 public interface CustomerService {
@@ -12,8 +13,7 @@ public interface CustomerService {
 	CustomerDto findByCredentialUsernameIgnoringCase(final String username);
 	boolean deleteById(final Integer id);
 	CustomerContainerResponse getProfileByUsername(final String username);
-	CustomerContainerResponse getFavouritesByUsername(final String username);
-	CustomerContainerResponse getFavouritesByUsername(final String username, final int offset, final int size);
+	CustomerContainerResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest);
 	CustomerContainerResponse getReservationsByUsername(final String username);
 	CustomerContainerResponse getRatingsByUsername(final String username);
 	Boolean deleteFavourite(final String username, final Integer saloonId);
