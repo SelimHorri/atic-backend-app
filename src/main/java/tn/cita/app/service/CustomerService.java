@@ -13,6 +13,7 @@ public interface CustomerService {
 	boolean deleteById(final Integer id);
 	CustomerContainerResponse getProfileByUsername(final String username);
 	CustomerContainerResponse getFavouritesByUsername(final String username);
+	CustomerContainerResponse getFavouritesByUsername(final String username, final int offset, final int size);
 	CustomerContainerResponse getReservationsByUsername(final String username);
 	CustomerContainerResponse getRatingsByUsername(final String username);
 	Boolean deleteFavourite(final String username, final Integer saloonId);

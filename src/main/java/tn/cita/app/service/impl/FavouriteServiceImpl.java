@@ -26,6 +26,12 @@ public class FavouriteServiceImpl implements FavouriteService {
 				.map(FavouriteMapper::map);
 	}
 	
+	@Override
+	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final int offset, final int size) {
+		return this.favouriteRepository.findAllByCustomerId(customerId, PageRequest.of(offset - 1, size))
+				.map(FavouriteMapper::map);
+	}
+	
 	@Transactional
 	@Override
 	public Boolean deleteById(final FavouriteId favouriteId) {

@@ -16,6 +16,7 @@ INSERT INTO favourites (customer_id, saloon_id) VALUES
 (5, 7),
 (5, 8),
 (5, 6),
+(5, 9),
 (6, 2);
 
 

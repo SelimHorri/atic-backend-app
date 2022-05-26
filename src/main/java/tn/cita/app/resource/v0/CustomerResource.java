@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
@@ -35,10 +36,13 @@ public class CustomerResource {
 	}
 	
 	@GetMapping("/favourites")
-	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getFavourites(
-			final HttpServletRequest request) {
+	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getFavourites(final HttpServletRequest request, 
+			@RequestParam(defaultValue = "1") final String offset, 
+			@RequestParam(defaultValue = "" + AppConstant.PAGE_SIZE) final String size) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+						Integer.parseInt(offset), 
+						Integer.parseInt(size))));
 	}
 	
 	@GetMapping("/ratings")
