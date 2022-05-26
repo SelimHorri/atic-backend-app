@@ -84,9 +84,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return CustomerContainerResponse.builder()
 				.customerDto(customerDto)
 				// .credentialDto(this.credentialService.findById(customerDto.getCredentialDto().getId()))
-				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId(), 
-						clientPageRequest.getOffset(), 
-						clientPageRequest.getSize()))
+				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest))
 				.build();
 	}
 	

@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.FavouriteDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.mapper.FavouriteMapper;
 import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.service.FavouriteService;
@@ -27,8 +28,9 @@ public class FavouriteServiceImpl implements FavouriteService {
 	}
 	
 	@Override
-	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final int offset, final int size) {
-		return this.favouriteRepository.findAllByCustomerId(customerId, PageRequest.of(offset - 1, size))
+	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
+		return this.favouriteRepository.findAllByCustomerId(customerId, 
+					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(FavouriteMapper::map);
 	}
 	
