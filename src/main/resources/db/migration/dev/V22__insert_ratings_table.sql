@@ -5,7 +5,12 @@ INSERT INTO ratings (employee_id, customer_id, rate, description) VALUES
 (3, 9, 'GOOD', 'excellent'),
 (4, 7, 'NEUTRAL', NULL),
 (5, 6, 'BAD', '7mouumm'),
-(4, 6, 'VERY_BAD', 'kertha!!');
+(4, 6, 'VERY_BAD', 'kertha!!'),
+(4, 5, 'VERY_BAD', 'kertha!!'),
+(5, 5, 'GOOD', 'mch 5ayeb'),
+(6, 5, 'PERFECT', 'awesome'),
+(3, 5, 'NEUTRAL', '3adii!!'),
+(1, 5, 'VERY_BAD', 'kerthaa!!');
 
 INSERT INTO ratings (employee_id, customer_id, rate_date, rate, description) VALUES
 (3, 9, '2020-11-26 12:50:09', 'GOOD', 'excellent**'),
