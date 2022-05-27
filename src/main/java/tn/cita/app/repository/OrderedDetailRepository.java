@@ -17,7 +17,7 @@ public interface OrderedDetailRepository extends JpaRepository<OrderedDetail, Or
 	Page<OrderedDetail> findAllByServiceDetailId(final Integer serviceDetailId, final Pageable pageable);
 	
 	@Modifying
-	@Query(name = "OrderedDetail.saveOrderedDetail", nativeQuery = true)
+	@Query(name = "int.saveOrderedDetail", nativeQuery = true)
 	int saveOrderedDetail(@Param("orderedDetail") final OrderedDetailRequest orderedDetail);
 	
 }
