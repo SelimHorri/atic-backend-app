@@ -78,8 +78,8 @@ class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 				.status(ReservationStatus.NOT_STARTED)
 				.customer(Customer.builder()
 						.id(null)
-						.firstname("CR7")
-						.lastname("")
+						.firstname("cristiano")
+						.lastname("ronaldo")
 						.birthdate(null)
 						.build())
 				.build();

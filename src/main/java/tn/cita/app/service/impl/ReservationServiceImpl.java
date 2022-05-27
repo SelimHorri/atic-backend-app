@@ -6,8 +6,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
@@ -27,8 +27,9 @@ public class ReservationServiceImpl implements ReservationService {
 	private final TaskService taskService;
 	
 	@Override
-	public Page<ReservationDto> findAllByCustomerId(final Integer customerId) {
-		return this.reservationRepository.findAllByCustomerId(customerId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
+	public Page<ReservationDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
+		return this.reservationRepository.findAllByCustomerId(customerId, 
+					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(ReservationMapper::map);
 	}
 	

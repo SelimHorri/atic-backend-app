@@ -30,10 +30,12 @@ public class CustomerResource {
 	private final CustomerService customerService;
 	
 	@GetMapping("/profile")
-	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getProfile(
-			final HttpServletRequest request) {
+	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getProfile(final HttpServletRequest request, 
+			@RequestParam(defaultValue = "1") final String offset, 
+			@RequestParam(defaultValue = "" + AppConstant.PAGE_SIZE) final String size) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+				this.customerService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+						new ClientPageRequest(Integer.parseInt(offset), Integer.parseInt(size)))));
 	}
 	
 	@GetMapping("/favourites")
@@ -61,10 +63,12 @@ public class CustomerResource {
 	}
 	
 	@GetMapping("/reservations")
-	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getReservations(
-			final HttpServletRequest request) {
+	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getReservations(final HttpServletRequest request,
+			@RequestParam(defaultValue = "1") final String offset,
+			@RequestParam(defaultValue = "" + AppConstant.PAGE_SIZE) final String size) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+						new ClientPageRequest(Integer.parseInt(offset), Integer.parseInt(size)))));
 	}
 	
 	

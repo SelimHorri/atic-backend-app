@@ -40,6 +40,42 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 				.build(),
 				TagDto.builder()
 				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
 				.name("manicure")
 				.build()
 		);

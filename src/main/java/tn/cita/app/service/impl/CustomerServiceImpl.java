@@ -64,15 +64,15 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public CustomerContainerResponse getProfileByUsername(final String username) {
+	public CustomerContainerResponse getProfileByUsername(final String username, final ClientPageRequest clientPageRequest) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
 		return new CustomerContainerResponse(
 				this.findByCredentialUsernameIgnoringCase(username), 
 				null, 
-				this.reservationService.findAllByCustomerId(customerDto.getId()), 
-				this.favouriteService.findAllByCustomerId(customerDto.getId()),
+				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest), 
+				this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest),
 				this.ratingService.findAllByCustomerId(customerDto.getId()));
 	}
 	
@@ -83,20 +83,18 @@ public class CustomerServiceImpl implements CustomerService {
 		
 		return CustomerContainerResponse.builder()
 				.customerDto(customerDto)
-				// .credentialDto(this.credentialService.findById(customerDto.getCredentialDto().getId()))
 				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest))
 				.build();
 	}
 	
 	@Override
-	public CustomerContainerResponse getReservationsByUsername(final String username) {
+	public CustomerContainerResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
 		return CustomerContainerResponse.builder()
 				.customerDto(customerDto)
-				// .credentialDto(this.credentialService.findById(customerDto.getCredentialDto().getId()))
-				.reservationDtos(this.reservationService.findAllByCustomerId(customerDto.getId()))
+				.reservationDtos(this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest))
 				.build();
 	}
 	

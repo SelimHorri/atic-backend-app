@@ -12,9 +12,9 @@ public interface CustomerService {
 	CustomerDto findById(final Integer id);
 	CustomerDto findByCredentialUsernameIgnoringCase(final String username);
 	boolean deleteById(final Integer id);
-	CustomerContainerResponse getProfileByUsername(final String username);
+	CustomerContainerResponse getProfileByUsername(final String username, final ClientPageRequest clientPageRequest);
 	CustomerContainerResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest);
-	CustomerContainerResponse getReservationsByUsername(final String username);
+	CustomerContainerResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest);
 	CustomerContainerResponse getRatingsByUsername(final String username);
 	Boolean deleteFavourite(final String username, final Integer saloonId);
 	
