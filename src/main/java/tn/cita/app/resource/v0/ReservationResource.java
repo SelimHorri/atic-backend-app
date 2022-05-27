@@ -1,6 +1,7 @@
 package tn.cita.app.resource.v0;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -56,7 +57,7 @@ public class ReservationResource {
 	
 	@PutMapping("/details")
 	public ResponseEntity<ApiPayloadResponse<ReservationDto>> updateReservationDetails(final HttpServletRequest request, 
-			@RequestBody final ReservationDetailRequest reservationDetailRequest) {
+			@RequestBody @Valid final ReservationDetailRequest reservationDetailRequest) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.updateReservationDetails(reservationDetailRequest)));
@@ -64,7 +65,7 @@ public class ReservationResource {
 	
 	@PutMapping("/cancel")
 	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final HttpServletRequest request, 
-			@RequestBody final ReservationDto reservationDtoRequest) {
+			@RequestBody @Valid final ReservationDto reservationDtoRequest) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var reservationDto = this.reservationService.cancelReservation(reservationDtoRequest);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));

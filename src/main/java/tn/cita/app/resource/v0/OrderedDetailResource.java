@@ -1,6 +1,7 @@
 package tn.cita.app.resource.v0;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
@@ -42,7 +43,7 @@ public class OrderedDetailResource {
 	
 	@DeleteMapping
 	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteById(final HttpServletRequest request, 
-			@RequestBody final OrderedDetailId orderedDetailId) {
+			@RequestBody @Valid final OrderedDetailId orderedDetailId) {
 		this.extractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.orderedDetailService.deleteById(orderedDetailId)));
@@ -50,7 +51,7 @@ public class OrderedDetailResource {
 	
 	@PostMapping
 	public ResponseEntity<ApiPayloadResponse<OrderedDetailDto>> save(final HttpServletRequest request, 
-			@RequestBody final OrderedDetailRequest orderedDetailRequest) {
+			@RequestBody @Valid final OrderedDetailRequest orderedDetailRequest) {
 		this.extractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.orderedDetailService.save(orderedDetailRequest)));
 	}
