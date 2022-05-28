@@ -11,7 +11,7 @@ import tn.cita.app.dto.response.CustomerReservationResponse;
 
 public interface CustomerService {
 	
-	Page<CustomerDto> findAll(final int pageOffset);
+	Page<CustomerDto> findAll(final ClientPageRequest clientPageRequest);
 	CustomerDto findById(final Integer id);
 	CustomerDto findByCredentialUsernameIgnoringCase(final String username);
 	boolean deleteById(final Integer id);

@@ -1,6 +1,7 @@
 package tn.cita.app.resource.v0;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.LocationDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.LocationService;
 
@@ -25,8 +27,8 @@ public class LocationResource {
 	private final LocationService locationService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<Page<LocationDto>>> findAll(@RequestParam(defaultValue = "1") final String offset) {
-		final var locations = this.locationService.findAll(Integer.parseInt(offset));
+	public ResponseEntity<ApiPayloadResponse<Page<LocationDto>>> findAll(@RequestParam final Map<String, String> params) {
+		final var locations = this.locationService.findAll(new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(locations.toList().size(), HttpStatus.OK, true, locations));
 	}
 	

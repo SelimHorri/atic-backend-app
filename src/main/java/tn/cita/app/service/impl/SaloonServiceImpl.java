@@ -28,9 +28,9 @@ public class SaloonServiceImpl implements SaloonService {
 	}
 	
 	@Override
-	public Page<SaloonDto> findAllByLocationState(final String state, final int offset) {
+	public Page<SaloonDto> findAllByLocationState(final String state, final ClientPageRequest clientPageRequest) {
 		return this.saloonRepository.findAllByLocationStateIgnoringCase(state.strip(), 
-					PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
+					PageRequest.of(clientPageRequest.getOffset() - 1, AppConstant.PAGE_SIZE))
 				.map(SaloonMapper::map);
 	}
 	

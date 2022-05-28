@@ -1,8 +1,7 @@
 package tn.cita.app.util.impl;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.util.UserRequestExtractorUtil;
@@ -12,7 +11,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 public class ManagerRequestExtractorUtil implements UserRequestExtractorUtil {
 	
 	@Override
-	public String extractUsername(final HttpServletRequest request) {
+	public String extractUsername(final WebRequest request) {
 		return "Hello Manager";
 	}
 	

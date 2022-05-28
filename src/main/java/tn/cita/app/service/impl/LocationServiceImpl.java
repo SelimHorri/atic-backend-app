@@ -9,9 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.entity.Location;
 import tn.cita.app.dto.LocationDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.LocationNotFoundException;
 import tn.cita.app.mapper.LocationMapper;
 import tn.cita.app.repository.LocationRepository;
@@ -25,8 +25,9 @@ public class LocationServiceImpl implements LocationService {
 	private final LocationRepository locationRepository;
 	
 	@Override
-	public Page<LocationDto> findAll(final int offset) {
-		return this.locationRepository.findAll(PageRequest.of(offset - 1, AppConstant.PAGE_SIZE))
+	public Page<LocationDto> findAll(final ClientPageRequest clientPageRequest) {
+		return this.locationRepository.findAll(PageRequest
+					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(LocationMapper::map);
 	}
 	

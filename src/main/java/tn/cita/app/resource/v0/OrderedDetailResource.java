@@ -1,6 +1,5 @@
 package tn.cita.app.resource.v0;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
@@ -34,7 +34,7 @@ public class OrderedDetailResource {
 	private final OrderedDetailService orderedDetailService;
 	
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<Page<OrderedDetailDto>>> findAllByReservationId(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<Page<OrderedDetailDto>>> findAllByReservationId(final WebRequest request, 
 			@PathVariable final String reservationId) {
 		this.extractorUtil.extractUsername(request);
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(Integer.parseInt(reservationId));
@@ -42,7 +42,7 @@ public class OrderedDetailResource {
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteById(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteById(final WebRequest request, 
 			@RequestBody @Valid final OrderedDetailId orderedDetailId) {
 		this.extractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
@@ -50,7 +50,7 @@ public class OrderedDetailResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiPayloadResponse<OrderedDetailDto>> save(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<OrderedDetailDto>> save(final WebRequest request, 
 			@RequestBody @Valid final OrderedDetailRequest orderedDetailRequest) {
 		this.extractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.orderedDetailService.save(orderedDetailRequest)));

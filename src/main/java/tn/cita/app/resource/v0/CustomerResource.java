@@ -2,8 +2,6 @@ package tn.cita.app.resource.v0;
 
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
@@ -35,7 +34,7 @@ public class CustomerResource {
 	private final CustomerService customerService;
 	
 	@GetMapping("/profile")
-	public ResponseEntity<ApiPayloadResponse<CustomerProfileResponse>> getProfile(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<CustomerProfileResponse>> getProfile(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request), 
@@ -43,7 +42,7 @@ public class CustomerResource {
 	}
 	
 	@GetMapping("/favourites")
-	public ResponseEntity<ApiPayloadResponse<CustomerFavouriteResponse>> getFavourites(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<CustomerFavouriteResponse>> getFavourites(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
@@ -51,7 +50,7 @@ public class CustomerResource {
 	}
 	
 	@DeleteMapping("/favourites/{saloonId}")
-	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteFavourite(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteFavourite(final WebRequest request, 
 			@PathVariable final String saloonId) {
 		final Boolean isDeleted = this.customerService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
 				Integer.parseInt(saloonId));
@@ -60,13 +59,13 @@ public class CustomerResource {
 	
 	@GetMapping("/ratings")
 	public ResponseEntity<ApiPayloadResponse<CustomerRatingResponse>> getRatings(
-			final HttpServletRequest request) {
+			final WebRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
 	@GetMapping("/reservations")
-	public ResponseEntity<ApiPayloadResponse<CustomerReservationResponse>> getReservations(final HttpServletRequest request,
+	public ResponseEntity<ApiPayloadResponse<CustomerReservationResponse>> getReservations(final WebRequest request,
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 

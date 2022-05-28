@@ -33,8 +33,8 @@ public class SaloonResource {
 	
 	@GetMapping("/locations/state/{state}")
 	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
-			@RequestParam(defaultValue = "1") final String offset) {
-		final var saloons = this.saloonService.findAllByLocationState(state, Integer.parseInt(offset));
+			@RequestParam final Map<String, String> params) {
+		final var saloons = this.saloonService.findAllByLocationState(state, new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	

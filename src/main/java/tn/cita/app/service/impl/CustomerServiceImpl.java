@@ -7,7 +7,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -35,9 +34,10 @@ public class CustomerServiceImpl implements CustomerService {
 	private final RatingService ratingService;
 	
 	@Override
-	public Page<CustomerDto> findAll(final int pageOffset) {
+	public Page<CustomerDto> findAll(final ClientPageRequest clientPageRequest) {
 		log.info("** CustomerServiceImpl; List CustomerDto; find All with pageOffset service...*\n");
-		return this.customerRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE))
+		return this.customerRepository.findAll(PageRequest
+					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(CustomerMapper::map);
 	}
 	

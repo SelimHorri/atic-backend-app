@@ -1,7 +1,5 @@
 package tn.cita.app.resource.v0;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -10,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
@@ -30,7 +29,7 @@ public class TaskResource {
 	@GetMapping("/reservationId/{reservationId}")
 	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> findAllByReservationId(
 			@PathVariable final String reservationId, 
-			final HttpServletRequest request) {
+			final WebRequest request) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var taskDtos = this.taskService.findAllByReservationId(Integer.parseInt(reservationId));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(taskDtos.toList().size(), HttpStatus.OK, true, taskDtos));
