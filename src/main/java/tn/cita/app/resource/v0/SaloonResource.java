@@ -1,5 +1,7 @@
 package tn.cita.app.resource.v0;
 
+import java.util.Map;
+
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.SaloonDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.SaloonService;
 
@@ -22,9 +25,9 @@ public class SaloonResource {
 	
 	private final SaloonService saloonService;
 	
-	@GetMapping("/offset/{offset}")
-	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAll(@PathVariable final String offset) {
-		final var saloons = this.saloonService.findAll(Integer.parseInt(offset));
+	@GetMapping
+	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAll(@RequestParam final Map<String, String> params) {
+		final var saloons = this.saloonService.findAll(new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	

@@ -7,8 +7,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TagDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
 import tn.cita.app.mapper.TagMapper;
 import tn.cita.app.repository.TagRepository;
@@ -23,9 +23,10 @@ public class TagServiceImpl implements TagService {
 	private final TagRepository tagRepository;
 	
 	@Override
-	public Page<TagDto> findAll(final int pageOffset) {
+	public Page<TagDto> findAll(final ClientPageRequest clientPageRequest) {
 		log.info("** TagServiceImpl; List TagDto; find all based on pageOffset.. *\n");
-		return this.tagRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE))
+		return this.tagRepository.findAll(PageRequest
+					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(TagMapper::map);
 	}
 	

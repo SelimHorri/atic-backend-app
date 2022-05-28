@@ -1,5 +1,7 @@
 package tn.cita.app.resource.v0;
 
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -31,20 +33,18 @@ public class CustomerResource {
 	
 	@GetMapping("/profile")
 	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getProfile(final HttpServletRequest request, 
-			@RequestParam(defaultValue = "1") final String offset, 
-			@RequestParam(defaultValue = "" + AppConstant.PAGE_SIZE) final String size) {
+			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request), 
-						new ClientPageRequest(Integer.parseInt(offset), Integer.parseInt(size)))));
+						new ClientPageRequest(params))));
 	}
 	
 	@GetMapping("/favourites")
 	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getFavourites(final HttpServletRequest request, 
-			@RequestParam(defaultValue = "1") final String offset, 
-			@RequestParam(defaultValue = "" + AppConstant.PAGE_SIZE) final String size) {
+			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
-						new ClientPageRequest(Integer.parseInt(offset), Integer.parseInt(size)))));
+						new ClientPageRequest(params))));
 	}
 	
 	@DeleteMapping("/favourites/{saloonId}")
@@ -64,11 +64,10 @@ public class CustomerResource {
 	
 	@GetMapping("/reservations")
 	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getReservations(final HttpServletRequest request,
-			@RequestParam(defaultValue = "1") final String offset,
-			@RequestParam(defaultValue = "" + AppConstant.PAGE_SIZE) final String size) {
+			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
-						new ClientPageRequest(Integer.parseInt(offset), Integer.parseInt(size)))));
+						new ClientPageRequest(params))));
 	}
 	
 	

@@ -15,9 +15,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.entity.Tag;
 import tn.cita.app.dto.TagDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
 import tn.cita.app.repository.TagRepository;
 import tn.cita.app.service.TagService;
@@ -33,7 +33,7 @@ class TagServiceImplTest {
 	
 	@Test
 	void givenValidPageOffset_whenFindAll_thenAllTagsBasedOnPageOffsetShouldBeReturned() {
-		final var pageOffset = 1;
+		final var clientPageRequest = new ClientPageRequest();
 		final var mockedReturnedList = List.of(
 				Tag.builder()
 				.id(null)
@@ -55,10 +55,10 @@ class TagServiceImplTest {
 				.build()
 		);
 		
-		when(this.tagRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE)))
+		when(this.tagRepository.findAll(PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize())))
 				.thenReturn(new PageImpl<>(mockedReturnedList));
 		
-		final var list = this.tagService.findAll(pageOffset);
+		final var list = this.tagService.findAll(clientPageRequest);
 		assertThat(list)
 				.isNotNull()
 				.isNotEmpty()
