@@ -1,4 +1,4 @@
-package tn.cita.app.resource.v0;
+package tn.cita.app.resource.v0.customer;
 
 import java.util.Map;
 
@@ -14,31 +14,33 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.CustomerProfileResponse;
+import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.CustomerService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/customers")
+@RequestMapping(AppConstant.API_CONTEXT_V0 + "/customers/reservations")
 @RequiredArgsConstructor
-public class CustomerResource {
+public class CustomerReservationResource {
 	
 	@Qualifier("customerRequestExtractorUtil")
 	private final UserRequestExtractorUtil userRequestExtractorUtil;
 	private final CustomerService customerService;
 	
-	@GetMapping("/profile")
-	public ResponseEntity<ApiPayloadResponse<CustomerProfileResponse>> getProfile(final WebRequest request, 
+	@GetMapping
+	public ResponseEntity<ApiPayloadResponse<CustomerReservationResponse>> getReservations(final WebRequest request,
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	
 	
 	
 }
+
+
 
 
 
