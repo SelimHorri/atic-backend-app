@@ -1,6 +1,8 @@
 
+INSERT INTO reservations (code, start_date, description, status, customer_id, saloon_id) VALUES
+('86d1523e-2788-4ef0-8849-fe26c396360b', '2022-10-25 12:51:09', 'ASAP', 'NOT_STARTED', 5, 1);
+
 INSERT INTO reservations (code, description, status, customer_id, saloon_id) VALUES
-('86d1523e-2788-4ef0-8849-fe26c396360b', 'ASAP', 'NOT_STARTED', 5, 1),
 ('d31cfc5c-fd55-4887-9b8c-951a42f5b00d', 'done!!', 'COMPLETED', 6, 1),
 ('6276666a-eff5-43fa-aadf-cf7f5cda1da9', NULL, 'IN_PROGRESS', 1, 1),
 ('a70f1e5a-9b6a-41e1-aad4-79ba78610a4b', 'on going!!', 'IN_PROGRESS', 1, 5),
