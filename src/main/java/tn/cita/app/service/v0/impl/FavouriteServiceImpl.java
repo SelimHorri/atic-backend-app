@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.FavouriteDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -20,12 +19,6 @@ import tn.cita.app.service.v0.FavouriteService;
 public class FavouriteServiceImpl implements FavouriteService {
 	
 	private final FavouriteRepository favouriteRepository;
-	
-	@Override
-	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId) {
-		return this.favouriteRepository.findAllByCustomerId(customerId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
-				.map(FavouriteMapper::map);
-	}
 	
 	@Override
 	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {

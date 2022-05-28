@@ -8,7 +8,6 @@ import tn.cita.app.dto.request.ClientPageRequest;
 
 public interface FavouriteService {
 	
-	Page<FavouriteDto> findAllByCustomerId(final Integer customerId);
 	Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest);
 	Boolean deleteById(final FavouriteId favouriteId);
 	

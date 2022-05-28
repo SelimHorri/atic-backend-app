@@ -1,4 +1,4 @@
-package tn.cita.app.resource.v0;
+package tn.cita.app.resource.v0.employee;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
