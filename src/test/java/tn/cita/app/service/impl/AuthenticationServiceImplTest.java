@@ -12,7 +12,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
-import tn.cita.app.service.AuthenticationService;
+import tn.cita.app.service.v0.AuthenticationService;
 import tn.cita.app.util.JwtUtil;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

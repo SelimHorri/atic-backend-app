@@ -16,7 +16,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.SaloonService;
+import tn.cita.app.service.v0.SaloonService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/saloons")

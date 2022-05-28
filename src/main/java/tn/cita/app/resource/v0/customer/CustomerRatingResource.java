@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.response.CustomerRatingResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.CustomerService;
+import tn.cita.app.service.v0.customer.CustomerRatingService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
@@ -22,13 +22,13 @@ public class CustomerRatingResource {
 	
 	@Qualifier("customerRequestExtractorUtil")
 	private final UserRequestExtractorUtil userRequestExtractorUtil;
-	private final CustomerService customerService;
+	private final CustomerRatingService customerRatingService;
 	
 	@GetMapping
 	public ResponseEntity<ApiPayloadResponse<CustomerRatingResponse>> getRatings(
 			final WebRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+				this.customerRatingService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
 	

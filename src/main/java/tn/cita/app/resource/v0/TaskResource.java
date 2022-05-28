@@ -14,7 +14,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.TaskService;
+import tn.cita.app.service.v0.TaskService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController

@@ -21,7 +21,7 @@ import tn.cita.app.domain.id.OrderedDetailId;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.request.OrderedDetailRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.OrderedDetailService;
+import tn.cita.app.service.v0.OrderedDetailService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController

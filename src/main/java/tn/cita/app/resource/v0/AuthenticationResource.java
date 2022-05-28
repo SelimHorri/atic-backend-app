@@ -16,7 +16,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.AuthenticationService;
+import tn.cita.app.service.v0.AuthenticationService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/authenticate")

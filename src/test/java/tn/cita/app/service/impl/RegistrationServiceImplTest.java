@@ -32,7 +32,7 @@ import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
-import tn.cita.app.service.RegistrationService;
+import tn.cita.app.service.v0.RegistrationService;
 import tn.cita.app.util.NotificationUtil;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

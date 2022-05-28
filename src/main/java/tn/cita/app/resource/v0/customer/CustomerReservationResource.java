@@ -16,7 +16,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.CustomerService;
+import tn.cita.app.service.v0.customer.CustomerReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
@@ -26,13 +26,13 @@ public class CustomerReservationResource {
 	
 	@Qualifier("customerRequestExtractorUtil")
 	private final UserRequestExtractorUtil userRequestExtractorUtil;
-	private final CustomerService customerService;
+	private final CustomerReservationService customerReservationService;
 	
 	@GetMapping
 	public ResponseEntity<ApiPayloadResponse<CustomerReservationResponse>> getReservations(final WebRequest request,
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+				this.customerReservationService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	

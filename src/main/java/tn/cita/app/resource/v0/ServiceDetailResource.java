@@ -13,7 +13,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.ServiceDetailService;
+import tn.cita.app.service.v0.ServiceDetailService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/service-details")

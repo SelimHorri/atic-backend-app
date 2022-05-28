@@ -18,7 +18,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.RegistrationService;
+import tn.cita.app.service.v0.RegistrationService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/register")

@@ -20,7 +20,7 @@ import tn.cita.app.dto.TagDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
 import tn.cita.app.repository.TagRepository;
-import tn.cita.app.service.TagService;
+import tn.cita.app.service.v0.TagService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class TagServiceImplTest {

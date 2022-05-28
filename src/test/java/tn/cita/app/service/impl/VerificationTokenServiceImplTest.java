@@ -21,7 +21,7 @@ import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.VerificationTokenDto;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.repository.VerificationTokenRepository;
-import tn.cita.app.service.VerificationTokenService;
+import tn.cita.app.service.v0.VerificationTokenService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class VerificationTokenServiceImplTest {

@@ -17,7 +17,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TagDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.TagService;
+import tn.cita.app.service.v0.TagService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/tags")

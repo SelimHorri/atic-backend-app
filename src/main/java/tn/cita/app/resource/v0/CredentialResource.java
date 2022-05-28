@@ -12,7 +12,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.CredentialService;
+import tn.cita.app.service.v0.CredentialService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/credentials")

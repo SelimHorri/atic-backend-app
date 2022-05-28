@@ -19,7 +19,7 @@ import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.ReservationService;
+import tn.cita.app.service.v0.ReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController

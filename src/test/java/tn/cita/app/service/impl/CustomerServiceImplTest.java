@@ -28,7 +28,7 @@ import tn.cita.app.dto.UserImageDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.repository.CustomerRepository;
-import tn.cita.app.service.CustomerService;
+import tn.cita.app.service.v0.CustomerService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CustomerServiceImplTest {

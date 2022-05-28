@@ -18,7 +18,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerFavouriteResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.CustomerService;
+import tn.cita.app.service.v0.customer.CustomerFavouriteService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
@@ -28,20 +28,20 @@ public class CustomerFavouriteResource {
 	
 	@Qualifier("customerRequestExtractorUtil")
 	private final UserRequestExtractorUtil userRequestExtractorUtil;
-	private final CustomerService customerService;
+	private final CustomerFavouriteService customerFavouriteService;
 	
 	@GetMapping
 	public ResponseEntity<ApiPayloadResponse<CustomerFavouriteResponse>> getFavourites(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+				this.customerFavouriteService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	
 	@DeleteMapping("/{saloonId}")
 	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteFavourite(final WebRequest request, 
 			@PathVariable final String saloonId) {
-		final Boolean isDeleted = this.customerService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
+		final Boolean isDeleted = this.customerFavouriteService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
 				Integer.parseInt(saloonId));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, isDeleted));
 	}

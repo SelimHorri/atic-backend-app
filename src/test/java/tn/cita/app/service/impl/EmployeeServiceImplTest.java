@@ -28,7 +28,7 @@ import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.UserImageDto;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.repository.EmployeeRepository;
-import tn.cita.app.service.EmployeeService;
+import tn.cita.app.service.v0.EmployeeService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class EmployeeServiceImplTest {

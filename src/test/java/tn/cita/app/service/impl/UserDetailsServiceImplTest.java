@@ -17,7 +17,7 @@ import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.UserDetailsImpl;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
-import tn.cita.app.service.CredentialService;
+import tn.cita.app.service.v0.CredentialService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class UserDetailsServiceImplTest {
