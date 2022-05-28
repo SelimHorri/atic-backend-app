@@ -13,13 +13,13 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.RatingDto;
 
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Getter
-public final class CustomerReservationResponse implements Serializable {
+public final class CustomerRatingResponse implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -27,8 +27,8 @@ public final class CustomerReservationResponse implements Serializable {
 	private final CustomerDto customerDto;
 	
 	@JsonInclude(value = Include.NON_NULL)
-	@JsonProperty("reservations")
-	private final Page<ReservationDto> reservationDtos;
+	@JsonProperty("ratings")
+	private final Page<RatingDto> ratingDtos;
 	
 }
 

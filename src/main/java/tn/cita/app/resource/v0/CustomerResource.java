@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.CustomerContainerResponse;
+import tn.cita.app.dto.response.CustomerFavouriteResponse;
+import tn.cita.app.dto.response.CustomerProfileResponse;
+import tn.cita.app.dto.response.CustomerRatingResponse;
+import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.CustomerService;
 import tn.cita.app.util.UserRequestExtractorUtil;
@@ -32,7 +35,7 @@ public class CustomerResource {
 	private final CustomerService customerService;
 	
 	@GetMapping("/profile")
-	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getProfile(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<CustomerProfileResponse>> getProfile(final HttpServletRequest request, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request), 
@@ -40,7 +43,7 @@ public class CustomerResource {
 	}
 	
 	@GetMapping("/favourites")
-	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getFavourites(final HttpServletRequest request, 
+	public ResponseEntity<ApiPayloadResponse<CustomerFavouriteResponse>> getFavourites(final HttpServletRequest request, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
@@ -56,14 +59,14 @@ public class CustomerResource {
 	}
 	
 	@GetMapping("/ratings")
-	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getRatings(
+	public ResponseEntity<ApiPayloadResponse<CustomerRatingResponse>> getRatings(
 			final HttpServletRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
 	@GetMapping("/reservations")
-	public ResponseEntity<ApiPayloadResponse<CustomerContainerResponse>> getReservations(final HttpServletRequest request,
+	public ResponseEntity<ApiPayloadResponse<CustomerReservationResponse>> getReservations(final HttpServletRequest request,
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 

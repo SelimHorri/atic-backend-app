@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,13 +19,12 @@ import tn.cita.app.dto.FavouriteDto;
 import tn.cita.app.dto.RatingDto;
 import tn.cita.app.dto.ReservationDto;
 
-@AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
 @Getter
 @Builder
-public final class CustomerContainerResponse implements Serializable {
+public final class CustomerProfileResponse implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -39,15 +37,15 @@ public final class CustomerContainerResponse implements Serializable {
 	
 	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("reservations")
-	private Page<ReservationDto> reservationDtos;
+	private final Page<ReservationDto> reservationDtos;
 	
 	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("favourites")
-	private Page<FavouriteDto> favouriteDtos;
+	private final Page<FavouriteDto> favouriteDtos;
 	
 	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("ratings")
-	private Page<RatingDto> ratingDtos;
+	private final Page<RatingDto> ratingDtos;
 	
 }
 

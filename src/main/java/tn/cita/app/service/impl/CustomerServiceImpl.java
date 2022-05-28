@@ -11,7 +11,10 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.CustomerContainerResponse;
+import tn.cita.app.dto.response.CustomerFavouriteResponse;
+import tn.cita.app.dto.response.CustomerProfileResponse;
+import tn.cita.app.dto.response.CustomerRatingResponse;
+import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.repository.CustomerRepository;
@@ -64,11 +67,11 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public CustomerContainerResponse getProfileByUsername(final String username, final ClientPageRequest clientPageRequest) {
+	public CustomerProfileResponse getProfileByUsername(final String username, final ClientPageRequest clientPageRequest) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
-		return new CustomerContainerResponse(
+		return new CustomerProfileResponse(
 				this.findByCredentialUsernameIgnoringCase(username), 
 				null, 
 				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest), 
@@ -77,36 +80,33 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public CustomerContainerResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest) {
+	public CustomerFavouriteResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
-		return CustomerContainerResponse.builder()
-				.customerDto(customerDto)
-				.favouriteDtos(this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest))
-				.build();
+		return new CustomerFavouriteResponse(
+				customerDto,
+				this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest));
 	}
 	
 	@Override
-	public CustomerContainerResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest) {
+	public CustomerReservationResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
-		return CustomerContainerResponse.builder()
-				.customerDto(customerDto)
-				.reservationDtos(this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest))
-				.build();
+		return new CustomerReservationResponse(
+				customerDto,
+				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest));
 	}
 	
 	@Override
-	public CustomerContainerResponse getRatingsByUsername(final String username) {
+	public CustomerRatingResponse getRatingsByUsername(final String username) {
 		
 		final var customerDto = this.findByCredentialUsernameIgnoringCase(username);
 		
-		return CustomerContainerResponse.builder()
-				.customerDto(customerDto)
-				.ratingDtos(this.ratingService.findAllByCustomerId(customerDto.getId()))
-				.build();
+		return new CustomerRatingResponse(
+				customerDto,
+				this.ratingService.findAllByCustomerId(customerDto.getId()));
 	}
 	
 	@Transactional
