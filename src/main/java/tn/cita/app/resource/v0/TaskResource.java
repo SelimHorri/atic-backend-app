@@ -27,9 +27,8 @@ public class TaskResource {
 	private final TaskService taskService;
 	
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> findAllByReservationId(
-			@PathVariable final String reservationId, 
-			final WebRequest request) {
+	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> findAllByReservationId(final WebRequest request, 
+			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var taskDtos = this.taskService.findAllByReservationId(Integer.parseInt(reservationId));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(taskDtos.toList().size(), HttpStatus.OK, true, taskDtos));
