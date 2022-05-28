@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.response.CustomerRatingResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.v0.customer.CustomerRatingService;
+import tn.cita.app.service.v0.business.customer.CustomerRatingService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController

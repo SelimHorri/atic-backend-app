@@ -18,7 +18,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerFavouriteResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.v0.customer.CustomerFavouriteService;
+import tn.cita.app.service.v0.business.customer.CustomerFavouriteService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController

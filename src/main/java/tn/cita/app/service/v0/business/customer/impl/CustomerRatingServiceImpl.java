@@ -1,4 +1,4 @@
-package tn.cita.app.service.v0.customer.impl;
+package tn.cita.app.service.v0.business.customer.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.response.CustomerRatingResponse;
 import tn.cita.app.service.v0.CustomerService;
 import tn.cita.app.service.v0.RatingService;
-import tn.cita.app.service.v0.customer.CustomerRatingService;
+import tn.cita.app.service.v0.business.customer.CustomerRatingService;
 
 @Service
 @Transactional(readOnly = true)

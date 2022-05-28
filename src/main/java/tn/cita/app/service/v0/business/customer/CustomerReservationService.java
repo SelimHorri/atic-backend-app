@@ -1,4 +1,4 @@
-package tn.cita.app.service.v0.customer;
+package tn.cita.app.service.v0.business.customer;
 
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;

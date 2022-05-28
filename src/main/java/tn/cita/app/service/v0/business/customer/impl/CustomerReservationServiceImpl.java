@@ -1,4 +1,4 @@
-package tn.cita.app.service.v0.customer.impl;
+package tn.cita.app.service.v0.business.customer.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -8,7 +8,7 @@ import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.service.v0.CustomerService;
 import tn.cita.app.service.v0.ReservationService;
-import tn.cita.app.service.v0.customer.CustomerReservationService;
+import tn.cita.app.service.v0.business.customer.CustomerReservationService;
 
 @Service
 @Transactional(readOnly = true)

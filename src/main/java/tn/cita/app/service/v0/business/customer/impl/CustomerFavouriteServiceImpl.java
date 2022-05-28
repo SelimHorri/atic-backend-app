@@ -1,4 +1,4 @@
-package tn.cita.app.service.v0.customer.impl;
+package tn.cita.app.service.v0.business.customer.impl;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,7 +9,7 @@ import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerFavouriteResponse;
 import tn.cita.app.service.v0.CustomerService;
 import tn.cita.app.service.v0.FavouriteService;
-import tn.cita.app.service.v0.customer.CustomerFavouriteService;
+import tn.cita.app.service.v0.business.customer.CustomerFavouriteService;
 
 @Service
 @Transactional(readOnly = true)
