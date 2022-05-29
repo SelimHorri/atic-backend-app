@@ -30,8 +30,6 @@ public final class ClientPageRequest implements Serializable {
 	@Builder.Default
 	private Sort.Direction direction = Sort.Direction.DESC;
 	
-	private Map<String, String> params;
-	
 	public ClientPageRequest(final int offset, final int size) {
 		this.offset = offset;
 		this.size = size;
