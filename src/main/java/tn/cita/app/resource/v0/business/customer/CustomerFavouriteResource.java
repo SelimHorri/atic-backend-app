@@ -1,4 +1,4 @@
-package tn.cita.app.resource.v0.customer;
+package tn.cita.app.resource.v0.business.customer;
 
 import java.util.Map;
 

@@ -25,7 +25,7 @@ import tn.cita.app.dto.TaskDto;
 @EqualsAndHashCode
 @Getter
 @Builder
-public final class ReservationContainerResponse implements Serializable {
+public final class ReservationDetailResponse implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

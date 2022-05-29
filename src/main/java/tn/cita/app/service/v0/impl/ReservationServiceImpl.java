@@ -9,7 +9,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.request.ReservationDetailRequest;
-import tn.cita.app.dto.response.ReservationContainerResponse;
+import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.repository.ReservationRepository;
@@ -50,11 +50,11 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 	
 	@Override
-	public ReservationContainerResponse getReservationDetails(final Integer reservationId) {
+	public ReservationDetailResponse getReservationDetails(final Integer reservationId) {
 		
 		final var reservationDto = this.findById(reservationId);
 		
-		return ReservationContainerResponse.builder()
+		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
 				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))
 				.taskDtos(this.taskService.findAllByReservationId(reservationDto.getId()))
