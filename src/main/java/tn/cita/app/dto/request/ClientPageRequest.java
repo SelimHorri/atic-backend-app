@@ -28,7 +28,7 @@ public final class ClientPageRequest implements Serializable {
 	private Sort sortBy;
 	
 	@Builder.Default
-	private Sort.Direction direction = Sort.Direction.DESC;
+	private Sort.Direction sortDirection = Sort.Direction.DESC;
 	
 	public ClientPageRequest(final int offset, final int size) {
 		this.offset = offset;
