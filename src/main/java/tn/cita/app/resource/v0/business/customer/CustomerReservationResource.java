@@ -2,10 +2,14 @@ package tn.cita.app.resource.v0.business.customer;
 
 import java.util.Map;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
@@ -34,6 +39,14 @@ public class CustomerReservationResource {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
+	}
+	
+	@PutMapping("/cancel")
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final WebRequest request, 
+			@RequestBody @Valid final ReservationDto reservationDtoRequest) {
+		this.userRequestExtractorUtil.extractUsername(request);
+		final var reservationDto = this.customerReservationService.cancelReservation(reservationDtoRequest);
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));
 	}
 	
 	

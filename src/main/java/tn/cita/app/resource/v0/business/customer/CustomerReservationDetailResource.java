@@ -19,24 +19,24 @@ import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.v0.ReservationService;
+import tn.cita.app.service.v0.business.customer.CustomerReservationDetailService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/reservations/details")
+@RequestMapping(AppConstant.API_CONTEXT_V0 + "/customers/reservations/details")
 @RequiredArgsConstructor
-public class ReservationDetailResource {
+public class CustomerReservationDetailResource {
 	
 	@Qualifier("customerRequestExtractorUtil")
 	private final UserRequestExtractorUtil userRequestExtractorUtil;
-	private final ReservationService reservationService;
+	private final CustomerReservationDetailService customerReservationDetailService;
 	
 	@GetMapping("/{reservationId}")
 	public ResponseEntity<ApiPayloadResponse<ReservationDetailResponse>> getReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.reservationService.getReservationDetails(Integer.parseInt(reservationId))));
+				this.customerReservationDetailService.getReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
 	@PutMapping
@@ -44,15 +44,7 @@ public class ReservationDetailResource {
 			@RequestBody @Valid final ReservationDetailRequest reservationDetailRequest) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.reservationService.updateReservationDetails(reservationDetailRequest)));
-	}
-	
-	@PutMapping("/cancel")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final WebRequest request, 
-			@RequestBody @Valid final ReservationDto reservationDtoRequest) {
-		this.userRequestExtractorUtil.extractUsername(request);
-		final var reservationDto = this.reservationService.cancelReservation(reservationDtoRequest);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));
+				this.customerReservationDetailService.updateReservationDetails(reservationDetailRequest)));
 	}
 	
 	

@@ -1,6 +1,5 @@
 package tn.cita.app.resource.v0;
 
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,21 +13,17 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.v0.ReservationService;
-import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/reservations")
 @RequiredArgsConstructor
 public class ReservationResource {
 	
-	@Qualifier("customerRequestExtractorUtil")
-	private final UserRequestExtractorUtil userRequestExtractorUtil;
 	private final ReservationService reservationService;
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(final WebRequest request, 
 			@PathVariable final String id) {
-		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findById(Integer.parseInt(id))));
 	}
@@ -36,7 +31,6 @@ public class ReservationResource {
 	@GetMapping("/code/{code}")
 	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(final WebRequest request,
 			@PathVariable final String code) {
-		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findByCode(code)));
 	}
