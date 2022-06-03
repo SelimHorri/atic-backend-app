@@ -40,7 +40,7 @@ spring:
             required: true
   config:
     import:
-    - 'optional:import/secrets/mail-secrets.yml'
+      - 'optional:import/secrets/mail-secrets.yml'
 management:
   endpoint:
     health:

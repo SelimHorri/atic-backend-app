@@ -12,6 +12,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 	
 	Page<Reservation> findAllByCustomerId(final Integer customerId, final Pageable pageable);
 	Optional<Reservation> findByCode(final String code);
+	Page<Reservation> findAllBySaloonId(final Integer saloonId, final Pageable pageable);
 	
 }
 

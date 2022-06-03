@@ -48,6 +48,13 @@ public class ReservationServiceImpl implements ReservationService {
 						.format("Reservation with code: %s not found", code)));
 	}
 	
+	@Override
+	public Page<ReservationDto> findAllBySaloonId(final Integer saloonId, final ClientPageRequest clientPageRequest) {
+		return this.reservationRepository.findAllBySaloonId(saloonId, 
+					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+				.map(ReservationMapper::map);
+	}
+	
 	
 	
 }
