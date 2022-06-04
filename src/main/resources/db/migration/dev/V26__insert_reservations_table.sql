@@ -2,7 +2,7 @@
 INSERT INTO reservations (code, start_date, description, status, customer_id, saloon_id) VALUES
 ('86d1523e-2788-4ef0-8849-fe26c396360b', '2022-06-04 12:30:00', 'ASAP', 'NOT_STARTED', 5, 1),
 ('925e935e-3d06-4576-9ffe-02fe485c2cd2', '2022-06-05 12:00:00', 'ASAP', 'NOT_STARTED', 5, 1),
-('925e935e-3d06-4576-9ffe-02fe485c2cd2', '2022-06-06 11:00:00', 'ASAP', 'NOT_STARTED', 5, 1),
+('71d58140-35b7-4f1b-82c7-548ffa6742ab', '2022-06-06 11:00:00', 'ASAP', 'NOT_STARTED', 5, 1),
 ('02b232b2-5422-48f4-afdb-3a24c6f97fe7', '2022-06-06 17:00:00', 'ASAP', 'NOT_STARTED', 5, 1),
 ('7d852e04-92fe-4dba-b151-b2de5b153692', '2022-06-07 16:30:00', 'ASAP', 'NOT_STARTED', 5, 1),
 ('3f0893c0-ea1f-46ad-bf4c-34aaa41426a7', '2022-06-08 18:30:00', 'ASAP', 'NOT_STARTED', 5, 1),

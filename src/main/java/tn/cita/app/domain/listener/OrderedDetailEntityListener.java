@@ -12,7 +12,7 @@ import tn.cita.app.domain.entity.OrderedDetail;
 public class OrderedDetailEntityListener {
 	
 	@PrePersist
-	void preCreate(final OrderedDetail orderedDetail) {
+	public void preCreate(final OrderedDetail orderedDetail) {
 		orderedDetail.setOrderedDate(LocalDateTime.now());
 	}
 	
