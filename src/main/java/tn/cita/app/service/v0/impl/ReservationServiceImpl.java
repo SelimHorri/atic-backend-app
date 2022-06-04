@@ -1,5 +1,8 @@
 package tn.cita.app.service.v0.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -53,6 +56,15 @@ public class ReservationServiceImpl implements ReservationService {
 		return this.reservationRepository.findAllBySaloonId(saloonId, 
 					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(ReservationMapper::map);
+	}
+	
+	@Override
+	public List<ReservationDto> findAllBySaloonId(final Integer saloonId) {
+		return this.reservationRepository.findAllBySaloonId(saloonId)
+				.stream()
+					.map(ReservationMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

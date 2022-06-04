@@ -1,5 +1,7 @@
 package tn.cita.app.service.v0;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 
 import tn.cita.app.dto.ReservationDto;
@@ -13,6 +15,7 @@ public interface ReservationService {
 	ReservationDto findById(final Integer id);
 	ReservationDto findByCode(final String code);
 	Page<ReservationDto> findAllBySaloonId(final Integer saloonId, final ClientPageRequest clientPageRequest);
+	List<ReservationDto> findAllBySaloonId(final Integer saloonId);
 	
 }
 

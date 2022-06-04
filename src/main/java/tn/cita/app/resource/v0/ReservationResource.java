@@ -3,6 +3,7 @@ package tn.cita.app.resource.v0;
 import java.util.Map;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,10 +13,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.v0.ReservationService;
 
@@ -43,10 +45,11 @@ public class ReservationResource {
 	@GetMapping("/saloonId/{saloonId}")
 	public ResponseEntity<ApiPayloadResponse<Page<ReservationDto>>> findAllBySaloonId(final WebRequest request,
 			@PathVariable final String saloonId, 
-			@RequestParam(required = false) final Map<String, String> params) {
-		final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId), new ClientPageRequest());
-		return ResponseEntity.ok(new ApiPayloadResponse<Page<ReservationDto>>((int)reservations.getTotalElements(), 
-				HttpStatus.OK, true, reservations));
+			@RequestParam(required = false) final Map<String, String> params) throws JsonProcessingException {
+		// final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId), new ClientPageRequest());
+		final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId));
+		return ResponseEntity.ok(new ApiPayloadResponse<>((int)reservations.size(), 
+				HttpStatus.OK, true, new PageImpl<>(reservations)));
 	}
 	
 	
