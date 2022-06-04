@@ -9,6 +9,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -59,6 +60,10 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	
 	@Column(name = "full_adr", nullable = true)
 	private String fullAdr;
+	
+	@Lob
+	@Column(name = "iframe_google_map", columnDefinition = "CLOB", nullable = true)
+	private String iframeGoogleMap;
 	
 	@Email(message = "Input must be in email format")
 	@Column(nullable = false)

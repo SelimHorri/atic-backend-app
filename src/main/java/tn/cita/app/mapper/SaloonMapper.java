@@ -17,6 +17,7 @@ public interface SaloonMapper {
 				.isPrimary(saloon.getIsPrimary())
 				.openingDate(saloon.getOpeningDate())
 				.fullAdr(saloon.getFullAdr())
+				.iframeGoogleMap(saloon.getIframeGoogleMap())
 				.email(saloon.getEmail())
 				.locationDto(
 					LocationDto.builder()
@@ -36,6 +37,7 @@ public interface SaloonMapper {
 				.isPrimary(saloonDto.getIsPrimary())
 				.openingDate(saloonDto.getOpeningDate())
 				.fullAdr(saloonDto.getFullAdr())
+				.iframeGoogleMap(saloonDto.getIframeGoogleMap())
 				.email(saloonDto.getEmail())
 				.location(
 					Location.builder()

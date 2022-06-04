@@ -36,6 +36,7 @@ public interface ReservationMapper {
 						.isPrimary(reservation.getSaloon().getIsPrimary())
 						.openingDate(reservation.getSaloon().getOpeningDate())
 						.fullAdr(reservation.getSaloon().getFullAdr())
+						.iframeGoogleMap(reservation.getSaloon().getIframeGoogleMap())
 						.email(reservation.getSaloon().getEmail())
 						.build())
 				.build();
@@ -66,6 +67,7 @@ public interface ReservationMapper {
 						.isPrimary(reservationDto.getSaloonDto().getIsPrimary())
 						.openingDate(reservationDto.getSaloonDto().getOpeningDate())
 						.fullAdr(reservationDto.getSaloonDto().getFullAdr())
+						.iframeGoogleMap(reservationDto.getSaloonDto().getIframeGoogleMap())
 						.email(reservationDto.getSaloonDto().getEmail())
 						.build())
 				.build();

@@ -48,6 +48,7 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate openingDate;
 	private String fullAdr;
+	private String iframeGoogleMap;
 	
 	@Email(message = "Input email should be in email format")
 	@NotBlank(message = "Input email should not be blank")
