@@ -23,6 +23,11 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	private final OrderedDetailRepository orderedDetailRepository;
 	
 	@Override
+	public OrderedDetailRepository getOrderedDetailRepository() {
+		return this.orderedDetailRepository;
+	}
+	
+	@Override
 	public Page<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
 		return this.orderedDetailRepository.findAllByReservationId(reservationId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
 				.map(OrderedDetailMapper::map);

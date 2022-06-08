@@ -38,8 +38,10 @@ import tn.cita.app.exception.wrapper.LocationNotFoundException;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.exception.wrapper.OrderedDetailAlreadyExistsException;
 import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
+import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.RatingNotFoundException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
@@ -113,6 +115,8 @@ public class ApiExceptionHandler {
 		ActuatorHealthException.class,
 		AuthenticationException.class,
 		OrderedDetailAlreadyExistsException.class,
+		OutdatedStartDateReservationException.class,
+		ReservationAlreadyExistsException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {

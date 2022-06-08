@@ -22,6 +22,11 @@ public class SaloonServiceImpl implements SaloonService {
 	private final SaloonRepository saloonRepository;
 	
 	@Override
+	public SaloonRepository getSaloonRepository() {
+		return this.saloonRepository;
+	}
+	
+	@Override
 	public Page<SaloonDto> findAll(final ClientPageRequest clientPageRequest) {
 		return this.saloonRepository.findAll(PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(SaloonMapper::map);

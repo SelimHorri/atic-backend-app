@@ -29,6 +29,11 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	private final OrderedDetailService orderedDetailService;
 	
 	@Override
+	public ServiceDetailRepository getServiceDetailRepository() {
+		return this.serviceDetailRepository;
+	}
+	
+	@Override
 	public ServiceDetailDto findById(final Integer id) {
 		return this.serviceDetailRepository.findById(id)
 				.map(ServiceDetailMapper::map)

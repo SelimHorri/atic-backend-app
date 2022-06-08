@@ -11,7 +11,8 @@ public class ReservationEntityListener {
 	
 	@PrePersist
 	public void preCreate(final Reservation reservation) {
-		reservation.setCode(UUID.randomUUID().toString());
+		reservation.setCode((reservation.getCode() == null || reservation.getCode().isBlank()) ? 
+				UUID.randomUUID().toString() : reservation.getCode());
 		reservation.setStatus(ReservationStatus.NOT_STARTED);
 	}
 	

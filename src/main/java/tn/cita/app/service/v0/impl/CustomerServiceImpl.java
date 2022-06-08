@@ -23,6 +23,11 @@ public class CustomerServiceImpl implements CustomerService {
 	private final CustomerRepository customerRepository;
 	
 	@Override
+	public CustomerRepository getCustomerRepository() {
+		return this.customerRepository;
+	}
+	
+	@Override
 	public Page<CustomerDto> findAll(final ClientPageRequest clientPageRequest) {
 		log.info("** CustomerServiceImpl; List CustomerDto; find All with pageOffset service...*\n");
 		return this.customerRepository.findAll(PageRequest

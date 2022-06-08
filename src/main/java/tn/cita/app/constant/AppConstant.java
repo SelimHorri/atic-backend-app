@@ -76,6 +76,11 @@ public final class AppConstant {
 	 */
 	public static final long EXPIRES_AT_FROM_NOW = Duration.ofMinutes(30).toMinutes();
 	
+	/**
+	 * Delay that customer can pass a valid reservation from localdatetime.now
+	 */
+	public static final long VALID_START_DATE_AFTER = Duration.ofMinutes(30).toMinutes();
+	
 }
 
 
