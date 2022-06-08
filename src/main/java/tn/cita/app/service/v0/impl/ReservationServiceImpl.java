@@ -5,6 +5,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,7 +32,8 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Page<ReservationDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
 		return this.reservationRepository.findAllByCustomerId(customerId, 
-					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize(), 
+							Sort.by(clientPageRequest.getSortDirection(), clientPageRequest.getSortBy())))
 				.map(ReservationMapper::map);
 	}
 	
