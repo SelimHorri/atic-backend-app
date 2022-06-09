@@ -68,13 +68,11 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	@Override
 	public ReservationDto createReservation(final ReservationRequest reservationRequest) {
 		
-		// TODO: check if there are any other startDate that time (already reserved)
-		
 		if (reservationRequest.getStartDate().isBefore(LocalDateTime.now().plusMinutes(AppConstant.VALID_START_DATE_AFTER))
-				/*&& (reservationRequest.getStartDate().getMinute() != 0 || reservationRequest.getStartDate().getMinute() != 30)*/)
+				|| (reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30))
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
-		else if (this.reservationService.getReservationRepository().existsByStartDate(reservationRequest.getStartDate()))
-			throw new ReservationAlreadyExistsException("Time is occupied! please choose another time");
+		if (this.reservationService.getReservationRepository().existsByStartDate(reservationRequest.getStartDate()))
+			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		
 		final var serviceDetailsIds = reservationRequest.getServiceDetailsIds()
 			.stream()
@@ -83,14 +81,6 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				.collect(Collectors.toUnmodifiableList());
 		
 		final var code = UUID.randomUUID().toString();
-		
-		// TODO
-		/*
-		if (this.reservationService.getReservationRepository().existsByCode(code))
-			throw new ReservationAlreadyExistsException(String
-					.format("Reservation with code: %s already exists", code));
-		*/
-		
 		final var reservation = Reservation.builder()
 				.code(code)
 				.startDate(reservationRequest.getStartDate())
