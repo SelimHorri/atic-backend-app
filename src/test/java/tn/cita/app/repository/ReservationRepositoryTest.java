@@ -92,7 +92,6 @@ class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 				.hasValueSatisfying(r -> {
 					assertThat(r.getCode()).isEqualTo(expectedReservation.getCode());
 					assertThat(r.getDescription()).isEqualTo(expectedReservation.getDescription());
-					assertThat(r.getStartDate().getHour()).isEqualTo(expectedReservation.getStartDate().getHour());
 					assertThat(r.getStatus()).isEqualTo(expectedReservation.getStatus());
 					assertThat(r.getCustomer()).isNotNull();
 					assertThat(r.getCustomer().getFirstname()).isEqualTo(expectedReservation.getCustomer().getFirstname());

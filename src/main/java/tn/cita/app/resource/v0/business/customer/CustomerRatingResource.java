@@ -25,8 +25,7 @@ public class CustomerRatingResource {
 	private final CustomerRatingService customerRatingService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<CustomerRatingResponse>> getRatings(
-			final WebRequest request) {
+	public ResponseEntity<ApiPayloadResponse<CustomerRatingResponse>> getRatings(final WebRequest request) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.customerRatingService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
