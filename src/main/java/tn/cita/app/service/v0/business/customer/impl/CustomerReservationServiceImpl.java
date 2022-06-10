@@ -78,10 +78,10 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		});
 		
 		final var serviceDetailsIds = reservationRequest.getServiceDetailsIds()
-			.stream()
-				.distinct()
-				.sorted()
-				.collect(Collectors.toUnmodifiableList());
+				.stream()
+					.distinct()
+					.sorted()
+					.collect(Collectors.toUnmodifiableList());
 		
 		final var reservation = Reservation.builder()
 				.startDate(reservationRequest.getStartDate())
