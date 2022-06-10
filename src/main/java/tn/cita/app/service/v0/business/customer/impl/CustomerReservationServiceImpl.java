@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -80,11 +79,10 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				.sorted()
 				.collect(Collectors.toUnmodifiableList());
 		
-		final var code = UUID.randomUUID().toString();
 		final var reservation = Reservation.builder()
-				.code(code)
 				.startDate(reservationRequest.getStartDate())
-				.customer(this.customerService.getCustomerRepository().findByCredentialUsernameIgnoringCase(reservationRequest.getUsername())
+				.customer(this.customerService.getCustomerRepository()
+							.findByCredentialUsernameIgnoringCase(reservationRequest.getUsername())
 						.orElseThrow(() -> new CustomerNotFoundException(String
 								.format("Customer with username %s not found", reservationRequest.getUsername()))))
 				.saloon(this.saloonService.getSaloonRepository().findById(reservationRequest.getSaloonId())
