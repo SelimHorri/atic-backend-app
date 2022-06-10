@@ -8,6 +8,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.Reservation;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
@@ -16,7 +17,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 	Optional<Reservation> findByCode(final String code);
 	Page<Reservation> findAllBySaloonId(final Integer saloonId, final Pageable pageable);
 	List<Reservation> findAllBySaloonId(final Integer saloonId);
-	Optional<Reservation> findByStartDate(final LocalDateTime startDate);
+	Optional<Reservation> findByStartDateAndStatus(final LocalDateTime startDate, final ReservationStatus status);
 	
 }
 

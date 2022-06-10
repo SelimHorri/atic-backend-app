@@ -72,10 +72,9 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				|| (reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30))
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
-		this.reservationService.getReservationRepository().findByStartDate(reservationRequest.getStartDate()).ifPresent(r -> {
-			if (r.getStatus().equals(ReservationStatus.NOT_STARTED) 
-					|| r.getStatus().equals(ReservationStatus.IN_PROGRESS))
-				throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
+		this.reservationService.getReservationRepository()
+				.findByStartDateAndStatus(reservationRequest.getStartDate(), ReservationStatus.NOT_STARTED).ifPresent(r -> {
+			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		});
 		
 		final var serviceDetailsIds = reservationRequest.getServiceDetailsIds()
