@@ -5,7 +5,8 @@ public enum ReservationStatus {
 	NOT_STARTED,
 	IN_PROGRESS,
 	COMPLETED,
-	CANCELLED
+	CANCELLED,
+	OUTDATED
 	
 }
 

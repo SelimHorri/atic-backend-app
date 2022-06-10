@@ -16,8 +16,7 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 	Optional<Reservation> findByCode(final String code);
 	Page<Reservation> findAllBySaloonId(final Integer saloonId, final Pageable pageable);
 	List<Reservation> findAllBySaloonId(final Integer saloonId);
-	boolean existsByCode(final String code);
-	boolean existsByStartDate(final LocalDateTime startDate);
+	Optional<Reservation> findByStartDate(final LocalDateTime startDate);
 	
 }
 

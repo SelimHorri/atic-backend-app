@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.OrderedDetail;
 import tn.cita.app.domain.entity.Reservation;
 import tn.cita.app.dto.ReservationDto;
@@ -70,8 +71,12 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		if (reservationRequest.getStartDate().isBefore(LocalDateTime.now().plusMinutes(AppConstant.VALID_START_DATE_AFTER))
 				|| (reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30))
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
-		if (this.reservationService.getReservationRepository().existsByStartDate(reservationRequest.getStartDate()))
-			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
+		
+		this.reservationService.getReservationRepository().findByStartDate(reservationRequest.getStartDate()).ifPresent(r -> {
+			if (r.getStatus().equals(ReservationStatus.NOT_STARTED) 
+					|| r.getStatus().equals(ReservationStatus.IN_PROGRESS))
+				throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
+		});
 		
 		final var serviceDetailsIds = reservationRequest.getServiceDetailsIds()
 			.stream()
@@ -88,7 +93,6 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				.saloon(this.saloonService.getSaloonRepository().findById(reservationRequest.getSaloonId())
 						.orElseThrow(() -> new SaloonNotFoundException(String
 								.format("Saloon with id: %d not found", reservationRequest.getSaloonId()))))
-				// .tasks(null)
 				.description(reservationRequest.getDescription())
 				.build();
 		
