@@ -51,15 +51,15 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	@Transactional
 	@Override
-	public ReservationDto cancelReservation(final ReservationDto reservationDtoRequest) {
+	public ReservationDto cancelReservation(final Integer reservationId) {
 		
-		final var reservation = this.reservationService.getReservationRepository().findById(reservationDtoRequest.getId())
+		final var reservation = this.reservationService.getReservationRepository().findById(reservationId)
 				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", reservationDtoRequest.getId())));
+						.format("Reservation with id: %s not found", reservationId)));
 		
 		// update
-		reservation.setCancelDate(reservationDtoRequest.getCancelDate());
-		reservation.setStatus(reservationDtoRequest.getStatus());
+		reservation.setCancelDate(LocalDateTime.now());
+		reservation.setStatus(ReservationStatus.CANCELLED);
 		
 		return ReservationMapper.map(this.reservationService.getReservationRepository().save(reservation));
 	}

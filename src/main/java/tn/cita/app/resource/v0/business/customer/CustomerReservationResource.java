@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -44,12 +45,12 @@ public class CustomerReservationResource {
 						new ClientPageRequest(params))));
 	}
 	
-	@PutMapping("/cancel")
+	@PutMapping("/cancel/{reservationId}")
 	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final WebRequest request, 
-			@RequestBody @Valid final ReservationDto reservationDtoRequest) {
+			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
-		final var reservationDto = this.customerReservationService.cancelReservation(reservationDtoRequest);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+				this.customerReservationService.cancelReservation(Integer.parseInt(reservationId))));
 	}
 	
 	@PostMapping

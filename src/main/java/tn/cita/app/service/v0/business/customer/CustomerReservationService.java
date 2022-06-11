@@ -8,7 +8,7 @@ import tn.cita.app.dto.response.CustomerReservationResponse;
 public interface CustomerReservationService {
 	
 	CustomerReservationResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest);
-	ReservationDto cancelReservation(final ReservationDto reservationDtoRequest);
+	ReservationDto cancelReservation(final Integer reservationId);
 	ReservationDto createReservation(final ReservationRequest reservationRequest);
 	
 }
