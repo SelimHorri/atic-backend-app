@@ -5,36 +5,64 @@ import javax.validation.constraints.NotNull;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.Employee;
 import tn.cita.app.domain.entity.Rating;
+import tn.cita.app.dto.CustomerDto;
+import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.RatingDto;
 
 public interface RatingMapper {
 	
 	public static RatingDto map(@NotNull final Rating rating) {
 		return RatingDto.builder()
-				.employeeId(rating.getEmployeeId())
+				.workerId(rating.getWorkerId())
 				.customerId(rating.getCustomerId())
 				.rateDate(rating.getRateDate())
 				.rate(rating.getRate())
 				.description(rating.getDescription())
-				.employeeId(rating.getEmployeeId())
-				.customerId(rating.getCustomerId())
+				.workerDto(
+					EmployeeDto.builder()
+						.id(rating.getWorker().getId())
+						.firstname(rating.getWorker().getFirstname())
+						.lastname(rating.getWorker().getLastname())
+						.email(rating.getWorker().getEmail())
+						.phone(rating.getWorker().getPhone())
+						.birthdate(rating.getWorker().getBirthdate())
+						.build())
+				.customerDto(
+					CustomerDto.builder()
+						.id(rating.getCustomer().getId())
+						.firstname(rating.getCustomer().getFirstname())
+						.lastname(rating.getCustomer().getLastname())
+						.email(rating.getCustomer().getEmail())
+						.phone(rating.getCustomer().getPhone())
+						.birthdate(rating.getCustomer().getBirthdate())
+						.build())
 				.build();
 	}
 	
 	public static Rating map(@NotNull final RatingDto ratingDto) {
 		return Rating.builder()
-				.employeeId(ratingDto.getEmployeeId())
+				.workerId(ratingDto.getWorkerId())
 				.customerId(ratingDto.getCustomerId())
 				.rateDate(ratingDto.getRateDate())
 				.rate(ratingDto.getRate())
 				.description(ratingDto.getDescription())
-				.employee(
+				.worker(
 					Employee.builder()
-						.id(ratingDto.getEmployeeId())
+						.id(ratingDto.getWorkerDto().getId())
+						.firstname(ratingDto.getWorkerDto().getFirstname())
+						.lastname(ratingDto.getWorkerDto().getLastname())
+						.email(ratingDto.getWorkerDto().getEmail())
+						.phone(ratingDto.getWorkerDto().getPhone())
+						.birthdate(ratingDto.getWorkerDto().getBirthdate())
 						.build())
 				.customer(
 					Customer.builder()
-						.id(ratingDto.getCustomerId())
+						.id(ratingDto.getCustomerDto().getId())
+						.firstname(ratingDto.getCustomerDto().getFirstname())
+						.lastname(ratingDto.getCustomerDto().getLastname())
+						.email(ratingDto.getCustomerDto().getEmail())
+						.phone(ratingDto.getCustomerDto().getPhone())
+						.birthdate(ratingDto.getCustomerDto().getBirthdate())
 						.build())
 				.build();
 	}

@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -18,6 +19,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.dto.TagDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 
@@ -28,12 +30,49 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 	@Autowired
 	private WebTestClient webTestClient;
 	
+	@Disabled
 	@Test
 	void givenValidPageOffset_whenFindAll_thenAllTagsBasedOnPageOffsetShouldBeReturned() {
 		
-		final var pageOffset = 1;
+		final var clientPageRequest = new ClientPageRequest();
 		
 		final var list = List.of(
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
 				TagDto.builder()
 				.id(null)
 				.name("barber")
@@ -47,7 +86,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 		final var expectedPayload = new ApiPayloadResponse<>(2, HttpStatus.OK, true, list);
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/tags/offset/{pageOffset}", pageOffset)
+				.uri(AppConstant.API_CONTEXT_V0 + "/tags?offset={offset}", clientPageRequest.getOffset())
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()

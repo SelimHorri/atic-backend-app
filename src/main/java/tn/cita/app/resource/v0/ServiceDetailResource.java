@@ -1,5 +1,6 @@
 package tn.cita.app.resource.v0;
 
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,7 +13,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.ServiceDetailService;
+import tn.cita.app.service.v0.ServiceDetailService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/service-details")
@@ -38,6 +39,12 @@ public class ServiceDetailResource {
 			@PathVariable final String reservationId) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.serviceDetailService.getOrderedServiceDetailsByReservationId(Integer.parseInt(reservationId))));
+	}
+	
+	@GetMapping("/saloonId/{saloonId}")
+	public ResponseEntity<ApiPayloadResponse<Page<ServiceDetailDto>>> findAllByCategorySaloonId(@PathVariable final String saloonId) {
+		final var serviceDetails = this.serviceDetailService.findAllByCategorySaloonId(Integer.parseInt(saloonId));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(serviceDetails.toList().size(), HttpStatus.OK, true, serviceDetails));
 	}
 	
 	

@@ -4,12 +4,17 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotBlank;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+@JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -25,7 +30,9 @@ public final class ServiceDetailDto extends AbstractMappedDto implements Seriali
 	private Boolean isAvailable;
 	private Double duration;
 	private Double priceUnit;
-	private Integer categoryId;
+	
+	@JsonProperty("category")
+	private CategoryDto categoryDto;
 	
 }
 

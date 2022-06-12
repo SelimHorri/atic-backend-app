@@ -8,7 +8,9 @@ import java.util.List;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.data.domain.PageRequest;
 
+import tn.cita.app.constant.AppConstant;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.Customer;
@@ -56,7 +58,7 @@ class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 				.build()
 				);
 		
-		final var reservations = this.reservationRepository.findAllByCustomerId(customerId);
+		final var reservations = this.reservationRepository.findAllByCustomerId(customerId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE));
 		
 		assertThat(reservations)
 				.isNotNull()
@@ -76,8 +78,8 @@ class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 				.status(ReservationStatus.NOT_STARTED)
 				.customer(Customer.builder()
 						.id(null)
-						.firstname("CR7")
-						.lastname("")
+						.firstname("cristiano")
+						.lastname("ronaldo")
 						.birthdate(null)
 						.build())
 				.build();
@@ -90,7 +92,6 @@ class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 				.hasValueSatisfying(r -> {
 					assertThat(r.getCode()).isEqualTo(expectedReservation.getCode());
 					assertThat(r.getDescription()).isEqualTo(expectedReservation.getDescription());
-					assertThat(r.getStartDate().getHour()).isEqualTo(expectedReservation.getStartDate().getHour());
 					assertThat(r.getStatus()).isEqualTo(expectedReservation.getStatus());
 					assertThat(r.getCustomer()).isNotNull();
 					assertThat(r.getCustomer().getFirstname()).isEqualTo(expectedReservation.getCustomer().getFirstname());

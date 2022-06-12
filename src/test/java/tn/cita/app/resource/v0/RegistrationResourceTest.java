@@ -32,7 +32,7 @@ import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
-import tn.cita.app.service.RegistrationService;
+import tn.cita.app.service.v0.RegistrationService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient

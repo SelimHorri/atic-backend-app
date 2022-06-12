@@ -13,14 +13,14 @@ import tn.cita.app.domain.entity.AbstractAuditingMappedEntity;
 public class AuditingEntityListener {
 	
 	@PrePersist
-	void preCreate(final AbstractAuditingMappedEntity auditable) {
+	public void preCreate(final AbstractAuditingMappedEntity auditable) {
 		final var now = Instant.now();
 		auditable.setCreatedAt(now);
 		auditable.setUpdatedAt(now);
 	}
 	
 	@PreUpdate
-	void preUpdate(final AbstractAuditingMappedEntity auditable) {
+	public void preUpdate(final AbstractAuditingMappedEntity auditable) {
 		final var now = Instant.now();
 		auditable.setUpdatedAt(now);
 	}

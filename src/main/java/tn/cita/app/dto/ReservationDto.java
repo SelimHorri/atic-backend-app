@@ -10,6 +10,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
@@ -23,6 +26,7 @@ import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.ReservationStatus;
 
+@JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -48,9 +52,14 @@ public final class ReservationDto extends AbstractMappedDto implements Serializa
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime cancelDate;
 	
-	@NotNull(message = "Input reservationStatus should not be null")
+	@NotNull(message = "Input status should not be null")
 	private ReservationStatus status;
-	private Integer customerId;
+	
+	@JsonProperty("customer")
+	private CustomerDto customerDto;
+	
+	@JsonProperty("saloon")
+	private SaloonDto saloonDto;
 	
 }
 

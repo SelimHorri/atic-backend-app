@@ -18,15 +18,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.UserImage;
+import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.CustomerDto;
+import tn.cita.app.dto.UserImageDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.repository.CustomerRepository;
-import tn.cita.app.service.CustomerService;
+import tn.cita.app.service.v0.CustomerService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CustomerServiceImplTest {
@@ -101,8 +103,13 @@ class CustomerServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageId(null)
-				.credentialId(null)
+				.userImageDto(new UserImageDto())
+				.credentialDto(
+						CredentialDto.builder()
+							.username("selimhorri")
+							.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
+							.isEnabled(true)
+							.build())
 				.build(), 
 				CustomerDto.builder()
 				.id(2)
@@ -111,15 +118,20 @@ class CustomerServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageId(null)
-				.credentialId(null)
+				.userImageDto(new UserImageDto())
+				.credentialDto(
+					CredentialDto.builder()
+						.username("amineladjimi")
+						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
+						.isEnabled(true)
+						.build())
 				.build());
 		
-		final int pageOffset = 1;
-		when(this.customerRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE)))
+		final var clientPageRequest = new ClientPageRequest();
+		when(this.customerRepository.findAll(PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize())))
 				.thenReturn(new PageImpl<>(mockFindAllCustomers));
 		
-		final var findAll = this.customerService.findAll(pageOffset);
+		final var findAll = this.customerService.findAll(clientPageRequest);
 		
 		assertThat(findAll)
 				.isNotNull()
@@ -129,6 +141,9 @@ class CustomerServiceImplTest {
 					assertThat(c.getId()).isNotNull();
 					assertThat(c.getEmail()).isEqualTo("@gmail.com");
 					assertThat(c.getPhone()).isEqualTo("22125144");
+					assertThat(c.getCredentialDto()).isNotNull();
+					assertThat(c.getCredentialDto().getUserRoleBasedAuthority().name()).isEqualTo(UserRoleBasedAuthority.CUSTOMER.name());
+					assertThat(c.getCredentialDto().getIsEnabled()).isTrue();
 				});
 		
 	}
@@ -148,8 +163,13 @@ class CustomerServiceImplTest {
 				.email("@gmail.com")
 				.phone("22125144")
 				.birthdate(LocalDate.of(1995, 1, 9))
-				.userImageId(null)
-				.credentialId(null)
+				.userImageDto(new UserImageDto())
+				.credentialDto(
+					CredentialDto.builder()
+						.username("selimhorri")
+						.userRoleBasedAuthority(UserRoleBasedAuthority.CUSTOMER)
+						.isEnabled(true)
+						.build())
 				.build();
 		
 		final var customerDto = this.customerService.findById(id);
@@ -161,6 +181,14 @@ class CustomerServiceImplTest {
 		assertThat(customerDto.getEmail()).isEqualTo(expectedCustomerDto.getEmail());
 		assertThat(customerDto.getPhone()).isEqualTo(expectedCustomerDto.getPhone());
 		assertThat(customerDto.getBirthdate()).isEqualTo(expectedCustomerDto.getBirthdate());
+		assertThat(customerDto.getUserImageDto()).isNotNull();
+		assertThat(customerDto.getCredentialDto()).isNotNull();
+		assertThat(customerDto.getCredentialDto().getUsername())
+				.isEqualTo(expectedCustomerDto.getCredentialDto().getUsername());
+		assertThat(customerDto.getCredentialDto().getUserRoleBasedAuthority())
+				.isEqualTo(expectedCustomerDto.getCredentialDto().getUserRoleBasedAuthority());
+		assertThat(customerDto.getCredentialDto().getIsEnabled())
+				.isEqualTo(expectedCustomerDto.getCredentialDto().getIsEnabled());
 	}
 	
 	@Test

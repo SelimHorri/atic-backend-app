@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -31,9 +32,11 @@ import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.UserRating;
 import tn.cita.app.domain.id.RatingId;
+import tn.cita.app.domain.listener.RatingEntityListener;
 
 @Entity
 @Table(name = "ratings")
+@EntityListeners(RatingEntityListener.class)
 @IdClass(RatingId.class)
 @NoArgsConstructor
 @AllArgsConstructor
@@ -46,7 +49,7 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@Id
 	@Column(name = "employee_id", nullable = false, insertable = false, updatable = false)
-	private Integer employeeId;
+	private Integer workerId;
 	
 	@Id
 	@Column(name = "customer_id", nullable = false, insertable = false, updatable = false)
@@ -69,7 +72,7 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
-	private Employee employee;
+	private Employee worker;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, updatable = false)

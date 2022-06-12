@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
@@ -28,9 +29,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.TaskId;
+import tn.cita.app.domain.listener.TaskEntityListener;
 
 @Entity
 @Table(name = "tasks")
+@EntityListeners(TaskEntityListener.class)
 @IdClass(TaskId.class)
 @NoArgsConstructor
 @AllArgsConstructor

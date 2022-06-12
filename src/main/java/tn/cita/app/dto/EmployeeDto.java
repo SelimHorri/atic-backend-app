@@ -11,6 +11,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
@@ -23,6 +26,7 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 
+@JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -51,10 +55,18 @@ public final class EmployeeDto extends AbstractMappedDto implements Serializable
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
 	private LocalDate hiredate;
-	private Integer credentialId;
-	private Integer managerId;
-	private Integer userImageId;
-	private Integer saloonId;
+	
+	@JsonProperty("credential")
+	private CredentialDto credentialDto;
+	
+	@JsonProperty("manager")
+	private EmployeeDto managerDto;
+	
+	@JsonProperty("userImage")
+	private UserImageDto userImageDto;
+	
+	@JsonProperty("saloon")
+	private SaloonDto saloonDto;
 	
 }
 

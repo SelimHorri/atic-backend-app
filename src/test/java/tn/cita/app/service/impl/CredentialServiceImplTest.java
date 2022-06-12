@@ -18,7 +18,7 @@ import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Employee;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.repository.CredentialRepository;
-import tn.cita.app.service.CredentialService;
+import tn.cita.app.service.v0.CredentialService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CredentialServiceImplTest {

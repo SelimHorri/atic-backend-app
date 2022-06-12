@@ -4,6 +4,7 @@ import javax.validation.constraints.NotNull;
 
 import tn.cita.app.domain.entity.Location;
 import tn.cita.app.domain.entity.Saloon;
+import tn.cita.app.dto.LocationDto;
 import tn.cita.app.dto.SaloonDto;
 
 public interface SaloonMapper {
@@ -16,8 +17,15 @@ public interface SaloonMapper {
 				.isPrimary(saloon.getIsPrimary())
 				.openingDate(saloon.getOpeningDate())
 				.fullAdr(saloon.getFullAdr())
+				.iframeGoogleMap(saloon.getIframeGoogleMap())
 				.email(saloon.getEmail())
-				.locationId(saloon.getLocation().getId())
+				.locationDto(
+					LocationDto.builder()
+						.id(saloon.getId())
+						.zipcode(saloon.getLocation().getZipcode())
+						.city(saloon.getLocation().getCity())
+						.state(saloon.getLocation().getState())
+						.build())
 				.build();
 	}
 	
@@ -29,10 +37,14 @@ public interface SaloonMapper {
 				.isPrimary(saloonDto.getIsPrimary())
 				.openingDate(saloonDto.getOpeningDate())
 				.fullAdr(saloonDto.getFullAdr())
+				.iframeGoogleMap(saloonDto.getIframeGoogleMap())
 				.email(saloonDto.getEmail())
 				.location(
 					Location.builder()
-						.id(saloonDto.getLocationId())
+						.id(saloonDto.getId())
+						.zipcode(saloonDto.getLocationDto().getZipcode())
+						.city(saloonDto.getLocationDto().getCity())
+						.state(saloonDto.getLocationDto().getState())
 						.build())
 				.build();
 	}

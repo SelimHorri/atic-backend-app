@@ -7,13 +7,15 @@ import javax.validation.constraints.NotNull;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Customer;
 import tn.cita.app.domain.entity.UserImage;
+import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.dto.CustomerDto;
+import tn.cita.app.dto.UserImageDto;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.util.RegistrationUtils;
 
 public interface CustomerMapper {
 	
-	public static CustomerDto map(@NotNull final Customer customer) {
+public static CustomerDto map(@NotNull final Customer customer) {
 		
 		final var userImage = Optional
 				.ofNullable(customer.getUserImage())
@@ -29,12 +31,31 @@ public interface CustomerMapper {
 				.facebookUrl(customer.getFacebookUrl())
 				.instagramUrl(customer.getInstagramUrl())
 				.linkedinUrl(customer.getLinkedinUrl())
-				.userImageId(userImage.getId())
-				.credentialId(customer.getCredential().getId())
+				.userImageDto(
+					UserImageDto.builder()
+						.id(userImage.getId())
+						.imageLob(userImage.getImageLob())
+						.build())
+				.credentialDto(
+					CredentialDto.builder()
+						.id(customer.getCredential().getId())
+						.username(customer.getCredential().getUsername())
+						.password(customer.getCredential().getPassword())
+						.userRoleBasedAuthority(customer.getCredential().getUserRoleBasedAuthority())
+						.isEnabled(customer.getCredential().getIsEnabled())
+						.isAccountNonExpired(customer.getCredential().getIsAccountNonExpired())
+						.isAccountNonLocked(customer.getCredential().getIsAccountNonLocked())
+						.isCredentialsNonExpired(customer.getCredential().getIsCredentialsNonExpired())
+						.build())
 				.build();
 	}
 	
 	public static Customer map(@NotNull final CustomerDto customerDto) {
+		
+		final var userImageDto = Optional
+				.ofNullable(customerDto.getUserImageDto())
+				.orElseGet(UserImageDto::new);
+		
 		return Customer.builder()
 				.id(customerDto.getId())
 				.firstname(customerDto.getFirstname())
@@ -47,11 +68,19 @@ public interface CustomerMapper {
 				.linkedinUrl(customerDto.getLinkedinUrl())
 				.userImage(
 					UserImage.builder()
-						.id(customerDto.getUserImageId())
+						.id(userImageDto.getId())
+						.imageLob(userImageDto.getImageLob())
 						.build())
 				.credential(
 					Credential.builder()
-						.id(customerDto.getCredentialId())
+						.id(customerDto.getCredentialDto().getId())
+						.username(customerDto.getCredentialDto().getUsername())
+						.password(customerDto.getCredentialDto().getPassword())
+						.userRoleBasedAuthority(customerDto.getCredentialDto().getUserRoleBasedAuthority())
+						.isEnabled(customerDto.getCredentialDto().getIsEnabled())
+						.isAccountNonExpired(customerDto.getCredentialDto().getIsAccountNonExpired())
+						.isAccountNonLocked(customerDto.getCredentialDto().getIsAccountNonLocked())
+						.isCredentialsNonExpired(customerDto.getCredentialDto().getIsCredentialsNonExpired())
 						.build())
 				.build();
 	}
@@ -63,7 +92,6 @@ public interface CustomerMapper {
 				.email(registerRequest.getEmail())
 				.phone(registerRequest.getPhone())
 				.birthdate(registerRequest.getBirthdate())
-				.userImage(null)
 				.credential(
 						Credential.builder()
 						.username(registerRequest.getUsername())

@@ -7,6 +7,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
@@ -31,9 +32,11 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.ReservationStatus;
+import tn.cita.app.domain.listener.ReservationEntityListener;
 
 @Entity
 @Table(name = "reservations")
+@EntityListeners(ReservationEntityListener.class)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -76,6 +79,10 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
 	private Set<Task> tasks;
+	
+	@ManyToOne(optional = false)
+	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	private Saloon saloon;
 	
 }
 

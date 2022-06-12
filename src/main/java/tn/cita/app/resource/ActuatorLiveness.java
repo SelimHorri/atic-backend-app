@@ -39,7 +39,7 @@ public class ActuatorLiveness {
 		}
 		finally {
 			if (health == null || !health.getStatus().equalsIgnoreCase("UP"))
-				throw new ActuatorHealthException("We're running into an issue 😬 <br>"
+				throw new ActuatorHealthException("We're running into an issue 😬 \n"
 						+ "Will be FIXED very soon, stay tunned..🤗");
 		}
 		

@@ -1,75 +1,55 @@
 package tn.cita.app.resource.v0;
 
-import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
-import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.context.request.WebRequest;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.response.ReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
-import tn.cita.app.service.ReservationService;
-import tn.cita.app.util.UserRequestExtractorUtil;
+import tn.cita.app.service.v0.ReservationService;
 
 @RestController
 @RequestMapping(AppConstant.API_CONTEXT_V0 + "/reservations")
 @RequiredArgsConstructor
 public class ReservationResource {
 	
-	@Qualifier("customerRequestExtractorUtil")
-	private final UserRequestExtractorUtil userRequestExtractorUtil;
 	private final ReservationService reservationService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(@PathVariable final String id, 
-			final HttpServletRequest request) {
-		this.userRequestExtractorUtil.extractUsername(request);
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(final WebRequest request, 
+			@PathVariable final String id) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findById(Integer.parseInt(id))));
 	}
 	
 	@GetMapping("/code/{code}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(@PathVariable final String code, 
-			final HttpServletRequest request) {
-		this.userRequestExtractorUtil.extractUsername(request);
+	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(final WebRequest request,
+			@PathVariable final String code) {
 		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findByCode(code)));
 	}
 	
-	@GetMapping("/details/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<ReservationContainerResponse>> getReservationDetails(
-			@PathVariable final String reservationId, final HttpServletRequest request) {
-		this.userRequestExtractorUtil.extractUsername(request);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.reservationService.getReservationDetails(Integer.parseInt(reservationId))));
-	}
-	
-	@PutMapping("/details")
-	public ResponseEntity<ApiPayloadResponse<Boolean>> updateReservationDetails(final HttpServletRequest request, 
-			@RequestBody final ReservationContainerResponse reservationContainerResponse) {
-		
-		// TODO...
-		this.userRequestExtractorUtil.extractUsername(request);
-		this.reservationService.updateReservationDetails(reservationContainerResponse);
-		
-		return ResponseEntity.ok(null);
-	}
-	
-	@PutMapping("/cancel")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final HttpServletRequest request, 
-			@RequestBody final ReservationDto reservationDtoRequest) {
-		this.userRequestExtractorUtil.extractUsername(request);
-		final var reservationDto = this.reservationService.cancelReservation(reservationDtoRequest);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));
+	@GetMapping("/saloonId/{saloonId}")
+	public ResponseEntity<ApiPayloadResponse<Page<ReservationDto>>> findAllBySaloonId(final WebRequest request,
+			@PathVariable final String saloonId, 
+			@RequestParam(required = false) final Map<String, String> params) throws JsonProcessingException {
+		// final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId), new ClientPageRequest());
+		final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId));
+		return ResponseEntity.ok(new ApiPayloadResponse<>((int)reservations.size(), 
+				HttpStatus.OK, true, new PageImpl<>(reservations)));
 	}
 	
 	

@@ -23,7 +23,7 @@ import tn.cita.app.constant.AppConstant;
 public class RatingId implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
-	private Integer employeeId;
+	private Integer workerId;
 	private Integer customerId;
 	
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)

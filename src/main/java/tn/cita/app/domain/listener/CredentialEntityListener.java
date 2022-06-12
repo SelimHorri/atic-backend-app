@@ -10,7 +10,7 @@ import tn.cita.app.domain.entity.Credential;
 public class CredentialEntityListener {
 	
 	@PrePersist
-	void preCreate(final Credential credential) {
+	public void preCreate(final Credential credential) {
 		credential.setIsEnabled(false);
 		credential.setIsAccountNonExpired(true);
 		credential.setIsAccountNonLocked(true);

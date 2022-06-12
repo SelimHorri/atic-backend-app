@@ -1,10 +1,10 @@
 package tn.cita.app.util;
 
-import javax.servlet.http.HttpServletRequest;
+import org.springframework.web.context.request.WebRequest;
 
 public interface UserRequestExtractorUtil {
 	
-	String extractUsername(final HttpServletRequest request);
+	String extractUsername(final WebRequest request);
 	
 }
 

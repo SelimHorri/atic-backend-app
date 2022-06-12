@@ -2,9 +2,8 @@ package tn.cita.app.util.impl;
 
 import java.util.Optional;
 
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.stereotype.Component;
+import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
@@ -19,7 +18,7 @@ public class CustomerRequestExtractorUtil implements UserRequestExtractorUtil {
 	private final JwtUtil jwtUtil;
 	
 	@Override
-	public String extractUsername(final HttpServletRequest request) {
+	public String extractUsername(final WebRequest request) {
 		
 		final var usernameAuthHeader = (Optional.ofNullable(request.getHeader(AppConstant.USERNAME_AUTH_HEADER)).isPresent()) ? 
 				request.getHeader(AppConstant.USERNAME_AUTH_HEADER) : "";

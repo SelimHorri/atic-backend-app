@@ -1,7 +1,8 @@
 package tn.cita.app.dto.response;
 
 import java.io.Serializable;
-import java.util.List;
+
+import org.springframework.data.domain.Page;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
@@ -23,10 +24,10 @@ public final class ServiceDetailsReservationContainerResponse implements Seriali
 	private static final long serialVersionUID = 1L;
 	
 	@JsonProperty("orderedDetails")
-	private final List<OrderedDetailDto> orderedDetailDtos;
+	private final Page<OrderedDetailDto> orderedDetailDtos;
 	
 	@JsonProperty("serviceDetails")
-	private final List<ServiceDetailDto> serviceDetailDtos;
+	private final Page<ServiceDetailDto> serviceDetailDtos;
 	
 	// @JsonProperty("category")
 	// private final CategoryDto categoryDto;
