@@ -15,12 +15,13 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TaskDto;
+import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.service.v0.business.employee.worker.WorkerReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/workers/reservations")
+@RequestMapping(AppConstant.API_CONTEXT_V0 + "/employees/workers/reservations")
 @RequiredArgsConstructor
 public class WorkerReservationResource {
 	
@@ -28,11 +29,18 @@ public class WorkerReservationResource {
 	private final UserRequestExtractorUtil userRequestExtractorUtil;
 	private final WorkerReservationService workerReservationService;
 	
-	@GetMapping
+	@GetMapping("/paged")
 	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest, 
 			@RequestParam final Map<String, String> params) {
 		final var reservations = this.workerReservationService.getAllReservations(this.userRequestExtractorUtil
-				.extractUsername(webRequest), null);
+				.extractUsername(webRequest), new ClientPageRequest(params));
+		return ResponseEntity.ok(new ApiPayloadResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
+	}
+	
+	@GetMapping({"", "/all"})
+	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest) {
+		final var reservations = this.workerReservationService.getAllReservations(this.userRequestExtractorUtil
+				.extractUsername(webRequest));
 		return ResponseEntity.ok(new ApiPayloadResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
 	}
 	
