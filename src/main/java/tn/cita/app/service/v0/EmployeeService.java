@@ -8,6 +8,7 @@ public interface EmployeeService {
 	
 	Page<EmployeeDto> findAll(final int pageOffset);
 	EmployeeDto findById(final Integer id);
+	EmployeeDto findByUsername(final String username);
 	boolean deleteById(final Integer id);
 	
 }

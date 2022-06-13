@@ -49,9 +49,10 @@ public class Task extends AbstractAuditingMappedEntity implements Serializable {
 	private Integer workerId;
 	
 	@Id
-	@Column(name = "worker_id", nullable = false, insertable = false, updatable = false)
+	@Column(name = "reservation_id", nullable = false, insertable = false, updatable = false)
 	private Integer reservationId;
 	
+	@Id
 	@Column(name = "task_date", nullable = false)
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)

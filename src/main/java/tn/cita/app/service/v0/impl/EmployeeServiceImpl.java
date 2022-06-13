@@ -38,6 +38,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 						.format("Employee with id: %d not found", id)));
 	}
 	
+	@Override
+	public EmployeeDto findByUsername(final String username) {
+		return this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::map)
+				.orElseThrow(() -> new EmployeeNotFoundException(String
+						.format("Employee with username: %s not found", username)));
+	}
+	
 	@Transactional
 	@Override
 	public boolean deleteById(final Integer id) {
