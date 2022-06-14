@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.RegistrationService;
 
 @RestController
@@ -29,23 +29,23 @@ public class RegistrationResource {
 	private final RegistrationService registrationService;
 	
 	@PostMapping
-	public ResponseEntity<ApiPayloadResponse<RegisterResponse>> register(
+	public ResponseEntity<ApiResponse<RegisterResponse>> register(
 			@RequestBody 
 			@NotNull(message = "Input should not be null") 
 			@Valid final RegisterRequest registerRequest) {
 		log.info("**RegistrationResource controller; RegisterResponse; register user...*\n");
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.registrationService.register(registerRequest));
 		return ResponseEntity.ok(apiPayloadResponse);
 	}
 	
 	@GetMapping("/{token}")
-	public ResponseEntity<ApiPayloadResponse<String>> validateToken(
+	public ResponseEntity<ApiResponse<String>> validateToken(
 			@PathVariable
 			@NotNull(message = "Input token should not be null") 
 			final String token) {
 		log.info("**RegistrationResource controller; String; register user...*\n");
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.registrationService.validateToken(token));
 		return ResponseEntity.ok(apiPayloadResponse);
 	}

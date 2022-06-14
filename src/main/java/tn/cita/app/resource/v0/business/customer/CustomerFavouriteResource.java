@@ -17,7 +17,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerFavouriteResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerFavouriteService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -31,19 +31,19 @@ public class CustomerFavouriteResource {
 	private final CustomerFavouriteService customerFavouriteService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<CustomerFavouriteResponse>> getFavourites(final WebRequest request, 
+	public ResponseEntity<ApiResponse<CustomerFavouriteResponse>> getFavourites(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerFavouriteService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	
 	@DeleteMapping("/{saloonId}")
-	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteFavourite(final WebRequest request, 
+	public ResponseEntity<ApiResponse<Boolean>> deleteFavourite(final WebRequest request, 
 			@PathVariable final String saloonId) {
 		final Boolean isDeleted = this.customerFavouriteService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
 				Integer.parseInt(saloonId));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, isDeleted));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, isDeleted));
 	}
 	
 	

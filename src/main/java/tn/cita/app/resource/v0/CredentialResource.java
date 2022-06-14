@@ -11,7 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.CredentialService;
 
 @RestController
@@ -23,9 +23,9 @@ public class CredentialResource {
 	private final CredentialService credentialService;
 	
 	@GetMapping("/username/{username}")
-	public ResponseEntity<ApiPayloadResponse<CredentialDto>> findByUsername(@PathVariable final String username) {
+	public ResponseEntity<ApiResponse<CredentialDto>> findByUsername(@PathVariable final String username) {
 		log.info("** CredentialResource; CredentialDto; find by username.. *\n");
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.credentialService.findByUsername(username)));
 	}
 	

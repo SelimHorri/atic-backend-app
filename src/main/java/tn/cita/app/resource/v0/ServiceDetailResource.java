@@ -12,7 +12,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.ServiceDetailService;
 
 @RestController
@@ -23,8 +23,8 @@ public class ServiceDetailResource {
 	private final ServiceDetailService serviceDetailService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<ServiceDetailDto>> findById(@PathVariable final String id) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+	public ResponseEntity<ApiResponse<ServiceDetailDto>> findById(@PathVariable final String id) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.serviceDetailService.findById(Integer.parseInt(id))));
 	}
 	
@@ -35,16 +35,16 @@ public class ServiceDetailResource {
 	 * @return related services by a reservation
 	 */
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<ServiceDetailsReservationContainerResponse>> getOrderedServiceDetailsByReservationId(
+	public ResponseEntity<ApiResponse<ServiceDetailsReservationContainerResponse>> getOrderedServiceDetailsByReservationId(
 			@PathVariable final String reservationId) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.serviceDetailService.getOrderedServiceDetailsByReservationId(Integer.parseInt(reservationId))));
 	}
 	
 	@GetMapping("/saloonId/{saloonId}")
-	public ResponseEntity<ApiPayloadResponse<Page<ServiceDetailDto>>> findAllByCategorySaloonId(@PathVariable final String saloonId) {
+	public ResponseEntity<ApiResponse<Page<ServiceDetailDto>>> findAllByCategorySaloonId(@PathVariable final String saloonId) {
 		final var serviceDetails = this.serviceDetailService.findAllByCategorySaloonId(Integer.parseInt(saloonId));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(serviceDetails.toList().size(), HttpStatus.OK, true, serviceDetails));
+		return ResponseEntity.ok(new ApiResponse<>(serviceDetails.toList().size(), HttpStatus.OK, true, serviceDetails));
 	}
 	
 	

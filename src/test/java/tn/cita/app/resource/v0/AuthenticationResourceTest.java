@@ -18,7 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.AuthenticationService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -46,7 +46,7 @@ class AuthenticationResourceTest {
 	@Test
 	void givenLoginApiUrl_whenRequestIsValid_thenLoginResponseShouldBeReturned() {
 		
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.loginResponse);
+		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, this.loginResponse);
 		this.webTestClient
 				.post()
 				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")

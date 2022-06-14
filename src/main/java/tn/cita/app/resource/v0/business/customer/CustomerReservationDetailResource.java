@@ -18,7 +18,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerReservationDetailService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -32,18 +32,18 @@ public class CustomerReservationDetailResource {
 	private final CustomerReservationDetailService customerReservationDetailService;
 	
 	@GetMapping("/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDetailResponse>> getReservationDetails(final WebRequest request,
+	public ResponseEntity<ApiResponse<ReservationDetailResponse>> getReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationDetailService.getReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
 	@PutMapping
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> updateReservationDetails(final WebRequest request, 
+	public ResponseEntity<ApiResponse<ReservationDto>> updateReservationDetails(final WebRequest request, 
 			@RequestBody @Valid final ReservationDetailRequest reservationDetailRequest) {
 		this.userRequestExtractorUtil.extractUsername(request);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationDetailService.updateReservationDetails(reservationDetailRequest)));
 	}
 	

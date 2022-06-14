@@ -20,7 +20,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.dto.TagDto;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -83,7 +83,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 				.build()
 		);
 		
-		final var expectedPayload = new ApiPayloadResponse<>(2, HttpStatus.OK, true, list);
+		final var expectedPayload = new ApiResponse<>(2, HttpStatus.OK, true, list);
 		this.webTestClient
 				.get()
 				.uri(AppConstant.API_CONTEXT_V0 + "/tags?offset={offset}", clientPageRequest.getOffset())
@@ -107,7 +107,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 				.name("barber")
 				.build();
 		
-		final var expectedPayload = new ApiPayloadResponse<>(1, HttpStatus.OK, true, tagDto);
+		final var expectedPayload = new ApiResponse<>(1, HttpStatus.OK, true, tagDto);
 		this.webTestClient
 				.get()
 				.uri(AppConstant.API_CONTEXT_V0 + "/tags/{id}", id)
@@ -127,7 +127,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 	void givenInvalidId_whenFindById_thenTagNotFoundExceptionShouldBeThrown() {
 		
 		final int id = 0;
-		final var expectedPayload = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false, 
+		final var expectedPayload = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg(String.format("%sTag with id: %d not found%s", "#### ", id, "! ####")));
 		
 		this.webTestClient

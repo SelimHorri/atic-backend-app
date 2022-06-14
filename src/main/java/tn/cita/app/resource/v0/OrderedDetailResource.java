@@ -20,7 +20,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.id.OrderedDetailId;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.request.OrderedDetailRequest;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.OrderedDetailService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -34,26 +34,26 @@ public class OrderedDetailResource {
 	private final OrderedDetailService orderedDetailService;
 	
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<Page<OrderedDetailDto>>> findAllByReservationId(final WebRequest request, 
+	public ResponseEntity<ApiResponse<Page<OrderedDetailDto>>> findAllByReservationId(final WebRequest request, 
 			@PathVariable final String reservationId) {
 		this.extractorUtil.extractUsername(request);
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(Integer.parseInt(reservationId));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(orderedDetailDtos.toList().size(), HttpStatus.OK, true, orderedDetailDtos));
+		return ResponseEntity.ok(new ApiResponse<>(orderedDetailDtos.toList().size(), HttpStatus.OK, true, orderedDetailDtos));
 	}
 	
 	@DeleteMapping
-	public ResponseEntity<ApiPayloadResponse<Boolean>> deleteById(final WebRequest request, 
+	public ResponseEntity<ApiResponse<Boolean>> deleteById(final WebRequest request, 
 			@RequestBody @Valid final OrderedDetailId orderedDetailId) {
 		this.extractorUtil.extractUsername(request);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.orderedDetailService.deleteById(orderedDetailId)));
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiPayloadResponse<OrderedDetailDto>> save(final WebRequest request, 
+	public ResponseEntity<ApiResponse<OrderedDetailDto>> save(final WebRequest request, 
 			@RequestBody @Valid final OrderedDetailRequest orderedDetailRequest) {
 		this.extractorUtil.extractUsername(request);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, this.orderedDetailService.save(orderedDetailRequest)));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.orderedDetailService.save(orderedDetailRequest)));
 	}
 	
 	

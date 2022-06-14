@@ -13,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TaskDto;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.TaskService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -27,11 +27,11 @@ public class TaskResource {
 	private final TaskService taskService;
 	
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> findAllByReservationId(final WebRequest request, 
+	public ResponseEntity<ApiResponse<Page<TaskDto>>> findAllByReservationId(final WebRequest request, 
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var taskDtos = this.taskService.findAllByReservationId(Integer.parseInt(reservationId));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(taskDtos.toList().size(), HttpStatus.OK, true, taskDtos));
+		return ResponseEntity.ok(new ApiResponse<>(taskDtos.toList().size(), HttpStatus.OK, true, taskDtos));
 	}
 	
 	

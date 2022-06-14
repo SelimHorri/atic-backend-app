@@ -13,7 +13,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.response.actuator.HealthActuatorResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
 
 @RestController
@@ -26,7 +26,7 @@ public class ActuatorLiveness {
 	private final RestTemplate restTemplate;
 	
 	@GetMapping("/health")
-	public ResponseEntity<ApiPayloadResponse<HealthActuatorResponse>> health() {
+	public ResponseEntity<ApiResponse<HealthActuatorResponse>> health() {
 		
 		HealthActuatorResponse health = null;
 		try {
@@ -43,7 +43,7 @@ public class ActuatorLiveness {
 						+ "Will be FIXED very soon, stay tunned..🤗");
 		}
 		
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, health));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, health));
 	}
 	
 	

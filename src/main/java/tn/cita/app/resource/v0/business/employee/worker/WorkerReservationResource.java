@@ -18,7 +18,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.employee.worker.WorkerReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -32,25 +32,25 @@ public class WorkerReservationResource {
 	private final WorkerReservationService workerReservationService;
 	
 	@GetMapping("/paged")
-	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest, 
 			@RequestParam final Map<String, String> params) {
 		final var reservations = this.workerReservationService.getAllReservations(this.userRequestExtractorUtil
 				.extractUsername(webRequest), new ClientPageRequest(params));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
+		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
 	}
 	
 	@GetMapping({"", "/all"})
-	public ResponseEntity<ApiPayloadResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest) {
+	public ResponseEntity<ApiResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest) {
 		final var reservations = this.workerReservationService.getAllReservations(this.userRequestExtractorUtil
 				.extractUsername(webRequest));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
+		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
 	}
 	
 	@GetMapping("/details/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDetailResponse>> getReservationDetails(final WebRequest request,
+	public ResponseEntity<ApiResponse<ReservationDetailResponse>> getReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationService.getReservationDetails(Integer.parseInt(reservationId))));
 	}
 	

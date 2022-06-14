@@ -18,7 +18,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.ReservationService;
 
 @RestController
@@ -29,26 +29,26 @@ public class ReservationResource {
 	private final ReservationService reservationService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findById(final WebRequest request, 
+	public ResponseEntity<ApiResponse<ReservationDto>> findById(final WebRequest request, 
 			@PathVariable final String id) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findById(Integer.parseInt(id))));
 	}
 	
 	@GetMapping("/code/{code}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> findByCode(final WebRequest request,
+	public ResponseEntity<ApiResponse<ReservationDto>> findByCode(final WebRequest request,
 			@PathVariable final String code) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findByCode(code)));
 	}
 	
 	@GetMapping("/saloonId/{saloonId}")
-	public ResponseEntity<ApiPayloadResponse<Page<ReservationDto>>> findAllBySaloonId(final WebRequest request,
+	public ResponseEntity<ApiResponse<Page<ReservationDto>>> findAllBySaloonId(final WebRequest request,
 			@PathVariable final String saloonId, 
 			@RequestParam(required = false) final Map<String, String> params) throws JsonProcessingException {
 		// final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId), new ClientPageRequest());
 		final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId));
-		return ResponseEntity.ok(new ApiPayloadResponse<>((int)reservations.size(), 
+		return ResponseEntity.ok(new ApiResponse<>((int)reservations.size(), 
 				HttpStatus.OK, true, new PageImpl<>(reservations)));
 	}
 	
