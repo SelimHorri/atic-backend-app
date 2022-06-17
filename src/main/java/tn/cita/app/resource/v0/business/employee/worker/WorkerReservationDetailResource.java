@@ -5,12 +5,16 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.dto.TaskDto;
+import tn.cita.app.dto.request.TaskBeginRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.employee.worker.WorkerReservationDetailService;
@@ -32,6 +36,16 @@ public class WorkerReservationDetailResource {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationDetailService.getReservationDetails(Integer.parseInt(reservationId))));
 	}
+	
+	@PutMapping("/tasks/begin")
+	public ResponseEntity<ApiResponse<TaskDto>> beginTask(final WebRequest webRequest, 
+			@RequestBody final TaskBeginRequest taskBeginRequest) {
+		this.userRequestExtractorUtil.extractUsername(webRequest);
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.workerReservationDetailService.beginTask(taskBeginRequest)));
+	}
+	
+	
 	
 }
 

@@ -47,6 +47,7 @@ import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
+import tn.cita.app.exception.wrapper.TaskAlreadyBegan;
 import tn.cita.app.exception.wrapper.UnauthorizedUserException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.UsernameNotMatchException;
@@ -117,6 +118,7 @@ public class ApiExceptionHandler {
 		OrderedDetailAlreadyExistsException.class,
 		OutdatedStartDateReservationException.class,
 		ReservationAlreadyExistsException.class,
+		TaskAlreadyBegan.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
