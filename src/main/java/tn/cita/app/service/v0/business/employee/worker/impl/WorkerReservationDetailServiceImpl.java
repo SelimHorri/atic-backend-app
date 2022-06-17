@@ -42,6 +42,11 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 				.build();
 	}
 	
+	@Override
+	public TaskDto getAssignedTask(final String username, final Integer reservationId) {
+		return this.taskService.findById(new TaskId(this.employeeService.findByUsername(username).getId(), reservationId));
+	}
+	
 	@Transactional
 	@Override
 	public TaskDto beginTask(final TaskBeginRequest taskBeginRequest) {

@@ -37,6 +37,13 @@ public class WorkerReservationDetailResource {
 				this.workerReservationDetailService.getReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
+	@GetMapping("/tasks/{reservationId}")
+	public ResponseEntity<ApiResponse<TaskDto>> getAssignedTask(final WebRequest webRequest, @PathVariable final String reservationId) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.workerReservationDetailService.getAssignedTask(this.userRequestExtractorUtil.extractUsername(webRequest), 
+						Integer.parseInt(reservationId))));
+	}
+	
 	@PutMapping("/tasks/begin")
 	public ResponseEntity<ApiResponse<TaskDto>> beginTask(final WebRequest webRequest, 
 			@RequestBody final TaskBeginRequest taskBeginRequest) {

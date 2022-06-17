@@ -16,7 +16,8 @@ INSERT INTO tasks (worker_id, reservation_id, start_date, end_date, worker_descr
 (5, 11, '2022-05-31 13:30:43', CURRENT_TIMESTAMP(), 'finished success!!', 'great!!'),
 (6, 12, '2022-05-31 15:00:08', CURRENT_TIMESTAMP(), 'finished successdfg', 'greatdf'),
 (6, 13, NULL, NULL, NULL, 'we need great job'),
-(6, 14, '2022-06-02 09:30:55', NULL, 'On my way to finish', NULL),
+(6, 14, NULL, NULL, NULL, NULL),
+-- (6, 14, '2022-06-02 09:30:55', NULL, 'On my way to finish', NULL),
 (7, 15, '2022-06-02 10:00:06', NULL, 'On my way to finish', 'waiting u to complete'),
 (8, 16, CURRENT_TIMESTAMP(), NULL, NULL, 'we need awesome work on this'),
 (8, 17, CURRENT_TIMESTAMP(), NULL, NULL, NULL);

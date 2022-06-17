@@ -7,6 +7,7 @@ import tn.cita.app.dto.response.ReservationDetailResponse;
 public interface WorkerReservationDetailService {
 	
 	ReservationDetailResponse getReservationDetails(final Integer reservationId);
+	TaskDto getAssignedTask(final String username, final Integer reservationId);
 	TaskDto beginTask(final TaskBeginRequest taskBeginRequest);
 	
 }
