@@ -36,6 +36,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.email(employee.getEmail())
 				.phone(employee.getPhone())
 				.birthdate(employee.getBirthdate())
+				.hiredate(employee.getHiredate())
 				.userImageDto(
 					UserImageDto.builder()
 						.id(userImage.getId())
@@ -49,6 +50,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 						.email(manager.getEmail())
 						.phone(manager.getPhone())
 						.birthdate(manager.getBirthdate())
+						.hiredate(manager.getHiredate())
 						.build())
 				.credentialDto(
 					CredentialDto.builder()
@@ -93,6 +95,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.email(employeeDto.getEmail())
 				.phone(employeeDto.getPhone())
 				.birthdate(employeeDto.getBirthdate())
+				.hiredate(employeeDto.getHiredate())
 				.userImage(
 					UserImage.builder()
 						.id(userImageDto.getId())
@@ -106,6 +109,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 						.email(managerDto.getEmail())
 						.phone(managerDto.getPhone())
 						.birthdate(managerDto.getBirthdate())
+						.hiredate(managerDto.getHiredate())
 						.build())
 				.credential(
 					Credential.builder()

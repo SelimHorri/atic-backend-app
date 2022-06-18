@@ -1,4 +1,4 @@
-package tn.cita.app.dto;
+package tn.cita.app.dto.request;
 
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -11,42 +11,40 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 
-@JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-@EqualsAndHashCode(callSuper = true)
-@SuperBuilder
-public final class EmployeeDto extends AbstractMappedDto implements Serializable {
+@Builder
+public final class WorkerProfileRequest implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank(message = "Input firstname should not be blank")
+	@NotBlank(message = "Must specify authenticated username")
+	private String authenticatedUsername;
+	
+	@NotBlank(message = "Firstname must not be blank")
 	private String firstname;
 	
-	@NotBlank(message = "Input firstname should not be blank")
+	@NotBlank(message = "Lastname must not be blank")
 	private String lastname;
 	
-	@Email(message = "Input email should be in email format")
-	@NotBlank(message = "Input email should not be blank")
+	@Email(message = "Must follow email format")
+	@NotBlank(message = "Email must not be blank")
 	private String email;
 	
-	@Size(message = "Input must be in phone format", min = 8, max = 12)
+	@Size(min = 8, max = 12, message = "Phone must be between {min} and {max} characters")
+	@NotBlank(message = "Phone must not be blank")
 	private String phone;
 	
 	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
@@ -61,17 +59,14 @@ public final class EmployeeDto extends AbstractMappedDto implements Serializable
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate hiredate;
 	
-	@JsonProperty("credential")
-	private CredentialDto credentialDto;
+	@NotBlank(message = "Username must not be blank")
+	private String username;
 	
-	@JsonProperty("manager")
-	private EmployeeDto managerDto;
+	@NotBlank(message = "Password must not be blank")
+	private String password;
 	
-	@JsonProperty("userImage")
-	private UserImageDto userImageDto;
-	
-	@JsonProperty("saloon")
-	private SaloonDto saloonDto;
+	@NotBlank(message = "confirmPassword must not be blank")
+	private String confirmPassword;
 	
 }
 
