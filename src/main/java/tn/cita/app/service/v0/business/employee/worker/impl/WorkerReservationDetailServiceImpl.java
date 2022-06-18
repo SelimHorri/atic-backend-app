@@ -11,6 +11,7 @@ import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.id.TaskId;
 import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.TaskBeginRequest;
+import tn.cita.app.dto.request.TaskUpdateDescriptionRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.TaskAlreadyBegan;
@@ -45,6 +46,24 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 	@Override
 	public TaskDto getAssignedTask(final String username, final Integer reservationId) {
 		return this.taskService.findById(new TaskId(this.employeeService.findByUsername(username).getId(), reservationId));
+	}
+	
+	@Transactional
+	@Override
+	public TaskDto updateDescription(final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
+		
+		final var worker = this.employeeService.findByUsername(taskUpdateDescriptionRequest.getUsername());
+		final var reservation = this.reservationService.getReservationRepository()
+				.findById(taskUpdateDescriptionRequest.getReservationId())
+					.orElseThrow(() -> new ReservationNotFoundException(String
+							.format("Reservation with id: %s not found", taskUpdateDescriptionRequest.getReservationId())));
+		final var task = this.taskService.geTaskRepository()
+				.findById(new TaskId(worker.getId(), reservation.getId()))
+					.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
+		
+		// update worker description..
+		task.setWorkerDescription(taskUpdateDescriptionRequest.getWorkerDescription());
+		return TaskMapper.map(this.taskService.geTaskRepository().save(task));
 	}
 	
 	@Transactional

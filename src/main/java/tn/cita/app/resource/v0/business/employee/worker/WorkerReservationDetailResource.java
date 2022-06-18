@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.TaskBeginRequest;
+import tn.cita.app.dto.request.TaskUpdateDescriptionRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.employee.worker.WorkerReservationDetailService;
@@ -42,6 +43,14 @@ public class WorkerReservationDetailResource {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationDetailService.getAssignedTask(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						Integer.parseInt(reservationId))));
+	}
+	
+	@PutMapping("tasks/describe")
+	public ResponseEntity<ApiResponse<TaskDto>> updateDescription(final WebRequest webRequest, 
+			@RequestBody final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
+		this.userRequestExtractorUtil.extractUsername(webRequest);
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.workerReservationDetailService.updateDescription(taskUpdateDescriptionRequest)));
 	}
 	
 	@PutMapping("/tasks/begin")
