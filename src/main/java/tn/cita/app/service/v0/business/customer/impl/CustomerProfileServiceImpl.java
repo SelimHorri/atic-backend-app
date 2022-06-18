@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.request.CustomerProfileInfoRequest;
+import tn.cita.app.dto.request.CustomerProfileRequest;
 import tn.cita.app.dto.response.CustomerProfileResponse;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
@@ -42,30 +42,30 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 	
 	@Transactional
 	@Override
-	public CustomerDto updateProfileInfo(final CustomerProfileInfoRequest customerProfileInfoRequest) {
+	public CustomerDto updateProfileInfo(final CustomerProfileRequest customerProfileRequest) {
 		
 		this.customerService.getCustomerRepository()
-				.findByCredentialUsernameIgnoringCase(customerProfileInfoRequest.getUsername().strip()).ifPresent(c -> {
-			if (!c.getCredential().getUsername().equals(customerProfileInfoRequest.getAuthenticatedUsername()))
+				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getUsername().strip()).ifPresent(c -> {
+			if (!c.getCredential().getUsername().equals(customerProfileRequest.getAuthenticatedUsername()))
 				throw new UsernameAlreadyExistsException("Username already exists, please choose another");
 		});
 		
-		if (!customerProfileInfoRequest.getPassword().equals(customerProfileInfoRequest.getConfirmPassword()))
+		if (!customerProfileRequest.getPassword().equals(customerProfileRequest.getConfirmPassword()))
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
 		final var authenticatedCustomer = this.customerService.getCustomerRepository()
-				.findByCredentialUsernameIgnoringCase(customerProfileInfoRequest.getAuthenticatedUsername())
+				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getAuthenticatedUsername())
 				.orElseThrow();
-		authenticatedCustomer.setFirstname(customerProfileInfoRequest.getFirstname());
-		authenticatedCustomer.setLastname(customerProfileInfoRequest.getLastname());
-		authenticatedCustomer.setEmail(customerProfileInfoRequest.getEmail());
-		authenticatedCustomer.setPhone(customerProfileInfoRequest.getPhone());
-		authenticatedCustomer.setBirthdate(customerProfileInfoRequest.getBirthdate());
-		authenticatedCustomer.setFacebookUrl(customerProfileInfoRequest.getFacebookUrl());
-		authenticatedCustomer.setInstagramUrl(customerProfileInfoRequest.getInstagramUrl());
-		authenticatedCustomer.setLinkedinUrl(customerProfileInfoRequest.getLinkedinUrl());
-		authenticatedCustomer.getCredential().setUsername(customerProfileInfoRequest.getUsername().toLowerCase());
-		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileInfoRequest.getPassword()));
+		authenticatedCustomer.setFirstname(customerProfileRequest.getFirstname());
+		authenticatedCustomer.setLastname(customerProfileRequest.getLastname());
+		authenticatedCustomer.setEmail(customerProfileRequest.getEmail());
+		authenticatedCustomer.setPhone(customerProfileRequest.getPhone());
+		authenticatedCustomer.setBirthdate(customerProfileRequest.getBirthdate());
+		authenticatedCustomer.setFacebookUrl(customerProfileRequest.getFacebookUrl());
+		authenticatedCustomer.setInstagramUrl(customerProfileRequest.getInstagramUrl());
+		authenticatedCustomer.setLinkedinUrl(customerProfileRequest.getLinkedinUrl());
+		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.getUsername().toLowerCase());
+		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileRequest.getPassword()));
 		
 		return CustomerMapper.map(this.customerService.getCustomerRepository().save(authenticatedCustomer));
 	}

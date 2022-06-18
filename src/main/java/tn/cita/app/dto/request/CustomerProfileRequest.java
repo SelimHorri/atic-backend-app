@@ -26,7 +26,7 @@ import tn.cita.app.constant.AppConstant;
 @AllArgsConstructor
 @Data
 @Builder
-public final class CustomerProfileInfoRequest implements Serializable {
+public final class CustomerProfileRequest implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

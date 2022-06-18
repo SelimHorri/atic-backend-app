@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.request.CustomerProfileInfoRequest;
+import tn.cita.app.dto.request.CustomerProfileRequest;
 import tn.cita.app.dto.response.CustomerProfileResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerProfileService;
@@ -44,10 +44,10 @@ public class CustomerProfileResource {
 	
 	@PutMapping
 	public ResponseEntity<ApiResponse<CustomerDto>> updateProfileInfo(final WebRequest webRequest, 
-			@RequestBody @Valid final CustomerProfileInfoRequest customerProfileInfoRequest) {
+			@RequestBody @Valid final CustomerProfileRequest customerProfileRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerProfileService.updateProfileInfo(customerProfileInfoRequest)));
+				this.customerProfileService.updateProfileInfo(customerProfileRequest)));
 	}
 	
 	
