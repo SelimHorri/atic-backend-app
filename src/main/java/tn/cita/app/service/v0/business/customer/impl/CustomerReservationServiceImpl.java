@@ -43,7 +43,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	@Override
 	public CustomerReservationResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest) {
-		final var customerDto = this.customerService.findByCredentialUsernameIgnoringCase(username);
+		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerReservationResponse(
 				customerDto,
 				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest));

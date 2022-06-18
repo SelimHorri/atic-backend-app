@@ -31,7 +31,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 	
 	@Override
 	public CustomerProfileResponse getProfileByUsername(final String username, final ClientPageRequest clientPageRequest) {
-		final var customerDto = this.customerService.findByCredentialUsernameIgnoringCase(username);
+		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerProfileResponse(
 				customerDto, 
 				null, 
