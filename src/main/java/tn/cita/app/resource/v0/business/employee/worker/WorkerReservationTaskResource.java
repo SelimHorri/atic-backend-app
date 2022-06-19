@@ -1,5 +1,7 @@
 package tn.cita.app.resource.v0.business.employee.worker;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +40,7 @@ public class WorkerReservationTaskResource {
 	
 	@PutMapping("/describe")
 	public ResponseEntity<ApiResponse<TaskDto>> updateDescription(final WebRequest webRequest, 
-			@RequestBody final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
+			@RequestBody @Valid final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationTaskService.updateDescription(taskUpdateDescriptionRequest)));
@@ -46,7 +48,7 @@ public class WorkerReservationTaskResource {
 	
 	@PutMapping("/begin")
 	public ResponseEntity<ApiResponse<TaskDto>> beginTask(final WebRequest webRequest, 
-			@RequestBody final TaskBeginEndRequest taskBeginRequest) {
+			@RequestBody @Valid final TaskBeginEndRequest taskBeginRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationTaskService.beginTask(taskBeginRequest)));
@@ -54,7 +56,7 @@ public class WorkerReservationTaskResource {
 	
 	@PutMapping("/end")
 	public ResponseEntity<ApiResponse<TaskDto>> endTask(final WebRequest webRequest, 
-			@RequestBody final TaskBeginEndRequest taskEndRequest) {
+			@RequestBody @Valid final TaskBeginEndRequest taskEndRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationTaskService.endTask(taskEndRequest)));
