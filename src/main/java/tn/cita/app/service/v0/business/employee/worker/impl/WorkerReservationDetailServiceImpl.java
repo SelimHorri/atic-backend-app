@@ -86,6 +86,9 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 				.findById(new TaskId(worker.getId(), reservation.getId()))
 					.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
 		
+		Optional.ofNullable(task.getEndDate()).ifPresent(endDate -> {
+			throw new TaskAlreadyEndedException("Task already ended");
+		});
 		Optional.ofNullable(task.getStartDate()).ifPresent(startDate -> {
 			throw new TaskAlreadyBeganException("Task already began");
 		});
