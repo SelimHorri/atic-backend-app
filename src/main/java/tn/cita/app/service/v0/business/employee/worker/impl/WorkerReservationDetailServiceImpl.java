@@ -2,6 +2,7 @@ package tn.cita.app.service.v0.business.employee.worker.impl;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,13 +117,13 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 	@Override
 	public TaskDto endTask(final TaskBeginEndRequest taskEndRequest) {
 		
-		final var worker = this.employeeService.findByUsername(taskEndRequest.getUsername());
+		final var workerDto = this.employeeService.findByUsername(taskEndRequest.getUsername());
 		final var reservation = this.reservationService.getReservationRepository()
 				.findById(taskEndRequest.getReservationId())
 					.orElseThrow(() -> new ReservationNotFoundException(String
 							.format("Reservation with id: %s not found", taskEndRequest.getReservationId())));
 		final var task = this.taskService.geTaskRepository()
-				.findById(new TaskId(worker.getId(), reservation.getId()))
+				.findById(new TaskId(workerDto.getId(), reservation.getId()))
 					.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
 		
 		if (!Optional.ofNullable(task.getStartDate()).isPresent())
@@ -136,13 +137,25 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 		task.setEndDate(LocalDateTime.now());
 		task.setWorkerDescription(taskEndRequest.getWorkerDescription());
 		
-		/**
-		 * TODO (very important): 
-		 * Get all assigned workers related to this reservation (like current user)
-		 * then, check if all of them ended up their tasks related to this reservation,
-		 * if so 	 => 	turn this current reservation status to COMPLETED, update the reservation to db
-		 * otherwise => 	do nothing
-		*/
+		// fetch all assigned workers to this reservation..
+		final var assignedOtherTasks = this.taskService.geTaskRepository()
+				.findAllByReservationId(taskEndRequest.getReservationId())
+					.stream()
+						.filter(t -> !t.getWorkerId().equals(workerDto.getId()))
+						.map(TaskMapper::map)
+						.distinct()
+						.collect(Collectors.toList());
+		
+		final boolean isAllTasksEnded = assignedOtherTasks.stream()
+				.allMatch(t -> Optional.ofNullable(t.getEndDate()).isPresent());
+		
+		// update reservation as COMPLETED if match..
+		if (isAllTasksEnded) {
+			reservation.setStatus(ReservationStatus.COMPLETED);
+			final var completedReservation = this.reservationService.getReservationRepository().save(reservation);
+			task.setReservationId(completedReservation.getId());
+			task.setReservation(completedReservation);
+		}
 		
 		return TaskMapper.map(this.taskService.geTaskRepository().save(task));
 	}

@@ -11,6 +11,7 @@ import tn.cita.app.domain.id.TaskId;
 
 public interface TaskRepository extends JpaRepository<Task, TaskId> {
 	
+	List<Task> findAllByReservationId(final Integer reservationId);
 	Page<Task> findAllByReservationId(final Integer reservationId, final Pageable pageable);
 	List<Task> findAllByWorkerId(final Integer workerId);
 	Page<Task> findAllByWorkerId(final Integer workerId, final Pageable pageable);
