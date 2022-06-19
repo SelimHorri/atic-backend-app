@@ -14,7 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.TaskDto;
-import tn.cita.app.dto.request.TaskBeginRequest;
+import tn.cita.app.dto.request.TaskBeginEndRequest;
 import tn.cita.app.dto.request.TaskUpdateDescriptionRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -55,10 +55,18 @@ public class WorkerReservationDetailResource {
 	
 	@PutMapping("/tasks/begin")
 	public ResponseEntity<ApiResponse<TaskDto>> beginTask(final WebRequest webRequest, 
-			@RequestBody final TaskBeginRequest taskBeginRequest) {
+			@RequestBody final TaskBeginEndRequest taskBeginRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationDetailService.beginTask(taskBeginRequest)));
+	}
+	
+	@PutMapping("/tasks/end")
+	public ResponseEntity<ApiResponse<TaskDto>> endTask(final WebRequest webRequest, 
+			@RequestBody final TaskBeginEndRequest taskEndRequest) {
+		this.userRequestExtractorUtil.extractUsername(webRequest);
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.workerReservationDetailService.endTask(taskEndRequest)));
 	}
 	
 	

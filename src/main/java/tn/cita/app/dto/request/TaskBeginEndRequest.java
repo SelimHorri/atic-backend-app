@@ -15,11 +15,11 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Data
 @Builder
-public final class TaskBeginRequest implements Serializable {
+public final class TaskBeginEndRequest implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank(message = "Worker must be specified")
+	@NotBlank(message = "User must be specified")
 	private String username;
 	
 	@NotNull(message = "Reservation must be specified")
