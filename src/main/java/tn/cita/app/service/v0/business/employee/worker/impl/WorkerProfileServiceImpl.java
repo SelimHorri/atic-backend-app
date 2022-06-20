@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.request.WorkerProfileRequest;
 import tn.cita.app.dto.response.WorkerProfileResponse;
+import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.mapper.EmployeeMapper;
@@ -49,7 +50,7 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 		
 		final var authenticatedWorker = this.employeeService.getEmployeeRepository()
 				.findByCredentialUsernameIgnoringCase(workerProfileRequest.getAuthenticatedUsername())
-				.orElseThrow();
+				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
 		authenticatedWorker.setFirstname(workerProfileRequest.getFirstname());
 		authenticatedWorker.setLastname(workerProfileRequest.getLastname());
 		authenticatedWorker.setEmail(workerProfileRequest.getEmail());
