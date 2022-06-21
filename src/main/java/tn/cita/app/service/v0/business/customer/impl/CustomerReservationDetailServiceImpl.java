@@ -25,9 +25,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	
 	@Override
 	public ReservationDetailResponse getReservationDetails(final Integer reservationId) {
-		
 		final var reservationDto = this.reservationService.findById(reservationId);
-		
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
 				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))

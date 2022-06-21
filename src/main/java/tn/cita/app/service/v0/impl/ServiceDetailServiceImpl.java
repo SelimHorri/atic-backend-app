@@ -5,12 +5,10 @@ import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
@@ -48,7 +46,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 					.map(ServiceDetailMapper::map)
 					.distinct()
 					.collect(Collectors.toUnmodifiableList());
-		return new PageImpl<>(list, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE), list.size());
+		return new PageImpl<>(list);
 	}
 	
 	@Override
