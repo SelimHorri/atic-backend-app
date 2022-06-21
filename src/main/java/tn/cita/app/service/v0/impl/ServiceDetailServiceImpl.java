@@ -68,14 +68,20 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByCategoryId(final Integer categoryId) {
-		return this.serviceDetailRepository.findAllByCategoryId(categoryId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
-				.map(ServiceDetailMapper::map);
+		return new PageImpl<>(this.serviceDetailRepository.findAllByCategoryId(categoryId)
+				.stream()
+					.map(ServiceDetailMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList()));
 	}
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
-		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
-				.map(ServiceDetailMapper::map);
+		return new PageImpl<>(this.serviceDetailRepository.findAllByCategorySaloonId(saloonId)
+				.stream()
+					.map(ServiceDetailMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList()));
 	}
 	
 	

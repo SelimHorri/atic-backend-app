@@ -1,7 +1,5 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
-import java.util.List;
-
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -15,7 +13,11 @@ import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.mapper.EmployeeMapper;
+import tn.cita.app.service.v0.CategoryService;
 import tn.cita.app.service.v0.EmployeeService;
+import tn.cita.app.service.v0.ReservationService;
+import tn.cita.app.service.v0.SaloonTagService;
+import tn.cita.app.service.v0.ServiceDetailService;
 import tn.cita.app.service.v0.business.employee.manager.ManagerProfileService;
 
 @Service
@@ -25,16 +27,21 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	
 	private final EmployeeService employeeService;
 	private final PasswordEncoder passwordEncoder;
-	// private final SaloonService saloonService;
-	// private final ReservationService reservationService;
+	private final ReservationService reservationService;
+	private final SaloonTagService saloonTagService;
+	private final CategoryService categoryService;
+	private final ServiceDetailService serviceDetailService;
 	
 	@Override
 	public ManagerProfileResponse getProfile(final String username) {
 		final var managerDto = this.employeeService.findByUsername(username);
 		return new ManagerProfileResponse(
 				managerDto, 
-				managerDto.getCredentialDto(), 
-				new PageImpl<>(List.of()));
+				new PageImpl<>(this.employeeService.findAllByManagerId(managerDto.getId())),
+				new PageImpl<>(this.reservationService.findAllBySaloonId(managerDto.getSaloonDto().getId())),
+				new PageImpl<>(this.saloonTagService.findAllBySaloonId(managerDto.getSaloonDto().getId())), 
+				new PageImpl<>(this.categoryService.findAllBySaloonId(managerDto.getSaloonDto().getId())), 
+				new PageImpl<>(this.serviceDetailService.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()).toList()));
 	}
 	
 	@Transactional

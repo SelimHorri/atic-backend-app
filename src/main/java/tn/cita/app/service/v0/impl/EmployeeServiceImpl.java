@@ -1,5 +1,8 @@
 package tn.cita.app.service.v0.impl;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -57,6 +60,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.info("** EmployeeServiceImpl; boolean; delete user by id service...*\n");
 		this.employeeRepository.deleteById(id);
 		return !this.employeeRepository.existsById(id);
+	}
+	
+	@Override
+	public List<EmployeeDto> findAllByManagerId(final Integer managerId) {
+		return this.employeeRepository.findAllByManagerId(managerId)
+				.stream()
+					.map(EmployeeMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
 	}
 	
 	
