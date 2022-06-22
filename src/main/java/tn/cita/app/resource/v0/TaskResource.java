@@ -2,6 +2,7 @@ package tn.cita.app.resource.v0;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,7 +32,7 @@ public class TaskResource {
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var taskDtos = this.taskService.findAllByReservationId(Integer.parseInt(reservationId));
-		return ResponseEntity.ok(new ApiResponse<>(taskDtos.toList().size(), HttpStatus.OK, true, taskDtos));
+		return ResponseEntity.ok(new ApiResponse<>(taskDtos.size(), HttpStatus.OK, true, new PageImpl<>(taskDtos)));
 	}
 	
 	

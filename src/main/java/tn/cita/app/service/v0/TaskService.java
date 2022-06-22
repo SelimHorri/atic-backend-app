@@ -13,7 +13,7 @@ public interface TaskService {
 	
 	TaskRepository geTaskRepository();
 	TaskDto findById(final TaskId taskId);
-	Page<TaskDto> findAllByReservationId(final Integer reservationId);
+	List<TaskDto> findAllByReservationId(final Integer reservationId);
 	List<TaskDto> findAllByWorkerId(final Integer workerId);
 	Page<TaskDto> findAllByWorkerId(final Integer workerId, final ClientPageRequest clientPageRequest);
 	

@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.business.employee.worker.impl;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,7 +26,7 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
 				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))
-				.taskDtos(this.taskService.findAllByReservationId(reservationDto.getId()))
+				.taskDtos(new PageImpl<>(this.taskService.findAllByReservationId(reservationDto.getId())))
 				.build();
 	}
 	
