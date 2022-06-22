@@ -18,6 +18,7 @@ import tn.cita.app.dto.request.ReservationRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
@@ -56,6 +57,11 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		final var reservation = this.reservationService.getReservationRepository().findById(reservationId)
 				.orElseThrow(() -> new ReservationNotFoundException(String
 						.format("Reservation with id: %s not found", reservationId)));
+		
+		// TODO: check if reservation has been completed, should not be cancelled (or changed) anymore
+		// Add completeDate of reservation along with COMPLETED status to this check
+		if (reservation.getStatus().equals(ReservationStatus.COMPLETED))
+			throw new ReservationAlreadyCompletedException("Reservation is already completed");
 		
 		// update
 		reservation.setCancelDate(LocalDateTime.now());
