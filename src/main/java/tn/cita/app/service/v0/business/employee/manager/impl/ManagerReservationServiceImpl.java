@@ -1,6 +1,7 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -9,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.ManagerReservationResponse;
+import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.service.v0.EmployeeService;
 import tn.cita.app.service.v0.ReservationService;
 import tn.cita.app.service.v0.business.employee.manager.ManagerReservationService;
@@ -32,6 +34,19 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 			return new ManagerReservationResponse(
 					managerDto, 
 					new PageImpl<>(this.reservationService.findAllBySaloonId(managerDto.getSaloonDto().getId())));
+	}
+	
+	@Override
+	public ManagerReservationResponse searchAllBy(final String username, final String key) {
+		final var managerDto = this.employeeService.findByUsername(username);
+		return new ManagerReservationResponse(
+				managerDto, 
+				new PageImpl<>(this.reservationService.getReservationRepository()
+						.searchAllByKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase())
+						.stream()
+							.map(ReservationMapper::map)
+							.distinct()
+							.collect(Collectors.toUnmodifiableList())));
 	}
 	
 	
