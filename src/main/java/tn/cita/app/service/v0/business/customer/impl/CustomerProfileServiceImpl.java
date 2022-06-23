@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +38,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 				null, 
 				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest), 
 				this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest),
-				this.ratingService.findAllByCustomerId(customerDto.getId()));
+				new PageImpl<>(this.ratingService.findAllByCustomerId(customerDto.getId())));
 	}
 	
 	@Transactional

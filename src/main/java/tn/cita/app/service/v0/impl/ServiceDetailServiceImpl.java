@@ -60,7 +60,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		
 		return ServiceDetailsReservationContainerResponse.builder()
 				.serviceDetailDtos(this.findAllByIds(ids))
-				.orderedDetailDtos(orderedDetailDtos)
+				.orderedDetailDtos(new PageImpl<>(orderedDetailDtos))
 				.build();
 	}
 	

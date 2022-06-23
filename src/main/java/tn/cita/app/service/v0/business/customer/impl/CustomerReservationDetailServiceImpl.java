@@ -29,7 +29,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 		final var reservationDto = this.reservationService.findById(reservationId);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))
+				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService.findAllByReservationId(reservationDto.getId())))
 				.taskDtos(new PageImpl<>(this.taskService.findAllByReservationId(reservationDto.getId())))
 				.build();
 	}

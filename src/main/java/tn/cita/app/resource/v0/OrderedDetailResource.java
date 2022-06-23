@@ -4,6 +4,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -38,7 +39,7 @@ public class OrderedDetailResource {
 			@PathVariable final String reservationId) {
 		this.extractorUtil.extractUsername(request);
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(Integer.parseInt(reservationId));
-		return ResponseEntity.ok(new ApiResponse<>(orderedDetailDtos.toList().size(), HttpStatus.OK, true, orderedDetailDtos));
+		return ResponseEntity.ok(new ApiResponse<>(orderedDetailDtos.size(), HttpStatus.OK, true, new PageImpl<>(orderedDetailDtos)));
 	}
 	
 	@DeleteMapping

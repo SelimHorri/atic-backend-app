@@ -3,6 +3,7 @@ package tn.cita.app.service.v0.business.employee.manager.impl;
 import java.util.Comparator;
 import java.util.Optional;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,7 +31,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		final var reservationDto = this.reservationService.findById(reservationId);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))
+				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService.findAllByReservationId(reservationDto.getId())))
 				.build();
 	}
 	
@@ -39,17 +40,18 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		
 		final var taskDtos = this.taskService.findAllByReservationId(reservationId);
 		
-		final var taskBegin = taskDtos.stream()
+		final var firstTaskBegin = taskDtos.stream()
 				.filter(t -> Optional.ofNullable(t.getStartDate()).isPresent())
+				// .filter(t -> t.getReservationDto().getStatus().equals(ReservationStatus.IN_PROGRESS))
 				.min(Comparator.comparing(TaskDto::getStartDate))
 				.orElseGet(TaskDto::new);
-		final var taskEnd = taskDtos.stream()
+		final var lastTaskEnd = taskDtos.stream()
 				.filter(t -> Optional.ofNullable(t.getEndDate()).isPresent())
 				.filter(t -> t.getReservationDto().getStatus().equals(ReservationStatus.COMPLETED))
 				.max(Comparator.comparing(TaskDto::getEndDate))
 				.orElseGet(TaskDto::new);
 		
-		return new ReservationBeginEndTask(taskBegin, taskEnd);
+		return new ReservationBeginEndTask(firstTaskBegin, lastTaskEnd);
 	}
 	
 	
