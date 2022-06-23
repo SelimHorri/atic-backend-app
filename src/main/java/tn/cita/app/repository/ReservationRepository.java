@@ -21,8 +21,11 @@ public interface ReservationRepository extends JpaRepository<Reservation, Intege
 	List<Reservation> findAllBySaloonId(final Integer saloonId);
 	Optional<Reservation> findByStartDateAndStatus(final LocalDateTime startDate, final ReservationStatus status);
 	
-	@Query(name = "List<Reservation>.searchAllByKey")
-	List<Reservation> searchAllByKey(@Param("saloonId") final Integer saloonId, @Param("key") final String key);
+	@Query(name = "List<Reservation>.searchAllByCustomerIdLikeKey")
+	List<Reservation> searchAllByCustomerIdLikeKey(@Param("customerId") final Integer customerId, @Param("key") final String key);
+	
+	@Query(name = "List<Reservation>.searchAllBySaloonIdLikeKey")
+	List<Reservation> searchAllBySaloonIdLikeKey(@Param("saloonId") final Integer saloonId, @Param("key") final String key);
 	
 }
 

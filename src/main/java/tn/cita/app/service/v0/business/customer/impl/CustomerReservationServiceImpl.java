@@ -3,6 +3,7 @@ package tn.cita.app.service.v0.business.customer.impl;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +49,19 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		return new CustomerReservationResponse(
 				customerDto,
 				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest));
+	}
+	
+	@Override
+	public CustomerReservationResponse searchAllByCustomerIdLikeKey(final String username, final String key) {
+		final var customerDto = this.customerService.findByCredentialUsername(username);
+		return new CustomerReservationResponse(
+				customerDto, 
+				new PageImpl<>(this.reservationService.getReservationRepository()
+						.searchAllByCustomerIdLikeKey(customerDto.getId(), key.strip().toLowerCase())
+						.stream()
+							.map(ReservationMapper::map)
+							.distinct()
+							.collect(Collectors.toUnmodifiableList())));
 	}
 	
 	@Transactional

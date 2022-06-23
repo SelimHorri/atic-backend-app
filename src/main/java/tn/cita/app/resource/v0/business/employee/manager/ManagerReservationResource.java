@@ -44,10 +44,10 @@ public class ManagerReservationResource {
 	}
 	
 	@GetMapping("/search/{key}")
-	public ResponseEntity<ApiResponse<ManagerReservationResponse>> searchAllByKey(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<ManagerReservationResponse>> searchAllBySaloonIdLikeKey(final WebRequest webRequest, 
 			@PathVariable final String key) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerReservationService.searchAllBy(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
+				this.managerReservationService.searchAllBySaloonIdLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
 	}
 	
 	

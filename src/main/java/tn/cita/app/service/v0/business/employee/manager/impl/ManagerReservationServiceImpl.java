@@ -37,12 +37,12 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	}
 	
 	@Override
-	public ManagerReservationResponse searchAllBy(final String username, final String key) {
+	public ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key) {
 		final var managerDto = this.employeeService.findByUsername(username);
 		return new ManagerReservationResponse(
 				managerDto, 
 				new PageImpl<>(this.reservationService.getReservationRepository()
-						.searchAllByKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase())
+						.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase())
 						.stream()
 							.map(ReservationMapper::map)
 							.distinct()

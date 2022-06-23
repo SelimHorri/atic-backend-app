@@ -61,6 +61,13 @@ public class CustomerReservationResource {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, reservationDto));
 	}
 	
+	@GetMapping("/search/{key}")
+	public ResponseEntity<ApiResponse<CustomerReservationResponse>> searchAllBySaloonIdLikeKey(final WebRequest webRequest, 
+			@PathVariable final String key) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.customerReservationService.searchAllByCustomerIdLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
+	}
+	
 	
 	
 }
