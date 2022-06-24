@@ -125,16 +125,15 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		task.setWorkerDescription(taskEndRequest.getWorkerDescription());
 		
 		// fetch all assigned workers to this reservation..
-		final var assignedOtherTasks = this.taskService.geTaskRepository()
+		final var assignedOtherTaskDtos = this.taskService
 				.findAllByReservationId(taskEndRequest.getReservationId())
 					.stream()
 						.filter(t -> !t.getWorkerId().equals(workerDto.getId()))
-						.map(TaskMapper::map)
 						.distinct()
-						.collect(Collectors.toList());
+						.collect(Collectors.toUnmodifiableList());
 		
-		final boolean isAllTasksEnded = assignedOtherTasks.stream()
-				.allMatch(t -> Optional.ofNullable(t.getEndDate()).isPresent());
+		final boolean isAllTasksEnded = assignedOtherTaskDtos.stream()
+					.allMatch(t -> Optional.ofNullable(t.getEndDate()).isPresent());
 		
 		// update reservation as COMPLETED if match..
 		if (isAllTasksEnded) {
@@ -146,6 +145,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		return TaskMapper.map(this.taskService.geTaskRepository().save(task));
 	}
+	
+	
 	
 }
 
