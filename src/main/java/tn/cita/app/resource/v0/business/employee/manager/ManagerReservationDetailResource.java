@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.response.ReservationBeginEndTask;
 import tn.cita.app.dto.response.ReservationDetailResponse;
+import tn.cita.app.dto.response.ReservationSubWorkerResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.employee.manager.ManagerReservationDetailService;
 import tn.cita.app.util.UserRequestExtractorUtil;
@@ -40,6 +41,14 @@ public class ManagerReservationDetailResource {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerReservationDetailService.getBeginEndTask(Integer.parseInt(reservationId))));
+	}
+	
+	@GetMapping("/{reservationId}/tasks/unassigned")
+	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> getAllUnassignedSubWorkers(final WebRequest webRequest, 
+			@PathVariable final String reservationId) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationDetailService
+				.getAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
+						Integer.parseInt(reservationId))));
 	}
 	
 	
