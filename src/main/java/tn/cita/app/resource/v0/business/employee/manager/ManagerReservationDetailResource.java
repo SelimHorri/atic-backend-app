@@ -1,16 +1,21 @@
 package tn.cita.app.resource.v0.business.employee.manager;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
 import tn.cita.app.dto.response.ReservationBeginEndTask;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.ReservationSubWorkerResponse;
@@ -49,6 +54,14 @@ public class ManagerReservationDetailResource {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationDetailService
 				.getAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						Integer.parseInt(reservationId))));
+	}
+	
+	@PostMapping("/tasks/assign")
+	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> assignReservationWorkers(final WebRequest webRequest, 
+			@RequestBody @Valid ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationDetailService
+				.assignReservationWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
+						reservationAssignWorkerRequest)));
 	}
 	
 	

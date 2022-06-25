@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.dto.TaskDto;
+import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
 import tn.cita.app.dto.response.ReservationBeginEndTask;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.ReservationSubWorkerResponse;
@@ -76,6 +77,16 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 						.collect(Collectors.toUnmodifiableList());
 		
 		return new ReservationSubWorkerResponse(this.reservationService.findById(reservationId), new PageImpl<>(unassignedWorkerDtos));
+	}
+	
+	@Transactional
+	@Override
+	public ReservationSubWorkerResponse assignReservationWorkers(final String username, 
+			final ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
+		
+		
+		
+		return null;
 	}
 	
 	
