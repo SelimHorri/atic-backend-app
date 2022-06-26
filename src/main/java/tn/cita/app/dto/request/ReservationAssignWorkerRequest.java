@@ -21,11 +21,11 @@ public final class ReservationAssignWorkerRequest implements Serializable {
 	
 	private Integer reservationId;
 	
-	@Size(min = 1, message = "")
+	@Size(min = 1, message = "You must assign at least {min} worker")
 	@NotEmpty(message = "Workers must be assigned to the reservation")
 	private List<Integer> assignedWorkersIds;
 	
-	@Size(max = 255, message = "Manager description must not be over {255} characters")
+	@Size(max = 255, message = "Manager description must not be over {max} characters")
 	private String managerDescription;
 	
 }
