@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,6 +15,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.ManagerReservationResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -41,6 +43,14 @@ public class ManagerReservationResource {
 	public ResponseEntity<ApiResponse<ManagerReservationResponse>> getAllReservations(final WebRequest webRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerReservationService.getAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest), null)));
+	}
+	
+	@PutMapping("/cancel/{reservationId}")
+	public ResponseEntity<ApiResponse<ReservationDto>> cancelReservation(final WebRequest request, 
+			@PathVariable final String reservationId) {
+		this.userRequestExtractorUtil.extractUsername(request);
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.managerReservationService.cancelReservation(Integer.parseInt(reservationId))));
 	}
 	
 	@GetMapping("/search/{key}")

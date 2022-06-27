@@ -120,7 +120,6 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		
 		final var savedAssignedWorkers = assignedWorkers.stream()
 				.map(Task::getWorkerId)
-				.distinct()
 				.map(this.employeeService::findById)
 				.distinct()
 				.collect(Collectors.toUnmodifiableList());

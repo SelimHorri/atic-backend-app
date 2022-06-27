@@ -76,6 +76,10 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		// Add completeDate of reservation along with COMPLETED status to this check
 		if (reservation.getStatus().equals(ReservationStatus.COMPLETED))
 			throw new ReservationAlreadyCompletedException("Reservation is already completed");
+		else if (reservation.getStatus().equals(ReservationStatus.CANCELLED))
+			throw new ReservationAlreadyCompletedException("Reservation is already cancelled");
+		else if (reservation.getStatus().equals(ReservationStatus.OUTDATED))
+			throw new ReservationAlreadyCompletedException("Reservation is already outdated");
 		
 		// update
 		reservation.setCancelDate(LocalDateTime.now());
