@@ -98,7 +98,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 					.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final boolean isAlreadyAssigned = reservationAssignWorkerRequest.getAssignedWorkersIds().stream()
 						.map(workerId -> new TaskId(workerId, reservation.getId()))
-						.anyMatch(taskId -> this.taskService.geTaskRepository().existsById(taskId));
+						.anyMatch(this.taskService.geTaskRepository()::existsById);
 		if (isAlreadyAssigned)
 			throw new TaskAlreadyAssigned("Worker is already assigned");
 		
@@ -119,7 +119,10 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		});
 		
 		final var savedAssignedWorkers = assignedWorkers.stream()
-				.map(t -> this.employeeService.findById(t.getWorkerId()))
+				.map(Task::getWorkerId)
+				.distinct()
+				.map(this.employeeService::findById)
+				.distinct()
 				.collect(Collectors.toUnmodifiableList());
 		
 		return new ReservationSubWorkerResponse(ReservationMapper.map(reservation), new PageImpl<>(savedAssignedWorkers));
