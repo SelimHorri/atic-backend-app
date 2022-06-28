@@ -10,6 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
+import tn.cita.app.dto.response.ManagerWorkerInfoResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.employee.manager.ManagerWorkerInfoService;
 import tn.cita.app.util.UserRequestExtractorUtil;
@@ -24,7 +25,7 @@ public class ManagerWorkerInfoResource {
 	private final ManagerWorkerInfoService managerWorkerInfoService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<?>> getAllSubWorkers(final WebRequest webRequest) {
+	public ResponseEntity<ApiResponse<ManagerWorkerInfoResponse>> getAllSubWorkers(final WebRequest webRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerWorkerInfoService
 				.getAllSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
