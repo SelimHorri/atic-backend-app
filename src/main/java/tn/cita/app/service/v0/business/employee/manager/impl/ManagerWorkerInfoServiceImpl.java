@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.response.ManagerWorkerInfoResponse;
 import tn.cita.app.service.v0.EmployeeService;
 import tn.cita.app.service.v0.business.employee.manager.ManagerWorkerInfoService;
@@ -22,6 +23,11 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 		return new ManagerWorkerInfoResponse(
 				managerDto, 
 				new PageImpl<>(this.employeeService.findAllByManagerId(managerDto.getId())));
+	}
+	
+	@Override
+	public EmployeeDto getWorkerInfo(final Integer workerId) {
+		return this.employeeService.findById(workerId);
 	}
 	
 	
