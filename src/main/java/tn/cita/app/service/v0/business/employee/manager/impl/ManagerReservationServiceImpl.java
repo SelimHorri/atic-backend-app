@@ -11,13 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.ManagerReservationResponse;
+import tn.cita.app.dto.response.ReservationSubWorkerResponse;
 import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.service.v0.EmployeeService;
 import tn.cita.app.service.v0.ReservationService;
+import tn.cita.app.service.v0.TaskService;
 import tn.cita.app.service.v0.business.employee.manager.ManagerReservationService;
 
 @Service
@@ -27,6 +30,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	private final EmployeeService employeeService;
 	private final ReservationService reservationService;
+	private final TaskService taskService;
 	
 	@Override
 	public ManagerReservationResponse getAllReservations(final String username, final ClientPageRequest clientPageRequest) {
@@ -76,6 +80,26 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 							.map(ReservationMapper::map)
 							.distinct()
 							.collect(Collectors.toUnmodifiableList())));
+	}
+	
+	@Override
+	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
+
+		final var managerDto = this.employeeService.findByUsername(username);
+		final var assignedWorkersIds = this.taskService
+				.findAllByReservationId(reservationId)
+					.stream()
+						.map(TaskDto::getWorkerId)
+						.distinct()
+						.collect(Collectors.toUnmodifiableSet());
+		final var unassignedWorkerDtos = this.employeeService
+				.findAllByManagerId(managerDto.getId())
+					.stream()
+						.filter(w -> !assignedWorkersIds.contains(w.getId()))
+						.distinct()
+						.collect(Collectors.toUnmodifiableList());
+		
+		return new ReservationSubWorkerResponse(this.reservationService.findById(reservationId), new PageImpl<>(unassignedWorkerDtos));
 	}
 	
 	

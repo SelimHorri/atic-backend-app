@@ -18,6 +18,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.ManagerReservationResponse;
+import tn.cita.app.dto.response.ReservationSubWorkerResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.employee.manager.ManagerReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
@@ -58,6 +59,14 @@ public class ManagerReservationResource {
 			@PathVariable final String key) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerReservationService.searchAllBySaloonIdLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
+	}
+	
+	@GetMapping("/{reservationId}/unassigned")
+	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> getAllUnassignedSubWorkers(final WebRequest webRequest, 
+			@PathVariable final String reservationId) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationService
+				.getAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
+						Integer.parseInt(reservationId))));
 	}
 	
 	
