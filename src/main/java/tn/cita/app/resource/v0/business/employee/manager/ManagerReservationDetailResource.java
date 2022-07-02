@@ -58,7 +58,7 @@ public class ManagerReservationDetailResource {
 	
 	@PostMapping("/tasks/assign")
 	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> assignReservationWorkers(final WebRequest webRequest, 
-			@RequestBody @Valid ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
+			@RequestBody @Valid final ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationDetailService
 				.assignReservationWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						reservationAssignWorkerRequest)));
