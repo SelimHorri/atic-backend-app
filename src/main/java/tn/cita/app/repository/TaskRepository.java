@@ -23,6 +23,9 @@ public interface TaskRepository extends JpaRepository<Task, TaskId> {
 	@Modifying
 	int saveTask(@Param("task") final Task task);
 	
+	@Query(name = "List<Task>.searchAllByWorkerIdLikeKey")
+	List<Task> searchAllByWorkerIdLikeKey(@Param("workerId") final Integer workerId, @Param("key") final String key);
+	
 }
 
 

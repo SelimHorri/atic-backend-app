@@ -9,6 +9,7 @@ public interface WorkerReservationService {
 	
 	Page<TaskDto> getAllReservations(final String username, final ClientPageRequest clientPageRequest);
 	Page<TaskDto> getAllReservations(final String username);
+	Page<TaskDto> searchAllLikeKey(final String username, final String key);
 	
 }
 
