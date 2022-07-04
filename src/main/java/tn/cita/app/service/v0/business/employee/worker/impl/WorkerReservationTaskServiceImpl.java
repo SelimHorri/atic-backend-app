@@ -138,6 +138,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		// update reservation as COMPLETED if match..
 		if (isAllTasksEnded) {
 			reservation.setStatus(ReservationStatus.COMPLETED);
+			reservation.setCompleteDate(LocalDateTime.now());
 			final var completedReservation = this.reservationService.getReservationRepository().save(reservation);
 			task.setReservationId(completedReservation.getId());
 			task.setReservation(completedReservation);

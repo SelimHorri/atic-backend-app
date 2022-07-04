@@ -18,6 +18,7 @@ public interface ReservationMapper {
 				.description(reservation.getDescription())
 				.startDate(reservation.getStartDate())
 				.cancelDate(reservation.getCancelDate())
+				.completeDate(reservation.getCompleteDate())
 				.status(reservation.getStatus())
 				.customerDto(
 					CustomerDto.builder()
@@ -49,6 +50,7 @@ public interface ReservationMapper {
 				.description(reservationDto.getDescription())
 				.startDate(reservationDto.getStartDate())
 				.cancelDate(reservationDto.getCancelDate())
+				.completeDate(reservationDto.getCompleteDate())
 				.status(reservationDto.getStatus())
 				.customer(
 					Customer.builder()

@@ -66,6 +66,13 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	@Column(name = "cancel_date", nullable = true)
 	private LocalDateTime cancelDate;
 	
+	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@Column(name = "complete_date", nullable = true)
+	private LocalDateTime completeDate;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
 	private ReservationStatus status;
