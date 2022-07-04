@@ -13,7 +13,6 @@ public interface ServiceDetailRepository extends JpaRepository<ServiceDetail, In
 	List<ServiceDetail> findAllByCategoryId(final Integer categoryId);
 	Page<ServiceDetail> findAllByCategoryId(final Integer categoryId, final Pageable pageable);
 	List<ServiceDetail> findAllByCategorySaloonId(final Integer saloonId);
-	Page<ServiceDetail> findAllByCategorySaloonId(final Integer saloonId, final Pageable pageable);
 	
 }
 

@@ -41,7 +41,7 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 				new PageImpl<>(this.reservationService.findAllBySaloonId(managerDto.getSaloonDto().getId())),
 				new PageImpl<>(this.saloonTagService.findAllBySaloonId(managerDto.getSaloonDto().getId())), 
 				new PageImpl<>(this.categoryService.findAllBySaloonId(managerDto.getSaloonDto().getId())), 
-				new PageImpl<>(this.serviceDetailService.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()).toList()));
+				new PageImpl<>(this.serviceDetailService.findAllByCategorySaloonId(managerDto.getSaloonDto().getId())));
 	}
 	
 	@Transactional

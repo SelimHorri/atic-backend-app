@@ -50,11 +50,10 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids) {
-		final var list = this.serviceDetailRepository.findAllById(ids)
-				.stream()
-					.map(ServiceDetailMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		final var list = this.serviceDetailRepository.findAllById(ids).stream()
+				.map(ServiceDetailMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 		return new PageImpl<>(list);
 	}
 	
@@ -62,8 +61,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	public ServiceDetailsReservationContainerResponse getOrderedServiceDetailsByReservationId(final Integer reservationId) {
 		
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(reservationId);
-		final var ids = orderedDetailDtos
-				.stream()
+		final var ids = orderedDetailDtos.stream()
 					.map(OrderedDetailDto::getServiceDetailId)
 					.collect(Collectors.toUnmodifiableSet());
 		
@@ -75,20 +73,18 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByCategoryId(final Integer categoryId) {
-		return new PageImpl<>(this.serviceDetailRepository.findAllByCategoryId(categoryId)
-				.stream()
-					.map(ServiceDetailMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList()));
+		return new PageImpl<>(this.serviceDetailRepository.findAllByCategoryId(categoryId).stream()
+				.map(ServiceDetailMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList()));
 	}
 	
 	@Override
-	public Page<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
-		return new PageImpl<>(this.serviceDetailRepository.findAllByCategorySaloonId(saloonId)
-				.stream()
+	public List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
+		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId).stream()
 					.map(ServiceDetailMapper::map)
 					.distinct()
-					.collect(Collectors.toUnmodifiableList()));
+					.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

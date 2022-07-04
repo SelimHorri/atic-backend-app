@@ -6,8 +6,9 @@ import tn.cita.app.dto.ServiceDetailDto;
 
 public interface ManagerServiceDetailService {
 	
-	Page<ServiceDetailDto> getAll();
+	Page<ServiceDetailDto> getAll(final String username);
 	ServiceDetailDto getById(final Integer serviceDetailId);
+	Boolean deleteServiceDetail(final Integer serviceDetailId);
 	
 }
 

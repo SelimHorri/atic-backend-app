@@ -17,7 +17,7 @@ public interface ServiceDetailService {
 	Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids);
 	ServiceDetailsReservationContainerResponse getOrderedServiceDetailsByReservationId(final Integer reservationId);
 	Page<ServiceDetailDto> findAllByCategoryId(final Integer categoryId);
-	Page<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId);
+	List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId);
 	
 }
 
