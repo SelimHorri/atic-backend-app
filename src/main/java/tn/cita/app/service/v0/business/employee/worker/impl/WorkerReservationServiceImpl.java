@@ -37,7 +37,7 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 	public Page<TaskDto> searchAllLikeKey(final String username, final String key) {
 		final var workerDto = this.employeeService.findByUsername(username);
 		return new PageImpl<>(this.taskService.geTaskRepository()
-				.searchAllByWorkerIdLikeKey(workerDto.getId(), key).stream()
+				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.toLowerCase()).stream()
 					.map(TaskMapper::map)
 					.distinct()
 					.collect(Collectors.toUnmodifiableList()));

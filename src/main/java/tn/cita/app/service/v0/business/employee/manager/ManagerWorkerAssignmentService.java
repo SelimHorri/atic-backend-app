@@ -7,6 +7,7 @@ public interface ManagerWorkerAssignmentService {
 	
 	ManagerWorkerAssignmentResponse getAllWorkerTasks(final String username, 
 			final Integer workerId, final ClientPageRequest clientPageRequest);
+	ManagerWorkerAssignmentResponse searchAllLikeKey(final String username, final Integer workerId, final String key);
 	
 }
 

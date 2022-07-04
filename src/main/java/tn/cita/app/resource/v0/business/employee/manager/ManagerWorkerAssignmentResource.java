@@ -38,6 +38,15 @@ public class ManagerWorkerAssignmentResource {
 						Integer.parseInt(workerId), new ClientPageRequest(params))));
 	}
 	
+	@GetMapping("/{workerId}/search/{key}")
+	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> searchAllReservationsLikeKey(final WebRequest webRequest, 
+			@PathVariable final String workerId, 
+			@PathVariable final String key) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.managerWorkerAssignmentService.searchAllLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), 
+						Integer.parseInt(workerId), key)));
+	}
+	
 	
 	
 }
