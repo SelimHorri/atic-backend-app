@@ -73,18 +73,18 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
 	private UserImage userImage;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = true)
 	private Employee manager;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "manager")
 	private Set<Employee> workers;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "credential_id", referencedColumnName = "id", nullable = false)
 	private Credential credential;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id", nullable = false)
 	private Saloon saloon;
 	

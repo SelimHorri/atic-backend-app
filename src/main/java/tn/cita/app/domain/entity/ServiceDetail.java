@@ -44,7 +44,7 @@ public class ServiceDetail extends AbstractMappedEntity implements Serializable 
 	@Column(name = "price_unit", columnDefinition = "DECIMAL")
 	private Double priceUnit;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
 	private Category category;
 	

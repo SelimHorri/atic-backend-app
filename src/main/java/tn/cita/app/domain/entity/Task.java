@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -79,11 +78,11 @@ public class Task extends AbstractAuditingMappedEntity implements Serializable {
 	@Column(name = "manager_description", nullable = true)
 	private String managerDescription;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "worker_id", referencedColumnName = "id")
 	private Employee worker;
 	
-	@ManyToOne(fetch = FetchType.EAGER)
+	@ManyToOne
 	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
 	private Reservation reservation;
 	

@@ -69,7 +69,7 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	@Column(nullable = false)
 	private String email;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "location_id", referencedColumnName = "id")
 	private Location location;
 	

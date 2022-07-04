@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -29,6 +30,14 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	@Override
 	public ServiceDetailRepository getServiceDetailRepository() {
 		return this.serviceDetailRepository;
+	}
+	
+	@Override
+	public List<ServiceDetailDto> findAll() {
+		return this.serviceDetailRepository.findAll().stream()
+				.map(ServiceDetailMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	@Override

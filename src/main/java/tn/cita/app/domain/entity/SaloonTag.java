@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -59,11 +58,11 @@ public class SaloonTag extends AbstractAuditingMappedEntity implements Serializa
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime taggedDate;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
 	private Saloon saloon;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "tag_id", referencedColumnName = "id")
 	private Tag tag;
 	
