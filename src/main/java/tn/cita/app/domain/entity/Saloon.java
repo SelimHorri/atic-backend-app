@@ -62,7 +62,7 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	private String fullAdr;
 	
 	@Lob
-	@Column(name = "iframe_google_map", columnDefinition = "CLOB", nullable = true)
+	@Column(name = "iframe_google_map", columnDefinition = "TEXT", nullable = true)
 	private String iframeGoogleMap;
 	
 	@Email(message = "Input must be in email format")
