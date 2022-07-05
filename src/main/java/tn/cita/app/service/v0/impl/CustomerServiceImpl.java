@@ -53,7 +53,7 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	@Override
-	public CustomerDto findByCredentialUsernameIgnoringCase(final String username) {
+	public CustomerDto findByCredentialUsername(final String username) {
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException(String

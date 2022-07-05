@@ -6,8 +6,8 @@ import java.time.LocalDateTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -21,7 +21,6 @@ import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstant;
 
-@JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
@@ -53,9 +52,11 @@ public final class TaskDto implements Serializable {
 	private String workerDescription;
 	private String managerDescription;
 	
+	@JsonInclude(Include.NON_NULL)
 	@JsonProperty("worker")
 	private EmployeeDto workerDto;
 	
+	@JsonInclude(Include.NON_NULL)
 	@JsonProperty("reservation")
 	private ReservationDto reservationDto;
 	

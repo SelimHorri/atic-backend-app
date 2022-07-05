@@ -66,22 +66,33 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	@Column(name = "cancel_date", nullable = true)
 	private LocalDateTime cancelDate;
 	
+	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonSerialize(using = LocalDateTimeSerializer.class)
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@Column(name = "complete_date", nullable = true)
+	private LocalDateTime completeDate;
+	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "status", nullable = false)
 	private ReservationStatus status;
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+	@EqualsAndHashCode.Exclude
 	private Set<OrderedDetail> orderedDetails;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+	@EqualsAndHashCode.Exclude
 	private Set<Task> tasks;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 }

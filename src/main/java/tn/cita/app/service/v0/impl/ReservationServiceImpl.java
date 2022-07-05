@@ -56,7 +56,8 @@ public class ReservationServiceImpl implements ReservationService {
 	@Override
 	public Page<ReservationDto> findAllBySaloonId(final Integer saloonId, final ClientPageRequest clientPageRequest) {
 		return this.reservationRepository.findAllBySaloonId(saloonId, 
-					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize(), 
+							clientPageRequest.getSortDirection(), clientPageRequest.getSortBy()))
 				.map(ReservationMapper::map);
 	}
 	

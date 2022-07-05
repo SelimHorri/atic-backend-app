@@ -19,9 +19,9 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.request.CustomerProfileInfoRequest;
+import tn.cita.app.dto.request.CustomerProfileRequest;
 import tn.cita.app.dto.response.CustomerProfileResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerProfileService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -35,19 +35,19 @@ public class CustomerProfileResource {
 	private final CustomerProfileService customerProfileService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<CustomerProfileResponse>> getProfile(final WebRequest request, 
+	public ResponseEntity<ApiResponse<CustomerProfileResponse>> getProfile(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerProfileService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	
 	@PutMapping
-	public ResponseEntity<ApiPayloadResponse<CustomerDto>> updateProfileInfo(final WebRequest webRequest, 
-			@RequestBody @Valid final CustomerProfileInfoRequest customerProfileInfoRequest) {
+	public ResponseEntity<ApiResponse<CustomerDto>> updateProfileInfo(final WebRequest webRequest, 
+			@RequestBody @Valid final CustomerProfileRequest customerProfileRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
-				this.customerProfileService.updateProfileInfo(customerProfileInfoRequest)));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.customerProfileService.updateProfileInfo(customerProfileRequest)));
 	}
 	
 	

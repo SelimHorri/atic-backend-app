@@ -1,0 +1,80 @@
+package tn.cita.app.dto.request;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
+
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import tn.cita.app.constant.AppConstant;
+
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
+@Builder
+public final class CustomerProfileRequest implements Serializable {
+	
+	private static final long serialVersionUID = 1L;
+	
+	@NotBlank(message = "Must specify authenticated username")
+	private String authenticatedUsername;
+	
+	@NotBlank(message = "Firstname must not be blank")
+	private String firstname;
+	
+	@NotBlank(message = "Lastname must not be blank")
+	private String lastname;
+	
+	@Email(message = "Must follow email format")
+	@NotBlank(message = "Email must not be blank")
+	private String email;
+	
+	@Size(min = 8, max = 12, message = "Phone must be between {min} and {max} characters")
+	@NotBlank(message = "Phone must not be blank")
+	private String phone;
+	
+	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate birthdate;
+	private String facebookUrl;
+	private String instagramUrl;
+	private String linkedinUrl;
+	
+	@NotBlank(message = "Username must not be blank")
+	private String username;
+	
+	@NotBlank(message = "Password must not be blank")
+	private String password;
+	
+	@NotBlank(message = "confirmPassword must not be blank")
+	private String confirmPassword;
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+

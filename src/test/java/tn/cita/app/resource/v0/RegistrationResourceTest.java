@@ -27,7 +27,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
@@ -71,7 +71,7 @@ class RegistrationResourceTest {
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.getUsername(), 
 						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -116,7 +116,7 @@ class RegistrationResourceTest {
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.getUsername(), 
 						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -161,7 +161,7 @@ class RegistrationResourceTest {
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.getUsername(), 
 						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -206,7 +206,7 @@ class RegistrationResourceTest {
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.getUsername(), 
 						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -245,7 +245,7 @@ class RegistrationResourceTest {
 				.role("XXX")
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Wrong role type for registration, it should be Customer/Worker/Manager/Owner role! ####"));
 		
 		when(this.registrationService.register(registerRequest))
@@ -285,7 +285,7 @@ class RegistrationResourceTest {
 				.role(UserRoleBasedAuthority.WORKER.name())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Account with username: " + registerRequest.getUsername() + " already exists! ####"));
 		
 		when(this.registrationService.register(registerRequest))
@@ -325,7 +325,7 @@ class RegistrationResourceTest {
 				.role(UserRoleBasedAuthority.CUSTOMER.name())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Unmatched passwords! please check again! ####"));
 		
 		when(this.registrationService.register(registerRequest))
@@ -353,7 +353,7 @@ class RegistrationResourceTest {
 	void givenValidToken_whenValidateToken_thenConfirmationMsgStringShouldBeReturned() {
 		
 		final var token = "c856b457-ed66-4dd4-bc1a-f0be552a28e5";
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				"User has been activated successfully, go and login!");
 		
 		when(this.registrationService.validateToken(token))

@@ -11,7 +11,7 @@ public interface CustomerService {
 	CustomerRepository getCustomerRepository();
 	Page<CustomerDto> findAll(final ClientPageRequest clientPageRequest);
 	CustomerDto findById(final Integer id);
-	CustomerDto findByCredentialUsernameIgnoringCase(final String username);
+	CustomerDto findByCredentialUsername(final String username);
 	boolean deleteById(final Integer id);
 	
 }

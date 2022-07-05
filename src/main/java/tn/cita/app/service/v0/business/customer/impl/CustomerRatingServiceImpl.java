@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,10 +20,10 @@ public class CustomerRatingServiceImpl implements CustomerRatingService {
 	
 	@Override
 	public CustomerRatingResponse getRatingsByUsername(final String username) {
-		final var customerDto = this.customerService.findByCredentialUsernameIgnoringCase(username);
+		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerRatingResponse(
 				customerDto,
-				this.ratingService.findAllByCustomerId(customerDto.getId()));
+				new PageImpl<>(this.ratingService.findAllByCustomerId(customerDto.getId())));
 	}
 	
 	

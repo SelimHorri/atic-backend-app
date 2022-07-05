@@ -26,7 +26,7 @@ import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -57,7 +57,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.CUSTOMER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
@@ -98,7 +98,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.WORKER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
@@ -139,7 +139,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.MANAGER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
@@ -180,7 +180,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.OWNER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
 								+ "Check your email to enbale your account. "
@@ -221,7 +221,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role("XXX")
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Wrong role type for registration, it should be Customer/Worker/Manager/Owner role! ####"));
 		
 		this.webTestClient
@@ -258,7 +258,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.WORKER.name())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Account with username: " + registerRequest.getUsername() + " already exists! ####"));
 		
 		this.webTestClient
@@ -295,7 +295,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.CUSTOMER.name())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Unmatched passwords! please check again! ####"));
 		
 		this.webTestClient
@@ -321,7 +321,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		
 		final var token = "c856b457-ed66-4dd4-bc1a-f0be552a28e5";
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				"User has been activated successfully, go and login!");
 		
 		this.webTestClient

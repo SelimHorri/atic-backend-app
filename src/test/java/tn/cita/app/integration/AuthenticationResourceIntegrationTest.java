@@ -22,7 +22,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.service.v0.AuthenticationService;
 import tn.cita.app.util.JwtUtil;
@@ -54,7 +54,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	void givenLoginApiUrl_whenRequestIsValid_thenLoginResponseShouldBeReturned() {
 		
 		this.loginResponse = this.authenticationService.authenticate(loginRequest);
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, loginResponse);
+		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, loginResponse);
 		
 		this.webTestClient
 				.post()
@@ -84,7 +84,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	void givenLoginApiUrl_whenRequestWithInvalidUsername_thenExceptionMsgShouldBeReturned() {
 		
 		final var wrongUsernameLoginRequest = new LoginRequest(this.loginRequest + "iiii", this.loginRequest.getPassword());
-		final var apiPayloadResponse = new ApiPayloadResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
+		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("#### Credential with username " + wrongUsernameLoginRequest.getUsername() + " not found! ####"));
 		
 		this.webTestClient
@@ -115,7 +115,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	void givenLoginApiUrl_whenRequestWithInvalidPasswordOrElse_thenExceptionMsgShouldBeReturned() {
 		
 		final var wrongCredentialsLoginRequest = new LoginRequest(this.loginRequest.getUsername(), this.loginRequest.getPassword() + "012545");
-		final var apiPayloadResponse = new ApiPayloadResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
+		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("#### Bad credentials! ####"));
 		
 		this.webTestClient
@@ -145,7 +145,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	void givenLoginApiUrl_whenRequestUsernameIsBlank_thenCustomValidationExceptionMsgShouldBeReturned() {
 		
 		final var wrongCredentialsLoginRequest = new LoginRequest(null, this.loginRequest.getPassword());
-		final var apiPayloadResponse = new ApiPayloadResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
+		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("*Input username should not be blank!**"));
 		
 		this.webTestClient
@@ -175,7 +175,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	void givenLoginApiUrl_whenRequestPasswordIsEmpty_thenCustomValidationExceptionMsgShouldBeReturned() {
 		
 		final var wrongCredentialsLoginRequest = new LoginRequest(this.loginRequest.getUsername(), null);
-		final var apiPayloadResponse = new ApiPayloadResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
+		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("*Input password should not be blank!**"));
 		
 		this.webTestClient

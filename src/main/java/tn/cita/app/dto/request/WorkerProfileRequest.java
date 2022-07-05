@@ -26,7 +26,7 @@ import tn.cita.app.constant.AppConstant;
 @AllArgsConstructor
 @Data
 @Builder
-public final class CustomerProfileInfoRequest implements Serializable {
+public final class WorkerProfileRequest implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -52,9 +52,12 @@ public final class CustomerProfileInfoRequest implements Serializable {
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
-	private String facebookUrl;
-	private String instagramUrl;
-	private String linkedinUrl;
+	
+	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonSerialize(using = LocalDateSerializer.class)
+	@JsonDeserialize(using = LocalDateDeserializer.class)
+	private LocalDate hiredate;
 	
 	@NotBlank(message = "Username must not be blank")
 	private String username;
@@ -66,6 +69,7 @@ public final class CustomerProfileInfoRequest implements Serializable {
 	private String confirmPassword;
 	
 }
+
 
 
 

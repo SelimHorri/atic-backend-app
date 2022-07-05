@@ -62,33 +62,40 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	private String fullAdr;
 	
 	@Lob
-	@Column(name = "iframe_google_map", columnDefinition = "CLOB", nullable = true)
+	@Column(name = "iframe_google_map", columnDefinition = "TEXT", nullable = true)
 	private String iframeGoogleMap;
 	
 	@Email(message = "Input must be in email format")
 	@Column(nullable = false)
 	private String email;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "location_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Location location;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@EqualsAndHashCode.Exclude
 	private Set<Employee> employees;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@EqualsAndHashCode.Exclude
 	private Set<Favourite> favourites;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@EqualsAndHashCode.Exclude
 	private Set<SaloonImage> saloonImage;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@EqualsAndHashCode.Exclude
 	private Set<SaloonTag> saloonTags;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@EqualsAndHashCode.Exclude
 	private Set<Category> categories;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@EqualsAndHashCode.Exclude
 	private Set<Reservation> reservations;
 	
 }

@@ -3,6 +3,7 @@ package tn.cita.app.service.v0.business.customer.impl;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +19,7 @@ import tn.cita.app.dto.request.ReservationRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
@@ -43,10 +45,23 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	@Override
 	public CustomerReservationResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest) {
-		final var customerDto = this.customerService.findByCredentialUsernameIgnoringCase(username);
+		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerReservationResponse(
 				customerDto,
 				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest));
+	}
+	
+	@Override
+	public CustomerReservationResponse searchAllByCustomerIdLikeKey(final String username, final String key) {
+		final var customerDto = this.customerService.findByCredentialUsername(username);
+		return new CustomerReservationResponse(
+				customerDto, 
+				new PageImpl<>(this.reservationService.getReservationRepository()
+						.searchAllByCustomerIdLikeKey(customerDto.getId(), key.strip().toLowerCase())
+						.stream()
+							.map(ReservationMapper::map)
+							.distinct()
+							.collect(Collectors.toUnmodifiableList())));
 	}
 	
 	@Transactional
@@ -56,6 +71,15 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		final var reservation = this.reservationService.getReservationRepository().findById(reservationId)
 				.orElseThrow(() -> new ReservationNotFoundException(String
 						.format("Reservation with id: %s not found", reservationId)));
+		
+		// TODO: check if reservation has been completed, should not be cancelled (or changed) anymore
+		// Add completeDate of reservation along with COMPLETED status to this check
+		if (reservation.getStatus().equals(ReservationStatus.COMPLETED))
+			throw new ReservationAlreadyCompletedException("Reservation is already completed");
+		else if (reservation.getStatus().equals(ReservationStatus.CANCELLED))
+			throw new ReservationAlreadyCompletedException("Reservation is already cancelled");
+		else if (reservation.getStatus().equals(ReservationStatus.OUTDATED))
+			throw new ReservationAlreadyCompletedException("Reservation is already outdated");
 		
 		// update
 		reservation.setCancelDate(LocalDateTime.now());

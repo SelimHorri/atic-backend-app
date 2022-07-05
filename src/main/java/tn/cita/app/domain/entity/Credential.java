@@ -57,12 +57,15 @@ public class Credential extends AbstractMappedEntity implements Serializable {
 	private Boolean isCredentialsNonExpired;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+	@EqualsAndHashCode.Exclude
 	private Employee employee;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credential")
+	@EqualsAndHashCode.Exclude
 	private Set<VerificationToken> verificationTokens;
 	
 }

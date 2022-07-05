@@ -21,7 +21,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	
 	@Override
 	public CustomerFavouriteResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest) {
-		final var customerDto = this.customerService.findByCredentialUsernameIgnoringCase(username);
+		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerFavouriteResponse(
 				customerDto,
 				this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest));
@@ -30,7 +30,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	@Transactional
 	@Override
 	public Boolean deleteFavourite(final String username, final Integer saloonId) {
-		final var favouriteId = new FavouriteId(this.customerService.findByCredentialUsernameIgnoringCase(username).getId(), saloonId);
+		final var favouriteId = new FavouriteId(this.customerService.findByCredentialUsername(username).getId(), saloonId);
 		return this.favouriteService.deleteById(favouriteId);
 	}
 	

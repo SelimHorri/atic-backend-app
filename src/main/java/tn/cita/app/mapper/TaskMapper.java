@@ -42,6 +42,7 @@ public static TaskDto map(final Task task) {
 						.description(reservation.getDescription())
 						.startDate(reservation.getStartDate())
 						.cancelDate(reservation.getCancelDate())
+						.completeDate(reservation.getCompleteDate())
 						.status(reservation.getStatus())
 						.build())
 				.build();
@@ -78,6 +79,7 @@ public static TaskDto map(final Task task) {
 						.description(reservationDto.getDescription())
 						.startDate(reservationDto.getStartDate())
 						.cancelDate(reservationDto.getCancelDate())
+						.completeDate(reservationDto.getCompleteDate())
 						.status(reservationDto.getStatus())
 						.build())
 				.build();

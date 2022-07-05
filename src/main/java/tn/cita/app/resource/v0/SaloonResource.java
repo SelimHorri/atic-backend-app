@@ -15,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.SaloonService;
 
 @RestController
@@ -26,28 +26,28 @@ public class SaloonResource {
 	private final SaloonService saloonService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAll(@RequestParam final Map<String, String> params) {
+	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAll(@RequestParam final Map<String, String> params) {
 		final var saloons = this.saloonService.findAll(new ClientPageRequest(params));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
+		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
 	@GetMapping("/locations/state/{state}")
-	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
+	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
 			@RequestParam final Map<String, String> params) {
 		final var saloons = this.saloonService.findAllByLocationState(state, new ClientPageRequest(params));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
+		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<SaloonDto>> findById(@PathVariable final String id) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+	public ResponseEntity<ApiResponse<SaloonDto>> findById(@PathVariable final String id) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.saloonService.findById(Integer.parseInt(id))));
 	}
 	
 	@GetMapping("/code/{code}")
-	public ResponseEntity<ApiPayloadResponse<Page<SaloonDto>>> findAllByCode(@PathVariable final String code) {
+	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAllByCode(@PathVariable final String code) {
 		final var saloons = this.saloonService.findAllByCode(code);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
+		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
 	

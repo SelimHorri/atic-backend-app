@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.EmployeeService;
 
 @RestController
@@ -21,8 +21,8 @@ public class EmployeeResource {
 	private final EmployeeService employeeService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<EmployeeDto>> findById(@PathVariable final String id) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+	public ResponseEntity<ApiResponse<EmployeeDto>> findById(@PathVariable final String id) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.employeeService.findById(Integer.parseInt(id))));
 	}
 	
