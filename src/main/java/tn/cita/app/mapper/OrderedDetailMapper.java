@@ -23,6 +23,7 @@ public interface OrderedDetailMapper {
 						.description(orderedDetail.getReservation().getDescription())
 						.startDate(orderedDetail.getReservation().getStartDate())
 						.cancelDate(orderedDetail.getReservation().getCancelDate())
+						.completeDate(orderedDetail.getReservation().getCompleteDate())
 						.status(orderedDetail.getReservation().getStatus())
 						.build())
 				.serviceDetailDto(
@@ -49,6 +50,7 @@ public interface OrderedDetailMapper {
 						.description(orderedDetailDto.getReservationDto().getDescription())
 						.startDate(orderedDetailDto.getReservationDto().getStartDate())
 						.cancelDate(orderedDetailDto.getReservationDto().getCancelDate())
+						.completeDate(orderedDetailDto.getReservationDto().getCompleteDate())
 						.status(orderedDetailDto.getReservationDto().getStatus())
 						.build())
 				.serviceDetail(

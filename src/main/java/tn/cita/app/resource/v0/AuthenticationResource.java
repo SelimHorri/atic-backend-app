@@ -15,7 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.AuthenticationService;
 
 @RestController
@@ -27,13 +27,13 @@ public class AuthenticationResource {
 	private final AuthenticationService authenticationService;
 	
 	@PostMapping
-	public ResponseEntity<ApiPayloadResponse<LoginResponse>> authenticate(
+	public ResponseEntity<ApiResponse<LoginResponse>> authenticate(
 			@RequestBody 
 			@NotNull(message = "Input login should not be null") 
 			@Valid final LoginRequest loginRequest) {
 		
 		log.info("**AuthenticationResource controller; authenticate user...*\n");
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.authenticationService.authenticate(loginRequest));
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(apiPayloadResponse);

@@ -32,18 +32,22 @@ public class Category extends AbstractMappedEntity implements Serializable {
 	@Column(nullable = false)
 	private String name;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "parent_category_id", referencedColumnName = "id", nullable = true)
+	@EqualsAndHashCode.Exclude
 	private Category parentCategory;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "parentCategory")
+	@EqualsAndHashCode.Exclude
 	private Set<Category> subCategories;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
+	@EqualsAndHashCode.Exclude
 	private Set<ServiceDetail> serviceDetails;
 	
 }

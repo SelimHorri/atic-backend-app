@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -70,12 +69,14 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	@Column(nullable = true)
 	private String description;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@EqualsAndHashCode.Exclude
 	private Employee worker;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
 }

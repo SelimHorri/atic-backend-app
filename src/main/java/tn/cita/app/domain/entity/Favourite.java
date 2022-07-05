@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -59,12 +58,14 @@ public class Favourite extends AbstractAuditingMappedEntity implements Serializa
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime favouriteDate;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
-	@ManyToOne(fetch = FetchType.LAZY, optional = false)
+	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 }

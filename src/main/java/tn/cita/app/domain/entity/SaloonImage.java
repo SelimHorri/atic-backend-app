@@ -42,6 +42,7 @@ public class SaloonImage extends AbstractMappedEntity implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 }

@@ -23,7 +23,10 @@ public class FavouriteServiceImpl implements FavouriteService {
 	@Override
 	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
 		return this.favouriteRepository.findAllByCustomerId(customerId, 
-					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+					PageRequest.of(clientPageRequest.getOffset() - 1, 
+							clientPageRequest.getSize(), 
+							clientPageRequest.getSortDirection(), 
+							clientPageRequest.getSortBy()))
 				.map(FavouriteMapper::map);
 	}
 	

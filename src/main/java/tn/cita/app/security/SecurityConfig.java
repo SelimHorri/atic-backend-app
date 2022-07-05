@@ -46,15 +46,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				.antMatchers(HttpMethod.GET, AppConstant.WHITELIST_URLS_GET).permitAll()
 				.antMatchers("/api/v*/customers/**")
 					.hasRole(UserRoleBasedAuthority.CUSTOMER.name())
-				.antMatchers("/api/v*/workers/**")
+				.antMatchers("/api/v*/employees/workers/**")
 					.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
 							UserRoleBasedAuthority.MANAGER.name(),
 							UserRoleBasedAuthority.OWNER.name())
-				.antMatchers("/api/v*/managers/**")
+				.antMatchers("/api/v*/employees/managers/**")
 					.hasAnyRole(UserRoleBasedAuthority.MANAGER.name(),
 							UserRoleBasedAuthority.OWNER.name())
-				.antMatchers("/api/v*/owners/**")
+				.antMatchers("/api/v*/employees/owners/**")
 					.hasRole(UserRoleBasedAuthority.OWNER.name())
+				.antMatchers("/api/v*/employees/**")
+					.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
+							UserRoleBasedAuthority.MANAGER.name(),
+							UserRoleBasedAuthority.OWNER.name())
 				.anyRequest().authenticated()
 			.and()
 			.exceptionHandling(e -> e.authenticationEntryPoint((request, response, authException) -> 

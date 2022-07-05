@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.response.CustomerRatingResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerRatingService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -25,8 +25,8 @@ public class CustomerRatingResource {
 	private final CustomerRatingService customerRatingService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<CustomerRatingResponse>> getRatings(final WebRequest request) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+	public ResponseEntity<ApiResponse<CustomerRatingResponse>> getRatings(final WebRequest request) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerRatingService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	

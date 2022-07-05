@@ -1,12 +1,14 @@
 package tn.cita.app.service.v0.impl;
 
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
@@ -35,7 +37,7 @@ public class SaloonServiceImpl implements SaloonService {
 	@Override
 	public Page<SaloonDto> findAllByLocationState(final String state, final ClientPageRequest clientPageRequest) {
 		return this.saloonRepository.findAllByLocationStateIgnoringCase(state.strip(), 
-					PageRequest.of(clientPageRequest.getOffset() - 1, AppConstant.PAGE_SIZE))
+					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(SaloonMapper::map);
 	}
 	
@@ -49,8 +51,11 @@ public class SaloonServiceImpl implements SaloonService {
 	
 	@Override
 	public Page<SaloonDto> findAllByCode(final String code) {
-		return this.saloonRepository.findAllByCode(code, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
-				.map(SaloonMapper::map);
+		return new PageImpl<>(this.saloonRepository.findAllByCode(code)
+				.stream()
+					.map(SaloonMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList()));
 	}
 	
 	

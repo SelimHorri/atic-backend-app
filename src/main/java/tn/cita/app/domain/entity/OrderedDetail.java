@@ -6,7 +6,6 @@ import java.time.LocalDateTime;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
@@ -59,12 +58,14 @@ public class OrderedDetail extends AbstractAuditingMappedEntity implements Seria
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime orderedDate;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Reservation reservation;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	@JoinColumn(name = "service_detail_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private ServiceDetail serviceDetail;
 	
 }

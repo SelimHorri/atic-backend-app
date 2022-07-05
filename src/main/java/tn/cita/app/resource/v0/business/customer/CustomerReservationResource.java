@@ -24,7 +24,7 @@ import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.request.ReservationRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
@@ -38,27 +38,34 @@ public class CustomerReservationResource {
 	private final CustomerReservationService customerReservationService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<CustomerReservationResponse>> getReservations(final WebRequest request,
+	public ResponseEntity<ApiResponse<CustomerReservationResponse>> getReservations(final WebRequest request,
 			@RequestParam final Map<String, String> params) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	
 	@PutMapping("/cancel/{reservationId}")
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> cancelReservation(final WebRequest request, 
+	public ResponseEntity<ApiResponse<ReservationDto>> cancelReservation(final WebRequest request, 
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.cancelReservation(Integer.parseInt(reservationId))));
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiPayloadResponse<ReservationDto>> createReservation(final WebRequest request,
+	public ResponseEntity<ApiResponse<ReservationDto>> createReservation(final WebRequest request,
 			@RequestBody @NotNull @Valid final ReservationRequest reservationRequest) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var reservationDto = this.customerReservationService.createReservation(reservationRequest);
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, reservationDto));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, reservationDto));
+	}
+	
+	@GetMapping("/search/{key}")
+	public ResponseEntity<ApiResponse<CustomerReservationResponse>> searchAllBySaloonIdLikeKey(final WebRequest webRequest, 
+			@PathVariable final String key) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.customerReservationService.searchAllByCustomerIdLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
 	}
 	
 	

@@ -19,7 +19,7 @@ import tn.cita.app.constant.AppConstant;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -45,7 +45,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 				.isCredentialsNonExpired(true)
 				.build();
 		
-		final var expectedPayload = new ApiPayloadResponse<>(1, HttpStatus.OK, true, credentialDto);
+		final var expectedPayload = new ApiResponse<>(1, HttpStatus.OK, true, credentialDto);
 		
 		this.webTestClient
 				.get()
@@ -75,7 +75,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 				.errorMsg(String.format("#### Credential with username %s not found! ####", username))
 				.build();
 		
-		final var expectedPayload = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false, exceptionMsg);
+		final var expectedPayload = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false, exceptionMsg);
 		
 		this.webTestClient
 				.get()

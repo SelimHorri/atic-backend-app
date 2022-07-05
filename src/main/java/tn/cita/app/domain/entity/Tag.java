@@ -34,6 +34,7 @@ public class Tag extends AbstractMappedEntity implements Serializable {
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tag")
+	@EqualsAndHashCode.Exclude
 	private Set<SaloonTag> saloonTags;
 	
 }

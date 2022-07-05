@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,13 +26,11 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	
 	@Override
 	public ReservationDetailResponse getReservationDetails(final Integer reservationId) {
-		
 		final var reservationDto = this.reservationService.findById(reservationId);
-		
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(this.orderedDetailService.findAllByReservationId(reservationDto.getId()))
-				.taskDtos(this.taskService.findAllByReservationId(reservationDto.getId()))
+				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService.findAllByReservationId(reservationDto.getId())))
+				.taskDtos(new PageImpl<>(this.taskService.findAllByReservationId(reservationDto.getId())))
 				.build();
 	}
 	

@@ -77,19 +77,24 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private UserImage userImage;
 	
-	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "credential_id", referencedColumnName = "id", nullable = false)
+	@EqualsAndHashCode.Exclude
 	private Credential credential;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
+	@EqualsAndHashCode.Exclude
 	private Set<Rating> ratings;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@EqualsAndHashCode.Exclude
 	private Set<Favourite> favourites;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
+	@EqualsAndHashCode.Exclude
 	private Set<Reservation> reservations;
 	
 }

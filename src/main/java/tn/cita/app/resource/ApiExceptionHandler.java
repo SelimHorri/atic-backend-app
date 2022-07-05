@@ -21,7 +21,7 @@ import org.springframework.web.context.request.WebRequest;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
@@ -41,12 +41,17 @@ import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
 import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.RatingNotFoundException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
+import tn.cita.app.exception.wrapper.TaskAlreadyAssigned;
+import tn.cita.app.exception.wrapper.TaskAlreadyBeganException;
+import tn.cita.app.exception.wrapper.TaskAlreadyEndedException;
+import tn.cita.app.exception.wrapper.TaskNotBeganException;
 import tn.cita.app.exception.wrapper.UnauthorizedUserException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.UsernameNotMatchException;
@@ -61,7 +66,7 @@ public class ApiExceptionHandler {
 		HttpMessageNotReadableException.class,
 		ConstraintViolationException.class,
 	})
-	public <T extends BindException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleValidationException(final T e, 
+	public <T extends BindException> ResponseEntity<ApiResponse<ExceptionMsg>> handleValidationException(final T e, 
 			final WebRequest webRequest) {
 		
 		log.info("**ApiExceptionHandler controller; ExceptionMsg; handle validation exception*\n");
@@ -74,7 +79,7 @@ public class ApiExceptionHandler {
 		final var exceptionMsg = ExceptionMsg.builder()
 				.errorMsg(String.format("*%s!**", fieldError.getDefaultMessage()))
 				.build();
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
+		final var apiPayloadResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)
@@ -117,8 +122,13 @@ public class ApiExceptionHandler {
 		OrderedDetailAlreadyExistsException.class,
 		OutdatedStartDateReservationException.class,
 		ReservationAlreadyExistsException.class,
+		ReservationAlreadyCompletedException.class,
+		TaskNotBeganException.class,
+		TaskAlreadyBeganException.class,
+		TaskAlreadyEndedException.class,
+		TaskAlreadyAssigned.class,
 	})
-	public <T extends RuntimeException> ResponseEntity<ApiPayloadResponse<ExceptionMsg>> handleApiRequestException(final T e, 
+	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
 		log.info("**ApiExceptionHandler controller; ExceptionMsg; handle API request*\n");
 		
@@ -126,7 +136,7 @@ public class ApiExceptionHandler {
 		final var exceptionMsg = ExceptionMsg.builder()
 				.errorMsg(String.format("#### %s! ####", e.getMessage()))
 				.build();
-		final var apiPayloadResponse = new ApiPayloadResponse<>(1, httpStatus, false, exceptionMsg);
+		final var apiPayloadResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)

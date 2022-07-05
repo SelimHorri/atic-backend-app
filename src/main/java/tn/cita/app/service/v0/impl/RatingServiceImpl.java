@@ -1,12 +1,12 @@
 package tn.cita.app.service.v0.impl;
 
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.RatingDto;
 import tn.cita.app.mapper.RatingMapper;
 import tn.cita.app.repository.RatingRepository;
@@ -20,9 +20,12 @@ public class RatingServiceImpl implements RatingService {
 	private final RatingRepository ratingRepository;
 	
 	@Override
-	public Page<RatingDto> findAllByCustomerId(final Integer customerId) {
-		return this.ratingRepository.findAllByCustomerId(customerId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE))
-				.map(RatingMapper::map);
+	public List<RatingDto> findAllByCustomerId(final Integer customerId) {
+		return this.ratingRepository.findAllByCustomerId(customerId)
+				.stream()
+					.map(RatingMapper::map)
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

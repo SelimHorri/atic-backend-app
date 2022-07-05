@@ -16,7 +16,7 @@ import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstant;
 import tn.cita.app.dto.LocationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.LocationService;
 
 @RestController
@@ -27,27 +27,27 @@ public class LocationResource {
 	private final LocationService locationService;
 	
 	@GetMapping
-	public ResponseEntity<ApiPayloadResponse<Page<LocationDto>>> findAll(@RequestParam final Map<String, String> params) {
+	public ResponseEntity<ApiResponse<Page<LocationDto>>> findAll(@RequestParam final Map<String, String> params) {
 		final var locations = this.locationService.findAll(new ClientPageRequest(params));
-		return ResponseEntity.ok(new ApiPayloadResponse<>(locations.toList().size(), HttpStatus.OK, true, locations));
+		return ResponseEntity.ok(new ApiResponse<>(locations.toList().size(), HttpStatus.OK, true, locations));
 	}
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiPayloadResponse<LocationDto>> findById(@PathVariable final String id) {
-		return ResponseEntity.ok(new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+	public ResponseEntity<ApiResponse<LocationDto>> findById(@PathVariable final String id) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.locationService.findById(Integer.parseInt(id))));
 	}
 	
 	@GetMapping("/cities")
-	public ResponseEntity<ApiPayloadResponse<List<String>>> getAllCities() {
+	public ResponseEntity<ApiResponse<List<String>>> getAllCities() {
 		final var cities = this.locationService.getAllCities();
-		return ResponseEntity.ok(new ApiPayloadResponse<>(cities.size(), HttpStatus.OK, true, cities));
+		return ResponseEntity.ok(new ApiResponse<>(cities.size(), HttpStatus.OK, true, cities));
 	}
 	
 	@GetMapping("/states")
-	public ResponseEntity<ApiPayloadResponse<List<String>>> getAllStates() {
+	public ResponseEntity<ApiResponse<List<String>>> getAllStates() {
 		final var states = this.locationService.getAllStates();
-		return ResponseEntity.ok(new ApiPayloadResponse<>(states.size(), HttpStatus.OK, true, states));
+		return ResponseEntity.ok(new ApiResponse<>(states.size(), HttpStatus.OK, true, states));
 	}
 	
 	
