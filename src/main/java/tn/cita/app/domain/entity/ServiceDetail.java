@@ -46,9 +46,11 @@ public class ServiceDetail extends AbstractMappedEntity implements Serializable 
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Category category;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "serviceDetail")
+	@EqualsAndHashCode.Exclude
 	private Set<OrderedDetail> orderedDetails;
 	
 }

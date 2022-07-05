@@ -60,10 +60,12 @@ public class OrderedDetail extends AbstractAuditingMappedEntity implements Seria
 	
 	@ManyToOne
 	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Reservation reservation;
 	
 	@ManyToOne
 	@JoinColumn(name = "service_detail_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private ServiceDetail serviceDetail;
 	
 }

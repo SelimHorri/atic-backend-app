@@ -30,6 +30,7 @@ public class Location extends AbstractMappedEntity implements Serializable {
 	private String state;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "location")
+	@EqualsAndHashCode.Exclude
 	private Set<Saloon> saloons;
 	
 }

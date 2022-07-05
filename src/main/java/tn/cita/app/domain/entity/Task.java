@@ -80,10 +80,12 @@ public class Task extends AbstractAuditingMappedEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "worker_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Employee worker;
 	
 	@ManyToOne
 	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Reservation reservation;
 	
 }

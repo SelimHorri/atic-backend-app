@@ -60,10 +60,12 @@ public class SaloonTag extends AbstractAuditingMappedEntity implements Serializa
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "tag_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Tag tag;
 	
 }

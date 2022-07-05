@@ -71,10 +71,12 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@ManyToOne
 	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@EqualsAndHashCode.Exclude
 	private Employee worker;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
 }

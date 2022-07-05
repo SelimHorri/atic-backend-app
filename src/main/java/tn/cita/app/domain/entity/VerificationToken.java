@@ -48,6 +48,7 @@ public class VerificationToken extends AbstractMappedEntity implements Serializa
 	
 	@ManyToOne
 	@JoinColumn(name = "credential_id", referencedColumnName = "id")
+	@EqualsAndHashCode.Exclude
 	private Credential credential;
 	
 }
