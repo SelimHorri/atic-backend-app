@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.ServiceDetailDto;
+import tn.cita.app.dto.request.ServiceDetailRequest;
 import tn.cita.app.service.v0.EmployeeService;
 import tn.cita.app.service.v0.ServiceDetailService;
 import tn.cita.app.service.v0.business.employee.manager.ManagerServiceDetailService;
@@ -35,6 +36,18 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	public Boolean deleteServiceDetail(final Integer serviceDetailId) {
 		this.serviceDetailService.getServiceDetailRepository().deleteById(serviceDetailId);
 		return !this.serviceDetailService.getServiceDetailRepository().existsById(serviceDetailId);
+	}
+	
+	@Transactional
+	@Override
+	public ServiceDetailDto saveServiceDetailDto(final ServiceDetailRequest serviceDetailRequest) {
+		return this.serviceDetailService.save(serviceDetailRequest);
+	}
+	
+	@Transactional
+	@Override
+	public ServiceDetailDto updateServiceDetailDto(final ServiceDetailRequest serviceDetailRequest) {
+		return this.serviceDetailService.update(serviceDetailRequest);
 	}
 	
 	
