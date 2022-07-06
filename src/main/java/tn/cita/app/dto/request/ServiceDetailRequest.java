@@ -18,14 +18,13 @@ public final class ServiceDetailRequest implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	// @NotNull(message = "Service must be specified")
 	private Integer serviceDetailId;
 	
 	@NotBlank(message = "Service name must be not blank")
 	private String name;
 	
-	@NotNull(message = "Is Service available ?")
-	private Boolean isAvailable;
+	@Builder.Default
+	private Boolean isAvailable = true;
 	
 	@NotNull(message = "Service duration (min) must be specified approximately")
 	private Double duration;
