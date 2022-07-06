@@ -10,7 +10,7 @@ services:
     networks:
       - net
   cita-backend-app:
-    image: selimhorri/cita-backend-app
+    image: selimhorri/cita-backend-app:dev
     container_name: cita-backend-app
     ports:
       - 8400:8400
@@ -80,6 +80,8 @@ services:
       - 3000:3000
     #links:
     #  - prometheus:prometheus
+    volumes:
+      - ./grafana.ini:/etc/grafana/grafana.ini
     restart: always
     networks:
       - net
