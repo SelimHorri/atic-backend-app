@@ -19,9 +19,7 @@ import tn.cita.app.dto.request.ReservationRequest;
 import tn.cita.app.dto.response.CustomerReservationResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
-import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
-import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.mapper.ReservationMapper;
@@ -31,6 +29,7 @@ import tn.cita.app.service.v0.ReservationService;
 import tn.cita.app.service.v0.SaloonService;
 import tn.cita.app.service.v0.ServiceDetailService;
 import tn.cita.app.service.v0.business.customer.CustomerReservationService;
+import tn.cita.app.service.v0.common.ReservationCommonService;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,6 +38,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	private final CustomerService customerService;
 	private final ReservationService reservationService;
+	private final ReservationCommonService reservationCommonService;
 	private final SaloonService saloonService;
 	private final ServiceDetailService serviceDetailService;
 	private final OrderedDetailService orderedDetailService;
@@ -58,7 +58,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				customerDto, 
 				new PageImpl<>(this.reservationService.getReservationRepository()
 						.searchAllByCustomerIdLikeKey(customerDto.getId(), key.strip().toLowerCase())
-						.stream()
+							.stream()
 							.map(ReservationMapper::map)
 							.distinct()
 							.collect(Collectors.toUnmodifiableList())));
@@ -67,25 +67,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	@Transactional
 	@Override
 	public ReservationDto cancelReservation(final Integer reservationId) {
-		
-		final var reservation = this.reservationService.getReservationRepository().findById(reservationId)
-				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", reservationId)));
-		
-		// TODO: check if reservation has been completed, should not be cancelled (or changed) anymore
-		// Add completeDate of reservation along with COMPLETED status to this check
-		if (reservation.getStatus().equals(ReservationStatus.COMPLETED))
-			throw new ReservationAlreadyCompletedException("Reservation is already completed");
-		else if (reservation.getStatus().equals(ReservationStatus.CANCELLED))
-			throw new ReservationAlreadyCompletedException("Reservation is already cancelled");
-		else if (reservation.getStatus().equals(ReservationStatus.OUTDATED))
-			throw new ReservationAlreadyCompletedException("Reservation is already outdated");
-		
-		// update
-		reservation.setCancelDate(LocalDateTime.now());
-		reservation.setStatus(ReservationStatus.CANCELLED);
-		
-		return ReservationMapper.map(this.reservationService.getReservationRepository().save(reservation));
+		return this.reservationCommonService.cancelReservation(reservationId);
 	}
 	
 	@Transactional
@@ -93,7 +75,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	public ReservationDto createReservation(final ReservationRequest reservationRequest) {
 		
 		if (reservationRequest.getStartDate().isBefore(LocalDateTime.now().plusMinutes(AppConstant.VALID_START_DATE_AFTER))
-				|| (reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30))
+				|| reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30)
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
 		this.reservationService.getReservationRepository()
@@ -101,8 +83,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		});
 		
-		final var serviceDetailsIds = reservationRequest.getServiceDetailsIds()
-				.stream()
+		final var serviceDetailsIds = reservationRequest
+				.getServiceDetailsIds().stream()
 					.distinct()
 					.sorted()
 					.collect(Collectors.toUnmodifiableList());
