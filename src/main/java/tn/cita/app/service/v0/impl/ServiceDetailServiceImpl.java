@@ -101,8 +101,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 					.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
 		
 		final var serviceDetail = ServiceDetail.builder()
-				.name(serviceDetailRequest.getName())
-				.description(serviceDetailRequest.getDescription())
+				.name(serviceDetailRequest.getName().strip().toLowerCase())
+				.description(serviceDetailRequest.getDescription().strip())
 				.isAvailable(serviceDetailRequest.getIsAvailable())
 				.duration(serviceDetailRequest.getDuration())
 				.priceUnit(serviceDetailRequest.getPriceUnit())
@@ -124,8 +124,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 				.findById(serviceDetailRequest.getServiceDetailId())
 					.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
 		
-		serviceDetail.setName(serviceDetailRequest.getName().toLowerCase());
-		serviceDetail.setDescription(serviceDetailRequest.getDescription());
+		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
+		serviceDetail.setDescription(serviceDetailRequest.getDescription().strip());
 		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable());
 		serviceDetail.setDuration(serviceDetailRequest.getDuration());
 		serviceDetail.setPriceUnit(serviceDetailRequest.getPriceUnit());

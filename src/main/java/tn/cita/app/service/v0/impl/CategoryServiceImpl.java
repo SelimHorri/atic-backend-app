@@ -1,6 +1,7 @@
 package tn.cita.app.service.v0.impl;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
@@ -57,15 +58,14 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public CategoryDto save(final CategoryRequest categoryRequest) {
 		
-		final var parentCategory = this.categoryRepository
-				.findById(categoryRequest.getParentCategoryId())
-					.orElse(null);
+		final var parentCategory = Optional.ofNullable(categoryRequest.getParentCategoryId()).isPresent() ?
+				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
 		final var saloon = this.saloonService.getSaloonRepository()
 				.findById(categoryRequest.getSaloonId())
 					.orElseThrow(SaloonNotFoundException::new);
 		
 		final var category = Category.builder()
-				.name(categoryRequest.getName().toLowerCase())
+				.name(categoryRequest.getName().strip().toLowerCase())
 				.parentCategory(parentCategory)
 				.saloon(saloon)
 				.build();
@@ -77,9 +77,8 @@ public class CategoryServiceImpl implements CategoryService {
 	@Override
 	public CategoryDto update(final CategoryRequest categoryRequest) {
 		
-		final var parentCategory = this.categoryRepository
-				.findById(categoryRequest.getParentCategoryId())
-					.orElse(null);
+		final var parentCategory = Optional.ofNullable(categoryRequest.getParentCategoryId()).isPresent() ?
+				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
 		final var saloon = this.saloonService.getSaloonRepository()
 				.findById(categoryRequest.getSaloonId())
 					.orElseThrow(SaloonNotFoundException::new);
@@ -87,9 +86,12 @@ public class CategoryServiceImpl implements CategoryService {
 		final var category = this.categoryRepository
 				.findById(categoryRequest.getCategoryId())
 					.orElseThrow(CategoryNotFoundException::new);
-		category.setName(categoryRequest.getName().toLowerCase());
+		category.setId(categoryRequest.getCategoryId());
+		category.setName(categoryRequest.getName().strip().toLowerCase());
 		category.setParentCategory(parentCategory);
 		category.setSaloon(saloon);
+		
+		System.err.println(CategoryMapper.map(category));
 		
 		return CategoryMapper.map(this.categoryRepository.save(category));
 	}
