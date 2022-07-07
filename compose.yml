@@ -100,6 +100,22 @@ services:
     restart: always
     networks:
       - net
+  logstash:
+    image: logstash:7.16.3
+    container_name: logstash
+    #ports:
+    #  - "5000:5000"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - elasticsearch
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    restart: always
+    networks:
+      - net
   kibana:
     image: kibana:7.16.3
     container_name: kibana
@@ -108,6 +124,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     depends_on:
       - elasticsearch
     restart: always
