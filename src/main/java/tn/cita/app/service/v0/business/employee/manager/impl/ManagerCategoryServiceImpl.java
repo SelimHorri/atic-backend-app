@@ -7,6 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.CategoryDto;
+import tn.cita.app.dto.request.CategoryRequest;
 import tn.cita.app.service.v0.CategoryService;
 import tn.cita.app.service.v0.EmployeeService;
 import tn.cita.app.service.v0.business.employee.manager.ManagerCategoryService;
@@ -35,6 +36,18 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	public Boolean deleteCategory(final Integer categoryId) {
 		this.categoryService.getCategoryRepository().deleteById(categoryId);
 		return !this.categoryService.getCategoryRepository().existsById(categoryId);
+	}
+	
+	@Transactional
+	@Override
+	public CategoryDto saveCategory(final CategoryRequest categoryRequest) {
+		return this.categoryService.save(categoryRequest);
+	}
+	
+	@Transactional
+	@Override
+	public CategoryDto updateCategory(final CategoryRequest categoryRequest) {
+		return this.categoryService.update(categoryRequest);
 	}
 	
 	

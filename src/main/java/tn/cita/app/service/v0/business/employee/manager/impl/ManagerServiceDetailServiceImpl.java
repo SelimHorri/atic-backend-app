@@ -40,13 +40,13 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Transactional
 	@Override
-	public ServiceDetailDto saveServiceDetailDto(final ServiceDetailRequest serviceDetailRequest) {
+	public ServiceDetailDto saveServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
 		return this.serviceDetailService.save(serviceDetailRequest);
 	}
 	
 	@Transactional
 	@Override
-	public ServiceDetailDto updateServiceDetailDto(final ServiceDetailRequest serviceDetailRequest) {
+	public ServiceDetailDto updateServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
 		return this.serviceDetailService.update(serviceDetailRequest);
 	}
 	

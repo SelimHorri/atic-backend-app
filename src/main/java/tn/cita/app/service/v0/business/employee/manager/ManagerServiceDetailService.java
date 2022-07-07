@@ -10,8 +10,8 @@ public interface ManagerServiceDetailService {
 	Page<ServiceDetailDto> getAll(final String username);
 	ServiceDetailDto getById(final Integer serviceDetailId);
 	Boolean deleteServiceDetail(final Integer serviceDetailId);
-	ServiceDetailDto saveServiceDetailDto(final ServiceDetailRequest serviceDetailRequest);
-	ServiceDetailDto updateServiceDetailDto(final ServiceDetailRequest serviceDetailRequest);
+	ServiceDetailDto saveServiceDetail(final ServiceDetailRequest serviceDetailRequest);
+	ServiceDetailDto updateServiceDetail(final ServiceDetailRequest serviceDetailRequest);
 	
 }
 

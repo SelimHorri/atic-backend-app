@@ -52,7 +52,7 @@ public class ManagerServiceDetailResource {
 			@RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerServiceDetailService.saveServiceDetailDto(serviceDetailRequest)));
+				this.managerServiceDetailService.saveServiceDetail(serviceDetailRequest)));
 	}
 	
 	@PutMapping
@@ -60,7 +60,7 @@ public class ManagerServiceDetailResource {
 			@RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerServiceDetailService.updateServiceDetailDto(serviceDetailRequest)));
+				this.managerServiceDetailService.updateServiceDetail(serviceDetailRequest)));
 	}
 	
 	@DeleteMapping("/{serviceDetailId}")

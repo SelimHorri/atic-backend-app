@@ -131,10 +131,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		serviceDetail.setPriceUnit(serviceDetailRequest.getPriceUnit());
 		serviceDetail.setCategory(category);
 		
-		final var savedServiceDetail = this.serviceDetailRepository.save(serviceDetail);
-		System.err.println(ServiceDetailMapper.map(savedServiceDetail));
-		
-		return ServiceDetailMapper.map(savedServiceDetail);
+		return ServiceDetailMapper.map(this.serviceDetailRepository.save(serviceDetail));
 	}
 	
 	
