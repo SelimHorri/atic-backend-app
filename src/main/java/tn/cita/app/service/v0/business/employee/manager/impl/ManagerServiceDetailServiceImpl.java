@@ -1,5 +1,8 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -22,8 +25,12 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Override
 	public Page<ServiceDetailDto> getAll(final String username) {
-		final var managerDto = this.employeeService.findByUsername(username);
-		return new PageImpl<>(this.serviceDetailService.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()));
+		return new PageImpl<>(this.serviceDetailService
+				.findAllByCategorySaloonId(this.employeeService.findByUsername(username).getSaloonDto().getId()).stream()
+					.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
+							.thenComparing(ServiceDetailDto::getName))
+					.distinct()
+					.collect(Collectors.toUnmodifiableList()));
 	}
 	
 	@Override
