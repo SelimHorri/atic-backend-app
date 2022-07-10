@@ -71,19 +71,17 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	@Override
 	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
 		
-		final var managerDto = this.employeeService.findByUsername(username);
+		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		final var assignedWorkersIds = this.taskService
-				.findAllByReservationId(reservationId)
-					.stream()
-						.map(TaskDto::getWorkerId)
-						.distinct()
-						.collect(Collectors.toUnmodifiableSet());
+				.findAllByReservationId(reservationId).stream()
+					.map(TaskDto::getWorkerId)
+					.distinct()
+					.collect(Collectors.toUnmodifiableSet());
 		final var unassignedWorkerDtos = this.employeeService
-				.findAllByManagerId(managerDto.getId())
-					.stream()
-						.filter(w -> !assignedWorkersIds.contains(w.getId()))
-						.distinct()
-						.collect(Collectors.toUnmodifiableList());
+				.findAllByManagerId(managerDto.getId()).stream()
+					.filter(w -> !assignedWorkersIds.contains(w.getId()))
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
 		
 		return new ReservationSubWorkerResponse(this.reservationService.findById(reservationId), new PageImpl<>(unassignedWorkerDtos));
 	}

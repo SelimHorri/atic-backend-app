@@ -1,6 +1,7 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
 import java.time.LocalDateTime;
+import java.util.Comparator;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
@@ -57,10 +58,10 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		return new CustomerReservationResponse(
 				customerDto, 
 				new PageImpl<>(this.reservationService.getReservationRepository()
-						.searchAllByCustomerIdLikeKey(customerDto.getId(), key.strip().toLowerCase())
-							.stream()
+						.searchAllByCustomerIdLikeKey(customerDto.getId(), key.strip().toLowerCase()).stream()
 							.map(ReservationMapper::map)
 							.distinct()
+							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
 							.collect(Collectors.toUnmodifiableList())));
 	}
 	

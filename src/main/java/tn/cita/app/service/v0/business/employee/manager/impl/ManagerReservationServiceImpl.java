@@ -1,6 +1,7 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	@Override
 	public ManagerReservationResponse getAllReservations(final String username, final ClientPageRequest clientPageRequest) {
-		final var managerDto = this.employeeService.findByUsername(username);
+		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		if (Optional.ofNullable(clientPageRequest).isPresent())
 			return new ManagerReservationResponse(
 					managerDto, 
@@ -60,21 +61,21 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	@Override
 	public ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key) {
-		final var managerDto = this.employeeService.findByUsername(username);
+		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerReservationResponse(
 				managerDto, 
 				new PageImpl<>(this.reservationService.getReservationRepository()
-						.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase())
-							.stream()
+						.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase()).stream()
 							.map(ReservationMapper::map)
 							.distinct()
+							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
 							.collect(Collectors.toUnmodifiableList())));
 	}
 	
 	@Override
 	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
 
-		final var managerDto = this.employeeService.findByUsername(username);
+		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		final var assignedWorkersIds = this.taskService
 				.findAllByReservationId(reservationId).stream()
 					.map(TaskDto::getWorkerId)

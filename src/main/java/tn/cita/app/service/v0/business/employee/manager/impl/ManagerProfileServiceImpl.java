@@ -34,7 +34,7 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	
 	@Override
 	public ManagerProfileResponse getProfile(final String username) {
-		final var managerDto = this.employeeService.findByUsername(username);
+		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerProfileResponse(
 				managerDto, 
 				new PageImpl<>(this.employeeService.findAllByManagerId(managerDto.getId())),

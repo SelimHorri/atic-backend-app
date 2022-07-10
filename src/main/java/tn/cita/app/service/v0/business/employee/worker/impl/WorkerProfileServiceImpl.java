@@ -28,7 +28,7 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 	
 	@Override
 	public WorkerProfileResponse getProfile(final String username) {
-		final var workerDto = this.employeeService.findByUsername(username);
+		final var workerDto = this.employeeService.findByCredentialUsername(username);
 		return new WorkerProfileResponse(
 				workerDto, 
 				workerDto.getCredentialDto(), 

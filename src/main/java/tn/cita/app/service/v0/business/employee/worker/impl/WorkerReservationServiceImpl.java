@@ -25,17 +25,17 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 	
 	@Override
 	public Page<TaskDto> getAllReservations(final String username, final ClientPageRequest clientPageRequest) {
-		return this.taskService.findAllByWorkerId(this.employeeService.findByUsername(username).getId(), clientPageRequest);
+		return this.taskService.findAllByWorkerId(this.employeeService.findByCredentialUsername(username).getId(), clientPageRequest);
 	}
 	
 	@Override
 	public Page<TaskDto> getAllReservations(final String username) {
-		return new PageImpl<>(this.taskService.findAllByWorkerId(this.employeeService.findByUsername(username).getId()));
+		return new PageImpl<>(this.taskService.findAllByWorkerId(this.employeeService.findByCredentialUsername(username).getId()));
 	}
 	
 	@Override
 	public Page<TaskDto> searchAllLikeKey(final String username, final String key) {
-		final var workerDto = this.employeeService.findByUsername(username);
+		final var workerDto = this.employeeService.findByCredentialUsername(username);
 		return new PageImpl<>(this.taskService.geTaskRepository()
 				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.toLowerCase()).stream()
 					.map(TaskMapper::map)

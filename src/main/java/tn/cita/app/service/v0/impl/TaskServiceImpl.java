@@ -38,20 +38,18 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Override
 	public List<TaskDto> findAllByReservationId(final Integer reservationId) {
-		return this.taskRepository.findAllByReservationId(reservationId)
-				.stream()
-					.map(TaskMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.taskRepository.findAllByReservationId(reservationId).stream()
+				.map(TaskMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	@Override
 	public List<TaskDto> findAllByWorkerId(final Integer workerId) {
-		return this.taskRepository.findAllByWorkerId(workerId)
-				.stream()
-					.map(TaskMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.taskRepository.findAllByWorkerId(workerId).stream()
+				.map(TaskMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	@Override
