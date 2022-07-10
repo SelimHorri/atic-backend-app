@@ -29,7 +29,7 @@ scrape_configs:
   - job_name: "cita-actuator-prometheus"
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
-    bearer_token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWluZWxhZGppbWkiLCJpYXQiOjE2NTcxMjE4Mzl9.kveynh5GLoCY1HdFbwdHriaEiHn2R_q_DlRd-ymMOxq3PsOXj9dKObLZki-5ioNRXqmK2Xk7oWVn5BjSkwLjXA
+    bearer_token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhbWluZWxhZGppbWkiLCJleHAiOjE2NTgwNTg3NzEsImlhdCI6MTY1NzQ1Mzk3MX0.E9VXG_v4p-G5dWqFTg4RlfcJhzaCP0TXTZHuwhN30QbJ4vqr7IyFeQxL31yisQQFj-ZD3CtPQyu_CXswje1_9A
     static_configs:
       - targets: ["cita-backend-app:8400", "localhost:8400"]
 
