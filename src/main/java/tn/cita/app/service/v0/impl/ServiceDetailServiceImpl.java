@@ -10,12 +10,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import tn.cita.app.domain.entity.ServiceDetail;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.ServiceDetailDto;
+import tn.cita.app.dto.request.ServiceDetailRequest;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
+import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.mapper.ServiceDetailMapper;
 import tn.cita.app.repository.ServiceDetailRepository;
+import tn.cita.app.service.v0.CategoryService;
 import tn.cita.app.service.v0.OrderedDetailService;
 import tn.cita.app.service.v0.ServiceDetailService;
 
@@ -26,6 +30,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	private final ServiceDetailRepository serviceDetailRepository;
 	private final OrderedDetailService orderedDetailService;
+	private final CategoryService categoryService;
 	
 	@Override
 	public ServiceDetailRepository getServiceDetailRepository() {
@@ -85,6 +90,48 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 					.map(ServiceDetailMapper::map)
 					.distinct()
 					.collect(Collectors.toUnmodifiableList());
+	}
+	
+	@Transactional
+	@Override
+	public ServiceDetailDto save(final ServiceDetailRequest serviceDetailRequest) {
+		
+		final var category = this.categoryService.getCategoryRepository()
+				.findById(serviceDetailRequest.getCategoryId())
+					.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+		
+		final var serviceDetail = ServiceDetail.builder()
+				.name(serviceDetailRequest.getName().strip().toLowerCase())
+				.description(serviceDetailRequest.getDescription().strip())
+				.isAvailable(serviceDetailRequest.getIsAvailable())
+				.duration(serviceDetailRequest.getDuration())
+				.priceUnit(serviceDetailRequest.getPriceUnit())
+				.category(category)
+				.build();
+		
+		return ServiceDetailMapper.map(this.serviceDetailRepository.save(serviceDetail));
+	}
+	
+	@Transactional
+	@Override
+	public ServiceDetailDto update(final ServiceDetailRequest serviceDetailRequest) {
+		
+		final var category = this.categoryService.getCategoryRepository()
+				.findById(serviceDetailRequest.getCategoryId())
+					.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+		
+		final var serviceDetail = this.serviceDetailRepository
+				.findById(serviceDetailRequest.getServiceDetailId())
+					.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
+		
+		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
+		serviceDetail.setDescription(serviceDetailRequest.getDescription().strip());
+		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable());
+		serviceDetail.setDuration(serviceDetailRequest.getDuration());
+		serviceDetail.setPriceUnit(serviceDetailRequest.getPriceUnit());
+		serviceDetail.setCategory(category);
+		
+		return ServiceDetailMapper.map(this.serviceDetailRepository.save(serviceDetail));
 	}
 	
 	

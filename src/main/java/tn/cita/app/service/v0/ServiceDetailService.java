@@ -6,6 +6,7 @@ import java.util.Set;
 import org.springframework.data.domain.Page;
 
 import tn.cita.app.dto.ServiceDetailDto;
+import tn.cita.app.dto.request.ServiceDetailRequest;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
 import tn.cita.app.repository.ServiceDetailRepository;
 
@@ -18,6 +19,8 @@ public interface ServiceDetailService {
 	ServiceDetailsReservationContainerResponse getOrderedServiceDetailsByReservationId(final Integer reservationId);
 	Page<ServiceDetailDto> findAllByCategoryId(final Integer categoryId);
 	List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId);
+	ServiceDetailDto save(final ServiceDetailRequest serviceDetailRequest);
+	ServiceDetailDto update(final ServiceDetailRequest serviceDetailRequest);
 	
 }
 

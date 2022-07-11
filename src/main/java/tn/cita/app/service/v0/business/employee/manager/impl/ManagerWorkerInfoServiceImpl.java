@@ -19,9 +19,8 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	
 	@Override
 	public ManagerWorkerInfoResponse getAllSubWorkers(final String username) {
-		final var managerDto = this.employeeService.findByUsername(username);
-		return new ManagerWorkerInfoResponse(
-				managerDto, 
+		final var managerDto = this.employeeService.findByCredentialUsername(username);
+		return new ManagerWorkerInfoResponse(managerDto, 
 				new PageImpl<>(this.employeeService.findAllByManagerId(managerDto.getId())));
 	}
 	

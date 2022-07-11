@@ -12,7 +12,7 @@ public interface EmployeeService {
 	EmployeeRepository getEmployeeRepository();
 	Page<EmployeeDto> findAll(final int pageOffset);
 	EmployeeDto findById(final Integer id);
-	EmployeeDto findByUsername(final String username);
+	EmployeeDto findByCredentialUsername(final String username);
 	boolean deleteById(final Integer id);
 	List<EmployeeDto> findAllByManagerId(final Integer managerId);
 	

@@ -29,11 +29,10 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	
 	@Override
 	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
-		return this.orderedDetailRepository.findAllByReservationId(reservationId)
-				.stream()
-					.map(OrderedDetailMapper::map)
-					.distinct()
-					.collect(Collectors.toList());
+		return this.orderedDetailRepository.findAllByReservationId(reservationId).stream()
+				.map(OrderedDetailMapper::map)
+				.distinct()
+				.collect(Collectors.toList());
 	}
 	
 	@Transactional
