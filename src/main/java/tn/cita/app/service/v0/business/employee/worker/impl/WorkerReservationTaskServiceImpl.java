@@ -35,14 +35,14 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	
 	@Override
 	public TaskDto getAssignedTask(final String username, final Integer reservationId) {
-		return this.taskService.findById(new TaskId(this.employeeService.findByUsername(username).getId(), reservationId));
+		return this.taskService.findById(new TaskId(this.employeeService.findByCredentialUsername(username).getId(), reservationId));
 	}
 	
 	@Transactional
 	@Override
 	public TaskDto updateDescription(final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
 		
-		final var worker = this.employeeService.findByUsername(taskUpdateDescriptionRequest.getUsername());
+		final var worker = this.employeeService.findByCredentialUsername(taskUpdateDescriptionRequest.getUsername());
 		final var reservation = this.reservationService.getReservationRepository()
 				.findById(taskUpdateDescriptionRequest.getReservationId())
 					.orElseThrow(() -> new ReservationNotFoundException(String
@@ -65,7 +65,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Override
 	public TaskDto beginTask(final TaskBeginEndRequest taskBeginRequest) {
 		
-		final var worker = this.employeeService.findByUsername(taskBeginRequest.getUsername());
+		final var worker = this.employeeService.findByCredentialUsername(taskBeginRequest.getUsername());
 		final var reservation = this.reservationService.getReservationRepository()
 				.findById(taskBeginRequest.getReservationId())
 					.orElseThrow(() -> new ReservationNotFoundException(String
@@ -104,7 +104,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Override
 	public TaskDto endTask(final TaskBeginEndRequest taskEndRequest) {
 		
-		final var workerDto = this.employeeService.findByUsername(taskEndRequest.getUsername());
+		final var workerDto = this.employeeService.findByCredentialUsername(taskEndRequest.getUsername());
 		final var reservation = this.reservationService.getReservationRepository()
 				.findById(taskEndRequest.getReservationId())
 					.orElseThrow(() -> new ReservationNotFoundException(String
@@ -126,11 +126,10 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// fetch all assigned workers to this reservation..
 		final var assignedOtherTaskDtos = this.taskService
-				.findAllByReservationId(taskEndRequest.getReservationId())
-					.stream()
-						.filter(t -> !t.getWorkerId().equals(workerDto.getId()))
-						.distinct()
-						.collect(Collectors.toUnmodifiableList());
+				.findAllByReservationId(taskEndRequest.getReservationId()).stream()
+					.filter(t -> !t.getWorkerId().equals(workerDto.getId()))
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
 		
 		final boolean isAllTasksEnded = assignedOtherTaskDtos.stream()
 					.allMatch(t -> Optional.ofNullable(t.getEndDate()).isPresent());

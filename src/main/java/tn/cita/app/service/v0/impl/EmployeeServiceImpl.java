@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
-	public EmployeeDto findByUsername(final String username) {
+	public EmployeeDto findByCredentialUsername(final String username) {
 		return this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
