@@ -10,7 +10,7 @@ services:
     networks:
       - net
   cita-backend-app:
-    image: selimhorri/cita-backend-app
+    image: selimhorri/cita-backend-app:dev
     container_name: cita-backend-app
     ports:
       - 8400:8400
@@ -58,8 +58,8 @@ services:
     container_name: redis
     ports: 
       - 6379:6379
-#    volumes:
-#      - redis-data:/usr/local/etc/redis
+    #volumes:
+    #  - redis-data:/usr/local/etc/redis
     restart: always
     networks:
       - net
@@ -78,8 +78,9 @@ services:
     container_name: grafana
     ports:
       - 3000:3000
-    #links:
-    #  - prometheus:prometheus
+    volumes:
+      - ./grafana.ini:/etc/grafana/grafana.ini
+      - grafana-data:/var/lib/grafana
     restart: always
     networks:
       - net
@@ -93,8 +94,24 @@ services:
       ES_JAVA_OPTS: "-Xmx256m -Xms256m"
     depends_on:
       - mysql
+    #volumes:
+    #  - elasticsearch-data:/usr/share/elasticsearch/data
+    restart: always
+    networks:
+      - net
+  logstash:
+    image: logstash:7.16.3
+    container_name: logstash
+    #ports:
+    #  - "5000:5000"
+    environment:
+      ELASTICSEARCH_URL: http://elasticsearch:9200
+      ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+    depends_on:
+      - elasticsearch
     volumes:
-      - elasticsearch-data:/usr/share/elasticsearch/data
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     restart: always
     networks:
       - net
@@ -106,6 +123,7 @@ services:
     environment:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
+      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     depends_on:
       - elasticsearch
     restart: always
@@ -115,8 +133,10 @@ services:
 volumes:
   mysql-data:
     driver: local
-#  mysql-secret:
-#    driver: local
+  #mysql-secret:
+  #  driver: local
+  grafana-data:
+    driver: local
   elasticsearch-data:
     driver: local
   redis-data:

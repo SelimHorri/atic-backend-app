@@ -1,5 +1,8 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
+import java.util.Comparator;
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -7,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.dto.ServiceDetailDto;
+import tn.cita.app.dto.request.ServiceDetailRequest;
 import tn.cita.app.service.v0.EmployeeService;
 import tn.cita.app.service.v0.ServiceDetailService;
 import tn.cita.app.service.v0.business.employee.manager.ManagerServiceDetailService;
@@ -21,8 +25,12 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Override
 	public Page<ServiceDetailDto> getAll(final String username) {
-		final var managerDto = this.employeeService.findByUsername(username);
-		return new PageImpl<>(this.serviceDetailService.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()));
+		return new PageImpl<>(this.serviceDetailService
+				.findAllByCategorySaloonId(this.employeeService.findByCredentialUsername(username).getSaloonDto().getId()).stream()
+					.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
+							.thenComparing(ServiceDetailDto::getName))
+					.distinct()
+					.collect(Collectors.toUnmodifiableList()));
 	}
 	
 	@Override
@@ -35,6 +43,18 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	public Boolean deleteServiceDetail(final Integer serviceDetailId) {
 		this.serviceDetailService.getServiceDetailRepository().deleteById(serviceDetailId);
 		return !this.serviceDetailService.getServiceDetailRepository().existsById(serviceDetailId);
+	}
+	
+	@Transactional
+	@Override
+	public ServiceDetailDto saveServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
+		return this.serviceDetailService.save(serviceDetailRequest);
+	}
+	
+	@Transactional
+	@Override
+	public ServiceDetailDto updateServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
+		return this.serviceDetailService.update(serviceDetailRequest);
 	}
 	
 	
