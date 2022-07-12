@@ -100,7 +100,8 @@ services:
     networks:
       - net
   logstash:
-    image: logstash:7.16.3
+    #image: logstash:7.16.3
+    image: selimhorri/logstash-connector-j:7.16.3
     container_name: logstash
     #ports:
     #  - "5000:5000"
@@ -110,8 +111,8 @@ services:
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
     depends_on:
       - elasticsearch
-    volumes:
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    #volumes:
+      #- ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     restart: always
     networks:
       - net

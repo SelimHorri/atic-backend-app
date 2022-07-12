@@ -2,7 +2,6 @@ package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -15,7 +14,6 @@ import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
 import tn.cita.app.dto.response.ReservationBeginEndTask;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.ReservationSubWorkerResponse;
-import tn.cita.app.service.v0.EmployeeService;
 import tn.cita.app.service.v0.OrderedDetailService;
 import tn.cita.app.service.v0.ReservationService;
 import tn.cita.app.service.v0.TaskService;
@@ -27,7 +25,6 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 @RequiredArgsConstructor
 public class ManagerReservationDetailServiceImpl implements ManagerReservationDetailService {
 	
-	private final EmployeeService employeeService;
 	private final ReservationService reservationService;
 	private final ReservationCommonService reservationCommonService;
 	private final OrderedDetailService orderedDetailService;
@@ -63,20 +60,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	
 	@Override
 	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
-		
-		final var managerDto = this.employeeService.findByCredentialUsername(username);
-		final var assignedWorkersIds = this.taskService
-				.findAllByReservationId(reservationId).stream()
-					.map(TaskDto::getWorkerId)
-					.distinct()
-					.collect(Collectors.toUnmodifiableSet());
-		final var unassignedWorkerDtos = this.employeeService
-				.findAllByManagerId(managerDto.getId()).stream()
-					.filter(w -> !assignedWorkersIds.contains(w.getId()))
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
-		
-		return new ReservationSubWorkerResponse(this.reservationService.findById(reservationId), new PageImpl<>(unassignedWorkerDtos));
+		return this.reservationCommonService.getAllUnassignedSubWorkers(username, reservationId);
 	}
 	
 	@Transactional
