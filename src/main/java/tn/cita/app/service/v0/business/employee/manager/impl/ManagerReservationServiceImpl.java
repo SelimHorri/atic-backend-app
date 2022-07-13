@@ -39,7 +39,10 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 		else
 			return new ManagerReservationResponse(
 					managerDto, 
-					new PageImpl<>(this.reservationService.findAllBySaloonId(managerDto.getSaloonDto().getId())));
+					new PageImpl<>(this.reservationService
+							.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
+								.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
+								.collect(Collectors.toUnmodifiableList())));
 	}
 	
 	@Transactional

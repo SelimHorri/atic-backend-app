@@ -64,11 +64,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public List<EmployeeDto> findAllByManagerId(final Integer managerId) {
-		return this.employeeRepository.findAllByManagerId(managerId)
-				.stream()
-					.map(EmployeeMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.employeeRepository.findAllByManagerId(managerId).stream()
+				.map(EmployeeMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

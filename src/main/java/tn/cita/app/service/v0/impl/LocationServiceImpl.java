@@ -41,22 +41,20 @@ public class LocationServiceImpl implements LocationService {
 	
 	@Override
 	public List<String> getAllCities() {
-		return this.locationRepository.findAll()
-				.stream()
-					.map(Location::getCity)
-					.map(String::toLowerCase)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.locationRepository.findAll().stream()
+				.map(Location::getCity)
+				.map(String::toLowerCase)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	@Override
 	public List<String> getAllStates() {
-		return this.locationRepository.findAll()
-				.stream()
-					.map(Location::getState)
-					.map(String::toLowerCase)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.locationRepository.findAll().stream()
+				.map(Location::getState)
+				.map(String::toLowerCase)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

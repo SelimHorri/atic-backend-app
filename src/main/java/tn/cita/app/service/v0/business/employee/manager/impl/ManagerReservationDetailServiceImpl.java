@@ -35,7 +35,8 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		final var reservationDto = this.reservationService.findById(reservationId);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService.findAllByReservationId(reservationDto.getId())))
+				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService
+						.findAllByReservationId(reservationDto.getId())))
 				.build();
 	}
 	
