@@ -100,8 +100,9 @@ services:
     networks:
       - net
   logstash:
-    #image: logstash:7.16.3
-    image: selimhorri/logstash-connector-j:7.16.3
+    image: logstash:7.16.3
+    #image: selimhorri/logstash-connector-j:7.16.3
+    #image: dimmaryanto93/logstash-input-jdbc-mysql:6.6.0
     container_name: logstash
     #ports:
     #  - "5000:5000"
@@ -109,10 +110,15 @@ services:
       ELASTICSEARCH_URL: http://elasticsearch:9200
       ELASTICSEARCH_HOSTS: '["http://elasticsearch:9200"]'
       LS_JAVA_OPTS: "-Xmx256m -Xms256m"
+      #LOGSTASH_JDBC_URL: jdbc:mysql://mysql:3306/cita_staging
+      #LOGSTASH_JDBC_DRIVER: com.mysql.cj.jdbc.Driver
+      #LOGSTASH_JDBC_DRIVER_JAR_LOCATION: mysql-connector-java-8.0.28.jar
+      #LOGSTASH_JDBC_USERNAME: root
+      #LOGSTASH_JDBC_PASSWORD: toor
     depends_on:
       - elasticsearch
-    #volumes:
-      #- ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     restart: always
     networks:
       - net
