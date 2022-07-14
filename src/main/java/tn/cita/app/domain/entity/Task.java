@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.id.TaskId;
@@ -80,11 +81,13 @@ public class Task extends AbstractAuditingMappedEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "worker_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Employee worker;
 	
 	@ManyToOne
 	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Reservation reservation;
 	

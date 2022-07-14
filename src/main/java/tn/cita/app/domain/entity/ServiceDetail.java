@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -46,10 +47,12 @@ public class ServiceDetail extends AbstractMappedEntity implements Serializable 
 	
 	@ManyToOne
 	@JoinColumn(name = "category_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Category category;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "serviceDetail")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<OrderedDetail> orderedDetails;
 	

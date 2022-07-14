@@ -29,6 +29,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
 
@@ -77,23 +78,28 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private UserImage userImage;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "credential_id", referencedColumnName = "id", nullable = false)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Credential credential;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Rating> ratings;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Favourite> favourites;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "customer")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Reservation> reservations;
 	

@@ -18,6 +18,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.listener.CredentialEntityListener;
@@ -57,14 +58,17 @@ public class Credential extends AbstractMappedEntity implements Serializable {
 	private Boolean isCredentialsNonExpired;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "credential")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Employee employee;
 	
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "credential")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<VerificationToken> verificationTokens;
 	

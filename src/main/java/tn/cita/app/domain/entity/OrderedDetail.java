@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.id.OrderedDetailId;
@@ -60,11 +61,13 @@ public class OrderedDetail extends AbstractAuditingMappedEntity implements Seria
 	
 	@ManyToOne
 	@JoinColumn(name = "reservation_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Reservation reservation;
 	
 	@ManyToOne
 	@JoinColumn(name = "service_detail_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private ServiceDetail serviceDetail;
 	

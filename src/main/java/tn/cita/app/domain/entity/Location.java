@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -30,6 +31,7 @@ public class Location extends AbstractMappedEntity implements Serializable {
 	private String state;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "location")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Saloon> saloons;
 	

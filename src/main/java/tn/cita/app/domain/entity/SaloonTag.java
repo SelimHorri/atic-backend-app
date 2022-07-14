@@ -25,6 +25,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.id.SaloonTagId;
@@ -60,11 +61,13 @@ public class SaloonTag extends AbstractAuditingMappedEntity implements Serializa
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "tag_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Tag tag;
 	

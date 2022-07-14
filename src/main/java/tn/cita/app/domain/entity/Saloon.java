@@ -28,6 +28,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
 
@@ -71,30 +72,37 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "location_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Location location;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Employee> employees;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Favourite> favourites;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<SaloonImage> saloonImage;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<SaloonTag> saloonTags;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Category> categories;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Reservation> reservations;
 	

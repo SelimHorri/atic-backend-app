@@ -22,6 +22,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
 
@@ -48,6 +49,7 @@ public class VerificationToken extends AbstractMappedEntity implements Serializa
 	
 	@ManyToOne
 	@JoinColumn(name = "credential_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Credential credential;
 	

@@ -27,6 +27,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.UserRating;
@@ -71,11 +72,13 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@ManyToOne
 	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Employee worker;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
