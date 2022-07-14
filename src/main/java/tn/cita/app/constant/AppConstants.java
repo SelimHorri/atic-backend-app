@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
  *
  */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class AppConstant {
+public final class AppConstants {
 	
 	/**
 	 * USERNAME_AUTH_HEADER: is a custom header to be sure that 

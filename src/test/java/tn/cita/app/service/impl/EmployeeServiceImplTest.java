@@ -18,7 +18,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.domain.entity.Credential;
 import tn.cita.app.domain.entity.Employee;
@@ -128,7 +128,7 @@ class EmployeeServiceImplTest {
 				.build());
 		
 		final int pageOffset = 1;
-		when(this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE)))
+		when(this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE)))
 				.thenReturn(new PageImpl<>(mockFindAllEmployees));
 		
 		final var findAll = this.employeeService.findAll(pageOffset);

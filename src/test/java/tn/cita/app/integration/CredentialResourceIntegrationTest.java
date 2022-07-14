@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.CredentialDto;
@@ -49,7 +49,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 		
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/credentials/username/{username}", credentialDto.getUsername())
+				.uri(AppConstants.API_CONTEXT_V0 + "/credentials/username/{username}", credentialDto.getUsername())
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()
@@ -79,7 +79,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 		
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/credentials/username/{username}", username)
+				.uri(AppConstants.API_CONTEXT_V0 + "/credentials/username/{username}", username)
 				.exchange()
 				.expectStatus()
 					.isBadRequest()

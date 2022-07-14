@@ -14,14 +14,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.request.RegisterRequest;
 import tn.cita.app.dto.response.RegisterResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.RegistrationService;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/register")
+@RequestMapping(AppConstants.API_CONTEXT_V0 + "/register")
 @Slf4j
 @RequiredArgsConstructor
 public class RegistrationResource {

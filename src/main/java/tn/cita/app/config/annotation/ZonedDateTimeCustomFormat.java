@@ -13,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.ser.ZonedDateTimeSerializer;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @Target(value = {
 		ElementType.ANNOTATION_TYPE, 
@@ -24,12 +24,12 @@ import tn.cita.app.constant.AppConstant;
 })
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@JsonFormat(pattern = AppConstant.ZONED_DATE_TIME_FORMAT, shape = Shape.STRING)
-@DateTimeFormat(pattern = AppConstant.ZONED_DATE_TIME_FORMAT)
+@JsonFormat(pattern = AppConstants.ZONED_DATE_TIME_FORMAT, shape = Shape.STRING)
+@DateTimeFormat(pattern = AppConstants.ZONED_DATE_TIME_FORMAT)
 @JsonSerialize(using = ZonedDateTimeSerializer.class)
 public @interface ZonedDateTimeCustomFormat {
 	
-	String format() default AppConstant.ZONED_DATE_TIME_FORMAT;
+	String format() default AppConstants.ZONED_DATE_TIME_FORMAT;
 	
 }
 

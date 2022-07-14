@@ -17,7 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.config.filter.JwtRequestFilter;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 
 @Configuration
@@ -41,9 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 			.csrf().disable()
 			.authorizeRequests()
 				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-				.antMatchers(AppConstant.WHITELIST_URLS).permitAll()
-				.antMatchers(HttpMethod.GET, AppConstant.WHITE_BLACKLISTED_URLS_GET).authenticated()
-				.antMatchers(HttpMethod.GET, AppConstant.WHITELIST_URLS_GET).permitAll()
+				.antMatchers(AppConstants.WHITELIST_URLS).permitAll()
+				.antMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()
+				.antMatchers(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET).permitAll()
 				.antMatchers("/api/v*/customers/**")
 					.hasRole(UserRoleBasedAuthority.CUSTOMER.name())
 				.antMatchers("/api/v*/employees/workers/**")
