@@ -15,7 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -49,7 +49,7 @@ class AuthenticationResourceTest {
 		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, this.loginResponse);
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
+				.uri(AppConstants.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(loginRequest)

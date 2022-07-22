@@ -16,6 +16,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -34,19 +35,23 @@ public class Category extends AbstractMappedEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "parent_category_id", referencedColumnName = "id", nullable = true)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Category parentCategory;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "parentCategory")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Category> subCategories;
 	
 	@ManyToOne
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "category")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<ServiceDetail> serviceDetails;
 	

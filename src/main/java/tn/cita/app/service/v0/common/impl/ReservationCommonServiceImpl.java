@@ -14,6 +14,7 @@ import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.Task;
 import tn.cita.app.domain.id.TaskId;
 import tn.cita.app.dto.ReservationDto;
+import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
 import tn.cita.app.dto.response.ReservationSubWorkerResponse;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
@@ -58,6 +59,24 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		reservation.setStatus(ReservationStatus.CANCELLED);
 		
 		return ReservationMapper.map(this.reservationService.getReservationRepository().save(reservation));
+	}
+	
+	@Override
+	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
+
+		final var managerDto = this.employeeService.findByCredentialUsername(username);
+		final var assignedWorkersIds = this.taskService
+				.findAllByReservationId(reservationId).stream()
+					.map(TaskDto::getWorkerId)
+					.distinct()
+					.collect(Collectors.toUnmodifiableSet());
+		final var unassignedWorkerDtos = this.employeeService
+				.findAllByManagerId(managerDto.getId()).stream()
+					.filter(w -> !assignedWorkersIds.contains(w.getId()))
+					.distinct()
+					.collect(Collectors.toUnmodifiableList());
+		
+		return new ReservationSubWorkerResponse(this.reservationService.findById(reservationId), new PageImpl<>(unassignedWorkerDtos));
 	}
 	
 	@Transactional

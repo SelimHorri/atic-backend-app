@@ -21,11 +21,10 @@ public class RatingServiceImpl implements RatingService {
 	
 	@Override
 	public List<RatingDto> findAllByCustomerId(final Integer customerId) {
-		return this.ratingRepository.findAllByCustomerId(customerId)
-				.stream()
-					.map(RatingMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.ratingRepository.findAllByCustomerId(customerId).stream()
+				.map(RatingMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

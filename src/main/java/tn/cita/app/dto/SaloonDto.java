@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @JsonInclude(Include.NON_NULL)
 @NoArgsConstructor
@@ -42,8 +42,8 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	private String name;
 	private Boolean isPrimary;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate openingDate;

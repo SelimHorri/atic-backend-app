@@ -54,10 +54,11 @@ public class TaskServiceImpl implements TaskService {
 	
 	@Override
 	public Page<TaskDto> findAllByWorkerId(final Integer workerId, final ClientPageRequest clientPageRequest) {
-		return this.taskRepository.findAllByWorkerId(workerId, PageRequest.of(clientPageRequest.getOffset() - 1, 
-					clientPageRequest.getSize(), 
-					clientPageRequest.getSortDirection(), 
-					clientPageRequest.getSortBy()))
+		return this.taskRepository.findAllByWorkerId(workerId, PageRequest
+					.of(clientPageRequest.getOffset() - 1, 
+						clientPageRequest.getSize(), 
+						clientPageRequest.getSortDirection(), 
+						clientPageRequest.getSortBy()))
 				.map(TaskMapper::map);
 	}
 	

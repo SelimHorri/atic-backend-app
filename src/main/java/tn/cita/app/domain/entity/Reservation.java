@@ -29,8 +29,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.listener.ReservationEntityListener;
 
@@ -53,21 +54,21 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	private String description;
 	
 	@Column(name = "start_date", nullable = true)
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime startDate;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@Column(name = "cancel_date", nullable = true)
 	private LocalDateTime cancelDate;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	@Column(name = "complete_date", nullable = true)
@@ -79,19 +80,23 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY, optional = false)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<OrderedDetail> orderedDetails;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "reservation")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Task> tasks;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	

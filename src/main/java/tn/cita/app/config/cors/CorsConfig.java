@@ -10,7 +10,7 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @Configuration
 public class CorsConfig {
@@ -24,10 +24,10 @@ public class CorsConfig {
 		corsConfiguration.setAllowCredentials(true);
 		corsConfiguration.setAllowedOrigins(this.domains);
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
-				"Accept", "Authorization", AppConstant.USERNAME_AUTH_HEADER, "Origin, Accept", "X-Requested-With",
+				"Accept", "Authorization", AppConstants.USERNAME_AUTH_HEADER, "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
 		corsConfiguration.setExposedHeaders(Arrays.asList("Origin", "Content-Type", "Accept", "Authorization",
-				AppConstant.USERNAME_AUTH_HEADER, "Access-Control-Allow-Origin", "Access-Control-Allow-Origin",
+				AppConstants.USERNAME_AUTH_HEADER, "Access-Control-Allow-Origin", "Access-Control-Allow-Origin",
 				"Access-Control-Allow-Credentials"));
 		corsConfiguration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		

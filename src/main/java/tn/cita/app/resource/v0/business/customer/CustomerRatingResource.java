@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.response.CustomerRatingResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerRatingService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/customers/ratings")
+@RequestMapping(AppConstants.API_CONTEXT_V0 + "/customers/ratings")
 @RequiredArgsConstructor
 public class CustomerRatingResource {
 	

@@ -13,6 +13,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -37,14 +38,17 @@ public class UserImage extends AbstractMappedEntity implements Serializable {
 	
 	@Lob
 	@Column(name = "image_lob", columnDefinition = "BLOB", nullable = true)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private String imageLob;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "userImage")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Employee employee;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "userImage")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	

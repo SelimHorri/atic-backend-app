@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -42,6 +43,7 @@ public class SaloonImage extends AbstractMappedEntity implements Serializable {
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	

@@ -22,8 +22,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @Entity
 @Table(name = "verification_tokens")
@@ -40,14 +41,15 @@ public class VerificationToken extends AbstractMappedEntity implements Serializa
 	private String token;
 	
 	@Column(name = "expire_date")
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime expireDate;
 	
 	@ManyToOne
 	@JoinColumn(name = "credential_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Credential credential;
 	

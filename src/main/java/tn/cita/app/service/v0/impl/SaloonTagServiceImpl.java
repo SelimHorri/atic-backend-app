@@ -26,11 +26,10 @@ public class SaloonTagServiceImpl implements SaloonTagService {
 	
 	@Override
 	public List<SaloonTagDto> findAllBySaloonId(final Integer saloonId) {
-		return this.saloonTagRepository.findAllBySaloonId(saloonId)
-				.stream()
-					.map(SaloonTagMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.saloonTagRepository.findAllBySaloonId(saloonId).stream()
+				.map(SaloonTagMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

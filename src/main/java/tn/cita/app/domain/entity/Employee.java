@@ -29,8 +29,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @Entity
 @Table(name = "employees")
@@ -57,47 +58,54 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@Column(precision = 8, nullable = true)
 	private String phone;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate hiredate;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "user_image_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private UserImage userImage;
 	
 	@ManyToOne
 	@JoinColumn(name = "manager_id", referencedColumnName = "id", nullable = true)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Employee manager;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "manager")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Employee> workers;
 	
 	@OneToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "credential_id", referencedColumnName = "id", nullable = false)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Credential credential;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id", nullable = false)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "worker")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Rating> ratings;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "worker")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Task> tasks;
 	

@@ -30,7 +30,8 @@ public class SaloonServiceImpl implements SaloonService {
 	
 	@Override
 	public Page<SaloonDto> findAll(final ClientPageRequest clientPageRequest) {
-		return this.saloonRepository.findAll(PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+		return this.saloonRepository.findAll(PageRequest
+					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(SaloonMapper::map);
 	}
 	
@@ -51,11 +52,10 @@ public class SaloonServiceImpl implements SaloonService {
 	
 	@Override
 	public Page<SaloonDto> findAllByCode(final String code) {
-		return new PageImpl<>(this.saloonRepository.findAllByCode(code)
-				.stream()
-					.map(SaloonMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList()));
+		return new PageImpl<>(this.saloonRepository.findAllByCode(code).stream()
+				.map(SaloonMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList()));
 	}
 	
 	

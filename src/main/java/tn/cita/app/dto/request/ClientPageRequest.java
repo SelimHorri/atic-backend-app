@@ -9,7 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -23,7 +23,7 @@ public final class ClientPageRequest implements Serializable {
 	private int offset = 1;
 	
 	@Builder.Default
-	private int size = AppConstant.PAGE_SIZE;
+	private int size = AppConstants.PAGE_SIZE;
 	
 	private String[] sortBy;
 	
