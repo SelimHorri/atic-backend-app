@@ -14,6 +14,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
@@ -34,6 +35,7 @@ public class Tag extends AbstractMappedEntity implements Serializable {
 	private String description;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "tag")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<SaloonTag> saloonTags;
 	

@@ -18,7 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
@@ -58,7 +58,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
+				.uri(AppConstants.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(loginRequest)
@@ -89,7 +89,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
+				.uri(AppConstants.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongUsernameLoginRequest)
@@ -120,7 +120,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
+				.uri(AppConstants.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)
@@ -150,7 +150,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
+				.uri(AppConstants.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)
@@ -180,7 +180,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/authenticate")
+				.uri(AppConstants.API_CONTEXT_V0 + "/authenticate")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(wrongCredentialsLoginRequest)

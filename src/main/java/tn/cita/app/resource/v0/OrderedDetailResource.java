@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.id.OrderedDetailId;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.request.OrderedDetailRequest;
@@ -26,7 +26,7 @@ import tn.cita.app.service.v0.OrderedDetailService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/ordered-details")
+@RequestMapping(AppConstants.API_CONTEXT_V0 + "/ordered-details")
 @RequiredArgsConstructor
 public class OrderedDetailResource {
 	

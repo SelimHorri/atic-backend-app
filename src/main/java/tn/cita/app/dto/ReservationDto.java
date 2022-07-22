@@ -23,7 +23,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.ReservationStatus;
 
 @JsonInclude(Include.NON_NULL)
@@ -40,20 +40,20 @@ public final class ReservationDto extends AbstractMappedDto implements Serializa
 	private String code;
 	private String description;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime startDate;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime cancelDate;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime completeDate;

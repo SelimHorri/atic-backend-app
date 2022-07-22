@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
@@ -33,7 +33,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Page<EmployeeDto> findAll(final int pageOffset) {
 		log.info("** EmployeeServiceImpl; EmployeeDto; find all with pageOffset service...*\n");
-		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE))
+		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE))
 				.map(EmployeeMapper::map);
 	}
 	
@@ -64,11 +64,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public List<EmployeeDto> findAllByManagerId(final Integer managerId) {
-		return this.employeeRepository.findAllByManagerId(managerId)
-				.stream()
-					.map(EmployeeMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.employeeRepository.findAllByManagerId(managerId).stream()
+				.map(EmployeeMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

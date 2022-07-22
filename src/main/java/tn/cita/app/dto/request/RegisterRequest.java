@@ -21,7 +21,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @NoArgsConstructor
 @AllArgsConstructor
@@ -44,8 +44,8 @@ public final class RegisterRequest implements Serializable {
 	@Size(message = "Input phone should be in a phone number format", min = 8, max = 12)
 	private String phone;
 	
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate birthdate;

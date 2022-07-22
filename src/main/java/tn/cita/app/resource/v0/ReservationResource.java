@@ -16,13 +16,13 @@ import org.springframework.web.context.request.WebRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.ReservationService;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/reservations")
+@RequestMapping(AppConstants.API_CONTEXT_V0 + "/reservations")
 @RequiredArgsConstructor
 public class ReservationResource {
 	

@@ -26,10 +26,11 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	@Override
 	public Page<ServiceDetailDto> getAll(final String username) {
 		return new PageImpl<>(this.serviceDetailService
-				.findAllByCategorySaloonId(this.employeeService.findByCredentialUsername(username).getSaloonDto().getId()).stream()
+				.findAllByCategorySaloonId(this.employeeService
+						.findByCredentialUsername(username).getSaloonDto().getId()).stream()
+					.distinct()
 					.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
 							.thenComparing(ServiceDetailDto::getName))
-					.distinct()
 					.collect(Collectors.toUnmodifiableList()));
 	}
 	

@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.Customer;
@@ -58,7 +58,7 @@ class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 				.build()
 				);
 		
-		final var reservations = this.reservationRepository.findAllByCustomerId(customerId, PageRequest.of(1 - 1, AppConstant.PAGE_SIZE));
+		final var reservations = this.reservationRepository.findAllByCustomerId(customerId, PageRequest.of(1 - 1, AppConstants.PAGE_SIZE));
 		
 		assertThat(reservations)
 				.isNotNull()

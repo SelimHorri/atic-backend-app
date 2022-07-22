@@ -26,9 +26,10 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	@Override
 	public Page<CategoryDto> getAll(final String username) {
 		return new PageImpl<>(this.categoryService
-				.findAllBySaloonId(this.employeeService.findByCredentialUsername(username).getSaloonDto().getId()).stream()
-					.sorted(Comparator.comparing(CategoryDto::getName))
+				.findAllBySaloonId(this.employeeService
+						.findByCredentialUsername(username).getSaloonDto().getId()).stream()
 					.distinct()
+					.sorted(Comparator.comparing(CategoryDto::getName))
 					.collect(Collectors.toUnmodifiableList()));
 	}
 	

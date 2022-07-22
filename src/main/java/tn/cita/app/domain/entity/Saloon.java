@@ -28,8 +28,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @Entity
 @Table(name = "saloons")
@@ -52,8 +53,8 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	private Boolean isPrimary;
 	
 	@Column(name = "opening_date", nullable = true)
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
 	@JsonSerialize(using = LocalDateSerializer.class)
 	@JsonDeserialize(using = LocalDateDeserializer.class)
 	private LocalDate openingDate;
@@ -71,30 +72,37 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	
 	@ManyToOne
 	@JoinColumn(name = "location_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Location location;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Employee> employees;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Favourite> favourites;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<SaloonImage> saloonImage;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<SaloonTag> saloonTags;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Category> categories;
 	
 	@OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, mappedBy = "saloon")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Set<Reservation> reservations;
 	

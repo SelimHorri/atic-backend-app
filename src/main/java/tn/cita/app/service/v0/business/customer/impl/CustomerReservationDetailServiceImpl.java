@@ -29,15 +29,18 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 		final var reservationDto = this.reservationService.findById(reservationId);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService.findAllByReservationId(reservationDto.getId())))
-				.taskDtos(new PageImpl<>(this.taskService.findAllByReservationId(reservationDto.getId())))
+				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService
+						.findAllByReservationId(reservationDto.getId())))
+				.taskDtos(new PageImpl<>(this.taskService
+						.findAllByReservationId(reservationDto.getId())))
 				.build();
 	}
 	
 	@Transactional
 	@Override
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
-		final var reservation = this.reservationService.getReservationRepository().findById(reservationDetailRequest.getReservationId())
+		final var reservation = this.reservationService.getReservationRepository()
+				.findById(reservationDetailRequest.getReservationId())
 				.orElseThrow(() -> new ReservationNotFoundException(String
 						.format("Reservation with id: %s not found", reservationDetailRequest.getReservationId())));
 		reservation.setDescription(reservationDetailRequest.getDescription().strip());

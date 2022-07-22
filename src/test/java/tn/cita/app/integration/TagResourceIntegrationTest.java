@@ -16,7 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.dto.TagDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -86,7 +86,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 		final var expectedPayload = new ApiResponse<>(2, HttpStatus.OK, true, list);
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/tags?offset={offset}", clientPageRequest.getOffset())
+				.uri(AppConstants.API_CONTEXT_V0 + "/tags?offset={offset}", clientPageRequest.getOffset())
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()
@@ -110,7 +110,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 		final var expectedPayload = new ApiResponse<>(1, HttpStatus.OK, true, tagDto);
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/tags/{id}", id)
+				.uri(AppConstants.API_CONTEXT_V0 + "/tags/{id}", id)
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()
@@ -132,7 +132,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 		
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/tags/{id}", id)
+				.uri(AppConstants.API_CONTEXT_V0 + "/tags/{id}", id)
 				.exchange()
 				.expectStatus()
 					.isBadRequest()
