@@ -41,12 +41,12 @@ public class ReservationJobScheduler {
 					})
 					.map(this.reservationRepository::save)
 					.peek(r -> log.info("** Reservation with code {} has been switched to {} **", 
-							r.getCode(), r.getStatus()))
+							r.getCode(), r.getStatus().name()))
 					.distinct()
 					.sorted(Comparator.comparing(Reservation::getUpdatedAt))
 					.count();
-		log.info("All {} reservations has been oudated today {}", 
-				updatedReservationsCount, LocalDate.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		log.info("All {} reservations has been oudated yesterday {}", 
+				updatedReservationsCount, LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
 	}
 	
 	
