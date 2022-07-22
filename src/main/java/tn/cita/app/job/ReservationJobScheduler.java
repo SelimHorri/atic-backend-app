@@ -3,8 +3,8 @@ package tn.cita.app.job;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Comparator;
 
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -12,8 +12,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.ReservationStatus;
-import tn.cita.app.domain.entity.Reservation;
 import tn.cita.app.repository.ReservationRepository;
 
 @Component
@@ -25,12 +25,13 @@ public class ReservationJobScheduler {
 	
 	/**
 	 * Schedule daily update (at 00h:00min) for each NOT_STARTED reservation, switched to OUTDATED
+	 * Runs on a separate Thread configurable from application.yml (profile)
 	 */
-	@Scheduled(cron = "0 0 0 * * *")
+	@Scheduled(cron = AppConstants.CRON_MIDNIGHT)
 	@Transactional
-	public void scheduleOudatedReservation() {
+	public void scheduleOudatedReservations() {
 		
-		final var from = LocalDateTime.of(LocalDate.now(), LocalTime.MIDNIGHT);
+		final var from = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIDNIGHT);
 		final var to = from.plusDays(1);
 		
 		final long updatedReservationsCount = this.reservationRepository
@@ -40,13 +41,42 @@ public class ReservationJobScheduler {
 						return r;
 					})
 					.map(this.reservationRepository::save)
-					.peek(r -> log.info("** Reservation with code {} has been switched to {} **", 
-							r.getCode(), r.getStatus().name()))
 					.distinct()
-					.sorted(Comparator.comparing(Reservation::getUpdatedAt))
+					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
+							r.getCode(), r.getStatus().name()))
 					.count();
-		log.info("All {} reservations has been oudated yesterday {}", 
-				updatedReservationsCount, LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+		log.info("All {} not-started reservations of yesterday {} has been marked as OUTDATED at {}", 
+				updatedReservationsCount, 
+				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
+				LocalDateTime.now(ZoneId.systemDefault()));
+	}
+	
+	/**
+	 * Schedule daily update (at 00h:00min) for each IN_PROGRESS reservation, switched to NOT_CLOSED
+	 * Runs on a separate Thread configurable from application.yml (profile)
+	 */
+	@Scheduled(cron = AppConstants.CRON_MIDNIGHT)
+	@Transactional
+	public void scheduleNotClosedReservations() {
+		
+		final var from = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIDNIGHT);
+		final var to = from.plusDays(1);
+		
+		final long updatedReservationsCount = this.reservationRepository
+				.findAllByStatusAndStartDateBetween(ReservationStatus.IN_PROGRESS, from, to).stream()
+					.map(r -> {
+						r.setStatus(ReservationStatus.NOT_CLOSED);
+						return r;
+					})
+					.map(this.reservationRepository::save)
+					.distinct()
+					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
+							r.getCode(), r.getStatus().name()))
+					.count();
+		log.info("All {} in-progress reservations of yesterday {} has been marked as NOT_CLOSED at {}", 
+				updatedReservationsCount, 
+				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
+				LocalDateTime.now(ZoneId.systemDefault()));
 	}
 	
 	

@@ -81,6 +81,11 @@ public final class AppConstants {
 	 */
 	public static final long VALID_START_DATE_AFTER = Duration.ofMinutes(30).toMinutes();
 	
+	/**
+	 * Midnight  cron pattern
+	 */
+	public static final String CRON_MIDNIGHT = "0 0 0 * * *";
+	
 }
 
 
