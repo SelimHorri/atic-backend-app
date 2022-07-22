@@ -10,14 +10,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.ServiceDetailService;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/service-details")
+@RequestMapping(AppConstants.API_CONTEXT_V0 + "/service-details")
 @RequiredArgsConstructor
 public class ServiceDetailResource {
 	

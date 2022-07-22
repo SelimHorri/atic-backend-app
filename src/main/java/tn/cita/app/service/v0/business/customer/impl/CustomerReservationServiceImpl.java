@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.OrderedDetail;
 import tn.cita.app.domain.entity.Reservation;
@@ -75,7 +75,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	@Override
 	public ReservationDto createReservation(final ReservationRequest reservationRequest) {
 		
-		if (reservationRequest.getStartDate().isBefore(LocalDateTime.now().plusMinutes(AppConstant.VALID_START_DATE_AFTER))
+		if (reservationRequest.getStartDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER))
 				|| reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30)
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		

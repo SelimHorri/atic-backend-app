@@ -11,13 +11,13 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.response.actuator.HealthActuatorResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/actuator")
+@RequestMapping(AppConstants.API_CONTEXT_V0 + "/actuator")
 @RequiredArgsConstructor
 public class ActuatorLiveness {
 	

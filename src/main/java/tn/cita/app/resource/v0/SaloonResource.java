@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.SaloonService;
 
 @RestController
-@RequestMapping(AppConstant.API_CONTEXT_V0 + "/saloons")
+@RequestMapping(AppConstants.API_CONTEXT_V0 + "/saloons")
 @RequiredArgsConstructor
 public class SaloonResource {
 	

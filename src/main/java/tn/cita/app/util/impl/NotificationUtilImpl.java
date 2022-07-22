@@ -8,7 +8,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
 import tn.cita.app.util.MailContentBuilder;
@@ -29,7 +29,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 		
 		final MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
 			final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-			mimeMessageHelper.setFrom(AppConstant.MAIL_SOURCE);
+			mimeMessageHelper.setFrom(AppConstants.MAIL_SOURCE);
 			mimeMessageHelper.setTo(mailNotification.getTo());
 			mimeMessageHelper.setSubject(mailNotification.getSubject());
 			mimeMessageHelper.setText(this.mailContentBuilder.build(mailNotification.getBody()), true);

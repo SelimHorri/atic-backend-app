@@ -21,7 +21,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.request.RegisterRequest;
@@ -63,11 +63,11 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.getUsername(), 
-								AppConstant.EXPIRES_AT_FROM_NOW)));
+								AppConstants.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -104,11 +104,11 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.getUsername(), 
-								AppConstant.EXPIRES_AT_FROM_NOW)));
+								AppConstants.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -145,11 +145,11 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.getUsername(), 
-								AppConstant.EXPIRES_AT_FROM_NOW)));
+								AppConstants.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -186,11 +186,11 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.getUsername(), 
-								AppConstant.EXPIRES_AT_FROM_NOW)));
+								AppConstants.EXPIRES_AT_FROM_NOW)));
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -226,7 +226,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -263,7 +263,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -300,7 +300,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -326,7 +326,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register/" + token)
+				.uri(AppConstants.API_CONTEXT_V0 + "/register/" + token)
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()

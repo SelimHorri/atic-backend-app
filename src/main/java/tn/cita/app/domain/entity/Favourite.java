@@ -25,8 +25,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.domain.listener.FavouriteEntityListener;
 
@@ -52,19 +53,21 @@ public class Favourite extends AbstractAuditingMappedEntity implements Serializa
 	private Integer saloonId;
 	
 	@Column(name = "favourite_date", nullable = false)
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime favouriteDate;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "customer_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	
 	@ManyToOne(optional = false)
 	@JoinColumn(name = "saloon_id", referencedColumnName = "id")
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Saloon saloon;
 	

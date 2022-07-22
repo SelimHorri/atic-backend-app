@@ -63,11 +63,10 @@ public class ReservationServiceImpl implements ReservationService {
 	
 	@Override
 	public List<ReservationDto> findAllBySaloonId(final Integer saloonId) {
-		return this.reservationRepository.findAllBySaloonId(saloonId)
-				.stream()
-					.map(ReservationMapper::map)
-					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+		return this.reservationRepository.findAllBySaloonId(saloonId).stream()
+				.map(ReservationMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 	}
 	
 	

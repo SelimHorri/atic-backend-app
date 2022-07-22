@@ -19,7 +19,7 @@ import org.springframework.web.servlet.HandlerExceptionResolver;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
 import tn.cita.app.exception.wrapper.UnauthorizedUserException;
 import tn.cita.app.util.JwtUtil;
@@ -41,7 +41,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		
 		log.info("**JwtRequestFilter, once per request, validating and extracting token*\n");
 		
-		final var authorizationHeader = request.getHeader(AppConstant.AUTHORIZATION_HEADER);
+		final var authorizationHeader = request.getHeader(AppConstants.AUTHORIZATION_HEADER);
 		
 		String username = null;
 		String jwt = null;

@@ -27,8 +27,9 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.UserRating;
 import tn.cita.app.domain.id.RatingId;
 import tn.cita.app.domain.listener.RatingEntityListener;
@@ -56,8 +57,8 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@Id
 	@Column(name = "rate_date", nullable = false, insertable = false, updatable = false)
-	@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+	@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 	@JsonSerialize(using = LocalDateTimeSerializer.class)
 	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
 	private LocalDateTime rateDate;
@@ -71,11 +72,13 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	
 	@ManyToOne
 	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Employee worker;
 	
 	@ManyToOne
 	@JoinColumn(name = "customer_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Customer customer;
 	

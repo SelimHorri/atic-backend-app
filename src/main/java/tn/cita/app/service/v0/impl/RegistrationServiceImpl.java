@@ -10,7 +10,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.entity.VerificationToken;
 import tn.cita.app.dto.notif.MailBodyContentBuilder;
 import tn.cita.app.dto.notif.MailNotification;
@@ -108,7 +108,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Customer saved successfully! *\n");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
-				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
+				LocalDateTime.now().plusMinutes(AppConstants.EXPIRES_AT_FROM_NOW), 
 				savedCustomer.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *\n");
@@ -126,7 +126,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						savedCustomer.getCredential().getUsername(), 
-						AppConstant.EXPIRES_AT_FROM_NOW));
+						AppConstants.EXPIRES_AT_FROM_NOW));
 	}
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
@@ -137,8 +137,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Employee saved successfully! *\n");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
-				LocalDateTime.now().plusMinutes(AppConstant.EXPIRES_AT_FROM_NOW), 
-				// AppConstant.EXPIRES_AT_FROM_NOW, 
+				LocalDateTime.now().plusMinutes(AppConstants.EXPIRES_AT_FROM_NOW), 
+				// AppConstants.EXPIRES_AT_FROM_NOW, 
 				savedEmployee.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *\n");
@@ -156,7 +156,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						savedEmployee.getCredential().getUsername(), 
-						AppConstant.EXPIRES_AT_FROM_NOW));
+						AppConstants.EXPIRES_AT_FROM_NOW));
 	}
 	
 	@Override
