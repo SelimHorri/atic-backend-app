@@ -1,5 +1,6 @@
 package tn.cita.app.job;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -48,7 +49,7 @@ public class ReservationJobScheduler {
 		log.info("All {} not-started reservations of yesterday {} has been marked as OUTDATED at {}", 
 				updatedReservationsCount, 
 				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
-				LocalDateTime.now(ZoneId.systemDefault()));
+				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
 	/**
@@ -76,7 +77,7 @@ public class ReservationJobScheduler {
 		log.info("All {} in-progress reservations of yesterday {} has been marked as NOT_CLOSED at {}", 
 				updatedReservationsCount, 
 				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
-				LocalDateTime.now(ZoneId.systemDefault()));
+				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
 	

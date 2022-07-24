@@ -35,10 +35,10 @@ public class CustomerProfileResource {
 	private final CustomerProfileService customerProfileService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<CustomerProfileResponse>> getProfile(final WebRequest request, 
+	public ResponseEntity<ApiResponse<CustomerProfileResponse>> fetchProfile(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerProfileService.getProfileByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+				this.customerProfileService.fetchProfile(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	

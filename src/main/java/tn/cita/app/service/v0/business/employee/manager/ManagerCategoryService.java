@@ -7,8 +7,8 @@ import tn.cita.app.dto.request.CategoryRequest;
 
 public interface ManagerCategoryService {
 	
-	Page<CategoryDto> getAll(final String username);
-	CategoryDto getById(final Integer categoryId);
+	Page<CategoryDto> fetchAll(final String username);
+	CategoryDto fetchById(final Integer categoryId);
 	Boolean deleteCategory(final Integer categoryId);
 	CategoryDto saveCategory(final CategoryRequest categoryRequest);
 	CategoryDto updateCategory(final CategoryRequest categoryRequest);

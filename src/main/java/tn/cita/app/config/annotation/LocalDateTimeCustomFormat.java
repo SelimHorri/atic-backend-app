@@ -32,7 +32,7 @@ import tn.cita.app.constant.AppConstants;
 @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 public @interface LocalDateTimeCustomFormat {
 	
-	// String format() default AppConstants.LOCAL_DATE_TIME_FORMAT;
+	String format() default AppConstants.LOCAL_DATE_TIME_FORMAT;
 	
 }
 

@@ -23,7 +23,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 	private final TaskService taskService;
 	
 	@Override
-	public ManagerWorkerAssignmentResponse getAllWorkerTasks(final String username, final Integer workerId, 
+	public ManagerWorkerAssignmentResponse fetchAllWorkerTasks(final String username, final Integer workerId, 
 			final ClientPageRequest clientPageRequest) {
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerWorkerAssignmentResponse(managerDto, 

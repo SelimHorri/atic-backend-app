@@ -32,9 +32,9 @@ public class WorkerReservationTaskResource {
 	private final WorkerReservationTaskService workerReservationTaskService;
 	
 	@GetMapping("/{reservationId}")
-	public ResponseEntity<ApiResponse<TaskDto>> getAssignedTask(final WebRequest webRequest, @PathVariable final String reservationId) {
+	public ResponseEntity<ApiResponse<TaskDto>> fetchAssignedTask(final WebRequest webRequest, @PathVariable final String reservationId) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.workerReservationTaskService.getAssignedTask(this.userRequestExtractorUtil.extractUsername(webRequest), 
+				this.workerReservationTaskService.fetchAssignedTask(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						Integer.parseInt(reservationId))));
 	}
 	

@@ -34,17 +34,17 @@ public class ManagerCategoryResource {
 	private final ManagerCategoryService managerCategoryService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<Page<CategoryDto>>> getAll(final WebRequest webRequest) {
+	public ResponseEntity<ApiResponse<Page<CategoryDto>>> fetchAll(final WebRequest webRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, 
-				this.managerCategoryService.getAll(this.userRequestExtractorUtil.extractUsername(webRequest))));
+				this.managerCategoryService.fetchAll(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
 	
 	@GetMapping("/{categoryId}")
-	public ResponseEntity<ApiResponse<CategoryDto>> getById(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<CategoryDto>> fetchById(final WebRequest webRequest, 
 			@PathVariable final String categoryId) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerCategoryService.getById(Integer.parseInt(categoryId))));
+				this.managerCategoryService.fetchById(Integer.parseInt(categoryId))));
 	}
 	
 	@PostMapping

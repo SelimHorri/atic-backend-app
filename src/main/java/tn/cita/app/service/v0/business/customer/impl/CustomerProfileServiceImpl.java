@@ -31,7 +31,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override
-	public CustomerProfileResponse getProfileByUsername(final String username, final ClientPageRequest clientPageRequest) {
+	public CustomerProfileResponse fetchProfile(final String username, final ClientPageRequest clientPageRequest) {
 		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerProfileResponse(
 				customerDto, 
