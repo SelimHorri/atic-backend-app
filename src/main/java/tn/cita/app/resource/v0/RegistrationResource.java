@@ -1,7 +1,6 @@
 package tn.cita.app.resource.v0;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +28,7 @@ public class RegistrationResource {
 	private final RegistrationService registrationService;
 	
 	@PostMapping
-	public ResponseEntity<ApiResponse<RegisterResponse>> register(
-			@RequestBody 
-			@NotNull(message = "Input should not be null") 
-			@Valid final RegisterRequest registerRequest) {
+	public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody @Valid final RegisterRequest registerRequest) {
 		log.info("**RegistrationResource controller; RegisterResponse; register user...*\n");
 		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.registrationService.register(registerRequest));
@@ -40,10 +36,7 @@ public class RegistrationResource {
 	}
 	
 	@GetMapping("/{token}")
-	public ResponseEntity<ApiResponse<String>> validateToken(
-			@PathVariable
-			@NotNull(message = "Input token should not be null") 
-			final String token) {
+	public ResponseEntity<ApiResponse<String>> validateToken(@PathVariable final String token) {
 		log.info("**RegistrationResource controller; String; register user...*\n");
 		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.registrationService.validateToken(token));

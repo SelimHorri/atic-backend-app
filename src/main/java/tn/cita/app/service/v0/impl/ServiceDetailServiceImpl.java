@@ -63,7 +63,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	}
 	
 	@Override
-	public ServiceDetailsReservationContainerResponse getOrderedServiceDetailsByReservationId(final Integer reservationId) {
+	public ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final Integer reservationId) {
 		
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(reservationId);
 		final var ids = orderedDetailDtos.stream()

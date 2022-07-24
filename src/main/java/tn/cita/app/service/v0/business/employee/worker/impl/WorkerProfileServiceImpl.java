@@ -27,7 +27,7 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override
-	public WorkerProfileResponse getProfile(final String username) {
+	public WorkerProfileResponse fetchProfile(final String username) {
 		final var workerDto = this.employeeService.findByCredentialUsername(username);
 		return new WorkerProfileResponse(
 				workerDto, 

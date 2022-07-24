@@ -25,9 +25,9 @@ public class CustomerRatingResource {
 	private final CustomerRatingService customerRatingService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<CustomerRatingResponse>> getRatings(final WebRequest request) {
+	public ResponseEntity<ApiResponse<CustomerRatingResponse>> fetchAllRatings(final WebRequest request) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerRatingService.getRatingsByUsername(this.userRequestExtractorUtil.extractUsername(request))));
+				this.customerRatingService.fetchAllRatings(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
 	

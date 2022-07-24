@@ -34,7 +34,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	private final ReservationService reservationService;
 	
 	@Override
-	public TaskDto getAssignedTask(final String username, final Integer reservationId) {
+	public TaskDto fetchAssignedTask(final String username, final Integer reservationId) {
 		return this.taskService.findById(new TaskId(this.employeeService.findByCredentialUsername(username).getId(), reservationId));
 	}
 	

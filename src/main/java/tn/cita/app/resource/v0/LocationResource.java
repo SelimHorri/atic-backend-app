@@ -39,14 +39,14 @@ public class LocationResource {
 	}
 	
 	@GetMapping("/cities")
-	public ResponseEntity<ApiResponse<List<String>>> getAllCities() {
-		final var cities = this.locationService.getAllCities();
+	public ResponseEntity<ApiResponse<List<String>>> fetchAllCities() {
+		final var cities = this.locationService.fetchAllCities();
 		return ResponseEntity.ok(new ApiResponse<>(cities.size(), HttpStatus.OK, true, cities));
 	}
 	
 	@GetMapping("/states")
-	public ResponseEntity<ApiResponse<List<String>>> getAllStates() {
-		final var states = this.locationService.getAllStates();
+	public ResponseEntity<ApiResponse<List<String>>> fetchAllStates() {
+		final var states = this.locationService.fetchAllStates();
 		return ResponseEntity.ok(new ApiResponse<>(states.size(), HttpStatus.OK, true, states));
 	}
 	

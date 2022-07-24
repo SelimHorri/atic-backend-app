@@ -19,7 +19,7 @@ public class CustomerRatingServiceImpl implements CustomerRatingService {
 	private final RatingService ratingService;
 	
 	@Override
-	public CustomerRatingResponse getRatingsByUsername(final String username) {
+	public CustomerRatingResponse fetchAllRatings(final String username) {
 		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerRatingResponse(
 				customerDto,

@@ -6,7 +6,7 @@ import tn.cita.app.dto.response.WorkerProfileResponse;
 
 public interface WorkerProfileService {
 	
-	WorkerProfileResponse getProfile(final String username);
+	WorkerProfileResponse fetchProfile(final String username);
 	EmployeeDto updateProfileInfo(final WorkerProfileRequest workerProfileRequest);
 	
 }

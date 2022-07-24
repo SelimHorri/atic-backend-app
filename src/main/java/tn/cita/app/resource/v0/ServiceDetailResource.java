@@ -36,10 +36,10 @@ public class ServiceDetailResource {
 	 * @return related services by a reservation
 	 */
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiResponse<ServiceDetailsReservationContainerResponse>> getOrderedServiceDetailsByReservationId(
+	public ResponseEntity<ApiResponse<ServiceDetailsReservationContainerResponse>> fetchOrderedServiceDetails(
 			@PathVariable final String reservationId) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.serviceDetailService.getOrderedServiceDetailsByReservationId(Integer.parseInt(reservationId))));
+				this.serviceDetailService.fetchOrderedServiceDetails(Integer.parseInt(reservationId))));
 	}
 	
 	@GetMapping("/saloonId/{saloonId}")

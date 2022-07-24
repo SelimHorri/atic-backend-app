@@ -38,17 +38,17 @@ public class ManagerReservationResource {
 	private final ManagerReservationService managerReservationService;
 	
 	@GetMapping("/paged")
-	public ResponseEntity<ApiResponse<ManagerReservationResponse>> getAllReservations(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<ManagerReservationResponse>> fetchAllReservations(final WebRequest webRequest, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerReservationService.getAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest), 
+				this.managerReservationService.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						new ClientPageRequest(params))));
 	}
 	
 	@GetMapping("/all")
-	public ResponseEntity<ApiResponse<ManagerReservationResponse>> getAllReservations(final WebRequest webRequest) {
+	public ResponseEntity<ApiResponse<ManagerReservationResponse>> fetchAllReservations(final WebRequest webRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerReservationService.getAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest), null)));
+				this.managerReservationService.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest), null)));
 	}
 	
 	@PutMapping("/cancel/{reservationId}")
@@ -67,10 +67,10 @@ public class ManagerReservationResource {
 	}
 	
 	@GetMapping("/{reservationId}/unassigned")
-	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> getAllUnassignedSubWorkers(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> fetchAllUnassignedSubWorkers(final WebRequest webRequest, 
 			@PathVariable final String reservationId) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationService
-				.getAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
+				.fetchAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						Integer.parseInt(reservationId))));
 	}
 	

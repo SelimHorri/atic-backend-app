@@ -6,7 +6,7 @@ import tn.cita.app.dto.request.TaskUpdateDescriptionRequest;
 
 public interface WorkerReservationTaskService {
 	
-	TaskDto getAssignedTask(final String username, final Integer reservationId);
+	TaskDto fetchAssignedTask(final String username, final Integer reservationId);
 	TaskDto updateDescription(final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest);
 	TaskDto beginTask(final TaskBeginEndRequest taskBeginRequest);
 	TaskDto endTask(final TaskBeginEndRequest taskEndRequest);

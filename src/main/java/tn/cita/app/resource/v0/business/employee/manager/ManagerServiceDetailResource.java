@@ -34,17 +34,17 @@ public class ManagerServiceDetailResource {
 	private final ManagerServiceDetailService managerServiceDetailService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<Page<ServiceDetailDto>>> getAll(final WebRequest webRequest) {
+	public ResponseEntity<ApiResponse<Page<ServiceDetailDto>>> fetchAll(final WebRequest webRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, 
-				this.managerServiceDetailService.getAll(this.userRequestExtractorUtil.extractUsername(webRequest))));
+				this.managerServiceDetailService.fetchAll(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
 	
 	@GetMapping("/{serviceDetailId}")
-	public ResponseEntity<ApiResponse<ServiceDetailDto>> getById(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<ServiceDetailDto>> fetchById(final WebRequest webRequest, 
 			@PathVariable final String serviceDetailId) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerServiceDetailService.getById(Integer.parseInt(serviceDetailId))));
+				this.managerServiceDetailService.fetchById(Integer.parseInt(serviceDetailId))));
 	}
 	
 	@PostMapping

@@ -45,7 +45,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	private final OrderedDetailService orderedDetailService;
 	
 	@Override
-	public CustomerReservationResponse getReservationsByUsername(final String username, final ClientPageRequest clientPageRequest) {
+	public CustomerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
 		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerReservationResponse(
 				customerDto,
