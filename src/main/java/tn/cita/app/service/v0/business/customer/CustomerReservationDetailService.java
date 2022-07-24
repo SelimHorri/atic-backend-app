@@ -6,7 +6,7 @@ import tn.cita.app.dto.response.ReservationDetailResponse;
 
 public interface CustomerReservationDetailService {
 	
-	ReservationDetailResponse getReservationDetails(final Integer reservationId);
+	ReservationDetailResponse fetchReservationDetails(final Integer reservationId);
 	ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest);
 	
 }

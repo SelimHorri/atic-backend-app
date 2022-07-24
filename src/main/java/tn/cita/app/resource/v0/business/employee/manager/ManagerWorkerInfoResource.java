@@ -27,17 +27,17 @@ public class ManagerWorkerInfoResource {
 	private final ManagerWorkerInfoService managerWorkerInfoService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<ManagerWorkerInfoResponse>> getAllSubWorkers(final WebRequest webRequest) {
+	public ResponseEntity<ApiResponse<ManagerWorkerInfoResponse>> fetchAllSubWorkers(final WebRequest webRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerWorkerInfoService
-				.getAllSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest))));
+				.fetchAllSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
 	
 	@GetMapping("/{workerId}")
-	public ResponseEntity<ApiResponse<EmployeeDto>> getWorkerInfo(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<EmployeeDto>> fetchWorkerInfo(final WebRequest webRequest, 
 			@PathVariable final String workerId) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerWorkerInfoService.getWorkerInfo(Integer.parseInt(workerId))));
+				this.managerWorkerInfoService.fetchWorkerInfo(Integer.parseInt(workerId))));
 	}
 	
 	

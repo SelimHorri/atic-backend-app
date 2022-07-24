@@ -18,14 +18,14 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	private final EmployeeService employeeService;
 	
 	@Override
-	public ManagerWorkerInfoResponse getAllSubWorkers(final String username) {
+	public ManagerWorkerInfoResponse fetchAllSubWorkers(final String username) {
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerWorkerInfoResponse(managerDto, 
 				new PageImpl<>(this.employeeService.findAllByManagerId(managerDto.getId())));
 	}
 	
 	@Override
-	public EmployeeDto getWorkerInfo(final Integer workerId) {
+	public EmployeeDto fetchWorkerInfo(final Integer workerId) {
 		return this.employeeService.findById(workerId);
 	}
 	

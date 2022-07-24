@@ -222,6 +222,7 @@
 						<exclude>**/domain/**/*.class</exclude>
 						<exclude>**/dto/**/*.class</exclude>
 						<exclude>**/exception/**/*.class</exclude>
+						<exclude>**/job/**/*.class</exclude>
 						<exclude>**/resource/ApiExceptionHandler.class</exclude>
 						<exclude>**/resource/ActuatorLiveness.class</exclude>
 						<exclude>**/resource/*</exclude>

@@ -40,7 +40,7 @@ public class LocationServiceImpl implements LocationService {
 	}
 	
 	@Override
-	public List<String> getAllCities() {
+	public List<String> fetchAllCities() {
 		return this.locationRepository.findAll().stream()
 				.map(Location::getCity)
 				.map(String::toLowerCase)
@@ -49,7 +49,7 @@ public class LocationServiceImpl implements LocationService {
 	}
 	
 	@Override
-	public List<String> getAllStates() {
+	public List<String> fetchAllStates() {
 		return this.locationRepository.findAll().stream()
 				.map(Location::getState)
 				.map(String::toLowerCase)

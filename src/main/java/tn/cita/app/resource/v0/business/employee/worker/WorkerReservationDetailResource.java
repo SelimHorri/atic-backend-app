@@ -26,11 +26,11 @@ public class WorkerReservationDetailResource {
 	private final WorkerReservationDetailService workerReservationDetailService;
 	
 	@GetMapping("/{reservationId}")
-	public ResponseEntity<ApiResponse<ReservationDetailResponse>> getReservationDetails(final WebRequest request,
+	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.workerReservationDetailService.getReservationDetails(Integer.parseInt(reservationId))));
+				this.workerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
 	

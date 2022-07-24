@@ -5,8 +5,8 @@ import tn.cita.app.dto.response.ManagerWorkerInfoResponse;
 
 public interface ManagerWorkerInfoService {
 	
-	ManagerWorkerInfoResponse getAllSubWorkers(final String username);
-	EmployeeDto getWorkerInfo(final Integer workerId);
+	ManagerWorkerInfoResponse fetchAllSubWorkers(final String username);
+	EmployeeDto fetchWorkerInfo(final Integer workerId);
 	
 }
 

@@ -38,10 +38,10 @@ public class CustomerReservationResource {
 	private final CustomerReservationService customerReservationService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<CustomerReservationResponse>> getReservations(final WebRequest request,
+	public ResponseEntity<ApiResponse<CustomerReservationResponse>> fetchAllReservations(final WebRequest request,
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerReservationService.getReservationsByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+				this.customerReservationService.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	

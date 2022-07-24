@@ -8,10 +8,10 @@ import tn.cita.app.dto.response.ReservationSubWorkerResponse;
 
 public interface ManagerReservationService {
 	
-	ManagerReservationResponse getAllReservations(final String username, final ClientPageRequest clientPageRequest);
+	ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest);
 	ReservationDto cancelReservation(final Integer reservationId);
 	ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key);
-	ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId);
+	ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId);
 	ReservationSubWorkerResponse assignReservationWorkers(final String username, 
 			final ReservationAssignWorkerRequest reservationAssignWorkerRequest);
 	

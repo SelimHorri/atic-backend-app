@@ -7,8 +7,8 @@ import tn.cita.app.dto.request.ServiceDetailRequest;
 
 public interface ManagerServiceDetailService {
 	
-	Page<ServiceDetailDto> getAll(final String username);
-	ServiceDetailDto getById(final Integer serviceDetailId);
+	Page<ServiceDetailDto> fetchAll(final String username);
+	ServiceDetailDto fetchById(final Integer serviceDetailId);
 	Boolean deleteServiceDetail(final Integer serviceDetailId);
 	ServiceDetailDto saveServiceDetail(final ServiceDetailRequest serviceDetailRequest);
 	ServiceDetailDto updateServiceDetail(final ServiceDetailRequest serviceDetailRequest);

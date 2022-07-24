@@ -7,8 +7,8 @@ import tn.cita.app.dto.request.ClientPageRequest;
 
 public interface WorkerReservationService {
 	
-	Page<TaskDto> getAllReservations(final String username, final ClientPageRequest clientPageRequest);
-	Page<TaskDto> getAllReservations(final String username);
+	Page<TaskDto> fetchAllReservations(final String username, final ClientPageRequest clientPageRequest);
+	Page<TaskDto> fetchAllReservations(final String username);
 	Page<TaskDto> searchAllLikeKey(final String username, final String key);
 	
 }

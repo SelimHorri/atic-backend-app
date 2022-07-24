@@ -7,7 +7,7 @@ import tn.cita.app.dto.response.CustomerProfileResponse;
 
 public interface CustomerProfileService {
 	
-	CustomerProfileResponse getProfileByUsername(final String username, final ClientPageRequest clientPageRequest);
+	CustomerProfileResponse fetchProfile(final String username, final ClientPageRequest clientPageRequest);
 	CustomerDto updateProfileInfo(final CustomerProfileRequest customerProfileRequest);
 	
 }

@@ -4,7 +4,7 @@ import tn.cita.app.dto.response.CustomerRatingResponse;
 
 public interface CustomerRatingService {
 	
-	CustomerRatingResponse getRatingsByUsername(final String username);
+	CustomerRatingResponse fetchAllRatings(final String username);
 	
 }
 
