@@ -30,11 +30,11 @@ public class ManagerWorkerAssignmentResource {
 	private final ManagerWorkerAssignmentService managerWorkerAssignmentService;
 	
 	@GetMapping("/{workerId}")
-	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> getAllWorkerTasks(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> fetchAllWorkerTasks(final WebRequest webRequest, 
 			@PathVariable final String workerId, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,this.managerWorkerAssignmentService
-				.getAllWorkerTasks(this.userRequestExtractorUtil.extractUsername(webRequest), 
+				.fetchAllWorkerTasks(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						Integer.parseInt(workerId), new ClientPageRequest(params))));
 	}
 	

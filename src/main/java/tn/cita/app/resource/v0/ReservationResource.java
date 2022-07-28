@@ -46,7 +46,6 @@ public class ReservationResource {
 	public ResponseEntity<ApiResponse<Page<ReservationDto>>> findAllBySaloonId(final WebRequest request,
 			@PathVariable final String saloonId, 
 			@RequestParam(required = false) final Map<String, String> params) throws JsonProcessingException {
-		// final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId), new ClientPageRequest());
 		final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId));
 		return ResponseEntity.ok(new ApiResponse<>((int)reservations.size(), 
 				HttpStatus.OK, true, new PageImpl<>(reservations)));

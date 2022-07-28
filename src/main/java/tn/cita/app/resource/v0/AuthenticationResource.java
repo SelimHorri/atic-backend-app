@@ -1,7 +1,6 @@
 package tn.cita.app.resource.v0;
 
 import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,11 +26,7 @@ public class AuthenticationResource {
 	private final AuthenticationService authenticationService;
 	
 	@PostMapping
-	public ResponseEntity<ApiResponse<LoginResponse>> authenticate(
-			@RequestBody 
-			@NotNull(message = "Input login should not be null") 
-			@Valid final LoginRequest loginRequest) {
-		
+	public ResponseEntity<ApiResponse<LoginResponse>> authenticate(@RequestBody @Valid final LoginRequest loginRequest) {
 		log.info("**AuthenticationResource controller; authenticate user...*\n");
 		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.authenticationService.authenticate(loginRequest));

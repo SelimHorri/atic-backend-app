@@ -33,26 +33,26 @@ public class ManagerReservationDetailResource {
 	private final ManagerReservationDetailService managerReservationDetailService;
 	
 	@GetMapping("/{reservationId}")
-	public ResponseEntity<ApiResponse<ReservationDetailResponse>> getReservationDetails(final WebRequest request,
+	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerReservationDetailService.getReservationDetails(Integer.parseInt(reservationId))));
+				this.managerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
 	@GetMapping("/{reservationId}/tasks/info/beginEnd")
-	public ResponseEntity<ApiResponse<ReservationBeginEndTask>> getBeginEndTask(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<ReservationBeginEndTask>> fetchBeginEndTask(final WebRequest webRequest, 
 			@PathVariable final String reservationId) {
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerReservationDetailService.getBeginEndTask(Integer.parseInt(reservationId))));
+				this.managerReservationDetailService.fetchBeginEndTask(Integer.parseInt(reservationId))));
 	}
 	
 	@GetMapping("/{reservationId}/tasks/unassigned")
-	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> getAllUnassignedSubWorkers(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> fetchAllUnassignedSubWorkers(final WebRequest webRequest, 
 			@PathVariable final String reservationId) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationDetailService
-				.getAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
+				.fetchAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						Integer.parseInt(reservationId))));
 	}
 	

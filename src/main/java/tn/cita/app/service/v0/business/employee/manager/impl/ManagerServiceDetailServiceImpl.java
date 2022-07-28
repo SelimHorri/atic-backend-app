@@ -24,7 +24,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	private final ServiceDetailService serviceDetailService;
 	
 	@Override
-	public Page<ServiceDetailDto> getAll(final String username) {
+	public Page<ServiceDetailDto> fetchAll(final String username) {
 		return new PageImpl<>(this.serviceDetailService
 				.findAllByCategorySaloonId(this.employeeService
 						.findByCredentialUsername(username).getSaloonDto().getId()).stream()
@@ -35,7 +35,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	}
 	
 	@Override
-	public ServiceDetailDto getById(final Integer serviceDetailId) {
+	public ServiceDetailDto fetchById(final Integer serviceDetailId) {
 		return this.serviceDetailService.findById(serviceDetailId);
 	}
 	

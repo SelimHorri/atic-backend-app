@@ -31,10 +31,10 @@ public class CustomerFavouriteResource {
 	private final CustomerFavouriteService customerFavouriteService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<CustomerFavouriteResponse>> getFavourites(final WebRequest request, 
+	public ResponseEntity<ApiResponse<CustomerFavouriteResponse>> fetchAllFavourites(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerFavouriteService.getFavouritesByUsername(this.userRequestExtractorUtil.extractUsername(request), 
+				this.customerFavouriteService.fetchAllFavourites(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
 	}
 	

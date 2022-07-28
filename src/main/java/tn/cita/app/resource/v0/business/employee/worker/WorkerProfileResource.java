@@ -31,9 +31,9 @@ public class WorkerProfileResource {
 	private final WorkerProfileService workerProfileService;
 	
 	@GetMapping
-	public ResponseEntity<ApiResponse<WorkerProfileResponse>> getProfile(final WebRequest webRequest) {
+	public ResponseEntity<ApiResponse<WorkerProfileResponse>> fetchProfile(final WebRequest webRequest) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.workerProfileService.getProfile(this.userRequestExtractorUtil.extractUsername(webRequest))));
+				this.workerProfileService.fetchProfile(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
 	
 	@PutMapping

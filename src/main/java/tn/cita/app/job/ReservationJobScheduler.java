@@ -1,5 +1,6 @@
 package tn.cita.app.job;
 
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
@@ -40,15 +41,15 @@ public class ReservationJobScheduler {
 						r.setStatus(ReservationStatus.OUTDATED);
 						return r;
 					})
-					.map(this.reservationRepository::save)
 					.distinct()
+					.map(this.reservationRepository::save)
 					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
 							r.getCode(), r.getStatus().name()))
 					.count();
 		log.info("All {} not-started reservations of yesterday {} has been marked as OUTDATED at {}", 
 				updatedReservationsCount, 
 				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
-				LocalDateTime.now(ZoneId.systemDefault()));
+				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
 	/**
@@ -68,15 +69,15 @@ public class ReservationJobScheduler {
 						r.setStatus(ReservationStatus.NOT_CLOSED);
 						return r;
 					})
-					.map(this.reservationRepository::save)
 					.distinct()
+					.map(this.reservationRepository::save)
 					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
 							r.getCode(), r.getStatus().name()))
 					.count();
 		log.info("All {} in-progress reservations of yesterday {} has been marked as NOT_CLOSED at {}", 
 				updatedReservationsCount, 
 				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
-				LocalDateTime.now(ZoneId.systemDefault()));
+				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
 	

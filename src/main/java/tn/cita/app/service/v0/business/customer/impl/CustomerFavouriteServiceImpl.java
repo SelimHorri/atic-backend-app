@@ -20,7 +20,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	private final FavouriteService favouriteService;
 	
 	@Override
-	public CustomerFavouriteResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest) {
+	public CustomerFavouriteResponse fetchAllFavourites(final String username, final ClientPageRequest clientPageRequest) {
 		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerFavouriteResponse(
 				customerDto,

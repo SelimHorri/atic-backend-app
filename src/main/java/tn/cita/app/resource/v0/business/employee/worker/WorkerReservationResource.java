@@ -31,16 +31,16 @@ public class WorkerReservationResource {
 	private final WorkerReservationService workerReservationService;
 	
 	@GetMapping("/paged")
-	public ResponseEntity<ApiResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<Page<TaskDto>>> fetchAllReservations(final WebRequest webRequest, 
 			@RequestParam final Map<String, String> params) {
-		final var reservations = this.workerReservationService.getAllReservations(this.userRequestExtractorUtil
+		final var reservations = this.workerReservationService.fetchAllReservations(this.userRequestExtractorUtil
 				.extractUsername(webRequest), new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
 	}
 	
 	@GetMapping({"", "/all"})
-	public ResponseEntity<ApiResponse<Page<TaskDto>>> getAllReservations(final WebRequest webRequest) {
-		final var reservations = this.workerReservationService.getAllReservations(this.userRequestExtractorUtil
+	public ResponseEntity<ApiResponse<Page<TaskDto>>> fetchAllReservations(final WebRequest webRequest) {
+		final var reservations = this.workerReservationService.fetchAllReservations(this.userRequestExtractorUtil
 				.extractUsername(webRequest));
 		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
 	}

@@ -33,7 +33,7 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	private final ServiceDetailService serviceDetailService;
 	
 	@Override
-	public ManagerProfileResponse getProfile(final String username) {
+	public ManagerProfileResponse fetchProfile(final String username) {
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerProfileResponse(
 				managerDto, 

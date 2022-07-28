@@ -6,7 +6,7 @@ import tn.cita.app.dto.response.ManagerProfileResponse;
 
 public interface ManagerProfileService {
 	
-	ManagerProfileResponse getProfile(final String username);
+	ManagerProfileResponse fetchProfile(final String username);
 	EmployeeDto updateProfileInfo(final ManagerProfileRequest managerProfileRequest);
 	
 }

@@ -11,8 +11,8 @@ public interface LocationService {
 	
 	Page<LocationDto> findAll(final ClientPageRequest clientPageRequest);
 	LocationDto findById(final Integer id);
-	List<String> getAllCities();
-	List<String> getAllStates();
+	List<String> fetchAllCities();
+	List<String> fetchAllStates();
 	
 }
 

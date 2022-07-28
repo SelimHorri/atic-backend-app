@@ -27,7 +27,7 @@ public class EmployeeResource {
 	}
 	
 	@GetMapping("/username/{username}")
-	public ResponseEntity<ApiResponse<EmployeeDto>> findByUsername(@PathVariable final String username) {
+	public ResponseEntity<ApiResponse<EmployeeDto>> findByCredentialUsername(@PathVariable final String username) {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.employeeService.findByCredentialUsername(username)));
 	}

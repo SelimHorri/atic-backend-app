@@ -31,7 +31,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	private final TaskService taskService;
 	
 	@Override
-	public ReservationDetailResponse getReservationDetails(final Integer reservationId) {
+	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
 		final var reservationDto = this.reservationService.findById(reservationId);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
@@ -41,7 +41,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	}
 	
 	@Override
-	public ReservationBeginEndTask getBeginEndTask(final Integer reservationId) {
+	public ReservationBeginEndTask fetchBeginEndTask(final Integer reservationId) {
 		
 		final var taskDtos = this.taskService.findAllByReservationId(reservationId);
 		
@@ -60,7 +60,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	}
 	
 	@Override
-	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
+	public ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId) {
 		return this.reservationCommonService.getAllUnassignedSubWorkers(username, reservationId);
 	}
 	

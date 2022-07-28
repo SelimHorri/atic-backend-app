@@ -24,7 +24,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	private final CategoryService categoryService;
 	
 	@Override
-	public Page<CategoryDto> getAll(final String username) {
+	public Page<CategoryDto> fetchAll(final String username) {
 		return new PageImpl<>(this.categoryService
 				.findAllBySaloonId(this.employeeService
 						.findByCredentialUsername(username).getSaloonDto().getId()).stream()
@@ -34,7 +34,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	}
 	
 	@Override
-	public CategoryDto getById(final Integer categoryId) {
+	public CategoryDto fetchById(final Integer categoryId) {
 		return this.categoryService.findById(categoryId);
 	}
 	

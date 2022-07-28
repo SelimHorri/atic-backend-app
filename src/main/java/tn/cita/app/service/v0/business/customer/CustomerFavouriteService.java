@@ -5,7 +5,7 @@ import tn.cita.app.dto.response.CustomerFavouriteResponse;
 
 public interface CustomerFavouriteService {
 	
-	CustomerFavouriteResponse getFavouritesByUsername(final String username, final ClientPageRequest clientPageRequest);
+	CustomerFavouriteResponse fetchAllFavourites(final String username, final ClientPageRequest clientPageRequest);
 	Boolean deleteFavourite(final String username, final Integer saloonId);
 	
 }

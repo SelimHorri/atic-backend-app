@@ -30,7 +30,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	private final ReservationCommonService reservationCommonService;
 	
 	@Override
-	public ManagerReservationResponse getAllReservations(final String username, final ClientPageRequest clientPageRequest) {
+	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		if (Optional.ofNullable(clientPageRequest).isPresent())
 			return new ManagerReservationResponse(
@@ -65,7 +65,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	}
 	
 	@Override
-	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
+	public ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId) {
 		return this.reservationCommonService.getAllUnassignedSubWorkers(username, reservationId);
 	}
 	
