@@ -41,8 +41,8 @@ public class ReservationJobScheduler {
 						r.setStatus(ReservationStatus.OUTDATED);
 						return r;
 					})
-					.map(this.reservationRepository::save)
 					.distinct()
+					.map(this.reservationRepository::save)
 					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
 							r.getCode(), r.getStatus().name()))
 					.count();
@@ -69,8 +69,8 @@ public class ReservationJobScheduler {
 						r.setStatus(ReservationStatus.NOT_CLOSED);
 						return r;
 					})
-					.map(this.reservationRepository::save)
 					.distinct()
+					.map(this.reservationRepository::save)
 					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
 							r.getCode(), r.getStatus().name()))
 					.count();
