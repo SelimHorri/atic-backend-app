@@ -25,6 +25,7 @@ class SaloonRepositoryTest extends AbstractSharedMySQLTestContainer {
 		
 		assertThat(saloons)
 				.isNotNull()
+				.isNotEmpty()
 				.allSatisfy(s -> {
 					assertThat(s.getCode()).isEqualTo(code);
 				});
