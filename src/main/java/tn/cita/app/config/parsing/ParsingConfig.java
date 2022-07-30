@@ -11,7 +11,7 @@ import com.fasterxml.jackson.databind.json.JsonMapper;
 public class ParsingConfig {
 	
 	@Bean
-	public ObjectMapper objectMapperBean() {
+	ObjectMapper objectMapper() {
 		return new JsonMapper()
 				.enable(SerializationFeature.INDENT_OUTPUT);
 	}

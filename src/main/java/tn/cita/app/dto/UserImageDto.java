@@ -24,7 +24,7 @@ public final class UserImageDto extends AbstractMappedDto implements Serializabl
 	private String name;
 	private String type;
 	private Long size;
-	private String imageLob;
+	private byte[] imageLob;
 	
 }
 
