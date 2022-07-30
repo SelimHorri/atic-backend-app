@@ -27,6 +27,12 @@ spring:
     scheduling:
       pool:
         size: 2
+  servlet:
+    multipart:
+      enabled: true
+      file-size-threshold: 2KB
+      max-file-size: 256MB
+      max-request-size: 256MB
   mail:
     host: ${SPRING_MAIL_HOST:smtp.gmail.com}
     port: ${SPRING_MAIL_PORT:587}
@@ -46,6 +52,8 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+      probes:
+        enabled: true
 
 
 

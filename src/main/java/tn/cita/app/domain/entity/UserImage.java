@@ -40,7 +40,7 @@ public class UserImage extends AbstractMappedEntity implements Serializable {
 	@Column(name = "image_lob", columnDefinition = "BLOB", nullable = true)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
-	private String imageLob;
+	private byte[] imageLob;
 	
 	@OneToOne(fetch = FetchType.LAZY, mappedBy = "userImage")
 	@ToString.Exclude

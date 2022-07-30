@@ -30,7 +30,7 @@ public class ReservationJobScheduler {
 	 */
 	@Scheduled(cron = AppConstants.CRON_MIDNIGHT)
 	@Transactional
-	public void scheduleOudatedReservations() {
+	void scheduleOudatedReservations() {
 		
 		final var from = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIDNIGHT);
 		final var to = from.plusDays(1);
@@ -48,7 +48,7 @@ public class ReservationJobScheduler {
 					.count();
 		log.info("All {} not-started reservations of yesterday {} has been marked as OUTDATED at {}", 
 				updatedReservationsCount, 
-				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
+				from.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
 				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
@@ -58,7 +58,7 @@ public class ReservationJobScheduler {
 	 */
 	@Scheduled(cron = AppConstants.CRON_MIDNIGHT)
 	@Transactional
-	public void scheduleNotClosedReservations() {
+	void scheduleNotClosedReservations() {
 		
 		final var from = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIDNIGHT);
 		final var to = from.plusDays(1);
@@ -76,7 +76,7 @@ public class ReservationJobScheduler {
 					.count();
 		log.info("All {} in-progress reservations of yesterday {} has been marked as NOT_CLOSED at {}", 
 				updatedReservationsCount, 
-				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
+				from.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
 				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
