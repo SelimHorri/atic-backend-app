@@ -3,7 +3,6 @@ package tn.cita.app.security;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -22,7 +21,6 @@ import tn.cita.app.config.filter.JwtRequestFilter;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.UserRoleBasedAuthority;
 
-@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
