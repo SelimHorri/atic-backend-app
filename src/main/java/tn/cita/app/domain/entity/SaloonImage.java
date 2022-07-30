@@ -38,7 +38,7 @@ public class SaloonImage extends AbstractMappedEntity implements Serializable {
 	private Long size;
 	
 	@Lob
-	@Column(name = "image_lob")
+	@Column(name = "image_lob", columnDefinition = "BLOB", nullable = true)
 	private byte[] imageLob;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
