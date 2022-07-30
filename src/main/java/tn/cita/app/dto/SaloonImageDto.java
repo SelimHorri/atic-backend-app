@@ -25,7 +25,7 @@ public final class SaloonImageDto extends AbstractMappedDto implements Serializa
 	private String name;
 	private String type;
 	private Long size;
-	private String imageLob;
+	private byte[] imageLob;
 	
 	@JsonProperty("saloon")
 	private SaloonDto saloonDto;
