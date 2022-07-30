@@ -48,7 +48,7 @@ public class ReservationJobScheduler {
 					.count();
 		log.info("All {} not-started reservations of yesterday {} has been marked as OUTDATED at {}", 
 				updatedReservationsCount, 
-				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
+				from.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
 				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
@@ -76,7 +76,7 @@ public class ReservationJobScheduler {
 					.count();
 		log.info("All {} in-progress reservations of yesterday {} has been marked as NOT_CLOSED at {}", 
 				updatedReservationsCount, 
-				LocalDate.now().minusDays(1).format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
+				from.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
 				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
