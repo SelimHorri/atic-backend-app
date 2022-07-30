@@ -103,7 +103,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		final var serviceDetail = ServiceDetail.builder()
 				.name(serviceDetailRequest.getName().strip().toLowerCase())
 				.description(serviceDetailRequest.getDescription().strip())
-				.isAvailable(serviceDetailRequest.getIsAvailable())
+				.isAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable())
 				.duration(serviceDetailRequest.getDuration())
 				.priceUnit(serviceDetailRequest.getPriceUnit())
 				.category(category)
@@ -126,7 +126,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		
 		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
 		serviceDetail.setDescription(serviceDetailRequest.getDescription().strip());
-		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable());
+		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable());
 		serviceDetail.setDuration(serviceDetailRequest.getDuration());
 		serviceDetail.setPriceUnit(serviceDetailRequest.getPriceUnit());
 		serviceDetail.setCategory(category);
