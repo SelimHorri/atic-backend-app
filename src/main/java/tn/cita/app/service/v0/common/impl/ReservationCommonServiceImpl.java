@@ -18,7 +18,10 @@ import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
 import tn.cita.app.dto.response.ReservationSubWorkerResponse;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyCancelledException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyNotClosedException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyOutdatedException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.TaskAlreadyAssigned;
 import tn.cita.app.exception.wrapper.TaskNotFoundException;
@@ -50,9 +53,11 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		if (reservation.getStatus().equals(ReservationStatus.COMPLETED))
 			throw new ReservationAlreadyCompletedException("Reservation is already completed");
 		else if (reservation.getStatus().equals(ReservationStatus.CANCELLED))
-			throw new ReservationAlreadyCompletedException("Reservation is already cancelled");
+			throw new ReservationAlreadyCancelledException("Reservation is already cancelled");
 		else if (reservation.getStatus().equals(ReservationStatus.OUTDATED))
-			throw new ReservationAlreadyCompletedException("Reservation is already outdated");
+			throw new ReservationAlreadyOutdatedException("Reservation is already outdated");
+		else if (reservation.getStatus().equals(ReservationStatus.NOT_CLOSED))
+			throw new ReservationAlreadyNotClosedException("Reservation is already not-closed");
 		
 		// update
 		reservation.setCancelDate(LocalDateTime.now());
