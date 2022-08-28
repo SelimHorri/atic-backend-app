@@ -41,8 +41,11 @@ import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
 import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.RatingNotFoundException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyCancelledException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyNotClosedException;
+import tn.cita.app.exception.wrapper.ReservationAlreadyOutdatedException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
@@ -123,6 +126,9 @@ public class ApiExceptionHandler {
 		OutdatedStartDateReservationException.class,
 		ReservationAlreadyExistsException.class,
 		ReservationAlreadyCompletedException.class,
+		ReservationAlreadyCancelledException.class,
+		ReservationAlreadyOutdatedException.class,
+		ReservationAlreadyNotClosedException.class,
 		TaskNotBeganException.class,
 		TaskAlreadyBeganException.class,
 		TaskAlreadyEndedException.class,
