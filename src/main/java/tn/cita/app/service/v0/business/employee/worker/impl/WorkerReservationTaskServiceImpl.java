@@ -57,7 +57,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		});
 		
 		// update worker description..
-		task.setWorkerDescription(taskUpdateDescriptionRequest.getWorkerDescription());
+		task.setWorkerDescription((taskUpdateDescriptionRequest.getWorkerDescription() == null)? 
+				null : taskUpdateDescriptionRequest.getWorkerDescription().strip());
 		return TaskMapper.map(this.taskService.geTaskRepository().save(task));
 	}
 	
@@ -83,7 +84,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// begin task..
 		task.setStartDate(LocalDateTime.now());
-		task.setWorkerDescription(taskBeginRequest.getWorkerDescription());
+		task.setWorkerDescription((taskBeginRequest.getWorkerDescription() == null)?
+				null : taskBeginRequest.getWorkerDescription().strip());
 		
 		// make reservation as in_progress..
 		if (!reservation.getStatus().equals(ReservationStatus.NOT_STARTED)
@@ -122,7 +124,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// update task to be ended..
 		task.setEndDate(LocalDateTime.now());
-		task.setWorkerDescription(taskEndRequest.getWorkerDescription());
+		task.setWorkerDescription((taskEndRequest.getWorkerDescription() == null)?
+				null : taskEndRequest.getWorkerDescription().strip());
 		
 		// fetch all assigned workers to this reservation..
 		final var assignedOtherTaskDtos = this.taskService

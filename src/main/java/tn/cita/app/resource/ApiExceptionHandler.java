@@ -1,5 +1,6 @@
 package tn.cita.app.resource;
 
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import javax.naming.AuthenticationException;
@@ -90,6 +91,7 @@ public class ApiExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = {
+		NoSuchElementException.class,
 		BadCredentialsException.class,
 		IllegalCredentialsException.class,
 		IllegalStateException.class,
