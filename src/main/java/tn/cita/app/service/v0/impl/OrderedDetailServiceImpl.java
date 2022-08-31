@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -51,6 +52,9 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 		
 		if (this.orderedDetailRepository.existsById(orderedDetailId))
 			throw new OrderedDetailAlreadyExistsException(String.format("Service is already ordered"));
+		
+		if (orderedDetailRequest.getOrderedDate() == null)
+			orderedDetailRequest.setOrderedDate(LocalDateTime.now());
 		
 		this.orderedDetailRepository.saveOrderedDetail(orderedDetailRequest);
 		return OrderedDetailMapper.map(this.orderedDetailRepository.findById(orderedDetailId).orElseThrow());

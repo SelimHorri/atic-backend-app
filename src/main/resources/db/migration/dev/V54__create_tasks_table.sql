@@ -9,7 +9,7 @@ CREATE TABLE tasks (
 	manager_description VARCHAR(255),
 	created_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
 	updated_at TIMESTAMP DEFAULT LOCALTIMESTAMP NOT NULL NULL_TO_DEFAULT,
-	PRIMARY KEY (worker_id, reservation_id, task_date)
+	PRIMARY KEY (worker_id, reservation_id)
 );
 
 
