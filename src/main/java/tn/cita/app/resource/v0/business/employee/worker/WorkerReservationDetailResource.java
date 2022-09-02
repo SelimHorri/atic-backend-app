@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -18,6 +19,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/workers/reservations/details")
+@Slf4j
 @RequiredArgsConstructor
 public class WorkerReservationDetailResource {
 	
@@ -28,6 +30,7 @@ public class WorkerReservationDetailResource {
 	@GetMapping("/{reservationId}")
 	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
+		log.info("** Fetch worker reservation details.. *\n");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));

@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.response.ManagerWorkerInfoResponse;
@@ -19,6 +20,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/managers/workers")
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerWorkerInfoResource {
 	
@@ -28,6 +30,7 @@ public class ManagerWorkerInfoResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<ManagerWorkerInfoResponse>> fetchAllSubWorkers(final WebRequest webRequest) {
+		log.info("** Fetch all sub workers by manager.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerWorkerInfoService
 				.fetchAllSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
@@ -35,6 +38,7 @@ public class ManagerWorkerInfoResource {
 	@GetMapping("/{workerId}")
 	public ResponseEntity<ApiResponse<EmployeeDto>> fetchWorkerInfo(final WebRequest webRequest, 
 			@PathVariable final String workerId) {
+		log.info("** Fetch worker info by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerWorkerInfoService.fetchWorkerInfo(Integer.parseInt(workerId))));

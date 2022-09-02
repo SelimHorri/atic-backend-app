@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.request.ServiceDetailRequest;
 import tn.cita.app.service.v0.EmployeeService;
@@ -17,6 +18,7 @@ import tn.cita.app.service.v0.business.employee.manager.ManagerServiceDetailServ
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailService {
 	
@@ -25,6 +27,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Override
 	public Page<ServiceDetailDto> fetchAll(final String username) {
+		log.info("** Fetch all service details by manager.. *\n");
 		return new PageImpl<>(this.serviceDetailService
 				.findAllByCategorySaloonId(this.employeeService
 						.findByCredentialUsername(username).getSaloonDto().getId()).stream()
@@ -36,12 +39,14 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Override
 	public ServiceDetailDto fetchById(final Integer serviceDetailId) {
+		log.info("** Fetch service detail by id by manager.. *\n");
 		return this.serviceDetailService.findById(serviceDetailId);
 	}
 	
 	@Transactional
 	@Override
 	public Boolean deleteServiceDetail(final Integer serviceDetailId) {
+		log.info("** Delete service detail by id by manager.. *\n");
 		this.serviceDetailService.getServiceDetailRepository().deleteById(serviceDetailId);
 		return !this.serviceDetailService.getServiceDetailRepository().existsById(serviceDetailId);
 	}
@@ -49,12 +54,14 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	@Transactional
 	@Override
 	public ServiceDetailDto saveServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
+		log.info("** Save new service detail.. *\n");
 		return this.serviceDetailService.save(serviceDetailRequest);
 	}
 	
 	@Transactional
 	@Override
 	public ServiceDetailDto updateServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
+		log.info("** Update service detail.. *\n");
 		return this.serviceDetailService.update(serviceDetailRequest);
 	}
 	

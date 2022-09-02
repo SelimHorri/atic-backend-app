@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.RatingDto;
 import tn.cita.app.mapper.RatingMapper;
 import tn.cita.app.repository.RatingRepository;
@@ -14,6 +15,7 @@ import tn.cita.app.service.v0.RatingService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class RatingServiceImpl implements RatingService {
 	
@@ -21,6 +23,7 @@ public class RatingServiceImpl implements RatingService {
 	
 	@Override
 	public List<RatingDto> findAllByCustomerId(final Integer customerId) {
+		log.info("** Find all ratings by customerId.. *\n");
 		return this.ratingRepository.findAllByCustomerId(customerId).stream()
 				.map(RatingMapper::map)
 				.distinct()

@@ -32,14 +32,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public Page<EmployeeDto> findAll(final int pageOffset) {
-		log.info("** EmployeeServiceImpl; EmployeeDto; find all with pageOffset service...*\n");
+		log.info("** Find all employees offset paged..*\n");
 		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE))
 				.map(EmployeeMapper::map);
 	}
 	
 	@Override
 	public EmployeeDto findById(final Integer id) {
-		log.info("** EmployeeServiceImpl; EmployeeDto; find user by id service...*\n");
+		log.info("** Find employee by id..*\n");
 		return this.employeeRepository.findById(id)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
@@ -48,6 +48,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public EmployeeDto findByCredentialUsername(final String username) {
+		log.info("** Find employee by credential username.. *\n");
 		return this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
@@ -57,13 +58,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Transactional
 	@Override
 	public boolean deleteById(final Integer id) {
-		log.info("** EmployeeServiceImpl; boolean; delete user by id service...*\n");
+		log.info("** Delete employee by id..*\n");
 		this.employeeRepository.deleteById(id);
 		return !this.employeeRepository.existsById(id);
 	}
 	
 	@Override
 	public List<EmployeeDto> findAllByManagerId(final Integer managerId) {
+		log.info("** Find all employees by managerId.. *\n");
 		return this.employeeRepository.findAllByManagerId(managerId).stream()
 				.map(EmployeeMapper::map)
 				.distinct()

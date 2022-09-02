@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.request.ManagerProfileRequest;
 import tn.cita.app.dto.response.ManagerProfileResponse;
@@ -22,6 +23,7 @@ import tn.cita.app.service.v0.business.employee.manager.ManagerProfileService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerProfileServiceImpl implements ManagerProfileService {
 	
@@ -34,6 +36,7 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	
 	@Override
 	public ManagerProfileResponse fetchProfile(final String username) {
+		log.info("** Fetch manager profile.. *\n");
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerProfileResponse(
 				managerDto, 
@@ -47,6 +50,8 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	@Transactional
 	@Override
 	public EmployeeDto updateProfileInfo(final ManagerProfileRequest managerProfileRequest) {
+		
+		log.info("** Update manager profile.. *\n");
 		
 		this.employeeService.getEmployeeRepository()
 				.findByCredentialUsernameIgnoringCase(managerProfileRequest.getUsername().strip()).ifPresent(c -> {
