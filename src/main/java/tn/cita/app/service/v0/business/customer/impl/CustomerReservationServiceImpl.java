@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.OrderedDetail;
@@ -34,6 +35,7 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerReservationServiceImpl implements CustomerReservationService {
 	
@@ -46,6 +48,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	@Override
 	public CustomerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
+		log.info("** Fetch all reservations by customer.. *\n");
 		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerReservationResponse(
 				customerDto,
@@ -54,6 +57,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	@Override
 	public CustomerReservationResponse searchAllByCustomerIdLikeKey(final String username, final String key) {
+		log.info("** Search all reservations by customerId like key by customer.. *\n");
 		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerReservationResponse(
 				customerDto, 
@@ -74,6 +78,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	@Transactional
 	@Override
 	public ReservationDto createReservation(final ReservationRequest reservationRequest) {
+		
+		log.info("** Create new reservation by customer.. *\n");
 		
 		if (reservationRequest.getStartDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER))
 				|| reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30)

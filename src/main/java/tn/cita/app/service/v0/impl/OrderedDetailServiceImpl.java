@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.domain.id.OrderedDetailId;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.request.OrderedDetailRequest;
@@ -18,6 +19,7 @@ import tn.cita.app.service.v0.OrderedDetailService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class OrderedDetailServiceImpl implements OrderedDetailService {
 	
@@ -30,6 +32,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	
 	@Override
 	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
+		log.info("** Find all ordered detail by reservationId.. *\n");
 		return this.orderedDetailRepository.findAllByReservationId(reservationId).stream()
 				.map(OrderedDetailMapper::map)
 				.distinct()
@@ -39,6 +42,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	@Transactional
 	@Override
 	public Boolean deleteById(final OrderedDetailId orderedDetailId) {
+		log.info("** Delete ordered detail by id.. *\n");
 		this.orderedDetailRepository.deleteById(orderedDetailId);
 		return !this.orderedDetailRepository.existsById(orderedDetailId);
 	}
@@ -46,6 +50,8 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	@Transactional
 	@Override
 	public OrderedDetailDto save(final OrderedDetailRequest orderedDetailRequest) {
+		
+		log.info("** Save ordered detail.. *\n");
 		
 		final OrderedDetailId orderedDetailId = new OrderedDetailId(orderedDetailRequest.getReservationId(), 
 				orderedDetailRequest.getServiceDetailId());

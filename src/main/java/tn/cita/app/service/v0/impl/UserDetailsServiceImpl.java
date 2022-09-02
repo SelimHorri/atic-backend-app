@@ -23,7 +23,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
 		
-		log.info("** UserDetailsServiceImpl; UserDetails; load user by username service...*\n");
+		log.info("** Load user by username.. *\n");
 		
 		final UserDetails userDetails = new UserDetailsImpl(this.credentialService.findByUsername(username.strip()));
 		

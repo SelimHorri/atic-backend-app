@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.domain.entity.ServiceDetail;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.ServiceDetailDto;
@@ -25,6 +26,7 @@ import tn.cita.app.service.v0.ServiceDetailService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
@@ -39,6 +41,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public List<ServiceDetailDto> findAll() {
+		log.info("** Find all service details.. *\n");
 		return this.serviceDetailRepository.findAll().stream()
 				.map(ServiceDetailMapper::map)
 				.distinct()
@@ -47,6 +50,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public ServiceDetailDto findById(final Integer id) {
+		log.info("** Find service detail by id.. *\n");
 		return this.serviceDetailRepository.findById(id)
 				.map(ServiceDetailMapper::map)
 				.orElseThrow(() -> new ServiceDetailNotFoundException(String
@@ -55,6 +59,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids) {
+		log.info("** Find all service details by ids.. *\n");
 		final var list = this.serviceDetailRepository.findAllById(ids).stream()
 				.map(ServiceDetailMapper::map)
 				.distinct()
@@ -64,6 +69,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final Integer reservationId) {
+		
+		log.info("** Fetch ordered service details by reservationId.. *\n");
 		
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(reservationId);
 		final var ids = orderedDetailDtos.stream()
@@ -78,6 +85,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByCategoryId(final Integer categoryId) {
+		log.info("** Find all service details by categoryId.. *\n");
 		return new PageImpl<>(this.serviceDetailRepository.findAllByCategoryId(categoryId).stream()
 				.map(ServiceDetailMapper::map)
 				.distinct()
@@ -86,6 +94,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
+		log.info("** Find all service details by category saloonId.. *\n");
 		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId).stream()
 				.map(ServiceDetailMapper::map)
 				.distinct()
@@ -95,6 +104,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	@Transactional
 	@Override
 	public ServiceDetailDto save(final ServiceDetailRequest serviceDetailRequest) {
+		
+		log.info("** Save new service detail.. *\n");
 		
 		final var category = this.categoryService.getCategoryRepository()
 				.findById(serviceDetailRequest.getCategoryId())
@@ -116,6 +127,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	@Transactional
 	@Override
 	public ServiceDetailDto update(final ServiceDetailRequest serviceDetailRequest) {
+		
+		log.info("** Update a service detail.. *\n");
 		
 		final var category = this.categoryService.getCategoryRepository()
 				.findById(serviceDetailRequest.getCategoryId())

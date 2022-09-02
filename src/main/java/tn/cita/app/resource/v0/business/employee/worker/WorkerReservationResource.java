@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -23,6 +24,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/workers/reservations")
+@Slf4j
 @RequiredArgsConstructor
 public class WorkerReservationResource {
 	
@@ -33,6 +35,7 @@ public class WorkerReservationResource {
 	@GetMapping("/paged")
 	public ResponseEntity<ApiResponse<Page<TaskDto>>> fetchAllReservations(final WebRequest webRequest, 
 			@RequestParam final Map<String, String> params) {
+		log.info("** Fetch all paged worker reservations.. *\n");
 		final var reservations = this.workerReservationService.fetchAllReservations(this.userRequestExtractorUtil
 				.extractUsername(webRequest), new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
@@ -40,6 +43,7 @@ public class WorkerReservationResource {
 	
 	@GetMapping({"", "/all"})
 	public ResponseEntity<ApiResponse<Page<TaskDto>>> fetchAllReservations(final WebRequest webRequest) {
+		log.info("** Fetch all worker reservations.. *\n");
 		final var reservations = this.workerReservationService.fetchAllReservations(this.userRequestExtractorUtil
 				.extractUsername(webRequest));
 		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
@@ -48,6 +52,7 @@ public class WorkerReservationResource {
 	@GetMapping("/search/{key}")
 	public ResponseEntity<ApiResponse<Page<TaskDto>>> searchAllReservationsLikeKey(final WebRequest webRequest, 
 			@PathVariable final String key) {
+		log.info("** Search all worker reservations like key.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, 
 				this.workerReservationService.searchAllLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
 	}

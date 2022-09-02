@@ -21,7 +21,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 	
 	@Override
 	public VerificationTokenDto findByToken(final String token) {
-		log.info("** VerificationTokenServiceImpl; VerificationTokenDto; find by token service...*\n");
+		log.info("** Find verificationToken by token.. *\n");
 		return this.verificationTokenRepository.findByToken(token)
 				.map(VerificationTokenMapper::map)
 				.orElseThrow(() -> new VerificationTokenNotFoundException(String
@@ -31,7 +31,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 	@Transactional
 	@Override
 	public boolean deleteByToken(final String token) {
-		log.info("** VerificationTokenServiceImpl; boolean; delete by token service...*\n");
+		log.info("** Delete verificationToken by token..*\n");
 		this.verificationTokenRepository.deleteByToken(token);
 		return true;
 	}

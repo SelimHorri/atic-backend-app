@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.mapper.TaskMapper;
@@ -17,6 +18,7 @@ import tn.cita.app.service.v0.business.employee.worker.WorkerReservationService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class WorkerReservationServiceImpl implements WorkerReservationService {
 	
@@ -25,18 +27,21 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 	
 	@Override
 	public Page<TaskDto> fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
+		log.info("** Fetch all paged reservations by worker.. *\n");
 		return this.taskService.findAllByWorkerId(this.employeeService
 				.findByCredentialUsername(username).getId(), clientPageRequest);
 	}
 	
 	@Override
 	public Page<TaskDto> fetchAllReservations(final String username) {
+		log.info("** Fetch all reservations by worker.. *\n");
 		return new PageImpl<>(this.taskService.findAllByWorkerId(this.employeeService
 				.findByCredentialUsername(username).getId()));
 	}
 	
 	@Override
 	public Page<TaskDto> searchAllLikeKey(final String username, final String key) {
+		log.info("** Search all reservations like key by worker.. *\n");
 		final var workerDto = this.employeeService.findByCredentialUsername(username);
 		return new PageImpl<>(this.taskService.geTaskRepository()
 				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.toLowerCase()).stream()

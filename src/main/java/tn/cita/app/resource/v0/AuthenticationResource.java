@@ -27,7 +27,7 @@ public class AuthenticationResource {
 	
 	@PostMapping
 	public ResponseEntity<ApiResponse<LoginResponse>> authenticate(@RequestBody @Valid final LoginRequest loginRequest) {
-		log.info("**AuthenticationResource controller; authenticate user...*\n");
+		log.info("** Authenticate user...*\n");
 		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.authenticationService.authenticate(loginRequest));
 		return ResponseEntity.status(HttpStatus.OK)

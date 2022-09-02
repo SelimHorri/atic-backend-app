@@ -7,7 +7,7 @@ import tn.cita.app.dto.response.ReservationSubWorkerResponse;
 public interface ReservationCommonService {
 	
 	ReservationDto cancelReservation(final Integer reservationId);
-	ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId);
+	ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId);
 	ReservationSubWorkerResponse assignReservationWorkers(final String username, 
 			final ReservationAssignWorkerRequest reservationAssignWorkerRequest);
 	
