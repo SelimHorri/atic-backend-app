@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.request.CustomerProfileRequest;
@@ -21,6 +22,7 @@ import tn.cita.app.service.v0.business.customer.CustomerProfileService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerProfileServiceImpl implements CustomerProfileService {
 	
@@ -32,6 +34,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 	
 	@Override
 	public CustomerProfileResponse fetchProfile(final String username, final ClientPageRequest clientPageRequest) {
+		log.info("** Fetch customer profile.. *\n");
 		final var customerDto = this.customerService.findByCredentialUsername(username);
 		return new CustomerProfileResponse(
 				customerDto, 
@@ -44,6 +47,8 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 	@Transactional
 	@Override
 	public CustomerDto updateProfileInfo(final CustomerProfileRequest customerProfileRequest) {
+		
+		log.info("** Update customer profile.. *\n");
 		
 		this.customerService.getCustomerRepository()
 				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getUsername().strip()).ifPresent(c -> {

@@ -6,6 +6,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.FavouriteDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -15,6 +16,7 @@ import tn.cita.app.service.v0.FavouriteService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class FavouriteServiceImpl implements FavouriteService {
 	
@@ -22,6 +24,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 	
 	@Override
 	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
+		log.info("** Find all favourites by customerId.. *\n");
 		return this.favouriteRepository.findAllByCustomerId(customerId, 
 					PageRequest.of(clientPageRequest.getOffset() - 1, 
 							clientPageRequest.getSize(), 
@@ -33,6 +36,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 	@Transactional
 	@Override
 	public Boolean deleteById(final FavouriteId favouriteId) {
+		log.info("** Delete favourite by id.. *\n");
 		this.favouriteRepository.deleteById(favouriteId);
 		return !this.favouriteRepository.existsById(favouriteId);
 	}

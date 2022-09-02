@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.ManagerWorkerAssignmentResponse;
 import tn.cita.app.mapper.TaskMapper;
@@ -16,6 +17,7 @@ import tn.cita.app.service.v0.business.employee.manager.ManagerWorkerAssignmentS
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignmentService {
 	
@@ -25,6 +27,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 	@Override
 	public ManagerWorkerAssignmentResponse fetchAllWorkerTasks(final String username, final Integer workerId, 
 			final ClientPageRequest clientPageRequest) {
+		log.info("** Fetch all worker tasks by manager.. *\n");
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerWorkerAssignmentResponse(managerDto, 
 				this.taskService.findAllByWorkerId(workerId, clientPageRequest));
@@ -32,6 +35,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 	
 	@Override
 	public ManagerWorkerAssignmentResponse searchAllLikeKey(final String username, final Integer workerId, final String key) {
+		log.info("** Search all worker tasks like key by manager.. *\n");
 		return new ManagerWorkerAssignmentResponse(
 				this.employeeService.findByCredentialUsername(username), 
 				new PageImpl<>(this.taskService.geTaskRepository()

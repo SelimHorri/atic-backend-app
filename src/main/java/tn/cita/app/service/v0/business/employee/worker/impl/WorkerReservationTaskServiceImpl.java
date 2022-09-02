@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.id.TaskId;
 import tn.cita.app.dto.TaskDto;
@@ -26,6 +27,7 @@ import tn.cita.app.service.v0.business.employee.worker.WorkerReservationTaskServ
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskService {
 	
@@ -35,12 +37,15 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	
 	@Override
 	public TaskDto fetchAssignedTask(final String username, final Integer reservationId) {
+		log.info("** Fetch assigned task by worker.. *\n");
 		return this.taskService.findById(new TaskId(this.employeeService.findByCredentialUsername(username).getId(), reservationId));
 	}
 	
 	@Transactional
 	@Override
 	public TaskDto updateDescription(final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
+		
+		log.info("** Update description by worker.. *\n");
 		
 		final var worker = this.employeeService.findByCredentialUsername(taskUpdateDescriptionRequest.getUsername());
 		final var reservation = this.reservationService.getReservationRepository()
@@ -65,6 +70,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto beginTask(final TaskBeginEndRequest taskBeginRequest) {
+		
+		log.info("** Begin task by worker.. *\n");
 		
 		final var worker = this.employeeService.findByCredentialUsername(taskBeginRequest.getUsername());
 		final var reservation = this.reservationService.getReservationRepository()
@@ -105,6 +112,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto endTask(final TaskBeginEndRequest taskEndRequest) {
+		
+		log.info("** End task by worker.. *\n");
 		
 		final var workerDto = this.employeeService.findByCredentialUsername(taskEndRequest.getUsername());
 		final var reservation = this.reservationService.getReservationRepository()

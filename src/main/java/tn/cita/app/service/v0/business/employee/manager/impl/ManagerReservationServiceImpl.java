@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
@@ -22,6 +23,7 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerReservationServiceImpl implements ManagerReservationService {
 	
@@ -31,6 +33,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	@Override
 	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
+		log.info("** Fetch all paged reservations by manager.. *\n");
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		if (Optional.ofNullable(clientPageRequest).isPresent())
 			return new ManagerReservationResponse(
@@ -53,6 +56,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	@Override
 	public ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key) {
+		log.info("** Search all reservations by saloonId like key by manager.. *\n");
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerReservationResponse(
 				managerDto, 
