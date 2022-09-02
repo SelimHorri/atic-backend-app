@@ -66,7 +66,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	@Override
 	public ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId) {
-		return this.reservationCommonService.getAllUnassignedSubWorkers(username, reservationId);
+		return this.reservationCommonService.fetchAllUnassignedSubWorkers(username, reservationId);
 	}
 	
 	@Transactional

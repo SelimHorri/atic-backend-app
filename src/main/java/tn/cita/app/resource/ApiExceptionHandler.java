@@ -73,7 +73,7 @@ public class ApiExceptionHandler {
 	public <T extends BindException> ResponseEntity<ApiResponse<ExceptionMsg>> handleValidationException(final T e, 
 			final WebRequest webRequest) {
 		
-		log.info("**ApiExceptionHandler controller; ExceptionMsg; handle validation exception*\n");
+		log.info("** Handle validation exception.. *\n");
 		
 		final var fieldError = Optional
 				.ofNullable(e.getBindingResult().getFieldError())
@@ -138,7 +138,7 @@ public class ApiExceptionHandler {
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
-		log.info("**ApiExceptionHandler controller; ExceptionMsg; handle API request*\n");
+		log.info("** Handle API request custom exception.. *\n");
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = ExceptionMsg.builder()

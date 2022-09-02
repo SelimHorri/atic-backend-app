@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.CategoryDto;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -17,6 +18,7 @@ import tn.cita.app.service.v0.CategoryService;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/categories")
+@Slf4j
 @RequiredArgsConstructor
 public class CategoryResource {
 	
@@ -24,6 +26,7 @@ public class CategoryResource {
 	
 	@GetMapping("/{saloonId}")
 	public ResponseEntity<ApiResponse<Page<CategoryDto>>> findAllBySaloonId(@PathVariable final String saloonId) {
+		log.info("** Find all categories by saloonId.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, 
 				new PageImpl<>(this.categoryService.findAllBySaloonId(Integer.parseInt(saloonId)))));
 	}

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.domain.entity.Task;
 import tn.cita.app.domain.id.TaskId;
@@ -33,6 +34,7 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ReservationCommonServiceImpl implements ReservationCommonService {
 	
@@ -43,6 +45,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 	@Transactional
 	@Override
 	public ReservationDto cancelReservation(final Integer reservationId) {
+		
+		log.info("** Cancelling reservation.. *\n");
 
 		final var reservation = this.reservationService.getReservationRepository().findById(reservationId)
 				.orElseThrow(() -> new ReservationNotFoundException(String
@@ -67,7 +71,9 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 	}
 	
 	@Override
-	public ReservationSubWorkerResponse getAllUnassignedSubWorkers(final String username, final Integer reservationId) {
+	public ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId) {
+		
+		log.info("** Fetch all unassigned sub workers.. *\n");
 
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		final var assignedWorkersIds = this.taskService
@@ -88,6 +94,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 	@Override
 	public ReservationSubWorkerResponse assignReservationWorkers(final String username, 
 			final ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
+		
+		log.info("** Assign workers to a reservation.. *\n");
 		
 		final var reservation = this.reservationService.getReservationRepository()
 				.findById(reservationAssignWorkerRequest.getReservationId())

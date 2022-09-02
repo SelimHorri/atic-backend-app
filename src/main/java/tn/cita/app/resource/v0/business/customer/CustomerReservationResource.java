@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -30,6 +31,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/customers/reservations")
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerReservationResource {
 	
@@ -40,6 +42,7 @@ public class CustomerReservationResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<CustomerReservationResponse>> fetchAllReservations(final WebRequest request,
 			@RequestParam final Map<String, String> params) {
+		log.info("** Fetch all customer reservations.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
@@ -48,6 +51,7 @@ public class CustomerReservationResource {
 	@PutMapping("/cancel/{reservationId}")
 	public ResponseEntity<ApiResponse<ReservationDto>> cancelReservation(final WebRequest request, 
 			@PathVariable final String reservationId) {
+		log.info("** Cancel customer reservation.. *\n");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.cancelReservation(Integer.parseInt(reservationId))));
@@ -56,6 +60,7 @@ public class CustomerReservationResource {
 	@PostMapping
 	public ResponseEntity<ApiResponse<ReservationDto>> createReservation(final WebRequest request,
 			@RequestBody @NotNull @Valid final ReservationRequest reservationRequest) {
+		log.info("** Create customer reservation.. *\n");
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var reservationDto = this.customerReservationService.createReservation(reservationRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, reservationDto));
@@ -64,6 +69,7 @@ public class CustomerReservationResource {
 	@GetMapping("/search/{key}")
 	public ResponseEntity<ApiResponse<CustomerReservationResponse>> searchAllBySaloonIdLikeKey(final WebRequest webRequest, 
 			@PathVariable final String key) {
+		log.info("** Search all customer reservations by saloonId like key.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.searchAllByCustomerIdLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
 	}

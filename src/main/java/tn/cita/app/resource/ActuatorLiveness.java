@@ -11,6 +11,7 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.response.actuator.HealthActuatorResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -18,6 +19,7 @@ import tn.cita.app.exception.wrapper.ActuatorHealthException;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/actuator")
+@Slf4j
 @RequiredArgsConstructor
 public class ActuatorLiveness {
 	
@@ -27,6 +29,8 @@ public class ActuatorLiveness {
 	
 	@GetMapping("/health")
 	public ResponseEntity<ApiResponse<HealthActuatorResponse>> health() {
+		
+		log.info("** App health.. *\n");
 		
 		HealthActuatorResponse health = null;
 		try {

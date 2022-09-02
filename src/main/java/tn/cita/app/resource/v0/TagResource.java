@@ -29,14 +29,14 @@ public class TagResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<TagDto>>> findAll(@RequestParam final Map<String, String> params) {
-		log.info("** TagResource; List TagDto; find all based on pageOffset.. *\n");
+		log.info("** Find all tags.. *\n");
 		final var tags = this.tagService.findAll(new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiResponse<>(tags.toList().size(), HttpStatus.OK, true, tags));
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<TagDto>> findById(@PathVariable final String id) {
-		log.info("** TagResource; TagDto; find by id.. *\n");
+		log.info("** Find by id.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.tagService.findById(Integer.parseInt(id))));
 	}
 	

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.CategoryDto;
 import tn.cita.app.dto.request.CategoryRequest;
@@ -26,6 +27,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/managers/categories")
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerCategoryResource {
 	
@@ -35,6 +37,7 @@ public class ManagerCategoryResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<CategoryDto>>> fetchAll(final WebRequest webRequest) {
+		log.info("** Fetch all manager categories.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, 
 				this.managerCategoryService.fetchAll(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
@@ -42,22 +45,25 @@ public class ManagerCategoryResource {
 	@GetMapping("/{categoryId}")
 	public ResponseEntity<ApiResponse<CategoryDto>> fetchById(final WebRequest webRequest, 
 			@PathVariable final String categoryId) {
+		log.info("** Fetch manager category by id.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerCategoryService.fetchById(Integer.parseInt(categoryId))));
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiResponse<CategoryDto>> saveServiceDetail(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<CategoryDto>> saveCategory(final WebRequest webRequest, 
 			@RequestBody @Valid final CategoryRequest categoryRequest) {
+		log.info("** Save manager category.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerCategoryService
 				.saveCategory(categoryRequest)));
 	}
 	
 	@PutMapping
-	public ResponseEntity<ApiResponse<CategoryDto>> updateServiceDetail(final WebRequest webRequest, 
+	public ResponseEntity<ApiResponse<CategoryDto>> updateCategory(final WebRequest webRequest, 
 			@RequestBody @Valid final CategoryRequest categoryRequest) {
+		log.info("** Update manager category.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerCategoryService
 				.updateCategory(categoryRequest)));
@@ -66,6 +72,7 @@ public class ManagerCategoryResource {
 	@DeleteMapping("/{categoryId}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteCategory(final WebRequest webRequest, 
 			@PathVariable final String categoryId) {
+		log.info("** Delete manager category.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerCategoryService.deleteCategory(Integer.parseInt(categoryId))));

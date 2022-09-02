@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -20,6 +21,7 @@ import tn.cita.app.service.v0.SaloonService;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/saloons")
+@Slf4j
 @RequiredArgsConstructor
 public class SaloonResource {
 	
@@ -27,6 +29,7 @@ public class SaloonResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAll(@RequestParam final Map<String, String> params) {
+		log.info("** Find all saloons.. *\n");
 		final var saloons = this.saloonService.findAll(new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
@@ -34,18 +37,21 @@ public class SaloonResource {
 	@GetMapping("/locations/state/{state}")
 	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
 			@RequestParam final Map<String, String> params) {
+		log.info("** Find all saloons by location state.. *\n");
 		final var saloons = this.saloonService.findAllByLocationState(state, new ClientPageRequest(params));
 		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<SaloonDto>> findById(@PathVariable final String id) {
+		log.info("** Find by id.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.saloonService.findById(Integer.parseInt(id))));
 	}
 	
 	@GetMapping("/code/{code}")
 	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAllByCode(@PathVariable final String code) {
+		log.info("** Find all salonns by code.. *\n");
 		final var saloons = this.saloonService.findAllByCode(code);
 		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
