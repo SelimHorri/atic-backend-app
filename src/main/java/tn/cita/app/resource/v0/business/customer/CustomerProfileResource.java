@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
@@ -27,6 +28,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/customers/profile")
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerProfileResource {
 	
@@ -37,6 +39,7 @@ public class CustomerProfileResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<CustomerProfileResponse>> fetchProfile(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
+		log.info("** Fetch customer profile info.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerProfileService.fetchProfile(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
@@ -45,6 +48,7 @@ public class CustomerProfileResource {
 	@PutMapping
 	public ResponseEntity<ApiResponse<CustomerDto>> updateProfileInfo(final WebRequest webRequest, 
 			@RequestBody @Valid final CustomerProfileRequest customerProfileRequest) {
+		log.info("** Update customer profile info.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerProfileService.updateProfileInfo(customerProfileRequest)));

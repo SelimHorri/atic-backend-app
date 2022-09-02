@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.domain.id.OrderedDetailId;
 import tn.cita.app.dto.OrderedDetailDto;
@@ -27,6 +28,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/ordered-details")
+@Slf4j
 @RequiredArgsConstructor
 public class OrderedDetailResource {
 	
@@ -37,6 +39,7 @@ public class OrderedDetailResource {
 	@GetMapping("/reservationId/{reservationId}")
 	public ResponseEntity<ApiResponse<Page<OrderedDetailDto>>> findAllByReservationId(final WebRequest request, 
 			@PathVariable final String reservationId) {
+		log.info("** Find all ordered details by reservationId.. *\n");
 		this.extractorUtil.extractUsername(request);
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(Integer.parseInt(reservationId));
 		return ResponseEntity.ok(new ApiResponse<>(orderedDetailDtos.size(), HttpStatus.OK, true, new PageImpl<>(orderedDetailDtos)));
@@ -45,6 +48,7 @@ public class OrderedDetailResource {
 	@DeleteMapping
 	public ResponseEntity<ApiResponse<Boolean>> deleteById(final WebRequest request, 
 			@RequestBody @Valid final OrderedDetailId orderedDetailId) {
+		log.info("** Delete an ordered detail by id.. *\n");
 		this.extractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.orderedDetailService.deleteById(orderedDetailId)));
@@ -53,6 +57,7 @@ public class OrderedDetailResource {
 	@PostMapping
 	public ResponseEntity<ApiResponse<OrderedDetailDto>> save(final WebRequest request, 
 			@RequestBody @Valid final OrderedDetailRequest orderedDetailRequest) {
+		log.info("** Save an ordered detail.. *\n");
 		this.extractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.orderedDetailService.save(orderedDetailRequest)));
 	}

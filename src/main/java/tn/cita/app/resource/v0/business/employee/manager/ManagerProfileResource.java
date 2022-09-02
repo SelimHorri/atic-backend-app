@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.request.ManagerProfileRequest;
@@ -23,6 +24,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/managers/profile")
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerProfileResource {
 	
@@ -32,6 +34,7 @@ public class ManagerProfileResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<ManagerProfileResponse>> fetchProfile(final WebRequest webRequest) {
+		log.info("** Fetch manager profile info.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerProfileService.fetchProfile(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
@@ -39,6 +42,7 @@ public class ManagerProfileResource {
 	@PutMapping
 	public ResponseEntity<ApiResponse<EmployeeDto>> updateProfileInfo(final WebRequest webRequest, 
 			@RequestBody @Valid final ManagerProfileRequest managerProfileRequest) {
+		log.info("** Update manager profile info.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerProfileService.updateProfileInfo(managerProfileRequest)));

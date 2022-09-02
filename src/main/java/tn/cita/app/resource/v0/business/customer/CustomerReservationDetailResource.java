@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ReservationDetailRequest;
@@ -24,6 +25,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/customers/reservations/details")
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerReservationDetailResource {
 	
@@ -34,6 +36,7 @@ public class CustomerReservationDetailResource {
 	@GetMapping("/{reservationId}")
 	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
+		log.info("** Fetch customer reservation details.. *\n");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));
@@ -42,6 +45,7 @@ public class CustomerReservationDetailResource {
 	@PutMapping
 	public ResponseEntity<ApiResponse<ReservationDto>> updateReservationDetails(final WebRequest request, 
 			@RequestBody @Valid final ReservationDetailRequest reservationDetailRequest) {
+		log.info("** Update customer reservation details.. *\n");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationDetailService.updateReservationDetails(reservationDetailRequest)));

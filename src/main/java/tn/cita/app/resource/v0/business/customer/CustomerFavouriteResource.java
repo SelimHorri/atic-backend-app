@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerFavouriteResponse;
@@ -23,6 +24,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/customers/favourites")
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerFavouriteResource {
 	
@@ -33,6 +35,7 @@ public class CustomerFavouriteResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<CustomerFavouriteResponse>> fetchAllFavourites(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
+		log.info("** Fetch all customer favourites.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerFavouriteService.fetchAllFavourites(this.userRequestExtractorUtil.extractUsername(request), 
 						new ClientPageRequest(params))));
@@ -41,6 +44,7 @@ public class CustomerFavouriteResource {
 	@DeleteMapping("/{saloonId}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteFavourite(final WebRequest request, 
 			@PathVariable final String saloonId) {
+		log.info("** Delete customer favourite.. *\n");
 		final Boolean isDeleted = this.customerFavouriteService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
 				Integer.parseInt(saloonId));
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, isDeleted));

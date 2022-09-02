@@ -21,7 +21,7 @@ public class CredentialServiceImpl implements CredentialService {
 	
 	@Override
 	public CredentialDto findById(final Integer id) {
-		log.info("** CredentialServiceImpl; CredentialDto; find user by id service...*\n");
+		log.info("** Find user by id .. *\n");
 		return this.credentialRepository.findById(id)
 				.map(CredentialMapper::map)
 				.orElseThrow(() -> new CredentialNotFoundException(String
@@ -30,7 +30,7 @@ public class CredentialServiceImpl implements CredentialService {
 	
 	@Override
 	public CredentialDto findByUsername(final String username) {
-		log.info("** CredentialServiceImpl; CredentialDto; find user by username service...*\n");
+		log.info("** Find user by username.. *\n");
 		return this.credentialRepository.findByUsernameIgnoreCase(username)
 				.map(CredentialMapper::map)
 				.orElseThrow(() -> new CredentialNotFoundException(String

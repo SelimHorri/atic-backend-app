@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.SaloonDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
@@ -18,6 +19,7 @@ import tn.cita.app.service.v0.SaloonService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class SaloonServiceImpl implements SaloonService {
 	
@@ -30,6 +32,7 @@ public class SaloonServiceImpl implements SaloonService {
 	
 	@Override
 	public Page<SaloonDto> findAll(final ClientPageRequest clientPageRequest) {
+		log.info("** Find all paged saloons.. *\n");
 		return this.saloonRepository.findAll(PageRequest
 					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(SaloonMapper::map);
@@ -37,6 +40,7 @@ public class SaloonServiceImpl implements SaloonService {
 	
 	@Override
 	public Page<SaloonDto> findAllByLocationState(final String state, final ClientPageRequest clientPageRequest) {
+		log.info("** Find all saloons by location state.. *\n");
 		return this.saloonRepository.findAllByLocationStateIgnoringCase(state.strip(), 
 					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(SaloonMapper::map);
@@ -44,6 +48,7 @@ public class SaloonServiceImpl implements SaloonService {
 	
 	@Override
 	public SaloonDto findById(final Integer id) {
+		log.info("** Find saloon by id.. *\n");
 		return this.saloonRepository.findById(id)
 				.map(SaloonMapper::map)
 				.orElseThrow(() -> new SaloonNotFoundException(String
@@ -52,6 +57,7 @@ public class SaloonServiceImpl implements SaloonService {
 	
 	@Override
 	public Page<SaloonDto> findAllByCode(final String code) {
+		log.info("** Find all saloons by code.. *\n");
 		return new PageImpl<>(this.saloonRepository.findAllByCode(code).stream()
 				.map(SaloonMapper::map)
 				.distinct()

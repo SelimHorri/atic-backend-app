@@ -29,7 +29,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public Page<CustomerDto> findAll(final ClientPageRequest clientPageRequest) {
-		log.info("** CustomerServiceImpl; List CustomerDto; find All with pageOffset service...*\n");
+		log.info("** Find All paged customers.. *\n");
 		return this.customerRepository.findAll(PageRequest
 					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(CustomerMapper::map);
@@ -37,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public CustomerDto findById(final Integer id) {
-		log.info("** CustomerServiceImpl; CustomerDto; find user by id service...*\n");
+		log.info("** Find customer by id.. *\n");
 		return this.customerRepository.findById(id)
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException(String
@@ -47,13 +47,14 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	@Override
 	public boolean deleteById(final Integer id) {
-		log.info("** CustomerServiceImpl; boolean; delete user by id service...*\n");
+		log.info("** Delete customer by id..*\n");
 		this.customerRepository.deleteById(id);
 		return !this.customerRepository.existsById(id);
 	}
 	
 	@Override
 	public CustomerDto findByCredentialUsername(final String username) {
+		log.info("** Find customer by credential username.. *\n");
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException(String

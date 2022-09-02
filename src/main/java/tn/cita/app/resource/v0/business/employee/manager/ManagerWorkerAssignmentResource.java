@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.ManagerWorkerAssignmentResponse;
@@ -22,6 +23,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/managers/workers/assignments")
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerWorkerAssignmentResource {
 	
@@ -33,6 +35,7 @@ public class ManagerWorkerAssignmentResource {
 	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> fetchAllWorkerTasks(final WebRequest webRequest, 
 			@PathVariable final String workerId, 
 			@RequestParam final Map<String, String> params) {
+		log.info("** Fetch all worker tasks by manager.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,this.managerWorkerAssignmentService
 				.fetchAllWorkerTasks(this.userRequestExtractorUtil.extractUsername(webRequest), 
 						Integer.parseInt(workerId), new ClientPageRequest(params))));
@@ -42,6 +45,7 @@ public class ManagerWorkerAssignmentResource {
 	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> searchAllReservationsLikeKey(final WebRequest webRequest, 
 			@PathVariable final String workerId, 
 			@PathVariable final String key) {
+		log.info("** Search all reservations like key by manager.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerWorkerAssignmentService
 				.searchAllLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), Integer.parseInt(workerId), key)));
 	}

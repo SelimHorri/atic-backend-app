@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.CategoryDto;
 import tn.cita.app.dto.request.CategoryRequest;
 import tn.cita.app.service.v0.CategoryService;
@@ -17,6 +18,7 @@ import tn.cita.app.service.v0.business.employee.manager.ManagerCategoryService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	
@@ -25,6 +27,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	
 	@Override
 	public Page<CategoryDto> fetchAll(final String username) {
+		log.info("** Fetch all categories by manager.. *\n");
 		return new PageImpl<>(this.categoryService
 				.findAllBySaloonId(this.employeeService
 						.findByCredentialUsername(username).getSaloonDto().getId()).stream()
@@ -35,12 +38,14 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	
 	@Override
 	public CategoryDto fetchById(final Integer categoryId) {
+		log.info("** Fetch category by id by manager.. *\n");
 		return this.categoryService.findById(categoryId);
 	}
 	
 	@Transactional
 	@Override
 	public Boolean deleteCategory(final Integer categoryId) {
+		log.info("** Delete category by id by manager.. *\n");
 		this.categoryService.getCategoryRepository().deleteById(categoryId);
 		return !this.categoryService.getCategoryRepository().existsById(categoryId);
 	}
@@ -48,12 +53,14 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	@Transactional
 	@Override
 	public CategoryDto saveCategory(final CategoryRequest categoryRequest) {
+		log.info("** Save category by manager.. *\n");
 		return this.categoryService.save(categoryRequest);
 	}
 	
 	@Transactional
 	@Override
 	public CategoryDto updateCategory(final CategoryRequest categoryRequest) {
+		log.info("** Update category by manager.. *\n");
 		return this.categoryService.update(categoryRequest);
 	}
 	

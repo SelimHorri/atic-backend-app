@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.request.ServiceDetailRequest;
@@ -26,6 +27,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/managers/service-details")
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerServiceDetailResource {
 	
@@ -35,6 +37,7 @@ public class ManagerServiceDetailResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<ServiceDetailDto>>> fetchAll(final WebRequest webRequest) {
+		log.info("** Fetch all service details by manager.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, 
 				this.managerServiceDetailService.fetchAll(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
@@ -42,6 +45,7 @@ public class ManagerServiceDetailResource {
 	@GetMapping("/{serviceDetailId}")
 	public ResponseEntity<ApiResponse<ServiceDetailDto>> fetchById(final WebRequest webRequest, 
 			@PathVariable final String serviceDetailId) {
+		log.info("** Fetch service detail by id by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerServiceDetailService.fetchById(Integer.parseInt(serviceDetailId))));
@@ -50,6 +54,7 @@ public class ManagerServiceDetailResource {
 	@PostMapping
 	public ResponseEntity<ApiResponse<ServiceDetailDto>> saveServiceDetail(final WebRequest webRequest, 
 			@RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
+		log.info("** Save service detail by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerServiceDetailService.saveServiceDetail(serviceDetailRequest)));
@@ -58,6 +63,7 @@ public class ManagerServiceDetailResource {
 	@PutMapping
 	public ResponseEntity<ApiResponse<ServiceDetailDto>> updateServiceDetail(final WebRequest webRequest, 
 			@RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
+		log.info("** Update service detail by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerServiceDetailService.updateServiceDetail(serviceDetailRequest)));
@@ -66,6 +72,7 @@ public class ManagerServiceDetailResource {
 	@DeleteMapping("/{serviceDetailId}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteServiceDetail(final WebRequest webRequest, 
 			@PathVariable final String serviceDetailId) {
+		log.info("** Delete service detail by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerServiceDetailService.deleteServiceDetail(Integer.parseInt(serviceDetailId))));

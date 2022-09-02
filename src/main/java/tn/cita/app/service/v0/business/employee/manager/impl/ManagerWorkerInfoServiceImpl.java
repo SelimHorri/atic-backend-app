@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.dto.response.ManagerWorkerInfoResponse;
 import tn.cita.app.service.v0.EmployeeService;
@@ -12,6 +13,7 @@ import tn.cita.app.service.v0.business.employee.manager.ManagerWorkerInfoService
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	
@@ -19,6 +21,7 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	
 	@Override
 	public ManagerWorkerInfoResponse fetchAllSubWorkers(final String username) {
+		log.info("** Fetch all sub workers by manager.. *\n");
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
 		return new ManagerWorkerInfoResponse(managerDto, 
 				new PageImpl<>(this.employeeService.findAllByManagerId(managerDto.getId())));
@@ -26,6 +29,7 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	
 	@Override
 	public EmployeeDto fetchWorkerInfo(final Integer workerId) {
+		log.info("** Fetch worker infos by manager.. *\n");
 		return this.employeeService.findById(workerId);
 	}
 	

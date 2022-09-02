@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
@@ -17,6 +18,7 @@ import tn.cita.app.service.v0.business.customer.CustomerReservationDetailService
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerReservationDetailServiceImpl implements CustomerReservationDetailService {
 	
@@ -26,6 +28,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
+		log.info("** Fetch reservation details by reservationId by customer.. *\n");
 		final var reservationDto = this.reservationService.findById(reservationId);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
@@ -39,6 +42,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	@Transactional
 	@Override
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
+		log.info("** Update reservation details by customer.. *\n");
 		final var reservation = this.reservationService.getReservationRepository()
 				.findById(reservationDetailRequest.getReservationId())
 				.orElseThrow(() -> new ReservationNotFoundException(String

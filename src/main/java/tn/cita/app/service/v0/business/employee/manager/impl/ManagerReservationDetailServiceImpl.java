@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.domain.ReservationStatus;
 import tn.cita.app.dto.TaskDto;
 import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
@@ -22,6 +23,7 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 
 @Service
 @Transactional(readOnly = true)
+@Slf4j
 @RequiredArgsConstructor
 public class ManagerReservationDetailServiceImpl implements ManagerReservationDetailService {
 	
@@ -32,6 +34,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
+		log.info("** Fetch reservation details by reservationId by manager.. *\n");
 		final var reservationDto = this.reservationService.findById(reservationId);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
@@ -42,6 +45,8 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	
 	@Override
 	public ReservationBeginEndTask fetchBeginEndTask(final Integer reservationId) {
+		
+		log.info("** Fetch begin end task by manager.. *\n");
 		
 		final var taskDtos = this.taskService.findAllByReservationId(reservationId);
 		
@@ -61,7 +66,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	
 	@Override
 	public ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId) {
-		return this.reservationCommonService.getAllUnassignedSubWorkers(username, reservationId);
+		return this.reservationCommonService.fetchAllUnassignedSubWorkers(username, reservationId);
 	}
 	
 	@Transactional

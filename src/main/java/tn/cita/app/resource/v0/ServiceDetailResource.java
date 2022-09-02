@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
@@ -18,6 +19,7 @@ import tn.cita.app.service.v0.ServiceDetailService;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/service-details")
+@Slf4j
 @RequiredArgsConstructor
 public class ServiceDetailResource {
 	
@@ -25,6 +27,7 @@ public class ServiceDetailResource {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<ServiceDetailDto>> findById(@PathVariable final String id) {
+		log.info("** Find by id.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.serviceDetailService.findById(Integer.parseInt(id))));
 	}
@@ -38,12 +41,14 @@ public class ServiceDetailResource {
 	@GetMapping("/reservationId/{reservationId}")
 	public ResponseEntity<ApiResponse<ServiceDetailsReservationContainerResponse>> fetchOrderedServiceDetails(
 			@PathVariable final String reservationId) {
+		log.info("** Fetch ordered service details by reservationId (secured api).. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.serviceDetailService.fetchOrderedServiceDetails(Integer.parseInt(reservationId))));
 	}
 	
 	@GetMapping("/saloonId/{saloonId}")
 	public ResponseEntity<ApiResponse<Page<ServiceDetailDto>>> findAllByCategorySaloonId(@PathVariable final String saloonId) {
+		log.info("** Find All service details by category saloonId.. *\n");
 		final var serviceDetails = this.serviceDetailService.findAllByCategorySaloonId(Integer.parseInt(saloonId));
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, new PageImpl<>(serviceDetails)));
 	}

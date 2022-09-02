@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.dto.response.CustomerRatingResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -17,6 +18,7 @@ import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/customers/ratings")
+@Slf4j
 @RequiredArgsConstructor
 public class CustomerRatingResource {
 	
@@ -26,6 +28,7 @@ public class CustomerRatingResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<CustomerRatingResponse>> fetchAllRatings(final WebRequest request) {
+		log.info("** Fetch all customer ratings.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerRatingService.fetchAllRatings(this.userRequestExtractorUtil.extractUsername(request))));
 	}
