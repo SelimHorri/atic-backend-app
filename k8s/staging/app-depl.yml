@@ -25,7 +25,8 @@ spec:
     spec:
       containers:
         - name: cita-backend-app
-          image: selimhorri/cita-backend-app
+          image: selimhorri/cita-backend-app:staging
+          imagePullPolicy: IfNotPresent
           resources:
             limits:
               memory: "128Mi"
