@@ -27,6 +27,20 @@ spec:
         - name: cita-backend-app
           image: selimhorri/cita-backend-app:dev
           imagePullPolicy: IfNotPresent
+          #readinessProbe: 
+          #  httpGet: 
+          #    path: /actuator/health/readiness
+          #    port: 8400
+          #  initialDelaySeconds: 15
+          #  periodSeconds: 30
+          #  failureThreshold: 3
+          #livenessProbe: 
+          #  httpGet: 
+          #    path: /actuator/health/liveness
+          #    port: 8400
+          #  initialDelaySeconds: 30
+          #  periodSeconds: 30
+          #  failureThreshold: 3
           resources:
             limits:
               memory: "1024Mi"
