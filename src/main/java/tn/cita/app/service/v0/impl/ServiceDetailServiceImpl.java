@@ -113,7 +113,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		
 		final var serviceDetail = ServiceDetail.builder()
 				.name(serviceDetailRequest.getName().strip().toLowerCase())
-				.description((serviceDetailRequest.getDescription() == null)?
+				.description((serviceDetailRequest.getDescription() == null 
+							|| serviceDetailRequest.getDescription().isBlank()) ?
 						null : serviceDetailRequest.getDescription().strip())
 				.isAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable())
 				.duration(serviceDetailRequest.getDuration())
@@ -139,7 +140,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 					.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
 		
 		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
-		serviceDetail.setDescription((serviceDetailRequest.getDescription() == null)?
+		serviceDetail.setDescription((serviceDetailRequest.getDescription() == null 
+					|| serviceDetailRequest.getDescription().isBlank()) ?
 				null : serviceDetailRequest.getDescription().strip());
 		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable());
 		serviceDetail.setDuration(serviceDetailRequest.getDuration());

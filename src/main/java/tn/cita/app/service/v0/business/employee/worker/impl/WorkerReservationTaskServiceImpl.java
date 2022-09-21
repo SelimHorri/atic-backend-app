@@ -62,7 +62,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		});
 		
 		// update worker description..
-		task.setWorkerDescription((taskUpdateDescriptionRequest.getWorkerDescription() == null)? 
+		task.setWorkerDescription((taskUpdateDescriptionRequest.getWorkerDescription() == null 
+					|| taskUpdateDescriptionRequest.getWorkerDescription().isBlank()) ? 
 				null : taskUpdateDescriptionRequest.getWorkerDescription().strip());
 		return TaskMapper.map(this.taskService.geTaskRepository().save(task));
 	}
@@ -91,7 +92,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// begin task..
 		task.setStartDate(LocalDateTime.now());
-		task.setWorkerDescription((taskBeginRequest.getWorkerDescription() == null)?
+		task.setWorkerDescription((taskBeginRequest.getWorkerDescription() == null 
+					|| taskBeginRequest.getWorkerDescription().isBlank()) ? 
 				null : taskBeginRequest.getWorkerDescription().strip());
 		
 		// make reservation as in_progress..
@@ -133,7 +135,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// update task to be ended..
 		task.setEndDate(LocalDateTime.now());
-		task.setWorkerDescription((taskEndRequest.getWorkerDescription() == null)?
+		task.setWorkerDescription((taskEndRequest.getWorkerDescription() == null 
+					|| taskEndRequest.getWorkerDescription().isBlank()) ? 
 				null : taskEndRequest.getWorkerDescription().strip());
 		
 		// fetch all assigned workers to this reservation..

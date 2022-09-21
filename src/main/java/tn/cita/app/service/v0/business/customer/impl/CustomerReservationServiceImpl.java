@@ -105,7 +105,9 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				.saloon(this.saloonService.getSaloonRepository().findById(reservationRequest.getSaloonId())
 						.orElseThrow(() -> new SaloonNotFoundException(String
 								.format("Saloon with id: %d not found", reservationRequest.getSaloonId()))))
-				.description(reservationRequest.getDescription())
+				.description((reservationRequest.getDescription() == null 
+							|| reservationRequest.getDescription().isBlank()) ? 
+						null : reservationRequest.getDescription().strip())
 				.build();
 		
 		final var savedReservation = this.reservationService.getReservationRepository().save(reservation);

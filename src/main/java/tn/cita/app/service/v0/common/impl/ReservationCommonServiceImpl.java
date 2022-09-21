@@ -111,7 +111,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		task.setReservationId(reservation.getId());
 		task.setReservation(reservation);
 		task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..
-		task.setManagerDescription((reservationAssignWorkerRequest.getManagerDescription() == null)? 
+		task.setManagerDescription((reservationAssignWorkerRequest.getManagerDescription() == null 
+					|| reservationAssignWorkerRequest.getManagerDescription().isBlank()) ? 
 				null : reservationAssignWorkerRequest.getManagerDescription().strip());
 		reservationAssignWorkerRequest.getAssignedWorkersIds().forEach(workerId -> {
 			task.setWorkerId(workerId);

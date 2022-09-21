@@ -63,15 +63,15 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
 		final var authenticatedManager = this.employeeService.getEmployeeRepository()
-				.findByCredentialUsernameIgnoringCase(managerProfileRequest.getAuthenticatedUsername())
+				.findByCredentialUsernameIgnoringCase(managerProfileRequest.getAuthenticatedUsername().strip())
 					.orElseThrow(() -> new EmployeeNotFoundException("Manager not found"));
-		authenticatedManager.setFirstname(managerProfileRequest.getFirstname());
-		authenticatedManager.setLastname(managerProfileRequest.getLastname());
-		authenticatedManager.setEmail(managerProfileRequest.getEmail());
-		authenticatedManager.setPhone(managerProfileRequest.getPhone());
+		authenticatedManager.setFirstname(managerProfileRequest.getFirstname().strip());
+		authenticatedManager.setLastname(managerProfileRequest.getLastname().strip());
+		authenticatedManager.setEmail(managerProfileRequest.getEmail().strip());
+		authenticatedManager.setPhone(managerProfileRequest.getPhone().strip());
 		authenticatedManager.setBirthdate(managerProfileRequest.getBirthdate());
 		authenticatedManager.setHiredate(managerProfileRequest.getHiredate());
-		authenticatedManager.getCredential().setUsername(managerProfileRequest.getUsername().toLowerCase());
+		authenticatedManager.getCredential().setUsername(managerProfileRequest.getUsername().strip().toLowerCase());
 		authenticatedManager.getCredential()
 				.setPassword(this.passwordEncoder.encode(managerProfileRequest.getPassword()));
 		
