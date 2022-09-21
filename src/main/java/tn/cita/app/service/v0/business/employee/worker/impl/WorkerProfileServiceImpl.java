@@ -54,15 +54,15 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
 		final var authenticatedWorker = this.employeeService.getEmployeeRepository()
-				.findByCredentialUsernameIgnoringCase(workerProfileRequest.getAuthenticatedUsername())
+				.findByCredentialUsernameIgnoringCase(workerProfileRequest.getAuthenticatedUsername().strip())
 				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
-		authenticatedWorker.setFirstname(workerProfileRequest.getFirstname());
-		authenticatedWorker.setLastname(workerProfileRequest.getLastname());
-		authenticatedWorker.setEmail(workerProfileRequest.getEmail());
-		authenticatedWorker.setPhone(workerProfileRequest.getPhone());
+		authenticatedWorker.setFirstname(workerProfileRequest.getFirstname().strip());
+		authenticatedWorker.setLastname(workerProfileRequest.getLastname().strip());
+		authenticatedWorker.setEmail(workerProfileRequest.getEmail().strip());
+		authenticatedWorker.setPhone(workerProfileRequest.getPhone().strip());
 		authenticatedWorker.setBirthdate(workerProfileRequest.getBirthdate());
 		authenticatedWorker.setHiredate(workerProfileRequest.getHiredate());
-		authenticatedWorker.getCredential().setUsername(workerProfileRequest.getUsername().toLowerCase());
+		authenticatedWorker.getCredential().setUsername(workerProfileRequest.getUsername().strip().toLowerCase());
 		authenticatedWorker.getCredential().setPassword(this.passwordEncoder.encode(workerProfileRequest.getPassword()));
 		
 		return EmployeeMapper.map(this.employeeService.getEmployeeRepository().save(authenticatedWorker));

@@ -62,15 +62,15 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		final var authenticatedCustomer = this.customerService.getCustomerRepository()
 				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getAuthenticatedUsername())
 				.orElseThrow();
-		authenticatedCustomer.setFirstname(customerProfileRequest.getFirstname());
-		authenticatedCustomer.setLastname(customerProfileRequest.getLastname());
-		authenticatedCustomer.setEmail(customerProfileRequest.getEmail());
-		authenticatedCustomer.setPhone(customerProfileRequest.getPhone());
+		authenticatedCustomer.setFirstname(customerProfileRequest.getFirstname().strip());
+		authenticatedCustomer.setLastname(customerProfileRequest.getLastname().strip());
+		authenticatedCustomer.setEmail(customerProfileRequest.getEmail().strip());
+		authenticatedCustomer.setPhone(customerProfileRequest.getPhone().strip());
 		authenticatedCustomer.setBirthdate(customerProfileRequest.getBirthdate());
-		authenticatedCustomer.setFacebookUrl(customerProfileRequest.getFacebookUrl());
-		authenticatedCustomer.setInstagramUrl(customerProfileRequest.getInstagramUrl());
-		authenticatedCustomer.setLinkedinUrl(customerProfileRequest.getLinkedinUrl());
-		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.getUsername().toLowerCase());
+		authenticatedCustomer.setFacebookUrl(customerProfileRequest.getFacebookUrl().strip());
+		authenticatedCustomer.setInstagramUrl(customerProfileRequest.getInstagramUrl().strip());
+		authenticatedCustomer.setLinkedinUrl(customerProfileRequest.getLinkedinUrl().strip());
+		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.getUsername().strip().toLowerCase());
 		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileRequest.getPassword()));
 		
 		return CustomerMapper.map(this.customerService.getCustomerRepository().save(authenticatedCustomer));
