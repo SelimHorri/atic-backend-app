@@ -47,7 +47,9 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 				.findById(reservationDetailRequest.getReservationId())
 				.orElseThrow(() -> new ReservationNotFoundException(String
 						.format("Reservation with id: %s not found", reservationDetailRequest.getReservationId())));
-		reservation.setDescription(reservationDetailRequest.getDescription().strip());
+		reservation.setDescription((reservationDetailRequest.getDescription() == null 
+					|| reservationDetailRequest.getDescription().isBlank()) ? 
+				null : reservationDetailRequest.getDescription().strip());
 		
 		return ReservationMapper.map(this.reservationService.getReservationRepository().save(reservation));
 	}
