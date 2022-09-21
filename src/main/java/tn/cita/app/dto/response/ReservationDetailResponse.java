@@ -8,7 +8,6 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -19,7 +18,6 @@ import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.TaskDto;
 
-@AllArgsConstructor
 @RequiredArgsConstructor
 @ToString
 @EqualsAndHashCode
@@ -41,7 +39,7 @@ public final class ReservationDetailResponse implements Serializable {
 	
 	@JsonInclude(value = Include.NON_NULL)
 	@JsonProperty("tasks")
-	private Page<TaskDto> taskDtos;
+	private final Page<TaskDto> taskDtos;
 	
 }
 

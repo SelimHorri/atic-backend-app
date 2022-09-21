@@ -39,7 +39,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 		return new ManagerWorkerAssignmentResponse(
 				this.employeeService.findByCredentialUsername(username), 
 				new PageImpl<>(this.taskService.geTaskRepository()
-						.searchAllByWorkerIdLikeKey(workerId, key.toLowerCase()).stream()
+						.searchAllByWorkerIdLikeKey(workerId, key.strip().toLowerCase()).stream()
 							.map(TaskMapper::map)
 							.distinct()
 							.collect(Collectors.toUnmodifiableList())));

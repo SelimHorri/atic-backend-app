@@ -42,7 +42,7 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 	@Override
 	public Page<TaskDto> searchAllLikeKey(final String username, final String key) {
 		log.info("** Search all reservations like key by worker.. *\n");
-		final var workerDto = this.employeeService.findByCredentialUsername(username);
+		final var workerDto = this.employeeService.findByCredentialUsername(username.strip());
 		return new PageImpl<>(this.taskService.geTaskRepository()
 				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.toLowerCase()).stream()
 					.map(TaskMapper::map)
