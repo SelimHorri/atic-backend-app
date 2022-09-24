@@ -1,17 +1,19 @@
-{"properties": [
-  {
-    "name": "app.client.domains",
-    "type": "java.util.List",
-    "description": "A description for 'app.client.domains'\nClient domains for cors config (Angular)"
-  },
-  {
-    "name": "app.security.jwt.secret-key",
-    "type": "java.lang.String",
-    "description": "A description for 'app.security.jwt.secret-key'"
-  },
-  {
-    "name": "app.security.jwt.token-expires-after",
-    "type": "java.lang.String",
-    "description": "A description for 'app.security.jwt.token-expires-after'"
-  }
-]}
+{
+	"properties": [
+		{
+			"name": "app.client.domains",
+			"type": "java.util.List",
+			"description": "A description for 'app.client.domains'\nClient domains for cors config (Angular)"
+		},
+		{
+			"name": "app.security.jwt.secret-key",
+			"type": "java.lang.String",
+			"description": "A description for 'app.security.jwt.secret-key'"
+		},
+		{
+			"name": "app.security.jwt.token-expires-after",
+			"type": "java.lang.String",
+			"description": "A description for 'app.security.jwt.token-expires-after'"
+		}
+	]
+}
