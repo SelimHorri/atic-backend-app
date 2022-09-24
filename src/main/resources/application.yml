@@ -12,7 +12,7 @@ spring:
     name: CITA-BACKEND-APP
   profiles:
     active:
-    - ${SPRING_PROFILES_ACTIVE:@activatedProperties@}
+      - ${SPRING_PROFILES_ACTIVE:@activatedProperties@}
   zipkin:
     base-url: http://${SPRING_ZIPKIN_BASE_HOST:localhost}:9411/
   redis:

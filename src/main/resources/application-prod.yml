@@ -5,7 +5,7 @@ server:
 app:
   security:
     jwt:
-      secret-key: ${random.uuid:@app.security.jwt.secret-key@}
+      secret-key: ${random.uuid}
 
 management:
   endpoints:
@@ -15,12 +15,12 @@ management:
 
 spring:
   datasource:
-    url: jdbc:mysql://${SPRING_DATASOURCE_HOST:localhost}:3306/${DB_NAME:cita_prod_db}?createDatabaseIfNotExist=true
+    url: ${SPRING_DATASOURCE_URL:jdbc:mysql://${SPRING_DATASOURCE_HOST:localhost}:3306/${DB_NAME:cita_prod_db}?createDatabaseIfNotExist=true}
     username: ${SPRING_DATASOURCE_USERNAME:root}
     password: ${SPRING_DATASOURCE_PASSWORD:toor}
   config:
     import:
-    - 'optional:import/secrets/db-secrets.yml'
+      - 'optional:import/secrets/db-secrets.yml'
   jpa:
     show-sql: false
     hibernate:
