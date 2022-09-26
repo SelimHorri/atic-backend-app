@@ -1,6 +1,6 @@
 
 ##################### BASE IMAGE #####################
-FROM openjdk:11
+FROM eclipse-temurin:11
 
 ##################### MAITAINER #####################
 LABEL maintainer="SelimHorri"
