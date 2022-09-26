@@ -44,23 +44,25 @@ public class SecurityConfig {
 				.authorizeRequests(authorizeRequests -> authorizeRequests
 						.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 						.antMatchers(AppConstants.WHITELIST_URLS).permitAll()
-						.antMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()
+						.mvcMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()
 						.antMatchers(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET).permitAll()
-						.antMatchers("/api/v*/customers/**")
+						.mvcMatchers("/api/v*/customers/**")
 							.hasRole(UserRoleBasedAuthority.CUSTOMER.name())
-						.antMatchers("/api/v*/employees/workers/**")
+						.mvcMatchers("/api/v*/employees/workers/**")
 							.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
 									UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.antMatchers("/api/v*/employees/managers/**")
+						.mvcMatchers("/api/v*/employees/managers/**")
 							.hasAnyRole(UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.antMatchers("/api/v*/employees/owners/**")
+						.mvcMatchers("/api/v*/employees/owners/**")
 							.hasRole(UserRoleBasedAuthority.OWNER.name())
-						.antMatchers("/api/v*/employees/**")
+						.mvcMatchers("/api/v*/employees/**")
 							.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
 									UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
+						.mvcMatchers("/api/v*/admins/**")
+							.hasRole(UserRoleBasedAuthority.ADMIN.name())
 						.anyRequest().authenticated())
 				.authenticationProvider(this.authenticationProvider())
 				.exceptionHandling(e -> e.authenticationEntryPoint((request, response, authException) -> response
