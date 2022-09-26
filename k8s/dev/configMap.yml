@@ -13,6 +13,7 @@ metadata:
   namespace: cita-dev-ns
 data:
   SPRING_PROFILES_ACTIVE: dev
+  # SPRING_DATASOURCE_URL: 
   DB_NAME: cita-dev-db
 
 
