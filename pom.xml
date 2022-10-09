@@ -13,7 +13,7 @@
 	<groupId>tn.cita</groupId>
 	<artifactId>cita-backend-app</artifactId>
 	<version>0.5.1</version>
-	<name>Cita Backend application</name>
+	<name>Cita Backend Application</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>jar</packaging>
 	
@@ -23,10 +23,10 @@
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<springdoc.version>1.6.9</springdoc.version>
+		<springdoc.version>1.6.11</springdoc.version>
 		<spring-cloud.version>2021.0.3</spring-cloud.version>
-		<testcontainers.version>1.17.3</testcontainers.version>
-		<jacoco.version>0.8.6</jacoco.version>
+		<testcontainers.version>1.17.4</testcontainers.version>
+		<jacoco.version>0.8.8</jacoco.version>
 		<sonar.organization>selimhorri</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.inclusions>**/repository/**/*.java</sonar.inclusions>

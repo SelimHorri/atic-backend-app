@@ -40,9 +40,9 @@ class AuthenticationServiceImplTest {
 		
 		final var expectedLoginResponse = this.authenticationService.authenticate(this.loginRequest);
 		assertThat(expectedLoginResponse).isNotNull();
-		assertThat(expectedLoginResponse.getUsername()).isEqualTo(loginRequest.getUsername());
+		assertThat(expectedLoginResponse.username()).isEqualTo(loginRequest.getUsername());
 		
-		final var validateToken = this.jwtUtil.validateToken(expectedLoginResponse.getJwtToken(), 
+		final var validateToken = this.jwtUtil.validateToken(expectedLoginResponse.jwtToken(), 
 				this.userDetailsService.loadUserByUsername(loginRequest.getUsername()));
 		assertThat(validateToken).isTrue();
 	}
