@@ -1,6 +1,6 @@
 
 ##################### BASE IMAGE #####################
-FROM eclipse-temurin:11-alpine
+FROM eclipse-temurin:17-alpine
 
 ##################### MAITAINER #####################
 LABEL maintainer="SelimHorri"
