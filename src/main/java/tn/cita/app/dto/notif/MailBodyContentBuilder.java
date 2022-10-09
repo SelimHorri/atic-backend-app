@@ -2,27 +2,10 @@ package tn.cita.app.dto.notif;
 
 import java.io.Serializable;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
+import lombok.Builder;
 
-@RequiredArgsConstructor
-@Data
-public final class MailBodyContentBuilder implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	private final String username;
-	private final String confirmLink;
-	
-}
-
-
-
-
-
-
-
-
+@Builder
+public record MailBodyContentBuilder(String username, String confirmLink) implements Serializable {}
 
 
 
