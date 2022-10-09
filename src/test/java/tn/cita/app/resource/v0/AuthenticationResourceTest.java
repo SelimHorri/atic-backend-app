@@ -64,8 +64,8 @@ class AuthenticationResourceTest {
 					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
 					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().getUsername()))
-					.jsonPath("$.responseBody.jwtToken").value(is(apiPayloadResponse.getResponseBody().getJwtToken()));
+					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().username()))
+					.jsonPath("$.responseBody.jwtToken").value(is(apiPayloadResponse.getResponseBody().jwtToken()));
 	}
 	
 	

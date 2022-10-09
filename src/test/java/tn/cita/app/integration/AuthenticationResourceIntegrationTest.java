@@ -73,10 +73,10 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
 					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().getUsername()));
+					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().username()));
 		
-		final boolean validateToken = this.jwtUtil.validateToken(this.loginResponse.getJwtToken(), 
-				this.userDetailsService.loadUserByUsername(this.loginResponse.getUsername()));
+		final boolean validateToken = this.jwtUtil.validateToken(this.loginResponse.jwtToken(), 
+				this.userDetailsService.loadUserByUsername(this.loginResponse.username()));
 		assertThat(validateToken).isTrue();
 	}
 	
