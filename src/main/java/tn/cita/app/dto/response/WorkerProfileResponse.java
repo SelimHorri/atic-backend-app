@@ -25,16 +25,7 @@ public record WorkerProfileResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("tasks")
-		Page<TaskDto> taskDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
+		Page<TaskDto> taskDtos) implements Serializable {}
 
 
 

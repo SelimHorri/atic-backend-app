@@ -19,18 +19,7 @@ public record OrderedDetailContainerResponse(
 		ReservationDto reservationDto,
 		
 		@JsonProperty("serviceDetail")
-		ServiceDetailDto serviceDetailDto
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
-
-
+		ServiceDetailDto serviceDetailDto) implements Serializable {}
 
 
 

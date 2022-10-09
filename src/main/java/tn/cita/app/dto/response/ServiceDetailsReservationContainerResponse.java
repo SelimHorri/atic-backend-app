@@ -17,19 +17,7 @@ public record ServiceDetailsReservationContainerResponse(
 		Page<OrderedDetailDto> orderedDetailDtos,
 		
 		@JsonProperty("serviceDetails")
-		Page<ServiceDetailDto> serviceDetailDtos
-		
-		// @JsonProperty("category")
-		// CategoryDto categoryDto
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
+		Page<ServiceDetailDto> serviceDetailDtos) implements Serializable {}
 
 
 
