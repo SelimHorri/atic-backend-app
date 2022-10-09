@@ -35,18 +35,7 @@ public record CustomerProfileResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("ratings")
-		Page<RatingDto> ratingDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
-
-
+		Page<RatingDto> ratingDtos) implements Serializable {}
 
 
 

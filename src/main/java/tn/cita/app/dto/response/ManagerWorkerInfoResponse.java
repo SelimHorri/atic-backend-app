@@ -20,16 +20,7 @@ public record ManagerWorkerInfoResponse(
 		
 		@JsonInclude(Include.NON_NULL)
 		@JsonProperty("subWorkers")
-		Page<EmployeeDto> subWorkersDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
+		Page<EmployeeDto> subWorkersDtos) implements Serializable {}
 
 
 

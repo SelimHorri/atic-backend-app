@@ -20,17 +20,7 @@ public record CustomerFavouriteResponse(
 		
 		@JsonInclude(value = Include.NON_NULL) 
 		@JsonProperty("favourites") 
-		Page<FavouriteDto> favouriteDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
-
+		Page<FavouriteDto> favouriteDtos) implements Serializable {}
 
 
 
