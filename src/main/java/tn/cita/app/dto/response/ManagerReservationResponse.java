@@ -21,21 +21,7 @@ public record ManagerReservationResponse(
 		
 		@JsonInclude(Include.NON_NULL)
 		@JsonProperty("reservations")
-		Page<ReservationDto> reservationDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
-
-
-
-
-
+		Page<ReservationDto> reservationDtos) implements Serializable {}
 
 
 

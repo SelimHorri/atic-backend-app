@@ -26,11 +26,3 @@ public final class RegisterResponse implements Serializable {
 
 
 
-
-
-
-
-
-
-
-

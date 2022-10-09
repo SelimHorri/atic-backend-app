@@ -21,16 +21,7 @@ public record ManagerWorkerAssignmentResponse(
 		
 		@JsonProperty("tasks")
 		@JsonInclude(Include.NON_NULL)
-		Page<TaskDto> tasksDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
+		Page<TaskDto> tasksDtos) implements Serializable {}
 
 
 

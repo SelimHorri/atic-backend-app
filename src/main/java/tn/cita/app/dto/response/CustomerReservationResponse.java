@@ -15,23 +15,12 @@ import tn.cita.app.dto.ReservationDto;
 @Builder
 public record CustomerReservationResponse(
 		
-		@JsonProperty("customer")
+		@JsonProperty("customer") 
 		CustomerDto customerDto,
 		
-		@JsonInclude(value = Include.NON_NULL)
-		@JsonProperty("reservations")
-		Page<ReservationDto> reservationDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
-
-
+		@JsonInclude(value = Include.NON_NULL) 
+		@JsonProperty("reservations") 
+		Page<ReservationDto> reservationDtos) implements Serializable {}
 
 
 
