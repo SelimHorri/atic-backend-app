@@ -12,15 +12,17 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 
+import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
 @RequiredArgsConstructor
-@Getter
-@EqualsAndHashCode
 @ToString
+@EqualsAndHashCode
+@Getter
+@Builder
 public final class ApiResponse<T> implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
