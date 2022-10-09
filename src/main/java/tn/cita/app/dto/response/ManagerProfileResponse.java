@@ -39,20 +39,7 @@ public record ManagerProfileResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("serviceDetails")
-		Page<ServiceDetailDto> serviceDetailDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
-
-
-
-
+		Page<ServiceDetailDto> serviceDetailDtos) implements Serializable {}
 
 
 

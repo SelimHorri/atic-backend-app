@@ -21,19 +21,7 @@ public record ReservationSubWorkerResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("subWorkers")
-		Page<EmployeeDto> subWorkerDtos
-		
-	) implements Serializable {}
-
-
-
-
-
-
-
-
-
-
+		Page<EmployeeDto> subWorkerDtos) implements Serializable {}
 
 
 
