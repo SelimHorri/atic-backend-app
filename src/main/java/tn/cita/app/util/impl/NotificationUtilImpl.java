@@ -30,9 +30,9 @@ public class NotificationUtilImpl implements NotificationUtil {
 		final MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
 			final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
 			mimeMessageHelper.setFrom(AppConstants.MAIL_SOURCE);
-			mimeMessageHelper.setTo(mailNotification.getTo());
-			mimeMessageHelper.setSubject(mailNotification.getSubject());
-			mimeMessageHelper.setText(this.mailContentBuilder.build(mailNotification.getBody()), true);
+			mimeMessageHelper.setTo(mailNotification.to());
+			mimeMessageHelper.setSubject(mailNotification.subject());
+			mimeMessageHelper.setText(this.mailContentBuilder.build(mailNotification.body()), true);
 		};
 		
 		try {
@@ -40,9 +40,8 @@ public class NotificationUtilImpl implements NotificationUtil {
 			isSent = true;
 		}
 		catch (MailException e) {
-			e.printStackTrace();
-			throw new MailNotificationNotProcessedException(String
-					.format("Sending mail to %s not processed as expected", mailNotification.getTo()));
+			throw new MailNotificationNotProcessedException("Sending mail to %s not processed as expected"
+					.formatted(mailNotification.to()));
 		}
 		
 		return isSent;
