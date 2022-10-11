@@ -31,6 +31,7 @@ import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
+import tn.cita.app.exception.wrapper.FavouriteAlreadyExists;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
@@ -135,6 +136,7 @@ public class ApiExceptionHandler {
 		TaskAlreadyBeganException.class,
 		TaskAlreadyEndedException.class,
 		TaskAlreadyAssigned.class,
+		FavouriteAlreadyExists.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
