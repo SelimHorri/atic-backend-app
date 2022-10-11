@@ -10,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.domain.id.FavouriteId;
 import tn.cita.app.dto.FavouriteDto;
 import tn.cita.app.dto.request.ClientPageRequest;
+import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.mapper.FavouriteMapper;
 import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.service.v0.FavouriteService;
@@ -21,6 +22,18 @@ import tn.cita.app.service.v0.FavouriteService;
 public class FavouriteServiceImpl implements FavouriteService {
 	
 	private final FavouriteRepository favouriteRepository;
+	
+	@Override
+	public FavouriteRepository getFavouriteRepository() {
+		return this.favouriteRepository;
+	}
+	
+	@Override
+	public FavouriteDto findById(final FavouriteId favouriteId) {
+		return this.favouriteRepository.findById(favouriteId)
+				.map(FavouriteMapper::map)
+				.orElseThrow(() -> new FavouriteNotFoundException("Favourite not found"));
+	}
 	
 	@Override
 	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
