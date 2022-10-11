@@ -53,8 +53,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		log.info("** Find service detail by id.. *\n");
 		return this.serviceDetailRepository.findById(id)
 				.map(ServiceDetailMapper::map)
-				.orElseThrow(() -> new ServiceDetailNotFoundException(String
-						.format("ServiceDetail with id: %d not found", id)));
+				.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
 	}
 	
 	@Override

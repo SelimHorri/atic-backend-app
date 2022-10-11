@@ -51,8 +51,7 @@ public class SaloonServiceImpl implements SaloonService {
 		log.info("** Find saloon by id.. *\n");
 		return this.saloonRepository.findById(id)
 				.map(SaloonMapper::map)
-				.orElseThrow(() -> new SaloonNotFoundException(String
-						.format("Saloon with id: %d not found", id)));
+				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
 	}
 	
 	@Override

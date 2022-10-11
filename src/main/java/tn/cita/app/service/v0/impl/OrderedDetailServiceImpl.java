@@ -57,7 +57,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 				orderedDetailRequest.getServiceDetailId());
 		
 		if (this.orderedDetailRepository.existsById(orderedDetailId))
-			throw new OrderedDetailAlreadyExistsException(String.format("Service is already ordered"));
+			throw new OrderedDetailAlreadyExistsException("Service is already ordered");
 		
 		if (orderedDetailRequest.getOrderedDate() == null)
 			orderedDetailRequest.setOrderedDate(LocalDateTime.now());

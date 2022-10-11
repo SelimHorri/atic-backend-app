@@ -42,8 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.info("** Find employee by id..*\n");
 		return this.employeeRepository.findById(id)
 				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with id: %d not found", id)));
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
 	}
 	
 	@Override
@@ -51,8 +50,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.info("** Find employee by credential username.. *\n");
 		return this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
 	}
 	
 	@Transactional

@@ -35,8 +35,7 @@ public class TagServiceImpl implements TagService {
 		log.info("** Find tag by id.. *\n");
 		return this.tagRepository.findById(id)
 				.map(TagMapper::map)
-				.orElseThrow(() -> new TagNotFoundException(String
-						.format("Tag with id: %d not found", id)));
+				.orElseThrow(() -> new TagNotFoundException("Tag not found"));
 	}
 	
 	

@@ -128,7 +128,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 		
 		final int id = 0;
 		final var expectedPayload = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false, 
-				new ExceptionMsg(String.format("%sTag with id: %d not found%s", "#### ", id, "! ####")));
+				new ExceptionMsg(String.format("%sTag not found%s", "#### ", "! ####")));
 		
 		this.webTestClient
 				.get()
