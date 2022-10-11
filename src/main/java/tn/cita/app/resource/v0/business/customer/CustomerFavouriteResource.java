@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
+import tn.cita.app.dto.FavouriteDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerFavouriteResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
@@ -48,6 +50,12 @@ public class CustomerFavouriteResource {
 		final Boolean isDeleted = this.customerFavouriteService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
 				Integer.parseInt(saloonId));
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, isDeleted));
+	}
+	
+	@PostMapping
+	public ResponseEntity<ApiResponse<FavouriteDto>> addFavourite(final WebRequest webRequest, @RequestParam final Integer saloonId) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.customerFavouriteService
+				.addFavourite(this.userRequestExtractorUtil.extractUsername(webRequest), saloonId)));
 	}
 	
 	
