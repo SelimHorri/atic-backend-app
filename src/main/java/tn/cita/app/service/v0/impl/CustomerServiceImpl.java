@@ -40,8 +40,7 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** Find customer by id.. *\n");
 		return this.customerRepository.findById(id)
 				.map(CustomerMapper::map)
-				.orElseThrow(() -> new CustomerNotFoundException(String
-						.format("Customer with id: %d not found", id)));
+				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 	}
 	
 	@Transactional
@@ -57,8 +56,7 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** Find customer by credential username.. *\n");
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::map)
-				.orElseThrow(() -> new CustomerNotFoundException(String
-						.format("Customer with username: %s not found", username)));
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
 	}
 	
 	

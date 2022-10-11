@@ -75,8 +75,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		// Step2
 		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()).ifPresent((c) -> {
-			throw new UsernameAlreadyExistsException(String
-					.format("Account with username: %s already exists", c.getUsername()));
+			throw new UsernameAlreadyExistsException("Account with username: %s already exists".formatted(c.getUsername()));
 		});
 		log.info("** User not exist by username checked successfully! *\n");
 		

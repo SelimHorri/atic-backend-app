@@ -25,7 +25,7 @@ public class CredentialServiceImpl implements CredentialService {
 		return this.credentialRepository.findById(id)
 				.map(CredentialMapper::map)
 				.orElseThrow(() -> new CredentialNotFoundException(String
-						.format("Credential with id %d not found", id)));
+						.format("Credential not found", id)));
 	}
 	
 	@Override

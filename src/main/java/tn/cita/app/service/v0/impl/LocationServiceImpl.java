@@ -39,8 +39,7 @@ public class LocationServiceImpl implements LocationService {
 		log.info("** Find location by id.. *\n");
 		return this.locationRepository.findById(id)
 				.map(LocationMapper::map)
-				.orElseThrow(() -> new LocationNotFoundException(String
-						.format("Location with id: %d not found", id)));
+				.orElseThrow(() -> new LocationNotFoundException("Location with id: %d not found"));
 	}
 	
 	@Override

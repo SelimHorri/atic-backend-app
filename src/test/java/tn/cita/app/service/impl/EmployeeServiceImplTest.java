@@ -203,7 +203,7 @@ class EmployeeServiceImplTest {
 				.isNotBlank()
 				.startsWith("Employee ")
 				.endsWith("not found")
-				.isEqualTo(String.format("Employee with id: %d not found", wrongId));
+				.isEqualTo(String.format("Employee not found", wrongId));
 	}
 	
 	@Test

@@ -45,8 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
 		log.info("** Find reservation by id.. *\n");
 		return this.reservationRepository.findById(id)
 				.map(ReservationMapper::map)
-				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", id)));
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 	}
 	
 	@Override

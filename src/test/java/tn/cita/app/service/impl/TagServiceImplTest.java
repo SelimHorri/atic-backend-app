@@ -103,7 +103,7 @@ class TagServiceImplTest {
 				.isThrownBy(() -> this.tagService.findById(id))
 				.withMessageStartingWith("Tag ")
 				.withMessageEndingWith(" not found")
-				.withMessage(String.format("Tag with id: %d not found", id));
+				.withMessage(String.format("Tag not found", id));
 		
 	}
 	

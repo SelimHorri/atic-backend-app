@@ -202,7 +202,7 @@ class CustomerServiceImplTest {
 				.isNotBlank()
 				.startsWith("Customer ")
 				.endsWith("not found")
-				.isEqualTo(String.format("Customer with id: %d not found", wrongId));
+				.isEqualTo(String.format("Customer not found", wrongId));
 	}
 	
 	@Test
