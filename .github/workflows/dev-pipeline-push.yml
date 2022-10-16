@@ -47,6 +47,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         run: mvn -B install -Pdev -DSPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }} -DAPP_SECURITY_JWT_SECRET_KEY=${{ secrets.APP_SECURITY_JWT_SECRET_KEY }} org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
       - name: Upload Artifact
+        #if: ${{ github.event_name == 'push' }}
         uses: actions/upload-artifact@v3
         with:
           name: ${{ env.APP_NAME }}-artifact
