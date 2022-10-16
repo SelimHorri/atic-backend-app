@@ -26,7 +26,7 @@ jobs:
           distribution: temurin
           java-version: 17
       - name: Run Docker Compose
-        run: docker-compose up -d
+        run: docker-compose up -d mysql zipkin
       - name: Cache SonarCloud packages
         uses: actions/cache@v1
         with:
@@ -57,7 +57,7 @@ jobs:
         distribution: temurin
         java-version: 17
     - name: Run Docker Compose
-      run: docker-compose up -d
+      run: docker-compose up -d mysql zipkin
     - name: Build with Maven
       run: mvn -B package -Ppreprod -DSPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }} -DAPP_SECURITY_JWT_SECRET_KEY=${{ secrets.APP_SECURITY_JWT_SECRET_KEY }} --file pom.xml
   
@@ -73,7 +73,7 @@ jobs:
         distribution: temurin
         java-version: 17
     - name: Run Docker Compose
-      run: docker-compose up -d
+      run: docker-compose up -d mysql zipkin
     - name: Build with Maven
       run: mvn -B package -Ppreprod -DSPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }} -DAPP_SECURITY_JWT_SECRET_KEY=${{ secrets.APP_SECURITY_JWT_SECRET_KEY }} --file pom.xml
     - name: Push Docker image
