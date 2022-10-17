@@ -6,7 +6,6 @@ app:
   client:
     domains: http://localhost:4200/, http://localhost:80/, http://cita-frontend-app:4200/, http://cita-frontend-app:80/
 
-
 spring:
   application:
     name: CITA-BACKEND-APP
@@ -48,12 +47,16 @@ spring:
   config:
     import:
       - 'optional:import/secrets/mail-secrets.yml'
+
 management:
   endpoint:
     health:
       show-details: when-authorized
       probes:
         enabled: true
+
+server:
+  shutdown: graceful
 
 
 
