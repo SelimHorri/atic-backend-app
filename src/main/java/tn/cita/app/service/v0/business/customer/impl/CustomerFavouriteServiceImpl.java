@@ -61,7 +61,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 		final var favouriteId = new FavouriteId(customer.getId(), saloonId);
 		this.favouriteService.getFavouriteRepository()
 				.findById(favouriteId).ifPresent(f -> {
-					throw new FavouriteAlreadyExists("this Saloon is already part of your favourites");
+					throw new FavouriteAlreadyExists("This is already part of your favourites");
 		});
 		
 		// persist..
