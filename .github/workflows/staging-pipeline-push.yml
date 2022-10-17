@@ -9,12 +9,14 @@ on:
     branches: [ staging ]
 
 env:
+  APP_NAME: cita-backend-app
   APP_VERSION: ${{ secrets.APP_VERSION }}
   DOCKER_IMAGE: ${{ secrets.DOCKER_IMAGE }}
 
 jobs:
-  sonar:
-    name: Sonar
+  
+  build:
+    name: Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -43,26 +45,16 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: mvn -B verify -Pstaging -DSPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }} -DAPP_SECURITY_JWT_SECRET_KEY=${{ secrets.APP_SECURITY_JWT_SECRET_KEY }} org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
-  
-  build:
-    needs: sonar
-    runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'pull_request' }}
-    steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        distribution: temurin
-        java-version: 17
-    - name: Run Docker Compose
-      run: docker-compose up -d mysql zipkin
-    - name: Build with Maven
-      run: mvn -B package -Pstaging -DSPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }} -DAPP_SECURITY_JWT_SECRET_KEY=${{ secrets.APP_SECURITY_JWT_SECRET_KEY }} --file pom.xml
-  
+        run: mvn -B install -Pstaging -DSPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }} -DAPP_SECURITY_JWT_SECRET_KEY=${{ secrets.APP_SECURITY_JWT_SECRET_KEY }} org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=SelimHorri_cita-backend-app
+      - name: Upload Artifact
+        if: ${{ github.event_name == 'push' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{ env.APP_NAME }}-artifact
+          path: target/*.jar
+
   push:
-    needs: sonar
+    needs: build
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' }}
     steps:
@@ -72,11 +64,12 @@ jobs:
       with:
         distribution: temurin
         java-version: 17
-    - name: Run Docker Compose
-      run: docker-compose up -d mysql zipkin
-    - name: Build with Maven
-      run: mvn -B package -Pstaging -DSPRING_MAIL_PASSWORD=${{ secrets.SPRING_MAIL_PASSWORD }} -DAPP_SECURITY_JWT_SECRET_KEY=${{ secrets.APP_SECURITY_JWT_SECRET_KEY }} --file pom.xml
-    - name: Push Docker image
+    - name: Download Artifact
+      uses: actions/download-artifact@v3
+      with:
+        name: ${{ env.APP_NAME }}-artifact
+        path: target
+    - name: Push to Docker Registry
       uses: mr-smithers-excellent/docker-build-push@v5
       with:
         image: ${{ secrets.DOCKER_USERNAME }}/${{ env.DOCKER_IMAGE }}
