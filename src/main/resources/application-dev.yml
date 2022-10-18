@@ -1,7 +1,4 @@
 
-server:
-  port: 8400
-
 app:
   security:
     jwt:
@@ -56,6 +53,17 @@ logging:
           rest: DEBUG
           jpa: DEBUG
           orm: DEBUG
+
+---
+
+spring:
+  config:
+    activate:
+      on-cloud-platform: kubernetes
+    import:
+      - 'classpath:import/conf/k8s-config.yml'
+
+
 
 
 
