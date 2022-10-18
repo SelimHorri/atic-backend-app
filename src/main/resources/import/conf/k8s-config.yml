@@ -1,0 +1,18 @@
+
+server:
+  shutdown: graceful
+  #port: 0
+
+management:
+  endpoint:
+    health:
+      probes:
+        enabled: true
+
+spring:
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
+
+
+
+
