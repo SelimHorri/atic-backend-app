@@ -44,6 +44,8 @@ public final class EmployeeDto extends AbstractMappedDto implements Serializable
 	@NotBlank(message = "Input firstname should not be blank")
 	private String lastname;
 	
+	private Boolean isMale;
+	
 	@Email(message = "Input email should be in email format")
 	@NotBlank(message = "Input email should not be blank")
 	private String email;

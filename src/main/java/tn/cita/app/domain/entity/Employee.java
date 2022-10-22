@@ -51,6 +51,9 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@Column(nullable = false)
 	private String lastname;
 	
+	@Column(name = "is_male", nullable = true)
+	private Boolean isMale;
+	
 	@Column(nullable = false)
 	private String email;
 	
