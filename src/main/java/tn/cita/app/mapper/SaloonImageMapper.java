@@ -12,6 +12,7 @@ public interface SaloonImageMapper {
 	public static SaloonImageDto map(@NotNull final SaloonImage saloonImage) {
 		return SaloonImageDto.builder()
 				.id(saloonImage.getId())
+				.identifier(saloonImage.getIdentifier())
 				.name(saloonImage.getName())
 				.type(saloonImage.getType())
 				.size(saloonImage.getSize())
@@ -19,6 +20,7 @@ public interface SaloonImageMapper {
 				.saloonDto(
 					SaloonDto.builder()
 						.id(saloonImage.getSaloon().getId())
+						.identifier(saloonImage.getSaloon().getIdentifier())
 						.code(saloonImage.getSaloon().getCode())
 						.name(saloonImage.getSaloon().getName())
 						.isPrimary(saloonImage.getSaloon().getIsPrimary())
@@ -32,6 +34,7 @@ public interface SaloonImageMapper {
 	public static SaloonImage map(@NotNull final SaloonImageDto saloonImageDto) {
 		return SaloonImage.builder()
 				.id(saloonImageDto.getId())
+				.identifier(saloonImageDto.getIdentifier())
 				.name(saloonImageDto.getName())
 				.type(saloonImageDto.getType())
 				.size(saloonImageDto.getSize())
@@ -39,6 +42,7 @@ public interface SaloonImageMapper {
 				.saloon(
 					Saloon.builder()
 						.id(saloonImageDto.getSaloonDto().getId())
+						.identifier(saloonImageDto.getSaloonDto().getIdentifier())
 						.code(saloonImageDto.getSaloonDto().getCode())
 						.name(saloonImageDto.getSaloonDto().getName())
 						.isPrimary(saloonImageDto.getSaloonDto().getIsPrimary())

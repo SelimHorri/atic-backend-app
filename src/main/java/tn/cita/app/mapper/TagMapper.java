@@ -10,6 +10,7 @@ public interface TagMapper {
 	public static TagDto map(@NotNull Tag tag) {
 		return TagDto.builder()
 				.id(tag.getId())
+				.identifier(tag.getIdentifier())
 				.name(tag.getName())
 				.description(tag.getDescription())
 				.build();
@@ -18,6 +19,7 @@ public interface TagMapper {
 	public static Tag map(@NotNull TagDto tagDto) {
 		return Tag.builder()
 				.id(tagDto.getId())
+				.identifier(tagDto.getIdentifier())
 				.name(tagDto.getName())
 				.description(tagDto.getDescription())
 				.build();

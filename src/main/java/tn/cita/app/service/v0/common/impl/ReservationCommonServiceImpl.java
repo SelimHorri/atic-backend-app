@@ -3,6 +3,7 @@ package tn.cita.app.service.v0.common.impl;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
@@ -111,6 +112,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		task.setReservationId(reservation.getId());
 		task.setReservation(reservation);
 		task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..
+		task.setIdentifier(UUID.randomUUID().toString());
 		task.setManagerDescription((reservationAssignWorkerRequest.getManagerDescription() == null 
 					|| reservationAssignWorkerRequest.getManagerDescription().isBlank()) ? 
 				null : reservationAssignWorkerRequest.getManagerDescription().strip());

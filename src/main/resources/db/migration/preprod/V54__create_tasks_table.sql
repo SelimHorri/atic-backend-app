@@ -3,6 +3,7 @@ CREATE TABLE tasks (
 	worker_id INT NOT NULL,
 	reservation_id INT NOT NULL,
 	task_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP(),
+	identifier VARCHAR(255) NOT NULL DEFAULT (UUID()),
 	start_date TIMESTAMP DEFAULT NULL,
 	end_date TIMESTAMP DEFAULT NULL,
 	worker_description VARCHAR(255),

@@ -1,6 +1,7 @@
 package tn.cita.app.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -14,6 +15,7 @@ import tn.cita.app.domain.id.TaskId;
 
 public interface TaskRepository extends JpaRepository<Task, TaskId> {
 	
+	Optional<Task> findByIdentifier(final String identifier);
 	List<Task> findAllByReservationId(final Integer reservationId);
 	Page<Task> findAllByReservationId(final Integer reservationId, final Pageable pageable);
 	List<Task> findAllByWorkerId(final Integer workerId);

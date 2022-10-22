@@ -1,6 +1,7 @@
 
 CREATE TABLE service_details (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	identifier VARCHAR(255) NOT NULL DEFAULT RANDOM_UUID(),
 	name VARCHAR(255),
 	description VARCHAR(255),
 	is_available BOOLEAN DEFAULT true,

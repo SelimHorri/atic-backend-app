@@ -23,6 +23,8 @@ public static CustomerDto map(@NotNull final Customer customer) {
 		
 		return CustomerDto.builder()
 				.id(customer.getId())
+				.identifier(customer.getIdentifier())
+				.ssn(customer.getSsn())
 				.firstname(customer.getFirstname())
 				.lastname(customer.getLastname())
 				.email(customer.getEmail())
@@ -34,11 +36,13 @@ public static CustomerDto map(@NotNull final Customer customer) {
 				.userImageDto(
 					UserImageDto.builder()
 						.id(userImage.getId())
+						.identifier(userImage.getIdentifier())
 						.imageLob(userImage.getImageLob())
 						.build())
 				.credentialDto(
 					CredentialDto.builder()
 						.id(customer.getCredential().getId())
+						.identifier(customer.getCredential().getIdentifier())
 						.username(customer.getCredential().getUsername())
 						.password(customer.getCredential().getPassword())
 						.userRoleBasedAuthority(customer.getCredential().getUserRoleBasedAuthority())
@@ -58,6 +62,8 @@ public static CustomerDto map(@NotNull final Customer customer) {
 		
 		return Customer.builder()
 				.id(customerDto.getId())
+				.identifier(customerDto.getIdentifier())
+				.ssn(customerDto.getSsn())
 				.firstname(customerDto.getFirstname())
 				.lastname(customerDto.getLastname())
 				.email(customerDto.getEmail())
@@ -69,11 +75,13 @@ public static CustomerDto map(@NotNull final Customer customer) {
 				.userImage(
 					UserImage.builder()
 						.id(userImageDto.getId())
+						.identifier(userImageDto.getIdentifier())
 						.imageLob(userImageDto.getImageLob())
 						.build())
 				.credential(
 					Credential.builder()
 						.id(customerDto.getCredentialDto().getId())
+						.identifier(customerDto.getCredentialDto().getIdentifier())
 						.username(customerDto.getCredentialDto().getUsername())
 						.password(customerDto.getCredentialDto().getPassword())
 						.userRoleBasedAuthority(customerDto.getCredentialDto().getUserRoleBasedAuthority())

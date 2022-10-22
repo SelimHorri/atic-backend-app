@@ -9,6 +9,7 @@ import tn.cita.app.domain.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	
+	Optional<Employee> findByIdentifier(final String identifier);
 	Optional<Employee> findByCredentialUsernameIgnoringCase(final String username);
 	List<Employee> findAllByManagerId(final Integer managerId);
 	

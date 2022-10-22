@@ -22,6 +22,7 @@ public static TaskDto map(final Task task) {
 				.workerId(task.getWorkerId())
 				.reservationId(task.getReservationId())
 				.taskDate(task.getTaskDate())
+				.identifier(task.getIdentifier())
 				.startDate(task.getStartDate())
 				.endDate(task.getEndDate())
 				.workerDescription(task.getWorkerDescription())
@@ -29,6 +30,8 @@ public static TaskDto map(final Task task) {
 				.workerDto(
 					EmployeeDto.builder()
 						.id(worker.getId())
+						.identifier(worker.getIdentifier())
+						.ssn(worker.getSsn())
 						.firstname(worker.getFirstname())
 						.lastname(worker.getLastname())
 						.email(worker.getEmail())
@@ -38,6 +41,7 @@ public static TaskDto map(final Task task) {
 				.reservationDto(
 					ReservationDto.builder()
 						.id(reservation.getId())
+						.identifier(reservation.getIdentifier())
 						.code(reservation.getCode())
 						.description(reservation.getDescription())
 						.startDate(reservation.getStartDate())
@@ -59,6 +63,7 @@ public static TaskDto map(final Task task) {
 				.workerId(taskDto.getWorkerId())
 				.reservationId(taskDto.getReservationId())
 				.taskDate(taskDto.getTaskDate())
+				.identifier(taskDto.getIdentifier())
 				.startDate(taskDto.getStartDate())
 				.endDate(taskDto.getEndDate())
 				.workerDescription(taskDto.getWorkerDescription())
@@ -66,6 +71,8 @@ public static TaskDto map(final Task task) {
 				.worker(
 					Employee.builder()
 						.id(workerDto.getId())
+						.identifier(workerDto.getIdentifier())
+						.ssn(workerDto.getSsn())
 						.firstname(workerDto.getFirstname())
 						.lastname(workerDto.getLastname())
 						.email(workerDto.getEmail())
@@ -75,6 +82,7 @@ public static TaskDto map(final Task task) {
 				.reservation(
 					Reservation.builder()
 						.id(reservationDto.getId())
+						.identifier(reservationDto.getIdentifier())
 						.code(reservationDto.getCode())
 						.description(reservationDto.getDescription())
 						.startDate(reservationDto.getStartDate())
