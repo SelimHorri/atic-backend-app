@@ -19,15 +19,18 @@ public static CategoryDto map(@NotNull final Category category) {
 		
 		return CategoryDto.builder()
 				.id(category.getId())
+				.identifier(category.getIdentifier())
 				.name(category.getName())
 				.parentCategoryDto(
 					CategoryDto.builder()
 						.id(parentCategory.getId())
+						.identifier(parentCategory.getIdentifier())
 						.name(parentCategory.getName())
 						.build())
 				.saloonDto(
 					SaloonDto.builder()
 						.id(category.getSaloon().getId())
+						.identifier(category.getSaloon().getIdentifier())
 						.code(category.getSaloon().getCode())
 						.name(category.getSaloon().getName())
 						.isPrimary(category.getSaloon().getIsPrimary())
@@ -46,15 +49,18 @@ public static CategoryDto map(@NotNull final Category category) {
 		
 		return Category.builder()
 				.id(categoryDto.getId())
+				.identifier(categoryDto.getIdentifier())
 				.name(categoryDto.getName())
 				.parentCategory(
 					Category.builder()
 						.id(parentCategoryDto.getId())
+						.identifier(parentCategoryDto.getIdentifier())
 						.name(parentCategoryDto.getName())
 						.build())
 				.saloon(
 					Saloon.builder()
 						.id(categoryDto.getSaloonDto().getId())
+						.identifier(categoryDto.getSaloonDto().getIdentifier())
 						.code(categoryDto.getSaloonDto().getCode())
 						.name(categoryDto.getSaloonDto().getName())
 						.isPrimary(categoryDto.getSaloonDto().getIsPrimary())

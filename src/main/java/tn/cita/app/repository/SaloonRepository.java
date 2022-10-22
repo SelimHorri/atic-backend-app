@@ -1,6 +1,7 @@
 package tn.cita.app.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,6 +11,7 @@ import tn.cita.app.domain.entity.Saloon;
 
 public interface SaloonRepository extends JpaRepository<Saloon, Integer> {
 	
+	Optional<Saloon> findByIdentifier(final String identifier);
 	List<Saloon> findAllByCode(final String code);
 	Page<Saloon> findAllByCode(final String code, final Pageable pageable);
 	List<Saloon> findAllByLocationStateIgnoringCase(final String state);

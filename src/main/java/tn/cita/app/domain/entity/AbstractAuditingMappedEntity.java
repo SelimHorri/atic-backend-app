@@ -34,6 +34,9 @@ public abstract class AbstractAuditingMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Column(nullable = false, unique = true)
+	private String identifier;
+	
 	@CreatedDate
 	@Column(name = "created_at", nullable = false)
 	@JsonFormat(shape = Shape.STRING)

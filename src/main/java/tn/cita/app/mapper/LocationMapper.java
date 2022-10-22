@@ -10,6 +10,7 @@ public interface LocationMapper {
 	public static LocationDto map(@NotNull final Location location) {
 		return LocationDto.builder()
 				.id(location.getId())
+				.identifier(location.getIdentifier())
 				.zipcode(location.getZipcode())
 				.city(location.getCity())
 				.state(location.getState())
@@ -19,6 +20,7 @@ public interface LocationMapper {
 	public static Location map(@NotNull final LocationDto locationDto) {
 		return Location.builder()
 				.id(locationDto.getId())
+				.identifier(locationDto.getIdentifier())
 				.zipcode(locationDto.getZipcode())
 				.city(locationDto.getCity())
 				.state(locationDto.getState())

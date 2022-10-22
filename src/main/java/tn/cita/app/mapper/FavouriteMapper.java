@@ -16,9 +16,12 @@ public interface FavouriteMapper {
 				.customerId(favourite.getCustomerId())
 				.saloonId(favourite.getSaloonId())
 				.favouriteDate(favourite.getFavouriteDate())
+				.identifier(favourite.getIdentifier())
 				.customerDto(
 					CustomerDto.builder()
 						.id(favourite.getCustomer().getId())
+						.identifier(favourite.getCustomer().getIdentifier())
+						.ssn(favourite.getCustomer().getSsn())
 						.firstname(favourite.getCustomer().getFirstname())
 						.lastname(favourite.getCustomer().getLastname())
 						.email(favourite.getCustomer().getEmail())
@@ -28,6 +31,7 @@ public interface FavouriteMapper {
 				.saloonDto(
 					SaloonDto.builder()
 						.id(favourite.getSaloon().getId())
+						.identifier(favourite.getSaloon().getIdentifier())
 						.code(favourite.getSaloon().getCode())
 						.name(favourite.getSaloon().getName())
 						.isPrimary(favourite.getSaloon().getIsPrimary())
@@ -43,9 +47,12 @@ public interface FavouriteMapper {
 				.customerId(favouriteDto.getCustomerId())
 				.saloonId(favouriteDto.getSaloonId())
 				.favouriteDate(favouriteDto.getFavouriteDate())
+				.identifier(favouriteDto.getIdentifier())
 				.customer(
 					Customer.builder()
 						.id(favouriteDto.getCustomerDto().getId())
+						.identifier(favouriteDto.getCustomerDto().getIdentifier())
+						.ssn(favouriteDto.getCustomerDto().getSsn())
 						.firstname(favouriteDto.getCustomerDto().getFirstname())
 						.lastname(favouriteDto.getCustomerDto().getLastname())
 						.email(favouriteDto.getCustomerDto().getEmail())
@@ -55,6 +62,7 @@ public interface FavouriteMapper {
 				.saloon(
 					Saloon.builder()
 						.id(favouriteDto.getSaloonDto().getId())
+						.identifier(favouriteDto.getSaloonDto().getIdentifier())
 						.code(favouriteDto.getSaloonDto().getCode())
 						.name(favouriteDto.getSaloonDto().getName())
 						.isPrimary(favouriteDto.getSaloonDto().getIsPrimary())
