@@ -16,9 +16,11 @@ public interface OrderedDetailMapper {
 				.reservationId(orderedDetail.getReservationId())
 				.serviceDetailId(orderedDetail.getServiceDetailId())
 				.orderedDate(orderedDetail.getOrderedDate())
+				.identifier(orderedDetail.getIdentifier())
 				.reservationDto(
 					ReservationDto.builder()
 						.id(orderedDetail.getReservation().getId())
+						.identifier(orderedDetail.getReservation().getIdentifier())
 						.code(orderedDetail.getReservation().getCode())
 						.description(orderedDetail.getReservation().getDescription())
 						.startDate(orderedDetail.getReservation().getStartDate())
@@ -29,6 +31,7 @@ public interface OrderedDetailMapper {
 				.serviceDetailDto(
 					ServiceDetailDto.builder()
 						.id(orderedDetail.getServiceDetail().getId())
+						.identifier(orderedDetail.getServiceDetail().getIdentifier())
 						.name(orderedDetail.getServiceDetail().getName())
 						.description(orderedDetail.getServiceDetail().getDescription())
 						.isAvailable(orderedDetail.getServiceDetail().getIsAvailable())
@@ -43,9 +46,11 @@ public interface OrderedDetailMapper {
 				.reservationId(orderedDetailDto.getReservationId())
 				.serviceDetailId(orderedDetailDto.getServiceDetailId())
 				.orderedDate(orderedDetailDto.getOrderedDate())
+				.identifier(orderedDetailDto.getIdentifier())
 				.reservation(
 						Reservation.builder()
 						.id(orderedDetailDto.getReservationDto().getId())
+						.identifier(orderedDetailDto.getReservationDto().getIdentifier())
 						.code(orderedDetailDto.getReservationDto().getCode())
 						.description(orderedDetailDto.getReservationDto().getDescription())
 						.startDate(orderedDetailDto.getReservationDto().getStartDate())
@@ -56,6 +61,7 @@ public interface OrderedDetailMapper {
 				.serviceDetail(
 						ServiceDetail.builder()
 						.id(orderedDetailDto.getServiceDetailDto().getId())
+						.identifier(orderedDetailDto.getServiceDetailDto().getIdentifier())
 						.name(orderedDetailDto.getServiceDetailDto().getName())
 						.description(orderedDetailDto.getServiceDetailDto().getDescription())
 						.isAvailable(orderedDetailDto.getServiceDetailDto().getIsAvailable())

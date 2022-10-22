@@ -13,6 +13,7 @@ public interface RatingMapper {
 	
 	public static RatingDto map(@NotNull final Rating rating) {
 		return RatingDto.builder()
+				.identifier(rating.getIdentifier())
 				.workerId(rating.getWorkerId())
 				.customerId(rating.getCustomerId())
 				.rateDate(rating.getRateDate())
@@ -21,6 +22,7 @@ public interface RatingMapper {
 				.workerDto(
 					EmployeeDto.builder()
 						.id(rating.getWorker().getId())
+						.identifier(rating.getWorker().getIdentifier())
 						.firstname(rating.getWorker().getFirstname())
 						.lastname(rating.getWorker().getLastname())
 						.email(rating.getWorker().getEmail())
@@ -30,6 +32,7 @@ public interface RatingMapper {
 				.customerDto(
 					CustomerDto.builder()
 						.id(rating.getCustomer().getId())
+						.identifier(rating.getCustomer().getIdentifier())
 						.firstname(rating.getCustomer().getFirstname())
 						.lastname(rating.getCustomer().getLastname())
 						.email(rating.getCustomer().getEmail())
@@ -41,6 +44,7 @@ public interface RatingMapper {
 	
 	public static Rating map(@NotNull final RatingDto ratingDto) {
 		return Rating.builder()
+				.identifier(ratingDto.getIdentifier())
 				.workerId(ratingDto.getWorkerId())
 				.customerId(ratingDto.getCustomerId())
 				.rateDate(ratingDto.getRateDate())
@@ -49,6 +53,7 @@ public interface RatingMapper {
 				.worker(
 					Employee.builder()
 						.id(ratingDto.getWorkerDto().getId())
+						.identifier(ratingDto.getWorkerDto().getIdentifier())
 						.firstname(ratingDto.getWorkerDto().getFirstname())
 						.lastname(ratingDto.getWorkerDto().getLastname())
 						.email(ratingDto.getWorkerDto().getEmail())
@@ -58,6 +63,7 @@ public interface RatingMapper {
 				.customer(
 					Customer.builder()
 						.id(ratingDto.getCustomerDto().getId())
+						.identifier(ratingDto.getCustomerDto().getIdentifier())
 						.firstname(ratingDto.getCustomerDto().getFirstname())
 						.lastname(ratingDto.getCustomerDto().getLastname())
 						.email(ratingDto.getCustomerDto().getEmail())

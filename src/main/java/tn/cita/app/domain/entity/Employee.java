@@ -13,8 +13,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -50,11 +48,9 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	@Column(nullable = false)
 	private String lastname;
 	
-	@Email(message = "Input must be in email format")
 	@Column(nullable = false)
 	private String email;
 	
-	@Size(message = "Input must be in phone format", min = 8, max = 12)
 	@Column(precision = 8, nullable = true)
 	private String phone;
 	

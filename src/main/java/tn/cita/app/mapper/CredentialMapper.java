@@ -10,6 +10,7 @@ public interface CredentialMapper {
 	public static CredentialDto map(@NotNull final Credential credential) {
 		return CredentialDto.builder()
 				.id(credential.getId())
+				.identifier(credential.getIdentifier())
 				.username(credential.getUsername())
 				.password(credential.getPassword())
 				.userRoleBasedAuthority(credential.getUserRoleBasedAuthority())
@@ -23,6 +24,7 @@ public interface CredentialMapper {
 	public static Credential map(@NotNull final CredentialDto credentialDto) {
 		return Credential.builder()
 				.id(credentialDto.getId())
+				.identifier(credentialDto.getIdentifier())
 				.username(credentialDto.getUsername())
 				.password(credentialDto.getPassword())
 				.userRoleBasedAuthority(credentialDto.getUserRoleBasedAuthority())

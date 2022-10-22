@@ -1,6 +1,7 @@
 
 CREATE TABLE categories (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+	identifier VARCHAR(255) NOT NULL DEFAULT (UUID()),
 	name VARCHAR(255) NOT NULL DEFAULT 'others',
 	-- image_lob BLOB DEFAULT '',
 	parent_category_id INT,

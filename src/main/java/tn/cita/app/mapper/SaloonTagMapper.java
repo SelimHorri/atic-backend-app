@@ -16,9 +16,11 @@ public interface SaloonTagMapper {
 				.saloonId(saloonTag.getSaloonId())
 				.tagId(saloonTag.getTagId())
 				.taggedDate(saloonTag.getTaggedDate())
+				.identifier(saloonTag.getIdentifier())
 				.saloonDto(
 					SaloonDto.builder()
 						.id(saloonTag.getSaloon().getId())
+						.identifier(saloonTag.getSaloon().getIdentifier())
 						.code(saloonTag.getSaloon().getCode())
 						.name(saloonTag.getSaloon().getName())
 						.isPrimary(saloonTag.getSaloon().getIsPrimary())
@@ -29,6 +31,7 @@ public interface SaloonTagMapper {
 				.tagDto(
 					TagDto.builder()
 						.id(saloonTag.getTag().getId())
+						.identifier(saloonTag.getTag().getIdentifier())
 						.name(saloonTag.getTag().getName())
 						.description(saloonTag.getTag().getDescription())
 						.build())
@@ -40,9 +43,11 @@ public interface SaloonTagMapper {
 				.saloonId(saloonTagDto.getSaloonId())
 				.tagId(saloonTagDto.getTagId())
 				.taggedDate(saloonTagDto.getTaggedDate())
+				.identifier(saloonTagDto.getIdentifier())
 				.saloon(
 					Saloon.builder()
 						.id(saloonTagDto.getSaloonDto().getId())
+						.identifier(saloonTagDto.getSaloonDto().getIdentifier())
 						.code(saloonTagDto.getSaloonDto().getCode())
 						.name(saloonTagDto.getSaloonDto().getName())
 						.isPrimary(saloonTagDto.getSaloonDto().getIsPrimary())
@@ -53,6 +58,7 @@ public interface SaloonTagMapper {
 				.tag(
 					Tag.builder()
 						.id(saloonTagDto.getTagDto().getId())
+						.identifier(saloonTagDto.getTagDto().getIdentifier())
 						.name(saloonTagDto.getTagDto().getName())
 						.description(saloonTagDto.getTagDto().getDescription())
 						.build())
