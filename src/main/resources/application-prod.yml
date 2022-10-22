@@ -52,7 +52,7 @@ logging:
 spring:
   config:
     activate:
-      on-cloud-platform: ${SPRING_CLOUD_ACTIVATE_ON_CLOUD_PLATFORM:kubernetes}
+      on-cloud-platform: kubernetes
     import:
       - 'classpath:import/conf/k8s-config.yml'
 
