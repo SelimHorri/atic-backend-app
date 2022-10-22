@@ -14,6 +14,7 @@ public interface ReservationMapper {
 	public static ReservationDto map(@NotNull final Reservation reservation) {
 		return ReservationDto.builder()
 				.id(reservation.getId())
+				.identifier(reservation.getIdentifier())
 				.code(reservation.getCode())
 				.description(reservation.getDescription())
 				.startDate(reservation.getStartDate())
@@ -23,6 +24,8 @@ public interface ReservationMapper {
 				.customerDto(
 					CustomerDto.builder()
 						.id(reservation.getCustomer().getId())
+						.identifier(reservation.getCustomer().getIdentifier())
+						.ssn(reservation.getCustomer().getSsn())
 						.firstname(reservation.getCustomer().getFirstname())
 						.lastname(reservation.getCustomer().getLastname())
 						.email(reservation.getCustomer().getEmail())
@@ -32,6 +35,7 @@ public interface ReservationMapper {
 				.saloonDto(
 					SaloonDto.builder()
 						.id(reservation.getSaloon().getId())
+						.identifier(reservation.getSaloon().getIdentifier())
 						.code(reservation.getSaloon().getCode())
 						.name(reservation.getSaloon().getName())
 						.isPrimary(reservation.getSaloon().getIsPrimary())
@@ -46,6 +50,7 @@ public interface ReservationMapper {
 	public static Reservation map(@NotNull final ReservationDto reservationDto) {
 		return Reservation.builder()
 				.id(reservationDto.getId())
+				.identifier(reservationDto.getIdentifier())
 				.code(reservationDto.getCode())
 				.description(reservationDto.getDescription())
 				.startDate(reservationDto.getStartDate())
@@ -55,6 +60,8 @@ public interface ReservationMapper {
 				.customer(
 					Customer.builder()
 						.id(reservationDto.getCustomerDto().getId())
+						.identifier(reservationDto.getCustomerDto().getIdentifier())
+						.ssn(reservationDto.getCustomerDto().getSsn())
 						.firstname(reservationDto.getCustomerDto().getFirstname())
 						.lastname(reservationDto.getCustomerDto().getLastname())
 						.email(reservationDto.getCustomerDto().getEmail())
@@ -64,6 +71,7 @@ public interface ReservationMapper {
 				.saloon(
 					Saloon.builder()
 						.id(reservationDto.getSaloonDto().getId())
+						.identifier(reservationDto.getSaloonDto().getIdentifier())
 						.code(reservationDto.getSaloonDto().getCode())
 						.name(reservationDto.getSaloonDto().getName())
 						.isPrimary(reservationDto.getSaloonDto().getIsPrimary())

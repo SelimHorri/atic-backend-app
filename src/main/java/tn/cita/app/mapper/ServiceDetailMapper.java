@@ -12,6 +12,7 @@ public interface ServiceDetailMapper {
 	public static ServiceDetailDto map(@NotNull final ServiceDetail serviceDetail) {
 		return ServiceDetailDto.builder()
 				.id(serviceDetail.getId())
+				.identifier(serviceDetail.getIdentifier())
 				.name(serviceDetail.getName())
 				.description(serviceDetail.getDescription())
 				.isAvailable(serviceDetail.getIsAvailable())
@@ -20,6 +21,7 @@ public interface ServiceDetailMapper {
 				.categoryDto(
 					CategoryDto.builder()
 						.id(serviceDetail.getCategory().getId())
+						.identifier(serviceDetail.getCategory().getIdentifier())
 						.name(serviceDetail.getCategory().getName())
 						.build())
 				.build();
@@ -28,6 +30,7 @@ public interface ServiceDetailMapper {
 	public static ServiceDetail map(@NotNull final ServiceDetailDto serviceDetailDto) {
 		return ServiceDetail.builder()
 				.id(serviceDetailDto.getId())
+				.identifier(serviceDetailDto.getIdentifier())
 				.name(serviceDetailDto.getName())
 				.description(serviceDetailDto.getDescription())
 				.isAvailable(serviceDetailDto.getIsAvailable())
@@ -36,6 +39,7 @@ public interface ServiceDetailMapper {
 				.category(
 					Category.builder()
 						.id(serviceDetailDto.getCategoryDto().getId())
+						.identifier(serviceDetailDto.getCategoryDto().getIdentifier())
 						.name(serviceDetailDto.getCategoryDto().getName())
 						.build())
 				.build();

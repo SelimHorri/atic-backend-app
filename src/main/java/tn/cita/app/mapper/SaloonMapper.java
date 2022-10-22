@@ -12,6 +12,7 @@ public interface SaloonMapper {
 	public static SaloonDto map(@NotNull final Saloon saloon) {
 		return SaloonDto.builder()
 				.id(saloon.getId())
+				.identifier(saloon.getIdentifier())
 				.code(saloon.getCode())
 				.name(saloon.getName())
 				.isPrimary(saloon.getIsPrimary())
@@ -22,6 +23,7 @@ public interface SaloonMapper {
 				.locationDto(
 					LocationDto.builder()
 						.id(saloon.getId())
+						.identifier(saloon.getLocation().getIdentifier())
 						.zipcode(saloon.getLocation().getZipcode())
 						.city(saloon.getLocation().getCity())
 						.state(saloon.getLocation().getState())
@@ -32,6 +34,7 @@ public interface SaloonMapper {
 	public static Saloon map(@NotNull final SaloonDto saloonDto) {
 		return Saloon.builder()
 				.id(saloonDto.getId())
+				.identifier(saloonDto.getIdentifier())
 				.code(saloonDto.getCode())
 				.name(saloonDto.getName())
 				.isPrimary(saloonDto.getIsPrimary())
@@ -42,6 +45,7 @@ public interface SaloonMapper {
 				.location(
 					Location.builder()
 						.id(saloonDto.getId())
+						.identifier(saloonDto.getLocationDto().getIdentifier())
 						.zipcode(saloonDto.getLocationDto().getZipcode())
 						.city(saloonDto.getLocationDto().getCity())
 						.state(saloonDto.getLocationDto().getState())

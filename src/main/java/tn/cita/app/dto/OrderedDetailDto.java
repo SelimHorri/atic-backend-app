@@ -19,6 +19,7 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.constant.AppConstants;
@@ -27,8 +28,9 @@ import tn.cita.app.constant.AppConstants;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public final class OrderedDetailDto implements Serializable {
+public final class OrderedDetailDto extends AbstractAuditingMappedDto implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	

@@ -1,6 +1,7 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
 import java.time.LocalDateTime;
+import java.util.UUID;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -70,6 +71,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 						.customerId(customer.getId())
 						.saloonId(saloonId)
 						.favouriteDate(LocalDateTime.now())
+						.identifier(UUID.randomUUID().toString())
 						.customer(customer)
 						.saloon(this.saloonService.getSaloonRepository()
 								.findById(saloonId)

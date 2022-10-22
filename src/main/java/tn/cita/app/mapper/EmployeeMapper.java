@@ -31,6 +31,8 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 		
 		return EmployeeDto.builder()
 				.id(employee.getId())
+				.identifier(employee.getIdentifier())
+				.ssn(employee.getSsn())
 				.firstname(employee.getFirstname())
 				.lastname(employee.getLastname())
 				.email(employee.getEmail())
@@ -40,11 +42,13 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.userImageDto(
 					UserImageDto.builder()
 						.id(userImage.getId())
+						.identifier(userImage.getIdentifier())
 						.imageLob(userImage.getImageLob())
 						.build())
 				.managerDto(
 					EmployeeDto.builder()
 						.id(manager.getId())
+						.identifier(manager.getIdentifier())
 						.firstname(manager.getFirstname())
 						.lastname(manager.getLastname())
 						.email(manager.getEmail())
@@ -55,6 +59,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.credentialDto(
 					CredentialDto.builder()
 						.id(employee.getCredential().getId())
+						.identifier(employee.getCredential().getIdentifier())
 						.username(employee.getCredential().getUsername())
 						.password(employee.getCredential().getPassword())
 						.userRoleBasedAuthority(employee.getCredential().getUserRoleBasedAuthority())
@@ -66,6 +71,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.saloonDto(
 					SaloonDto.builder()
 						.id(saloon.getId())
+						.identifier(saloon.getIdentifier())
 						.code(saloon.getCode())
 						.name(saloon.getName())
 						.isPrimary(saloon.getIsPrimary())
@@ -90,6 +96,8 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 		
 		return Employee.builder()
 				.id(employeeDto.getId())
+				.identifier(employeeDto.getIdentifier())
+				.ssn(employeeDto.getSsn())
 				.firstname(employeeDto.getFirstname())
 				.lastname(employeeDto.getLastname())
 				.email(employeeDto.getEmail())
@@ -99,11 +107,13 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.userImage(
 					UserImage.builder()
 						.id(userImageDto.getId())
+						.identifier(userImageDto.getIdentifier())
 						.imageLob(userImageDto.getImageLob())
 						.build())
 				.manager(
 					Employee.builder()
 						.id(managerDto.getId())
+						.identifier(managerDto.getIdentifier())
 						.firstname(managerDto.getFirstname())
 						.lastname(managerDto.getLastname())
 						.email(managerDto.getEmail())
@@ -114,6 +124,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.credential(
 					Credential.builder()
 						.id(employeeDto.getCredentialDto().getId())
+						.identifier(employeeDto.getCredentialDto().getIdentifier())
 						.username(employeeDto.getCredentialDto().getUsername())
 						.password(employeeDto.getCredentialDto().getPassword())
 						.userRoleBasedAuthority(employeeDto.getCredentialDto().getUserRoleBasedAuthority())
@@ -125,6 +136,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.saloon(
 					Saloon.builder()
 						.id(saloonDto.getId())
+						.identifier(saloonDto.getIdentifier())
 						.code(saloonDto.getCode())
 						.name(saloonDto.getName())
 						.isPrimary(saloonDto.getIsPrimary())

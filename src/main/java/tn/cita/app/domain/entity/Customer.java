@@ -12,9 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -44,20 +41,21 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@NotBlank(message = "Input firstname should not be blank")
+	@Column(precision = 8, nullable = true)
+	private String ssn;
+	
 	@Column(nullable = false)
 	private String firstname;
 	
-	@NotBlank(message = "Input lastname should not be blank")
 	@Column(nullable = false)
 	private String lastname;
 	
-	@Email(message = "Input email should be in email format")
-	@NotBlank(message = "Input email should not be blank")
+	@Column(name = "is_male", nullable = true)
+	private Boolean isMale;
+	
 	@Column(nullable = false)
 	private String email;
 	
-	@Size(message = "Input phone should be in a phone number format", min = 8, max = 12)
 	@Column(precision = 8, nullable = true)
 	private String phone;
 	

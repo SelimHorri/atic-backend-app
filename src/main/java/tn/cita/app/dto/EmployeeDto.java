@@ -36,11 +36,15 @@ public final class EmployeeDto extends AbstractMappedDto implements Serializable
 	
 	private static final long serialVersionUID = 1L;
 	
+	private String ssn;
+	
 	@NotBlank(message = "Input firstname should not be blank")
 	private String firstname;
 	
 	@NotBlank(message = "Input firstname should not be blank")
 	private String lastname;
+	
+	private Boolean isMale;
 	
 	@Email(message = "Input email should be in email format")
 	@NotBlank(message = "Input email should not be blank")
