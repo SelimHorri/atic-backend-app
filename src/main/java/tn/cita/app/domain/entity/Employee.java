@@ -42,6 +42,9 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
+	@Column(precision = 8, nullable = true)
+	private String ssn;
+	
 	@Column(nullable = false)
 	private String firstname;
 	

@@ -2,6 +2,7 @@
 CREATE TABLE customers (
 	id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	identifier VARCHAR(255) NOT NULL DEFAULT RANDOM_UUID(),
+	ssn VARCHAR(255),
 	firstname VARCHAR(255),
 	lastname VARCHAR(255),
 	email VARCHAR(255) DEFAULT 'cita.team.mail@gmail.com',

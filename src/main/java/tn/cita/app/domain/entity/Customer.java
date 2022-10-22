@@ -12,7 +12,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,8 +41,8 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
-	@Column(nullable = false)
-	private String identifier;
+	@Column(precision = 8, nullable = true)
+	private String ssn;
 	
 	@Column(nullable = false)
 	private String firstname;
@@ -54,7 +53,6 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	@Column(nullable = false)
 	private String email;
 	
-	@Size(message = "Input phone should be in a phone number format", min = 8, max = 12)
 	@Column(precision = 8, nullable = true)
 	private String phone;
 	
