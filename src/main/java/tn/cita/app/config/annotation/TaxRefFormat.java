@@ -23,7 +23,8 @@ import tn.cita.app.validator.TaxRefConstraintValidator;
 @Constraint(validatedBy = TaxRefConstraintValidator.class)
 public @interface TaxRefFormat {
 	
-	String message() default "{TaxRefFormat.invalid}";
+	// TODO: replace default msg with '{TaxRefFormat.invalid}' where it can be read from property files
+	String message() default "Tax reference does not match critereas, Re-check";
 	Class<?>[] groups() default {};
 	Class<? extends Payload>[] payload() default {};
 	
