@@ -32,8 +32,6 @@ public class ReservationJobScheduler {
 	@Transactional
 	void scheduleOudatedReservations() {
 		
-		log.info("** Schedule outdated reservations.. *\n");
-		
 		final var from = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIDNIGHT);
 		final var to = from.plusDays(1);
 		
@@ -61,8 +59,6 @@ public class ReservationJobScheduler {
 	@Scheduled(cron = AppConstants.CRON_MIDNIGHT)
 	@Transactional
 	void scheduleNotClosedReservations() {
-		
-		log.info("** Schedule not-closed reservations.. *\n");
 		
 		final var from = LocalDateTime.of(LocalDate.now().minusDays(1), LocalTime.MIDNIGHT);
 		final var to = from.plusDays(1);

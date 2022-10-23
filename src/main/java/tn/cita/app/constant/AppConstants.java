@@ -88,6 +88,11 @@ public final class AppConstants {
 	 */
 	public static final String CRON_MIDNIGHT = "0 0 0 * * *";
 	
+	/**
+	 * Runs each Monday at 12am..
+	 */
+	public static final String CRON_MONDAY_MIDAY = "0 0 12 * * 1";
+	
 }
 
 
