@@ -16,7 +16,7 @@ import tn.cita.app.service.v0.CredentialService;
 @Transactional(readOnly = true)
 @Slf4j
 @RequiredArgsConstructor
-public class UserDetailsServiceImpl implements UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 	
 	private final CredentialService credentialService;
 	

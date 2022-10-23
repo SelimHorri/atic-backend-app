@@ -20,7 +20,7 @@ import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.service.v0.CredentialService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-class UserDetailsServiceImplTest {
+class CustomUserDetailsServiceTest {
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
