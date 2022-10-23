@@ -46,6 +46,10 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 	@Column(nullable = false)
 	private String code;
 	
+	// @TaxRefFormat
+	@Column(name = "tax_ref", precision = 8, unique = true, nullable = false)
+	private String taxRef;
+	
 	@Column(nullable = false)
 	private String name;
 	

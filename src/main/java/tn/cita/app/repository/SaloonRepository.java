@@ -12,6 +12,7 @@ import tn.cita.app.domain.entity.Saloon;
 public interface SaloonRepository extends JpaRepository<Saloon, Integer> {
 	
 	Optional<Saloon> findByIdentifier(final String identifier);
+	Optional<Saloon> findByTaxRef(final String texRef);
 	List<Saloon> findAllByCode(final String code);
 	Page<Saloon> findAllByCode(final String code, final Pageable pageable);
 	List<Saloon> findAllByLocationStateIgnoringCase(final String state);

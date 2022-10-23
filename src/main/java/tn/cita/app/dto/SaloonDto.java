@@ -5,6 +5,7 @@ import java.time.LocalDate;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -37,6 +38,10 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	
 	@NotBlank(message = "Input code should not be blank")
 	private String code;
+	
+	@Size(min = 8, max = 8, message = "Tax reference must be exactly {max} characters")
+	@NotBlank(message = "Input tax ref should not be blank")
+	private String taxRef;
 	
 	@NotBlank(message = "Input name should not be blank")
 	private String name;
