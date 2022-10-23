@@ -25,7 +25,7 @@ import tn.cita.app.exception.payload.ExceptionMsg;
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
 @AutoConfigureMockMvc // required for UserDetailsService
-@WithUserDetails(userDetailsServiceBeanName = "userDetailsServiceImpl", value = "selimhorri")
+@WithUserDetails(userDetailsServiceBeanName = "customUserDetailsService", value = "selimhorri")
 class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 	
 	@Autowired
