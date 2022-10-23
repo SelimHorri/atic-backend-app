@@ -49,24 +49,22 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		log.info("** Cancelling reservation.. *\n");
 
-		final var reservation = this.reservationService.getReservationRepository().findById(reservationId)
-				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", reservationId)));
+		final var reservation = this.reservationService.getReservationRepository()
+				.findById(reservationId)
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		
 		// TODO: check if reservation has been completed, should not be cancelled (or changed) anymore
 		// Add completeDate of reservation along with COMPLETED status to this check
-		if (reservation.getStatus().equals(ReservationStatus.COMPLETED))
-			throw new ReservationAlreadyCompletedException("Reservation is already completed");
-		else if (reservation.getStatus().equals(ReservationStatus.CANCELLED))
-			throw new ReservationAlreadyCancelledException("Reservation is already cancelled");
-		else if (reservation.getStatus().equals(ReservationStatus.OUTDATED))
-			throw new ReservationAlreadyOutdatedException("Reservation is already outdated");
-		else if (reservation.getStatus().equals(ReservationStatus.NOT_CLOSED))
-			throw new ReservationAlreadyNotClosedException("Reservation is already not-closed");
-		
-		// update
-		reservation.setCancelDate(LocalDateTime.now());
-		reservation.setStatus(ReservationStatus.CANCELLED);
+		switch (reservation.getStatus()) {
+			case COMPLETED -> throw new ReservationAlreadyCompletedException("Reservation is already completed");
+			case CANCELLED -> throw new ReservationAlreadyCancelledException("Reservation is already cancelled");
+			case OUTDATED -> throw new ReservationAlreadyOutdatedException("Reservation is already outdated");
+			case NOT_CLOSED -> throw new ReservationAlreadyNotClosedException("Reservation is already not-closed");
+			default -> {
+				reservation.setCancelDate(LocalDateTime.now());
+				reservation.setStatus(ReservationStatus.CANCELLED);
+			}
+		};
 		
 		return ReservationMapper.map(this.reservationService.getReservationRepository().save(reservation));
 	}
@@ -100,7 +98,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		final var reservation = this.reservationService.getReservationRepository()
 				.findById(reservationAssignWorkerRequest.getReservationId())
-					.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final boolean isAlreadyAssigned = reservationAssignWorkerRequest.getAssignedWorkersIds().stream()
 						.map(workerId -> new TaskId(workerId, reservation.getId()))
 						.anyMatch(this.taskService.geTaskRepository()::existsById);
