@@ -85,7 +85,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 		
 		final var wrongUsernameLoginRequest = new LoginRequest(this.loginRequest + "iiii", this.loginRequest.getPassword());
 		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
-				new ExceptionMsg("#### Credential with username " + wrongUsernameLoginRequest.getUsername() + " not found! ####"));
+				new ExceptionMsg("#### Username is not registered! ####"));
 		
 		this.webTestClient
 				.post()
@@ -107,7 +107,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
 					.jsonPath("$.responseBody.errorMsg")
-						.value(containsStringIgnoringCase("Credential with username " + wrongUsernameLoginRequest.getUsername() + " not found"))
+						.value(containsStringIgnoringCase("Username is not registered"))
 					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.getResponseBody().getErrorMsg()));
 	}
 	
@@ -116,7 +116,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 		
 		final var wrongCredentialsLoginRequest = new LoginRequest(this.loginRequest.getUsername(), this.loginRequest.getPassword() + "012545");
 		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
-				new ExceptionMsg("#### Bad credentials! ####"));
+				new ExceptionMsg("#### Incorrect password! ####"));
 		
 		this.webTestClient
 				.post()
@@ -137,7 +137,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Bad credentials"))
+					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Incorrect password"))
 					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.getResponseBody().getErrorMsg()));
 	}
 	
