@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.UserDetailsImpl;
+import tn.cita.app.dto.CustomUserDetails;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.service.v0.CredentialService;
 
@@ -25,7 +25,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		log.info("** Load user by username.. *\n");
 		
-		final UserDetails userDetails = new UserDetailsImpl(this.credentialService.findByUsername(username.strip()));
+		final UserDetails userDetails = new CustomUserDetails(this.credentialService.findByUsername(username.strip()));
 		
 		if (!userDetails.isEnabled())
 			throw new IllegalUserDetailsStateException(String

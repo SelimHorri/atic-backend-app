@@ -7,13 +7,9 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import lombok.RequiredArgsConstructor;
-
-@RequiredArgsConstructor
-public final class UserDetailsImpl implements UserDetails {
+public record CustomUserDetails(CredentialDto credentialDto) implements UserDetails {
 	
 	private static final long serialVersionUID = 1L;
-	private final CredentialDto credentialDto;
 	
 	@Override
 	public String getUsername() {
@@ -27,7 +23,8 @@ public final class UserDetailsImpl implements UserDetails {
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		return Set.of(new SimpleGrantedAuthority(this.credentialDto.getUserRoleBasedAuthority().getRole()));
+		return Set.of(new SimpleGrantedAuthority(this.credentialDto
+				.getUserRoleBasedAuthority().getRole()));
 	}
 	
 	@Override

@@ -14,7 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.UserDetailsImpl;
+import tn.cita.app.dto.CustomUserDetails;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.service.v0.CredentialService;
@@ -44,7 +44,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 				.thenReturn(credentialDto);
 		
-		final var expectedUserDetails = new UserDetailsImpl(credentialDto);
+		final var expectedUserDetails = new CustomUserDetails(credentialDto);
 		final var userDetails = this.userDetailsService.loadUserByUsername(credentialDto.getUsername());
 		
 		assertThat(userDetails)
@@ -99,7 +99,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 				.thenReturn(credentialDto);
 		
-		final var userDetails = new UserDetailsImpl(credentialDto);
+		final var userDetails = new CustomUserDetails(credentialDto);
 		
 		final var illegalUserDetailsStateException = assertThrows(IllegalUserDetailsStateException.class, 
 				() -> this.userDetailsService.loadUserByUsername(userDetails.getUsername()));
@@ -131,7 +131,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 				.thenReturn(credentialDto);
 		
-		final var userDetails = new UserDetailsImpl(credentialDto);
+		final var userDetails = new CustomUserDetails(credentialDto);
 		
 		final var illegalUserDetailsStateException = assertThrows(IllegalUserDetailsStateException.class, 
 				() -> this.userDetailsService.loadUserByUsername(userDetails.getUsername()));
@@ -161,7 +161,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 		.thenReturn(credentialDto);
 		
-		final var userDetails = new UserDetailsImpl(credentialDto);
+		final var userDetails = new CustomUserDetails(credentialDto);
 		
 		final var illegalUserDetailsStateException = assertThrows(IllegalUserDetailsStateException.class, 
 				() -> this.userDetailsService.loadUserByUsername(userDetails.getUsername()));
@@ -191,7 +191,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 				.thenReturn(credentialDto);
 		
-		final var userDetails = new UserDetailsImpl(credentialDto);
+		final var userDetails = new CustomUserDetails(credentialDto);
 		
 		final var illegalUserDetailsStateException = assertThrows(IllegalUserDetailsStateException.class, 
 				() -> this.userDetailsService.loadUserByUsername(userDetails.getUsername()));
