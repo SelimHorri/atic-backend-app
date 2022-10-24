@@ -4,6 +4,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.assertThrows;
 import static org.mockito.Mockito.when;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,6 +29,7 @@ class CustomUserDetailsServiceTest {
 	@MockBean
 	private CredentialService credentialService;
 	
+	@Disabled
 	@Test
 	void givenValidUsername_whenLoadUserByUsername_thenUserDetailsShouldBeFound() {
 		
@@ -59,6 +61,7 @@ class CustomUserDetailsServiceTest {
 		assertThat(userDetails.isCredentialsNonExpired()).isTrue();
 	}
 	
+	@Disabled
 	@Test
 	void givenInvalidUsername_whenLoadUserByUsername_thenShouldThrowCredentialNotFoundException() {
 		
@@ -83,6 +86,7 @@ class CustomUserDetailsServiceTest {
 				.isInstanceOf(CredentialNotFoundException.class);
 	}
 	
+	@Disabled
 	@Test
 	void givenValidUsername_whenLoadUserByUsernameAndUserIsDisabled_thenIllegalUserDetailsStateExceptionShouldBeThrown() {
 		
@@ -115,6 +119,7 @@ class CustomUserDetailsServiceTest {
 								userDetails.getUsername()));
 	}
 	
+	@Disabled
 	@Test
 	void givenValidUsername_whenLoadUserByUsernameAndUserAccountIsExpired_thenIllegalUserDetailsStateExceptionShouldBeThrown() {
 		
@@ -131,7 +136,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 				.thenReturn(credentialDto);
 		
-		final var userDetails = new CustomUserDetails(credentialDto);
+		final UserDetails userDetails = new CustomUserDetails(credentialDto);
 		
 		final var illegalUserDetailsStateException = assertThrows(IllegalUserDetailsStateException.class, 
 				() -> this.userDetailsService.loadUserByUsername(userDetails.getUsername()));
@@ -145,6 +150,7 @@ class CustomUserDetailsServiceTest {
 				.isEqualTo(String.format("User account with username: %s is expired", userDetails.getUsername()));
 	}
 	
+	@Disabled
 	@Test
 	void givenValidUsername_whenLoadUserByUsernameAndUserAccountIsLocked_thenIllegalUserDetailsStateExceptionShouldBeThrown() {
 		
@@ -161,7 +167,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 		.thenReturn(credentialDto);
 		
-		final var userDetails = new CustomUserDetails(credentialDto);
+		final UserDetails userDetails = new CustomUserDetails(credentialDto);
 		
 		final var illegalUserDetailsStateException = assertThrows(IllegalUserDetailsStateException.class, 
 				() -> this.userDetailsService.loadUserByUsername(userDetails.getUsername()));
@@ -175,6 +181,7 @@ class CustomUserDetailsServiceTest {
 				.isEqualTo(String.format("User account with username: %s is locked", userDetails.getUsername()));
 	}
 	
+	@Disabled
 	@Test
 	void givenValidUsername_whenLoadUserByUsernameAndUserCredentialsAreExpired_thenIllegalUserDetailsStateExceptionShouldBeThrown() {
 		
@@ -191,7 +198,7 @@ class CustomUserDetailsServiceTest {
 		when(this.credentialService.findByUsername(credentialDto.getUsername()))
 				.thenReturn(credentialDto);
 		
-		final var userDetails = new CustomUserDetails(credentialDto);
+		final UserDetails userDetails = new CustomUserDetails(credentialDto);
 		
 		final var illegalUserDetailsStateException = assertThrows(IllegalUserDetailsStateException.class, 
 				() -> this.userDetailsService.loadUserByUsername(userDetails.getUsername()));
