@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -9,7 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.dto.CustomUserDetails;
+import tn.cita.app.exception.wrapper.IllegalCredentialsException;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
+import tn.cita.app.mapper.CredentialMapper;
 import tn.cita.app.service.v0.CredentialService;
 
 @Service
@@ -21,11 +24,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private final CredentialService credentialService;
 	
 	@Override
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException {
+	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException, BadCredentialsException {
 		
 		log.info("** Load user by username.. *\n");
 		
-		final UserDetails userDetails = new CustomUserDetails(this.credentialService.findByUsername(username.strip()));
+		final UserDetails userDetails = new CustomUserDetails(this.credentialService.getCredentialRepository()
+				.findByUsernameIgnoreCase(username.strip().toLowerCase())
+				.map(CredentialMapper::map)
+				.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
 		
 		if (!userDetails.isEnabled())
 			throw new IllegalUserDetailsStateException(String
