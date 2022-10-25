@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
@@ -35,7 +34,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch all paged reservations by manager.. *\n");
 		final var managerDto = this.employeeService.findByCredentialUsername(username);
-		if (Optional.ofNullable(clientPageRequest).isPresent())
+		if (clientPageRequest != null)
 			return new ManagerReservationResponse(
 					managerDto, 
 					this.reservationService.findAllBySaloonId(managerDto.getSaloonDto().getId(), clientPageRequest));

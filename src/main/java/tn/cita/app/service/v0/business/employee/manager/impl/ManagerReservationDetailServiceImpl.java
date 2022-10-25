@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
-import java.util.Optional;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -51,12 +50,12 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		final var taskDtos = this.taskService.findAllByReservationId(reservationId);
 		
 		final var firstTaskBegin = taskDtos.stream()
-				.filter(t -> Optional.ofNullable(t.getStartDate()).isPresent())
+				.filter(t -> t.getStartDate() != null)
 				// .filter(t -> t.getReservationDto().getStatus().equals(ReservationStatus.IN_PROGRESS))
 				.min(Comparator.comparing(TaskDto::getStartDate))
 				.orElseGet(TaskDto::new);
 		final var lastTaskEnd = taskDtos.stream()
-				.filter(t -> Optional.ofNullable(t.getEndDate()).isPresent())
+				.filter(t -> t.getEndDate() != null)
 				.filter(t -> t.getReservationDto().getStatus().equals(ReservationStatus.COMPLETED))
 				.max(Comparator.comparing(TaskDto::getEndDate))
 				.orElseGet(TaskDto::new);
