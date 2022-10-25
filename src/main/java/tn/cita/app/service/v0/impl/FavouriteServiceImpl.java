@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,6 +13,7 @@ import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.mapper.FavouriteMapper;
 import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.service.v0.FavouriteService;
+import tn.cita.app.util.ClientRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,10 +39,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all favourites by customerId.. *\n");
 		return this.favouriteRepository.findAllByCustomerId(customerId, 
-					PageRequest.of(clientPageRequest.getOffset() - 1, 
-							clientPageRequest.getSize(), 
-							clientPageRequest.getSortDirection(), 
-							clientPageRequest.getSortBy()))
+					ClientRequestUtils.from(clientPageRequest))
 				.map(FavouriteMapper::map);
 	}
 	
