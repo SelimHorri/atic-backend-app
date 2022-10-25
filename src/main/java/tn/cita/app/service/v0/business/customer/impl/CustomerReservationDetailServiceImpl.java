@@ -10,10 +10,12 @@ import tn.cita.app.dto.ReservationDto;
 import tn.cita.app.dto.request.ReservationDetailRequest;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
+import tn.cita.app.mapper.OrderedDetailMapper;
 import tn.cita.app.mapper.ReservationMapper;
-import tn.cita.app.service.v0.OrderedDetailService;
-import tn.cita.app.service.v0.ReservationService;
-import tn.cita.app.service.v0.TaskService;
+import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.repository.OrderedDetailRepository;
+import tn.cita.app.repository.ReservationRepository;
+import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.business.customer.CustomerReservationDetailService;
 
 @Service
@@ -22,20 +24,28 @@ import tn.cita.app.service.v0.business.customer.CustomerReservationDetailService
 @RequiredArgsConstructor
 public class CustomerReservationDetailServiceImpl implements CustomerReservationDetailService {
 	
-	private final ReservationService reservationService;
-	private final OrderedDetailService orderedDetailService;
-	private final TaskService taskService;
+	private final ReservationRepository reservationRepository;
+	private final OrderedDetailRepository orderedDetailRepository;
+	private final TaskRepository taskRepository;
 	
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
 		log.info("** Fetch reservation details by reservationId by customer.. *\n");
-		final var reservationDto = this.reservationService.findById(reservationId);
+		final var reservationDto = this.reservationRepository.findById(reservationId)
+				.map(ReservationMapper::map)
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService
-						.findAllByReservationId(reservationDto.getId())))
-				.taskDtos(new PageImpl<>(this.taskService
-						.findAllByReservationId(reservationDto.getId())))
+				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
+						.findAllByReservationId(reservationId).stream()
+						.map(OrderedDetailMapper::map)
+						.distinct()
+						.toList()))
+				.taskDtos(new PageImpl<>(this.taskRepository
+						.findAllByReservationId(reservationId).stream()
+						.map(TaskMapper::map)
+						.distinct()
+						.toList()))
 				.build();
 	}
 	
@@ -43,15 +53,14 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	@Override
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
 		log.info("** Update reservation details by customer.. *\n");
-		final var reservation = this.reservationService.getReservationRepository()
-				.findById(reservationDetailRequest.getReservationId())
+		final var reservation = this.reservationRepository.findById(reservationDetailRequest.getReservationId())
 				.orElseThrow(() -> new ReservationNotFoundException(String
 						.format("Reservation with id: %s not found", reservationDetailRequest.getReservationId())));
 		reservation.setDescription((reservationDetailRequest.getDescription() == null 
 					|| reservationDetailRequest.getDescription().isBlank()) ? 
 				null : reservationDetailRequest.getDescription().strip());
 		
-		return ReservationMapper.map(this.reservationService.getReservationRepository().save(reservation));
+		return ReservationMapper.map(this.reservationRepository.save(reservation));
 	}
 	
 	
