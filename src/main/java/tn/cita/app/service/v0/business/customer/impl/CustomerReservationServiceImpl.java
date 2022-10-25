@@ -24,14 +24,16 @@ import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
+import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.mapper.ReservationMapper;
-import tn.cita.app.service.v0.CustomerService;
-import tn.cita.app.service.v0.OrderedDetailService;
-import tn.cita.app.service.v0.ReservationService;
-import tn.cita.app.service.v0.SaloonService;
-import tn.cita.app.service.v0.ServiceDetailService;
+import tn.cita.app.repository.CustomerRepository;
+import tn.cita.app.repository.OrderedDetailRepository;
+import tn.cita.app.repository.ReservationRepository;
+import tn.cita.app.repository.SaloonRepository;
+import tn.cita.app.repository.ServiceDetailRepository;
 import tn.cita.app.service.v0.business.customer.CustomerReservationService;
 import tn.cita.app.service.v0.common.ReservationCommonService;
+import tn.cita.app.util.ClientRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -39,29 +41,37 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 @RequiredArgsConstructor
 public class CustomerReservationServiceImpl implements CustomerReservationService {
 	
-	private final CustomerService customerService;
-	private final ReservationService reservationService;
+	private final CustomerRepository customerRepository;
+	private final ReservationRepository reservationRepository;
 	private final ReservationCommonService reservationCommonService;
-	private final SaloonService saloonService;
-	private final ServiceDetailService serviceDetailService;
-	private final OrderedDetailService orderedDetailService;
+	private final SaloonRepository saloonRepository;
+	private final ServiceDetailRepository serviceDetailRepository;
+	private final OrderedDetailRepository orderedDetailRepository;
 	
 	@Override
 	public CustomerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch all reservations by customer.. *\n");
-		final var customerDto = this.customerService.findByCredentialUsername(username);
+		final var customerDto = this.customerRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::map)
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
 		return new CustomerReservationResponse(
 				customerDto,
-				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest));
+				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
+						ClientRequestUtils.from(clientPageRequest))
+					.map(ReservationMapper::map));
 	}
 	
 	@Override
 	public CustomerReservationResponse searchAllByCustomerIdLikeKey(final String username, final String key) {
 		log.info("** Search all reservations by customerId like key by customer.. *\n");
-		final var customerDto = this.customerService.findByCredentialUsername(username);
+		final var customerDto = this.customerRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::map)
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
 		return new CustomerReservationResponse(
 				customerDto, 
-				new PageImpl<>(this.reservationService.getReservationRepository()
+				new PageImpl<>(this.reservationRepository
 						.searchAllByCustomerIdLikeKey(customerDto.getId(), key.strip().toLowerCase()).stream()
 							.map(ReservationMapper::map)
 							.distinct()
@@ -85,7 +95,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				|| reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30)
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
-		this.reservationService.getReservationRepository()
+		this.reservationRepository
 				.findByStartDateAndStatus(reservationRequest.getStartDate(), ReservationStatus.NOT_STARTED).ifPresent(r -> {
 			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		});
@@ -98,19 +108,19 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		
 		final var reservation = Reservation.builder()
 				.startDate(reservationRequest.getStartDate())
-				.customer(this.customerService.getCustomerRepository()
-							.findByCredentialUsernameIgnoringCase(reservationRequest.getUsername())
+				.customer(this.customerRepository
+						.findByCredentialUsernameIgnoringCase(reservationRequest.getUsername())
 						.orElseThrow(() -> new CustomerNotFoundException(String
 								.format("Customer with username %s not found", reservationRequest.getUsername()))))
-				.saloon(this.saloonService.getSaloonRepository().findById(reservationRequest.getSaloonId())
-						.orElseThrow(() -> new SaloonNotFoundException(String
-								.format("Saloon with id: %d not found", reservationRequest.getSaloonId()))))
+				.saloon(this.saloonRepository
+						.findById(reservationRequest.getSaloonId())
+						.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
 				.description((reservationRequest.getDescription() == null 
 							|| reservationRequest.getDescription().isBlank()) ? 
 						null : reservationRequest.getDescription().strip())
 				.build();
 		
-		final var savedReservation = this.reservationService.getReservationRepository().save(reservation);
+		final var savedReservation = this.reservationRepository.save(reservation);
 		
 		final var orderedDetail = new OrderedDetail();
 		serviceDetailsIds.forEach(serviceDetailId -> {
@@ -118,11 +128,10 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 			orderedDetail.setServiceDetailId(serviceDetailId);
 			orderedDetail.setOrderedDate(LocalDateTime.now());
 			orderedDetail.setReservation(savedReservation);
-			orderedDetail.setServiceDetail(this.serviceDetailService.getServiceDetailRepository().findById(serviceDetailId)
-					.orElseThrow(() -> new ServiceDetailNotFoundException(String
-							.format("ServiceDetail with id: %d not found", serviceDetailId))));
+			orderedDetail.setServiceDetail(this.serviceDetailRepository.findById(serviceDetailId)
+					.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found")));
 			// persist...
-			this.orderedDetailService.getOrderedDetailRepository().saveOrderedDetail(new OrderedDetailRequest(
+			this.orderedDetailRepository.saveOrderedDetail(new OrderedDetailRequest(
 					orderedDetail.getReservationId(), 
 					orderedDetail.getServiceDetailId(), 
 					orderedDetail.getOrderedDate()));

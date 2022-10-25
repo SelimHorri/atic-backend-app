@@ -15,11 +15,15 @@ import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.response.CustomerFavouriteResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.FavouriteAlreadyExists;
+import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
-import tn.cita.app.service.v0.CustomerService;
-import tn.cita.app.service.v0.FavouriteService;
-import tn.cita.app.service.v0.SaloonService;
+import tn.cita.app.mapper.CustomerMapper;
+import tn.cita.app.mapper.FavouriteMapper;
+import tn.cita.app.repository.CustomerRepository;
+import tn.cita.app.repository.FavouriteRepository;
+import tn.cita.app.repository.SaloonRepository;
 import tn.cita.app.service.v0.business.customer.CustomerFavouriteService;
+import tn.cita.app.util.ClientRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,25 +31,37 @@ import tn.cita.app.service.v0.business.customer.CustomerFavouriteService;
 @RequiredArgsConstructor
 public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	
-	private final CustomerService customerService;
-	private final FavouriteService favouriteService;
-	private final SaloonService saloonService;
+	private final CustomerRepository customerRepository;
+	private final FavouriteRepository favouriteRepository;
+	private final SaloonRepository saloonRepository;
 	
 	@Override
 	public CustomerFavouriteResponse fetchAllFavourites(final String username, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch all favourites by customer.. *\n");
-		final var customerDto = this.customerService.findByCredentialUsername(username);
+		final var customerDto = this.customerRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::map)
+				.orElseThrow(() -> new CustomerNotFoundException(String
+						.format("Customer with username: %s not found", username)));
 		return new CustomerFavouriteResponse(
 				customerDto,
-				this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest));
+				this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
+						ClientRequestUtils.from(clientPageRequest))
+				.map(FavouriteMapper::map));
 	}
 	
 	@Transactional
 	@Override
 	public Boolean deleteFavourite(final String username, final Integer saloonId) {
 		log.info("** Delete favourite by customer.. *\n");
-		final var favouriteId = new FavouriteId(this.customerService.findByCredentialUsername(username).getId(), saloonId);
-		return this.favouriteService.deleteById(favouriteId);
+		final var favouriteId = new FavouriteId(this.customerRepository.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::map)
+				.orElseThrow(() -> new CustomerNotFoundException(String
+						.format("Customer with username: %s not found", username)))
+				.getId(), 
+				saloonId);
+		this.favouriteRepository.deleteById(favouriteId);
+		return !this.favouriteRepository.existsById(favouriteId);
 	}
 	
 	@Transactional
@@ -54,31 +70,29 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 		
 		log.info("** Add new favourite by customer.. *\n");
 		
-		final var customer = this.customerService.getCustomerRepository()
-				.findByCredentialUsernameIgnoringCase(username)
+		final var customer = this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username %s not found".formatted(username)));
 		
 		// Check if this favourite already exists..
 		final var favouriteId = new FavouriteId(customer.getId(), saloonId);
-		this.favouriteService.getFavouriteRepository()
-				.findById(favouriteId).ifPresent(f -> {
-					throw new FavouriteAlreadyExists("This is already part of your favourites");
+		this.favouriteRepository.findById(favouriteId).ifPresent(f -> {
+				throw new FavouriteAlreadyExists("This is already part of your favourites");
 		});
 		
 		// persist..
-		this.favouriteService.getFavouriteRepository()
-				.saveFavourite(Favourite.builder()
+		this.favouriteRepository.saveFavourite(Favourite.builder()
 						.customerId(customer.getId())
 						.saloonId(saloonId)
 						.favouriteDate(LocalDateTime.now())
 						.identifier(UUID.randomUUID().toString())
 						.customer(customer)
-						.saloon(this.saloonService.getSaloonRepository()
-								.findById(saloonId)
+						.saloon(this.saloonRepository.findById(saloonId)
 								.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
 						.build());
 		
-		return this.favouriteService.findById(favouriteId);
+		return this.favouriteRepository.findById(favouriteId)
+				.map(FavouriteMapper::map)
+				.orElseThrow(() -> new FavouriteNotFoundException("Favourite not found"));
 	}
 	
 	

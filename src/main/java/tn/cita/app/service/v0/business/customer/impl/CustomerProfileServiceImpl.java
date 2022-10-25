@@ -1,5 +1,7 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
+import java.util.stream.Collectors;
+
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -11,14 +13,19 @@ import tn.cita.app.dto.CustomerDto;
 import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.request.CustomerProfileRequest;
 import tn.cita.app.dto.response.CustomerProfileResponse;
+import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.mapper.CustomerMapper;
-import tn.cita.app.service.v0.CustomerService;
-import tn.cita.app.service.v0.FavouriteService;
-import tn.cita.app.service.v0.RatingService;
-import tn.cita.app.service.v0.ReservationService;
+import tn.cita.app.mapper.FavouriteMapper;
+import tn.cita.app.mapper.RatingMapper;
+import tn.cita.app.mapper.ReservationMapper;
+import tn.cita.app.repository.CustomerRepository;
+import tn.cita.app.repository.FavouriteRepository;
+import tn.cita.app.repository.RatingRepository;
+import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.service.v0.business.customer.CustomerProfileService;
+import tn.cita.app.util.ClientRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,22 +33,32 @@ import tn.cita.app.service.v0.business.customer.CustomerProfileService;
 @RequiredArgsConstructor
 public class CustomerProfileServiceImpl implements CustomerProfileService {
 	
-	private final CustomerService customerService;
-	private final ReservationService reservationService;
-	private final FavouriteService favouriteService;
-	private final RatingService ratingService;
+	private final CustomerRepository customerRepository;
+	private final ReservationRepository reservationRepository;
+	private final FavouriteRepository favouriteRepository;
+	private final RatingRepository ratingRepository;
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override
 	public CustomerProfileResponse fetchProfile(final String username, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch customer profile.. *\n");
-		final var customerDto = this.customerService.findByCredentialUsername(username);
+		final var customerDto = this.customerRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::map)
+				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 		return new CustomerProfileResponse(
 				customerDto, 
 				null, 
-				this.reservationService.findAllByCustomerId(customerDto.getId(), clientPageRequest), 
-				this.favouriteService.findAllByCustomerId(customerDto.getId(), clientPageRequest),
-				new PageImpl<>(this.ratingService.findAllByCustomerId(customerDto.getId())));
+				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
+						ClientRequestUtils.from(clientPageRequest))
+					.map(ReservationMapper::map), 
+					this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
+							ClientRequestUtils.from(clientPageRequest))
+						.map(FavouriteMapper::map),
+				new PageImpl<>(this.ratingRepository.findAllByCustomerId(customerDto.getId()).stream()
+						.map(RatingMapper::map)
+						.distinct()
+						.collect(Collectors.toUnmodifiableList())));
 	}
 	
 	@Transactional
@@ -50,7 +67,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		
 		log.info("** Update customer profile.. *\n");
 		
-		this.customerService.getCustomerRepository()
+		this.customerRepository
 				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getUsername().strip()).ifPresent(c -> {
 			if (!c.getCredential().getUsername().equals(customerProfileRequest.getAuthenticatedUsername()))
 				throw new UsernameAlreadyExistsException("Username already exists, please choose another");
@@ -59,9 +76,9 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		if (!customerProfileRequest.getPassword().equals(customerProfileRequest.getConfirmPassword()))
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
-		final var authenticatedCustomer = this.customerService.getCustomerRepository()
+		final var authenticatedCustomer = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getAuthenticatedUsername())
-				.orElseThrow();
+				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 		authenticatedCustomer.setFirstname(customerProfileRequest.getFirstname().strip());
 		authenticatedCustomer.setLastname(customerProfileRequest.getLastname().strip());
 		authenticatedCustomer.setEmail(customerProfileRequest.getEmail().strip());
@@ -73,7 +90,7 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.getUsername().strip().toLowerCase());
 		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileRequest.getPassword()));
 		
-		return CustomerMapper.map(this.customerService.getCustomerRepository().save(authenticatedCustomer));
+		return CustomerMapper.map(this.customerRepository.save(authenticatedCustomer));
 	}
 	
 	
