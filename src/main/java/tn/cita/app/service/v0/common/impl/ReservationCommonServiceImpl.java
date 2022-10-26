@@ -27,10 +27,12 @@ import tn.cita.app.exception.wrapper.ReservationAlreadyOutdatedException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.TaskAlreadyAssigned;
 import tn.cita.app.exception.wrapper.TaskNotFoundException;
+import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ReservationMapper;
-import tn.cita.app.service.v0.EmployeeService;
-import tn.cita.app.service.v0.ReservationService;
-import tn.cita.app.service.v0.TaskService;
+import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.repository.EmployeeRepository;
+import tn.cita.app.repository.ReservationRepository;
+import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.common.ReservationCommonService;
 
 @Service
@@ -39,18 +41,17 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 @RequiredArgsConstructor
 public class ReservationCommonServiceImpl implements ReservationCommonService {
 	
-	private final EmployeeService employeeService;
-	private final ReservationService reservationService;
-	private final TaskService taskService;
+	private final EmployeeRepository employeeRepository;
+	private final ReservationRepository reservationRepository;
+	private final TaskRepository taskRepository;
 	
 	@Transactional
 	@Override
 	public ReservationDto cancelReservation(final Integer reservationId) {
 		
 		log.info("** Cancelling reservation.. *\n");
-
-		final var reservation = this.reservationService.getReservationRepository()
-				.findById(reservationId)
+		
+		final var reservation = this.reservationRepository.findById(reservationId)
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		
 		// TODO: check if reservation has been completed, should not be cancelled (or changed) anymore
@@ -66,7 +67,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 			}
 		};
 		
-		return ReservationMapper.map(this.reservationService.getReservationRepository().save(reservation));
+		return ReservationMapper.map(this.reservationRepository.save(reservation));
 	}
 	
 	@Override
@@ -74,19 +75,28 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		log.info("** Fetch all unassigned sub workers.. *\n");
 
-		final var managerDto = this.employeeService.findByCredentialUsername(username);
-		final var assignedWorkersIds = this.taskService
+		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::map)
+				.orElseThrow(() -> new EmployeeNotFoundException(String
+						.format("Employee with username: %s not found", username)));
+		
+		final var assignedWorkersIds = this.taskRepository
 				.findAllByReservationId(reservationId).stream()
+					.map(TaskMapper::map)
 					.map(TaskDto::getWorkerId)
 					.distinct()
 					.collect(Collectors.toUnmodifiableSet());
-		final var unassignedWorkerDtos = this.employeeService
+		
+		final var unassignedWorkerDtos = this.employeeRepository
 				.findAllByManagerId(managerDto.getId()).stream()
+					.map(EmployeeMapper::map)
 					.filter(w -> !assignedWorkersIds.contains(w.getId()))
 					.distinct()
 					.collect(Collectors.toUnmodifiableList());
 		
-		return new ReservationSubWorkerResponse(this.reservationService.findById(reservationId), new PageImpl<>(unassignedWorkerDtos));
+		return new ReservationSubWorkerResponse(this.reservationRepository.findById(reservationId)
+				.map(ReservationMapper::map)
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found")), new PageImpl<>(unassignedWorkerDtos));
 	}
 	
 	@Transactional
@@ -96,12 +106,11 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		log.info("** Assign workers to a reservation.. *\n");
 		
-		final var reservation = this.reservationService.getReservationRepository()
-				.findById(reservationAssignWorkerRequest.getReservationId())
+		final var reservation = this.reservationRepository.findById(reservationAssignWorkerRequest.getReservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final boolean isAlreadyAssigned = reservationAssignWorkerRequest.getAssignedWorkersIds().stream()
 						.map(workerId -> new TaskId(workerId, reservation.getId()))
-						.anyMatch(this.taskService.geTaskRepository()::existsById);
+						.anyMatch(this.taskRepository::existsById);
 		if (isAlreadyAssigned)
 			throw new TaskAlreadyAssigned("Worker is already assigned");
 		
@@ -116,18 +125,18 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 				null : reservationAssignWorkerRequest.getManagerDescription().strip());
 		reservationAssignWorkerRequest.getAssignedWorkersIds().forEach(workerId -> {
 			task.setWorkerId(workerId);
-			task.setWorker(this.employeeService.getEmployeeRepository()
-					.findById(workerId)
-					.orElseThrow(EmployeeNotFoundException::new));
-			this.taskService.geTaskRepository().saveTask(task);
-			assignedWorkers.add(this.taskService.geTaskRepository()
-					.findById(new TaskId(task.getWorkerId(), task.getReservationId()))
-					.orElseThrow(TaskNotFoundException::new));
+			task.setWorker(this.employeeRepository.findById(workerId)
+					.orElseThrow(() -> new EmployeeNotFoundException("Employee not found")));
+			this.taskRepository.saveTask(task);
+			assignedWorkers.add(this.taskRepository.findById(new TaskId(task.getWorkerId(), task.getReservationId()))
+					.orElseThrow(() -> new TaskNotFoundException("Task not found")));
 		});
 		
 		final var savedAssignedWorkers = assignedWorkers.stream()
 				.map(Task::getWorkerId)
-				.map(this.employeeService::findById)
+				.map(workerId -> this.employeeRepository.findById(workerId)
+						.map(EmployeeMapper::map)
+						.orElseThrow(() -> new EmployeeNotFoundException("Employee not found")))
 				.distinct()
 				.collect(Collectors.toUnmodifiableList());
 		

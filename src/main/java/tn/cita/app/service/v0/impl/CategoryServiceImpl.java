@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,6 +57,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return this.categoryRepository.findAllBySaloonId(saloonId).stream()
 				.map(CategoryMapper::map)
 				.distinct()
+				.sorted(Comparator.comparing(CategoryDto::getName))
 				.collect(Collectors.toUnmodifiableList());
 	}
 	
@@ -99,8 +101,6 @@ public class CategoryServiceImpl implements CategoryService {
 		category.setName(categoryRequest.getName().strip().toLowerCase());
 		category.setParentCategory(parentCategory);
 		category.setSaloon(saloon);
-		
-		System.err.println(CategoryMapper.map(category));
 		
 		return CategoryMapper.map(this.categoryRepository.save(category));
 	}
