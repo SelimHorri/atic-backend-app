@@ -1,6 +1,7 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -14,9 +15,13 @@ import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
 import tn.cita.app.dto.response.ReservationBeginEndTask;
 import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.dto.response.ReservationSubWorkerResponse;
-import tn.cita.app.service.v0.OrderedDetailService;
-import tn.cita.app.service.v0.ReservationService;
-import tn.cita.app.service.v0.TaskService;
+import tn.cita.app.exception.wrapper.ReservationNotFoundException;
+import tn.cita.app.mapper.OrderedDetailMapper;
+import tn.cita.app.mapper.ReservationMapper;
+import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.repository.OrderedDetailRepository;
+import tn.cita.app.repository.ReservationRepository;
+import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.business.employee.manager.ManagerReservationDetailService;
 import tn.cita.app.service.v0.common.ReservationCommonService;
 
@@ -26,19 +31,24 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 @RequiredArgsConstructor
 public class ManagerReservationDetailServiceImpl implements ManagerReservationDetailService {
 	
-	private final ReservationService reservationService;
+	private final ReservationRepository reservationRepository;
 	private final ReservationCommonService reservationCommonService;
-	private final OrderedDetailService orderedDetailService;
-	private final TaskService taskService;
+	private final OrderedDetailRepository orderedDetailRepository;
+	private final TaskRepository taskRepository;
 	
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
 		log.info("** Fetch reservation details by reservationId by manager.. *\n");
-		final var reservationDto = this.reservationService.findById(reservationId);
+		final var reservationDto = this.reservationRepository.findById(reservationId)
+				.map(ReservationMapper::map)
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(new PageImpl<>(this.orderedDetailService
-						.findAllByReservationId(reservationDto.getId())))
+				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
+						.findAllByReservationId(reservationId).stream()
+						.map(OrderedDetailMapper::map)
+						.distinct()
+						.toList()))
 				.build();
 	}
 	
@@ -47,7 +57,10 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		
 		log.info("** Fetch begin end task by manager.. *\n");
 		
-		final var taskDtos = this.taskService.findAllByReservationId(reservationId);
+		final var taskDtos = this.taskRepository.findAllByReservationId(reservationId).stream()
+				.map(TaskMapper::map)
+				.distinct()
+				.collect(Collectors.toUnmodifiableList());
 		
 		final var firstTaskBegin = taskDtos.stream()
 				.filter(t -> t.getStartDate() != null)

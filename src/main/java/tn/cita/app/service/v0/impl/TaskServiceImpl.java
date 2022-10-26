@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +16,7 @@ import tn.cita.app.exception.wrapper.TaskNotFoundException;
 import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.TaskService;
+import tn.cita.app.util.ClientRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -60,11 +60,8 @@ public class TaskServiceImpl implements TaskService {
 	@Override
 	public Page<TaskDto> findAllByWorkerId(final Integer workerId, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all paged tasks by workerId.. *\n");
-		return this.taskRepository.findAllByWorkerId(workerId, PageRequest
-					.of(clientPageRequest.getOffset() - 1, 
-						clientPageRequest.getSize(), 
-						clientPageRequest.getSortDirection(), 
-						clientPageRequest.getSortBy()))
+		return this.taskRepository.findAllByWorkerId(workerId, 
+					ClientRequestUtils.from(clientPageRequest))
 				.map(TaskMapper::map);
 	}
 	

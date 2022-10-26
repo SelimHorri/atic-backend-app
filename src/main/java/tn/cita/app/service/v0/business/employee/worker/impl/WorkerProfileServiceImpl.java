@@ -14,7 +14,7 @@ import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.mapper.EmployeeMapper;
-import tn.cita.app.service.v0.EmployeeService;
+import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.service.v0.TaskService;
 import tn.cita.app.service.v0.business.employee.worker.WorkerProfileService;
 
@@ -24,18 +24,20 @@ import tn.cita.app.service.v0.business.employee.worker.WorkerProfileService;
 @RequiredArgsConstructor
 public class WorkerProfileServiceImpl implements WorkerProfileService {
 	
-	private final EmployeeService employeeService;
-	private final TaskService taskService;
+	private final EmployeeRepository employeeRepository;
+	private final TaskService taskRepository;
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override
 	public WorkerProfileResponse fetchProfile(final String username) {
 		log.info("** Fetch worker profile.. *\n");
-		final var workerDto = this.employeeService.findByCredentialUsername(username);
+		final var workerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::map)
+				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
 		return new WorkerProfileResponse(
 				workerDto, 
 				workerDto.getCredentialDto(), 
-				new PageImpl<>(this.taskService.findAllByWorkerId(workerDto.getId())));
+				new PageImpl<>(this.taskRepository.findAllByWorkerId(workerDto.getId())));
 	}
 	
 	@Transactional
@@ -44,7 +46,7 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 		
 		log.info("** Update worker profile.. *\n");
 
-		this.employeeService.getEmployeeRepository()
+		this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(workerProfileRequest.getUsername().strip()).ifPresent(c -> {
 			if (!c.getCredential().getUsername().equals(workerProfileRequest.getAuthenticatedUsername()))
 				throw new UsernameAlreadyExistsException("Username already exists, please choose another");
@@ -53,7 +55,7 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 		if (!workerProfileRequest.getPassword().equals(workerProfileRequest.getConfirmPassword()))
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
-		final var authenticatedWorker = this.employeeService.getEmployeeRepository()
+		final var authenticatedWorker = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(workerProfileRequest.getAuthenticatedUsername().strip())
 				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
 		authenticatedWorker.setFirstname(workerProfileRequest.getFirstname().strip());
@@ -65,7 +67,7 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 		authenticatedWorker.getCredential().setUsername(workerProfileRequest.getUsername().strip().toLowerCase());
 		authenticatedWorker.getCredential().setPassword(this.passwordEncoder.encode(workerProfileRequest.getPassword()));
 		
-		return EmployeeMapper.map(this.employeeService.getEmployeeRepository().save(authenticatedWorker));
+		return EmployeeMapper.map(this.employeeRepository.save(authenticatedWorker));
 	}
 	
 	

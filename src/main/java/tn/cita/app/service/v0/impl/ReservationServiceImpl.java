@@ -17,6 +17,7 @@ import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.service.v0.ReservationService;
+import tn.cita.app.util.ClientRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -61,8 +62,7 @@ public class ReservationServiceImpl implements ReservationService {
 	public Page<ReservationDto> findAllBySaloonId(final Integer saloonId, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all paged reservations by saloonId.. *\n");
 		return this.reservationRepository.findAllBySaloonId(saloonId, 
-					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize(), 
-							clientPageRequest.getSortDirection(), clientPageRequest.getSortBy()))
+					ClientRequestUtils.from(clientPageRequest))
 				.map(ReservationMapper::map);
 	}
 	
