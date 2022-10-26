@@ -28,11 +28,6 @@ public class ReservationServiceImpl implements ReservationService {
 	private final ReservationRepository reservationRepository;
 	
 	@Override
-	public ReservationRepository getReservationRepository() {
-		return this.reservationRepository;
-	}
-	
-	@Override
 	public Page<ReservationDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all reservations by customerId.. *\n");
 		return this.reservationRepository.findAllByCustomerId(customerId, 

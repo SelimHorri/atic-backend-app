@@ -26,11 +26,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 	private final EmployeeRepository employeeRepository;
 	
 	@Override
-	public EmployeeRepository getEmployeeRepository() {
-		return this.employeeRepository;
-	}
-	
-	@Override
 	public Page<EmployeeDto> findAll(final int pageOffset) {
 		log.info("** Find all employees offset paged..*\n");
 		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE))

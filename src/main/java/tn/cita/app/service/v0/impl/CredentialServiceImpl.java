@@ -20,17 +20,11 @@ public class CredentialServiceImpl implements CredentialService {
 	private final CredentialRepository credentialRepository;
 	
 	@Override
-	public CredentialRepository getCredentialRepository() {
-		return this.credentialRepository;
-	}
-	
-	@Override
 	public CredentialDto findById(final Integer id) {
 		log.info("** Find user by id .. *\n");
 		return this.credentialRepository.findById(id)
 				.map(CredentialMapper::map)
-				.orElseThrow(() -> new CredentialNotFoundException(String
-						.format("Credential not found", id)));
+				.orElseThrow(() -> new CredentialNotFoundException("Credential not found"));
 	}
 	
 	@Override

@@ -17,8 +17,8 @@ import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.mapper.CategoryMapper;
 import tn.cita.app.repository.CategoryRepository;
+import tn.cita.app.repository.SaloonRepository;
 import tn.cita.app.service.v0.CategoryService;
-import tn.cita.app.service.v0.SaloonService;
 
 @Service
 @Transactional(readOnly = true)
@@ -27,12 +27,7 @@ import tn.cita.app.service.v0.SaloonService;
 public class CategoryServiceImpl implements CategoryService {
 	
 	private final CategoryRepository categoryRepository;
-	private final SaloonService saloonService;
-	
-	@Override
-	public CategoryRepository getCategoryRepository() {
-		return this.categoryRepository;
-	}
+	private final SaloonRepository saloonRepository;
 	
 	@Override
 	public List<CategoryDto> findAll() {
@@ -69,9 +64,9 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		final var parentCategory = Optional.ofNullable(categoryRequest.getParentCategoryId()).isPresent() ?
 				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
-		final var saloon = this.saloonService.getSaloonRepository()
-				.findById(categoryRequest.getSaloonId())
-					.orElseThrow(SaloonNotFoundException::new);
+		
+		final var saloon = this.saloonRepository.findById(categoryRequest.getSaloonId())
+				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
 		
 		final var category = Category.builder()
 				.name(categoryRequest.getName().strip().toLowerCase())
@@ -90,13 +85,12 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		final var parentCategory = Optional.ofNullable(categoryRequest.getParentCategoryId()).isPresent() ?
 				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
-		final var saloon = this.saloonService.getSaloonRepository()
-				.findById(categoryRequest.getSaloonId())
-					.orElseThrow(SaloonNotFoundException::new);
 		
-		final var category = this.categoryRepository
-				.findById(categoryRequest.getCategoryId())
-					.orElseThrow(CategoryNotFoundException::new);
+		final var saloon = this.saloonRepository.findById(categoryRequest.getSaloonId())
+				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
+		
+		final var category = this.categoryRepository.findById(categoryRequest.getCategoryId())
+				.orElseThrow(CategoryNotFoundException::new);
 		category.setId(categoryRequest.getCategoryId());
 		category.setName(categoryRequest.getName().strip().toLowerCase());
 		category.setParentCategory(parentCategory);

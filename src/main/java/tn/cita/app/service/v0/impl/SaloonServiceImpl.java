@@ -26,11 +26,6 @@ public class SaloonServiceImpl implements SaloonService {
 	private final SaloonRepository saloonRepository;
 	
 	@Override
-	public SaloonRepository getSaloonRepository() {
-		return this.saloonRepository;
-	}
-	
-	@Override
 	public Page<SaloonDto> findAll(final ClientPageRequest clientPageRequest) {
 		log.info("** Find all paged saloons.. *\n");
 		return this.saloonRepository.findAll(PageRequest

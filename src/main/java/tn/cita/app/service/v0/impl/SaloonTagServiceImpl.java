@@ -22,11 +22,6 @@ public class SaloonTagServiceImpl implements SaloonTagService {
 	private final SaloonTagRepository saloonTagRepository;
 	
 	@Override
-	public SaloonTagRepository geSaloonTagRepository() {
-		return this.saloonTagRepository;
-	}
-	
-	@Override
 	public List<SaloonTagDto> findAllBySaloonId(final Integer saloonId) {
 		log.info("** Find all saloonTags by saloonId.. *\n");
 		return this.saloonTagRepository.findAllBySaloonId(saloonId).stream()
