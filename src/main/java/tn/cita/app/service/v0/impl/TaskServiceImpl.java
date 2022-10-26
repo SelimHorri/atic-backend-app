@@ -27,11 +27,6 @@ public class TaskServiceImpl implements TaskService {
 	private final TaskRepository taskRepository;
 	
 	@Override
-	public TaskRepository geTaskRepository() {
-		return this.taskRepository;
-	}
-	
-	@Override
 	public TaskDto findById(final TaskId taskId) {
 		log.info("** Find task by id.. *\n");
 		return this.taskRepository.findById(taskId)

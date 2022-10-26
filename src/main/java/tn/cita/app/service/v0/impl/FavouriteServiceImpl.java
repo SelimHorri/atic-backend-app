@@ -24,11 +24,6 @@ public class FavouriteServiceImpl implements FavouriteService {
 	private final FavouriteRepository favouriteRepository;
 	
 	@Override
-	public FavouriteRepository getFavouriteRepository() {
-		return this.favouriteRepository;
-	}
-	
-	@Override
 	public FavouriteDto findById(final FavouriteId favouriteId) {
 		return this.favouriteRepository.findById(favouriteId)
 				.map(FavouriteMapper::map)

@@ -26,11 +26,6 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	private final OrderedDetailRepository orderedDetailRepository;
 	
 	@Override
-	public OrderedDetailRepository getOrderedDetailRepository() {
-		return this.orderedDetailRepository;
-	}
-	
-	@Override
 	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
 		log.info("** Find all ordered detail by reservationId.. *\n");
 		return this.orderedDetailRepository.findAllByReservationId(reservationId).stream()

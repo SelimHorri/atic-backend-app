@@ -13,7 +13,7 @@ import tn.cita.app.dto.CustomUserDetails;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.mapper.CredentialMapper;
-import tn.cita.app.service.v0.CredentialService;
+import tn.cita.app.repository.CredentialRepository;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,17 +21,17 @@ import tn.cita.app.service.v0.CredentialService;
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
 	
-	private final CredentialService credentialService;
+	private final CredentialRepository credentialRepository;
 	
 	@Override
 	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException, BadCredentialsException {
 		
 		log.info("** Load user by username.. *\n");
 		
-		final UserDetails userDetails = new CustomUserDetails(this.credentialService.getCredentialRepository()
+		final UserDetails userDetails = new CustomUserDetails(this.credentialRepository
 				.findByUsernameIgnoreCase(username.strip().toLowerCase())
-				.map(CredentialMapper::map)
-				.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
+					.map(CredentialMapper::map)
+					.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
 		
 		if (!userDetails.isEnabled())
 			throw new IllegalUserDetailsStateException(String
