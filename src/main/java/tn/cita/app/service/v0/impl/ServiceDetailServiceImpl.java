@@ -1,5 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -97,6 +98,8 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId).stream()
 				.map(ServiceDetailMapper::map)
 				.distinct()
+				.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
+						.thenComparing(ServiceDetailDto::getName))
 				.collect(Collectors.toUnmodifiableList());
 	}
 	
