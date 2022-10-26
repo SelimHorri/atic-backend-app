@@ -23,7 +23,7 @@ import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.repository.SaloonRepository;
 import tn.cita.app.service.v0.business.customer.CustomerFavouriteService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -46,7 +46,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 		return new CustomerFavouriteResponse(
 				customerDto,
 				this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
-						ClientRequestUtils.from(clientPageRequest))
+						ClientPageRequestUtils.from(clientPageRequest))
 				.map(FavouriteMapper::map));
 	}
 	

@@ -15,9 +15,9 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 
 import tn.cita.app.domain.UserRoleBasedAuthority;
 import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.CustomUserDetails;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
+import tn.cita.app.security.CustomUserDetails;
 import tn.cita.app.service.v0.CredentialService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

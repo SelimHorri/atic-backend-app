@@ -25,7 +25,7 @@ import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.service.v0.AuthenticationService;
-import tn.cita.app.util.JwtUtil;
+import tn.cita.app.util.JwtUtils;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -35,7 +35,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	private AuthenticationService authenticationService;
 	
 	@Autowired
-	private JwtUtil jwtUtil;
+	private JwtUtils jwtUtils;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -75,7 +75,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().username()));
 		
-		final boolean validateToken = this.jwtUtil.validateToken(this.loginResponse.jwtToken(), 
+		final boolean validateToken = this.jwtUtils.validateToken(this.loginResponse.jwtToken(), 
 				this.userDetailsService.loadUserByUsername(this.loginResponse.username()));
 		assertThat(validateToken).isTrue();
 	}

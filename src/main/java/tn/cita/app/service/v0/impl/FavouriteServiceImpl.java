@@ -13,7 +13,7 @@ import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.mapper.FavouriteMapper;
 import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.service.v0.FavouriteService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -34,7 +34,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 	public Page<FavouriteDto> findAllByCustomerId(final Integer customerId, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all favourites by customerId.. *\n");
 		return this.favouriteRepository.findAllByCustomerId(customerId, 
-					ClientRequestUtils.from(clientPageRequest))
+					ClientPageRequestUtils.from(clientPageRequest))
 				.map(FavouriteMapper::map);
 	}
 	

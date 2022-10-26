@@ -13,7 +13,7 @@ import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.service.v0.AuthenticationService;
-import tn.cita.app.util.JwtUtil;
+import tn.cita.app.util.JwtUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -23,7 +23,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	private final AuthenticationManager authenticationManager;
 	private final UserDetailsService userDetailsService;
-	private final JwtUtil jwtUtil;
+	private final JwtUtils jwtUtils;
 	private final PasswordEncoder passwordEncoder;
 	
 	@Override
@@ -39,7 +39,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		final var authentication = this.authenticationManager
 				.authenticate(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), loginRequest.getPassword()));
 		
-		return new LoginResponse(authentication.getName(), this.jwtUtil.generateToken(userDetails));
+		return new LoginResponse(authentication.getName(), this.jwtUtils.generateToken(userDetails));
 	}
 	
 	
