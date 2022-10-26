@@ -16,7 +16,7 @@ import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.business.employee.manager.ManagerWorkerAssignmentService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -37,7 +37,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 						.format("Employee with username: %s not found", username)));
 		return new ManagerWorkerAssignmentResponse(managerDto, 
 				this.taskRepository.findAllByWorkerId(workerId, 
-						ClientRequestUtils.from(clientPageRequest))
+						ClientPageRequestUtils.from(clientPageRequest))
 					.map(TaskMapper::map));
 	}
 	

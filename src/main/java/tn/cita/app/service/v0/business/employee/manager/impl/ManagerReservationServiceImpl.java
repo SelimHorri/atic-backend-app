@@ -21,7 +21,7 @@ import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.service.v0.business.employee.manager.ManagerReservationService;
 import tn.cita.app.service.v0.common.ReservationCommonService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -44,7 +44,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 			return new ManagerReservationResponse(
 					managerDto, 
 					this.reservationRepository
-						.findAllBySaloonId(managerDto.getSaloonDto().getId(), ClientRequestUtils.from(clientPageRequest))
+						.findAllBySaloonId(managerDto.getSaloonDto().getId(), ClientPageRequestUtils.from(clientPageRequest))
 						.map(ReservationMapper::map));
 		else
 			return new ManagerReservationResponse(

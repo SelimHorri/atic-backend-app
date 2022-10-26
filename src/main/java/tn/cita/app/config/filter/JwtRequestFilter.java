@@ -22,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
 import tn.cita.app.exception.wrapper.UnauthorizedUserException;
-import tn.cita.app.util.JwtUtil;
+import tn.cita.app.util.JwtUtils;
 
 @Component
 @Slf4j
@@ -32,7 +32,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 	@Qualifier("handlerExceptionResolver")
 	private final HandlerExceptionResolver exceptionResolver;
 	private final UserDetailsService userDetailsService;
-	private final JwtUtil jwtUtil;
+	private final JwtUtils jwtUtils;
 	
 	@Override
 	protected void doFilterInternal(final HttpServletRequest request, 
@@ -50,7 +50,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			jwt = authorizationHeader.substring(7);
 			
 			try {
-				username = this.jwtUtil.extractUsername(jwt);
+				username = this.jwtUtils.extractUsername(jwt);
 			}
 			catch (RuntimeException e) {
 				this.exceptionResolver.resolveException(request, response, null, 
@@ -65,7 +65,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 			
 			final UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
 			
-			if (!this.jwtUtil.validateToken(jwt, userDetails)) {
+			if (!this.jwtUtils.validateToken(jwt, userDetails)) {
 				this.exceptionResolver.resolveException(request, response, null, 
 						new UnauthorizedUserException("UnauthorizedUserException"));
 				return;

@@ -13,13 +13,13 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import tn.cita.app.dto.request.LoginRequest;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.service.v0.AuthenticationService;
-import tn.cita.app.util.JwtUtil;
+import tn.cita.app.util.JwtUtils;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class AuthenticationServiceImplTest {
 	
 	@Autowired
-	private JwtUtil jwtUtil;
+	private JwtUtils jwtUtils;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -40,7 +40,7 @@ class AuthenticationServiceImplTest {
 		assertThat(expectedLoginResponse).isNotNull();
 		assertThat(expectedLoginResponse.username()).isEqualTo(loginRequest.getUsername());
 		
-		final var validateToken = this.jwtUtil.validateToken(expectedLoginResponse.jwtToken(), 
+		final var validateToken = this.jwtUtils.validateToken(expectedLoginResponse.jwtToken(), 
 				this.userDetailsService.loadUserByUsername(expectedLoginResponse.username()));
 		assertThat(validateToken).isTrue();
 	}

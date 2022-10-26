@@ -8,14 +8,14 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.UsernameNotMatchException;
-import tn.cita.app.util.JwtUtil;
+import tn.cita.app.util.JwtUtils;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @Component
 @RequiredArgsConstructor
 public class WorkerRequestExtractorUtil implements UserRequestExtractorUtil {
 	
-	private final JwtUtil jwtUtil;
+	private final JwtUtils jwtUtils;
 	
 	@Override
 	public String extractUsername(final WebRequest request) {
@@ -23,7 +23,7 @@ public class WorkerRequestExtractorUtil implements UserRequestExtractorUtil {
 		final var usernameAuthHeader = (Optional.ofNullable(request.getHeader(AppConstants.USERNAME_AUTH_HEADER)).isPresent()) ? 
 				request.getHeader(AppConstants.USERNAME_AUTH_HEADER) : "";
 		
-		final var authenticatedUsername = this.jwtUtil
+		final var authenticatedUsername = this.jwtUtils
 				.extractUsername(request.getHeader(AppConstants.AUTHORIZATION_HEADER).substring(7));
 		
 		if (!usernameAuthHeader.isBlank())

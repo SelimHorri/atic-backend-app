@@ -16,7 +16,7 @@ import tn.cita.app.exception.wrapper.TaskNotFoundException;
 import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.TaskService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -56,7 +56,7 @@ public class TaskServiceImpl implements TaskService {
 	public Page<TaskDto> findAllByWorkerId(final Integer workerId, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all paged tasks by workerId.. *\n");
 		return this.taskRepository.findAllByWorkerId(workerId, 
-					ClientRequestUtils.from(clientPageRequest))
+					ClientPageRequestUtils.from(clientPageRequest))
 				.map(TaskMapper::map);
 	}
 	

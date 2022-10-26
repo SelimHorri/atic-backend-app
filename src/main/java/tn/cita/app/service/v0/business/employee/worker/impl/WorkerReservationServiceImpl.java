@@ -17,7 +17,7 @@ import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.business.employee.worker.WorkerReservationService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -36,7 +36,7 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 					.map(EmployeeMapper::map)
 					.orElseThrow(() -> new EmployeeNotFoundException(String
 							.format("Employee with username: %s not found", username))).getId(), 
-					ClientRequestUtils.from(clientPageRequest))
+					ClientPageRequestUtils.from(clientPageRequest))
 				.map(TaskMapper::map);
 	}
 	

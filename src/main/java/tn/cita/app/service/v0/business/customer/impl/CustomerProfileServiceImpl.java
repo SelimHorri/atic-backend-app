@@ -25,7 +25,7 @@ import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.repository.RatingRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.service.v0.business.customer.CustomerProfileService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -50,10 +50,10 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 				customerDto, 
 				null, 
 				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
-						ClientRequestUtils.from(clientPageRequest))
+						ClientPageRequestUtils.from(clientPageRequest))
 					.map(ReservationMapper::map), 
 					this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
-							ClientRequestUtils.from(clientPageRequest))
+							ClientPageRequestUtils.from(clientPageRequest))
 						.map(FavouriteMapper::map),
 				new PageImpl<>(this.ratingRepository.findAllByCustomerId(customerDto.getId()).stream()
 						.map(RatingMapper::map)

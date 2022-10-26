@@ -33,7 +33,7 @@ import tn.cita.app.repository.SaloonRepository;
 import tn.cita.app.repository.ServiceDetailRepository;
 import tn.cita.app.service.v0.business.customer.CustomerReservationService;
 import tn.cita.app.service.v0.common.ReservationCommonService;
-import tn.cita.app.util.ClientRequestUtils;
+import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -58,7 +58,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		return new CustomerReservationResponse(
 				customerDto,
 				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
-						ClientRequestUtils.from(clientPageRequest))
+						ClientPageRequestUtils.from(clientPageRequest))
 					.map(ReservationMapper::map));
 	}
 	
