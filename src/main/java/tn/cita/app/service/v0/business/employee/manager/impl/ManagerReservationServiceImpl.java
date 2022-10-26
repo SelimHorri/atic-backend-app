@@ -14,11 +14,14 @@ import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
 import tn.cita.app.dto.response.ManagerReservationResponse;
 import tn.cita.app.dto.response.ReservationSubWorkerResponse;
+import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
+import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ReservationMapper;
-import tn.cita.app.service.v0.EmployeeService;
-import tn.cita.app.service.v0.ReservationService;
+import tn.cita.app.repository.EmployeeRepository;
+import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.service.v0.business.employee.manager.ManagerReservationService;
 import tn.cita.app.service.v0.common.ReservationCommonService;
+import tn.cita.app.util.ClientRequestUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -26,23 +29,31 @@ import tn.cita.app.service.v0.common.ReservationCommonService;
 @RequiredArgsConstructor
 public class ManagerReservationServiceImpl implements ManagerReservationService {
 	
-	private final EmployeeService employeeService;
-	private final ReservationService reservationService;
+	private final EmployeeRepository employeeRepository;
+	private final ReservationRepository reservationRepository;
 	private final ReservationCommonService reservationCommonService;
 	
 	@Override
 	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch all paged reservations by manager.. *\n");
-		final var managerDto = this.employeeService.findByCredentialUsername(username);
+		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::map)
+				.orElseThrow(() -> new EmployeeNotFoundException(String
+						.format("Employee with username: %s not found", username)));
 		if (clientPageRequest != null)
 			return new ManagerReservationResponse(
 					managerDto, 
-					this.reservationService.findAllBySaloonId(managerDto.getSaloonDto().getId(), clientPageRequest));
+					this.reservationRepository
+						.findAllBySaloonId(managerDto.getSaloonDto().getId(), ClientRequestUtils.from(clientPageRequest))
+						.map(ReservationMapper::map));
 		else
 			return new ManagerReservationResponse(
 					managerDto, 
-					new PageImpl<>(this.reservationService
+					new PageImpl<>(this.reservationRepository
 							.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
+							.map(ReservationMapper::map)
+							.distinct()
+							.collect(Collectors.toUnmodifiableList()).stream()
 								.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
 								.collect(Collectors.toUnmodifiableList())));
 	}
@@ -56,10 +67,13 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	@Override
 	public ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key) {
 		log.info("** Search all reservations by saloonId like key by manager.. *\n");
-		final var managerDto = this.employeeService.findByCredentialUsername(username);
+		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::map)
+				.orElseThrow(() -> new EmployeeNotFoundException(String
+						.format("Employee with username: %s not found", username)));
 		return new ManagerReservationResponse(
 				managerDto, 
-				new PageImpl<>(this.reservationService.getReservationRepository()
+				new PageImpl<>(this.reservationRepository
 						.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase()).stream()
 							.map(ReservationMapper::map)
 							.distinct()
