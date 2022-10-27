@@ -46,19 +46,20 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
-		return new CustomerProfileResponse(
-				customerDto, 
-				null, 
-				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
+		
+		return CustomerProfileResponse.builder()
+				.customerDto(customerDto)
+				.reservationDtos(this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
 						ClientPageRequestUtils.from(clientPageRequest))
-					.map(ReservationMapper::map), 
-					this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
-							ClientPageRequestUtils.from(clientPageRequest))
-						.map(FavouriteMapper::map),
-				new PageImpl<>(this.ratingRepository.findAllByCustomerId(customerDto.getId()).stream()
+					.map(ReservationMapper::map))
+				.favouriteDtos(this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
+						ClientPageRequestUtils.from(clientPageRequest))
+					.map(FavouriteMapper::map))
+				.ratingDtos(new PageImpl<>(this.ratingRepository.findAllByCustomerId(customerDto.getId()).stream()
 						.map(RatingMapper::map)
 						.distinct()
-						.collect(Collectors.toUnmodifiableList())));
+						.collect(Collectors.toUnmodifiableList())))
+				.build();
 	}
 	
 	@Transactional

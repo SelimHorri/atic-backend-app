@@ -47,14 +47,15 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 				customerDto,
 				this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
 						ClientPageRequestUtils.from(clientPageRequest))
-				.map(FavouriteMapper::map));
+					.map(FavouriteMapper::map));
 	}
 	
 	@Transactional
 	@Override
 	public Boolean deleteFavourite(final String username, final Integer saloonId) {
 		log.info("** Delete favourite by customer.. *\n");
-		final var favouriteId = new FavouriteId(this.customerRepository.findByCredentialUsernameIgnoringCase(username)
+		final var favouriteId = new FavouriteId(this.customerRepository
+				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException(String
 						.format("Customer with username: %s not found", username)))
@@ -81,14 +82,14 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 		
 		// persist..
 		this.favouriteRepository.saveFavourite(Favourite.builder()
-						.customerId(customer.getId())
-						.saloonId(saloonId)
-						.favouriteDate(LocalDateTime.now())
-						.identifier(UUID.randomUUID().toString())
-						.customer(customer)
-						.saloon(this.saloonRepository.findById(saloonId)
-								.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
-						.build());
+					.customerId(customer.getId())
+					.saloonId(saloonId)
+					.favouriteDate(LocalDateTime.now())
+					.identifier(UUID.randomUUID().toString())
+					.customer(customer)
+					.saloon(this.saloonRepository.findById(saloonId)
+							.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
+					.build());
 		
 		return this.favouriteRepository.findById(favouriteId)
 				.map(FavouriteMapper::map)

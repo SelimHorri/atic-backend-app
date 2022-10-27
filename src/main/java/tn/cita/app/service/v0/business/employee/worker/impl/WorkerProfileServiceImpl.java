@@ -31,7 +31,8 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 	@Override
 	public WorkerProfileResponse fetchProfile(final String username) {
 		log.info("** Fetch worker profile.. *\n");
-		final var workerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+		final var workerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
 		return new WorkerProfileResponse(
