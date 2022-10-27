@@ -44,10 +44,10 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 	public Page<TaskDto> fetchAllReservations(final String username) {
 		log.info("** Fetch all reservations by worker.. *\n");
 		return new PageImpl<>(this.taskRepository.findAllByWorkerId(this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(username.strip())
-				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username))).getId()))
+					.findByCredentialUsernameIgnoringCase(username.strip())
+					.map(EmployeeMapper::map)
+					.orElseThrow(() -> new EmployeeNotFoundException(String
+							.format("Employee with username: %s not found", username))).getId()))
 				.map(TaskMapper::map);
 	}
 	
@@ -59,7 +59,7 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
 		return new PageImpl<>(this.taskRepository
-				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.toLowerCase()).stream()
+				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.strip().toLowerCase()).stream()
 					.map(TaskMapper::map)
 					.distinct()
 					.collect(Collectors.toUnmodifiableList()));

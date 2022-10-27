@@ -1,7 +1,5 @@
 package tn.cita.app.util.impl;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 
@@ -20,7 +18,7 @@ public class ManagerRequestExtractorUtil implements UserRequestExtractorUtil {
 	@Override
 	public String extractUsername(final WebRequest request) {
 
-		final var usernameAuthHeader = (Optional.ofNullable(request.getHeader(AppConstants.USERNAME_AUTH_HEADER)).isPresent()) ? 
+		final var usernameAuthHeader = (request.getHeader(AppConstants.USERNAME_AUTH_HEADER) != null) ? 
 				request.getHeader(AppConstants.USERNAME_AUTH_HEADER) : "";
 		
 		final var authenticatedUsername = this.jwtUtils

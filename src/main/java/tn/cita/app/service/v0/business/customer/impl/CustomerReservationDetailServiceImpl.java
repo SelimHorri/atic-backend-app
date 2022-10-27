@@ -54,8 +54,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
 		log.info("** Update reservation details by customer.. *\n");
 		final var reservation = this.reservationRepository.findById(reservationDetailRequest.getReservationId())
-				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", reservationDetailRequest.getReservationId())));
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation with id: %s not found"));
 		reservation.setDescription((reservationDetailRequest.getDescription() == null 
 					|| reservationDetailRequest.getDescription().isBlank()) ? 
 				null : reservationDetailRequest.getDescription().strip());
