@@ -42,6 +42,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public CustomerDto findByIdentifier(final String identifier) {
+		log.info("** Find customer by identifier.. *\n");
 		return this.customerRepository.findByIdentifier(identifier.strip())
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
@@ -57,6 +58,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public List<CustomerDto> findAllBySsn(final String ssn) {
+		log.info("** Find customer(s) by ssn.. *\n");
 		return this.customerRepository.findAllBySsn(ssn.strip()).stream()
 				.map(CustomerMapper::map)
 				.distinct()
