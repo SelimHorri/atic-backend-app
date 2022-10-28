@@ -41,12 +41,27 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 	
 	@Override
+	public EmployeeDto findByIdentifier(final String identifier) {
+		return this.employeeRepository.findByIdentifier(identifier.strip())
+				.map(EmployeeMapper::map)
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
+	}
+	
+	@Override
 	public EmployeeDto findByCredentialUsername(final String username) {
 		log.info("** Find employee by credential username.. *\n");
 		return this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
+	}
+	
+	@Override
+	public List<EmployeeDto> findAllBySsn(final String ssn) {
+		return this.employeeRepository.findAllBySsn(ssn.strip()).stream()
+				.map(EmployeeMapper::map)
+				.distinct()
+				.toList();
 	}
 	
 	@Transactional
