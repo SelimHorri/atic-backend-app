@@ -42,6 +42,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public EmployeeDto findByIdentifier(final String identifier) {
+		log.info("** Find employee by identifier.. *\n");
 		return this.employeeRepository.findByIdentifier(identifier.strip())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
@@ -58,6 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	@Override
 	public List<EmployeeDto> findAllBySsn(final String ssn) {
+		log.info("** Find employee(s) by ssn.. *\n");
 		return this.employeeRepository.findAllBySsn(ssn.strip()).stream()
 				.map(EmployeeMapper::map)
 				.distinct()
