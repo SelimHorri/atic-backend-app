@@ -30,7 +30,7 @@ public final class ApiResponse<T> implements Serializable {
 	@JsonFormat(shape = Shape.STRING)
 	@JsonSerialize(using = InstantSerializer.class)
 	@JsonDeserialize(using = InstantDeserializer.class)
-	private transient final Instant timestamp = Instant.now();
+	private final Instant timestamp = Instant.now();
 	private final Integer totalResult;
 	private final HttpStatus httpStatus;
 	private final Boolean acknowledge;
