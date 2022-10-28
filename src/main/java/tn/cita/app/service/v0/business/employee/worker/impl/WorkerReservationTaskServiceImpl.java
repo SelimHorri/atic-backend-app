@@ -64,8 +64,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 						.format("Employee with username: %s not found", taskUpdateDescriptionRequest.getUsername())));
 		final var reservation = this.reservationRepository
 				.findById(taskUpdateDescriptionRequest.getReservationId())
-				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", taskUpdateDescriptionRequest.getReservationId())));
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final var task = this.taskRepository
 				.findById(new TaskId(worker.getId(), reservation.getId()))
 				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
@@ -94,8 +93,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 						.format("Employee with username: %s not found", taskBeginRequest.getUsername())));
 		final var reservation = this.reservationRepository
 				.findById(taskBeginRequest.getReservationId())
-				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", taskBeginRequest.getReservationId())));
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final var task = this.taskRepository
 				.findById(new TaskId(worker.getId(), reservation.getId()))
 				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
@@ -141,8 +139,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 						.format("Employee with username: %s not found", taskEndRequest.getUsername())));
 		final var reservation = this.reservationRepository
 				.findById(taskEndRequest.getReservationId())
-				.orElseThrow(() -> new ReservationNotFoundException(String
-						.format("Reservation with id: %s not found", taskEndRequest.getReservationId())));
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final var task = this.taskRepository
 				.findById(new TaskId(workerDto.getId(), reservation.getId()))
 				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
@@ -170,8 +167,6 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		final boolean isAllTasksEnded = assignedOtherTaskDtos.stream()
 					.map(Task::getEndDate)
 					.allMatch(Objects::nonNull);
-					//.allMatch(t -> Objects.nonNull(t.getEndDate()));
-					//.allMatch(t -> Optional.ofNullable(t.getEndDate()).isPresent());
 		
 		// update reservation as COMPLETED if match..
 		if (isAllTasksEnded) {

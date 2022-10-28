@@ -1,5 +1,7 @@
 package tn.cita.app.service.v0.impl;
 
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -38,12 +40,11 @@ public class CustomerServiceImpl implements CustomerService {
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 	}
 	
-	@Transactional
 	@Override
-	public boolean deleteById(final Integer id) {
-		log.info("** Delete customer by id..*\n");
-		this.customerRepository.deleteById(id);
-		return !this.customerRepository.existsById(id);
+	public CustomerDto findByIdentifier(final String identifier) {
+		return this.customerRepository.findByIdentifier(identifier.strip())
+				.map(CustomerMapper::map)
+				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 	}
 	
 	@Override
@@ -52,6 +53,22 @@ public class CustomerServiceImpl implements CustomerService {
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
+	}
+	
+	@Override
+	public List<CustomerDto> findAllBySsn(final String ssn) {
+		return this.customerRepository.findAllBySsn(ssn.strip()).stream()
+				.map(CustomerMapper::map)
+				.distinct()
+				.toList();
+	}
+	
+	@Transactional
+	@Override
+	public boolean deleteById(final Integer id) {
+		log.info("** Delete customer by id..*\n");
+		this.customerRepository.deleteById(id);
+		return !this.customerRepository.existsById(id);
 	}
 	
 	
