@@ -64,6 +64,7 @@ public final class AppConstants {
 	
 	public static final String[] WHITE_BLACKLISTED_URLS_GET = {
 			"/api/v*/service-details/reservationId/**",
+			"/api/v*/service-details/reservationIdentifier/**",
 	};
 	
 	/**

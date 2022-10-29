@@ -42,6 +42,15 @@ public class CustomerReservationDetailResource {
 				this.customerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
+	@GetMapping("/identifier/{reservationIdentifier}")
+	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetailsWithIdentifier(final WebRequest request,
+			@PathVariable final String reservationIdentifier) {
+		log.info("** Fetch customer reservation details.. *\n");
+		this.userRequestExtractorUtil.extractUsername(request);
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.customerReservationDetailService.fetchReservationDetails(reservationIdentifier.strip())));
+	}
+	
 	@PutMapping
 	public ResponseEntity<ApiResponse<ReservationDto>> updateReservationDetails(final WebRequest request, 
 			@RequestBody @Valid final ReservationDetailRequest reservationDetailRequest) {
