@@ -46,11 +46,25 @@ public class ServiceDetailResource {
 				this.serviceDetailService.fetchOrderedServiceDetails(Integer.parseInt(reservationId))));
 	}
 	
+	/**
+	 * Secured Resource
+	 * Added WHITE_BLACKLISTED_URLS_GET
+	 * @param reservationIdentifier
+	 * @return related services by a reservation
+	 */
+	@GetMapping("/reservationIdentifier/{reservationIdentifier}")
+	public ResponseEntity<ApiResponse<ServiceDetailsReservationContainerResponse>> fetchOrderedServiceDetailsWithIdentifier(
+			@PathVariable final String reservationIdentifier) {
+		log.info("** Fetch ordered service details by reservationIdentifier (secured api).. *\n");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.serviceDetailService.fetchOrderedServiceDetails(reservationIdentifier.strip())));
+	}
+	
 	@GetMapping("/saloonId/{saloonId}")
 	public ResponseEntity<ApiResponse<Page<ServiceDetailDto>>> findAllByCategorySaloonId(@PathVariable final String saloonId) {
 		log.info("** Find All service details by category saloonId.. *\n");
 		final var serviceDetails = this.serviceDetailService.findAllByCategorySaloonId(Integer.parseInt(saloonId));
-		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, new PageImpl<>(serviceDetails)));
+		return ResponseEntity.ok(new ApiResponse<>(serviceDetails.size(), HttpStatus.OK, true, new PageImpl<>(serviceDetails)));
 	}
 	
 	
