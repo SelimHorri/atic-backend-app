@@ -18,11 +18,14 @@ import tn.cita.app.dto.ServiceDetailDto;
 import tn.cita.app.dto.request.ServiceDetailRequest;
 import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
+import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.mapper.OrderedDetailMapper;
+import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.mapper.ServiceDetailMapper;
 import tn.cita.app.repository.CategoryRepository;
 import tn.cita.app.repository.OrderedDetailRepository;
+import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.ServiceDetailRepository;
 import tn.cita.app.service.v0.ServiceDetailService;
 
@@ -35,6 +38,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	private final ServiceDetailRepository serviceDetailRepository;
 	private final OrderedDetailRepository orderedDetailRepository;
 	private final CategoryRepository categoryRepository;
+	private final ReservationRepository reservationRepository;
 	
 	@Override
 	public List<ServiceDetailDto> findAll() {
@@ -73,6 +77,30 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 					.map(OrderedDetailMapper::map)
 					.distinct()
 					.collect(Collectors.toList());
+		final var ids = orderedDetailDtos.stream()
+					.map(OrderedDetailDto::getServiceDetailId)
+					.collect(Collectors.toUnmodifiableSet());
+		
+		return ServiceDetailsReservationContainerResponse.builder()
+				.serviceDetailDtos(this.findAllByIds(ids))
+				.orderedDetailDtos(new PageImpl<>(orderedDetailDtos))
+				.build();
+	}
+	
+	@Override
+	public ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final String reservationIdentifier) {
+		
+		log.info("** Fetch ordered service details by reservationIdentifier.. *\n");
+		
+		final var reservationDto = this.reservationRepository.findByIdentifier(reservationIdentifier)
+				.map(ReservationMapper::map)
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+		
+		final var orderedDetailDtos = this.orderedDetailRepository
+				.findAllByReservationId(reservationDto.getId()).stream()
+					.map(OrderedDetailMapper::map)
+					.distinct()
+					.toList();
 		final var ids = orderedDetailDtos.stream()
 					.map(OrderedDetailDto::getServiceDetailId)
 					.collect(Collectors.toUnmodifiableSet());
