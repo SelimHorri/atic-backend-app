@@ -9,6 +9,7 @@ public interface CategoryService {
 	
 	List<CategoryDto> findAll();
 	CategoryDto findById(final Integer id);
+	CategoryDto findByIdentifier(final String identifier);
 	List<CategoryDto> findAllBySaloonId(final Integer saloonId);
 	CategoryDto save(final CategoryRequest categoryRequest);
 	CategoryDto update(final CategoryRequest categoryRequest);

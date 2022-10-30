@@ -9,6 +9,7 @@ public interface TagService {
 	
 	Page<TagDto> findAll(final ClientPageRequest clientPageRequest);
 	TagDto findById(final Integer id);
+	TagDto findByIdentifier(final String identifier);
 	
 }
 
