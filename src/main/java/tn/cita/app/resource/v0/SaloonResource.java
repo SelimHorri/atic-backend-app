@@ -49,6 +49,13 @@ public class SaloonResource {
 				this.saloonService.findById(Integer.parseInt(id))));
 	}
 	
+	@GetMapping("/identifier/{identifier}")
+	public ResponseEntity<ApiResponse<SaloonDto>> findByIdentifier(@PathVariable final String identifier) {
+		log.info("** Find by identifier.. *\n");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.saloonService.findByIdentifier(identifier.strip())));
+	}
+	
 	@GetMapping("/code/{code}")
 	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAllByCode(@PathVariable final String code) {
 		log.info("** Find all salonns by code.. *\n");

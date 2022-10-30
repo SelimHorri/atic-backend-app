@@ -8,6 +8,7 @@ import tn.cita.app.dto.request.OrderedDetailRequest;
 
 public interface OrderedDetailService {
 	
+	OrderedDetailDto findByIdentifier(final String identifier);
 	List<OrderedDetailDto> findAllByReservationId(final Integer reservationId);
 	Boolean deleteById(final OrderedDetailId orderedDetailId);
 	OrderedDetailDto save(final OrderedDetailRequest orderedDetailRequest);

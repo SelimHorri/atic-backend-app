@@ -58,6 +58,13 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	}
 	
 	@Override
+	public ServiceDetailDto findByIdentifier(final String identifier) {
+		return this.serviceDetailRepository.findByIdentifier(identifier.strip())
+				.map(ServiceDetailMapper::map)
+				.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
+	}
+	
+	@Override
 	public Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids) {
 		log.info("** Find all service details by ids.. *\n");
 		final var list = this.serviceDetailRepository.findAllById(ids).stream()

@@ -11,6 +11,7 @@ import tn.cita.app.dto.request.ClientPageRequest;
 public interface TaskService {
 	
 	TaskDto findById(final TaskId taskId);
+	TaskDto findByIdentifier(final String identifier);
 	List<TaskDto> findAllByReservationId(final Integer reservationId);
 	List<TaskDto> findAllByWorkerId(final Integer workerId);
 	Page<TaskDto> findAllByWorkerId(final Integer workerId, final ClientPageRequest clientPageRequest);

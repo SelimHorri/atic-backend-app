@@ -40,6 +40,13 @@ public class TagResource {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.tagService.findById(Integer.parseInt(id))));
 	}
 	
+	@GetMapping("/identifier/{identifier}")
+	public ResponseEntity<ApiResponse<TagDto>> findByIdentifier(@PathVariable final String identifier) {
+		log.info("** Find by identifier.. *\n");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.tagService.findByIdentifier(identifier.strip())));
+	}
+	
 	
 	
 }

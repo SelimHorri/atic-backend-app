@@ -13,6 +13,7 @@ import tn.cita.app.domain.id.OrderedDetailId;
 import tn.cita.app.dto.OrderedDetailDto;
 import tn.cita.app.dto.request.OrderedDetailRequest;
 import tn.cita.app.exception.wrapper.OrderedDetailAlreadyExistsException;
+import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
 import tn.cita.app.mapper.OrderedDetailMapper;
 import tn.cita.app.repository.OrderedDetailRepository;
 import tn.cita.app.service.v0.OrderedDetailService;
@@ -24,6 +25,13 @@ import tn.cita.app.service.v0.OrderedDetailService;
 public class OrderedDetailServiceImpl implements OrderedDetailService {
 	
 	private final OrderedDetailRepository orderedDetailRepository;
+	
+	@Override
+	public OrderedDetailDto findByIdentifier(final String identifier) {
+		return this.orderedDetailRepository.findByIdentifier(identifier)
+				.map(OrderedDetailMapper::map)
+				.orElseThrow(() -> new OrderedDetailNotFoundException("OrderDetail not found"));
+	}
 	
 	@Override
 	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {

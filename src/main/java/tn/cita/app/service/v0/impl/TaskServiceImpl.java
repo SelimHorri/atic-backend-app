@@ -31,7 +31,14 @@ public class TaskServiceImpl implements TaskService {
 		log.info("** Find task by id.. *\n");
 		return this.taskRepository.findById(taskId)
 				.map(TaskMapper::map)
-				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
+				.orElseThrow(() -> new TaskNotFoundException("Task not found"));
+	}
+	
+	@Override
+	public TaskDto findByIdentifier(final String identifier) {
+		return this.taskRepository.findByIdentifier(identifier.strip())
+				.map(TaskMapper::map)
+				.orElseThrow(() -> new TaskNotFoundException("Task not found"));
 	}
 	
 	@Override
