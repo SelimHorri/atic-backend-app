@@ -45,6 +45,13 @@ public class ReservationServiceImpl implements ReservationService {
 	}
 	
 	@Override
+	public ReservationDto findByIdentifier(final String identifier) {
+		return this.reservationRepository.findByIdentifier(identifier.strip())
+				.map(ReservationMapper::map)
+				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+	}
+	
+	@Override
 	public ReservationDto findByCode(final String code) {
 		log.info("** Find reservation by code.. *\n");
 		return this.reservationRepository.findByCode(code)

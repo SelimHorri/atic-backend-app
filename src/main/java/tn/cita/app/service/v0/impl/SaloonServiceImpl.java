@@ -50,6 +50,13 @@ public class SaloonServiceImpl implements SaloonService {
 	}
 	
 	@Override
+	public SaloonDto findByIdentifier(final String identifier) {
+		return this.saloonRepository.findByIdentifier(identifier.strip())
+				.map(SaloonMapper::map)
+				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
+	}
+	
+	@Override
 	public Page<SaloonDto> findAllByCode(final String code) {
 		log.info("** Find all saloons by code.. *\n");
 		return new PageImpl<>(this.saloonRepository.findAllByCode(code).stream()

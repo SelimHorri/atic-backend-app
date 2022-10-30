@@ -32,6 +32,13 @@ public class OrderedDetailResource {
 	
 	private final OrderedDetailService orderedDetailService;
 	
+	@GetMapping("/identifier/{identifier}")
+	public ResponseEntity<ApiResponse<OrderedDetailDto>> findByIdentifier(@PathVariable final String identifier) {
+		log.info("** Find by identifier.. *\n");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.orderedDetailService.findByIdentifier(identifier.strip())));
+	}
+	
 	@GetMapping("/reservationId/{reservationId}")
 	public ResponseEntity<ApiResponse<Page<OrderedDetailDto>>> findAllByReservationId(final WebRequest request, 
 			@PathVariable final String reservationId) {
