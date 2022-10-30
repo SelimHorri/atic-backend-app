@@ -13,6 +13,7 @@ public interface ServiceDetailService {
 	
 	List<ServiceDetailDto> findAll();
 	ServiceDetailDto findById(final Integer id);
+	ServiceDetailDto findByIdentifier(final String identifier);
 	Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids);
 	ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final Integer reservationId);
 	ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final String reservationIdentifier);

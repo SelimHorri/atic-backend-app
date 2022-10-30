@@ -36,6 +36,13 @@ public class ReservationResource {
 				this.reservationService.findById(Integer.parseInt(id))));
 	}
 	
+	@GetMapping("/identifier/{identifier}")
+	public ResponseEntity<ApiResponse<ReservationDto>> findByIdentifier(@PathVariable final String identifier) {
+		log.info("** Find by identifier.. *\n");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.reservationService.findByIdentifier(identifier.strip())));
+	}
+	
 	@GetMapping("/code/{code}")
 	public ResponseEntity<ApiResponse<ReservationDto>> findByCode(final WebRequest request,
 			@PathVariable final String code) {

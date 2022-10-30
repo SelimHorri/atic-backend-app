@@ -24,6 +24,13 @@ public class CategoryResource {
 	
 	private final CategoryService categoryService;
 	
+	@GetMapping("/identifier/{identifier}")
+	public ResponseEntity<ApiResponse<CategoryDto>> findByIdentifier(@PathVariable final String identifier) {
+		log.info("** Find by identifier.. *\n");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.categoryService.findByIdentifier(identifier.strip())));
+	}
+	
 	@GetMapping("/{saloonId}")
 	public ResponseEntity<ApiResponse<Page<CategoryDto>>> findAllBySaloonId(@PathVariable final String saloonId) {
 		log.info("** Find all categories by saloonId.. *\n");

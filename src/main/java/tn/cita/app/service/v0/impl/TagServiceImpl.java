@@ -38,6 +38,13 @@ public class TagServiceImpl implements TagService {
 				.orElseThrow(() -> new TagNotFoundException("Tag not found"));
 	}
 	
+	@Override
+	public TagDto findByIdentifier(final String identifier) {
+		return this.tagRepository.findByIdentifier(identifier.strip())
+				.map(TagMapper::map)
+				.orElseThrow(() -> new TagNotFoundException("Tag not found"));
+	}
+	
 	
 	
 }

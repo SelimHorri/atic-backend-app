@@ -32,6 +32,13 @@ public class ServiceDetailResource {
 				this.serviceDetailService.findById(Integer.parseInt(id))));
 	}
 	
+	@GetMapping("/identifier/{identifier}")
+	public ResponseEntity<ApiResponse<ServiceDetailDto>> findByIdentifier(@PathVariable final String identifier) {
+		log.info("** Find by identifier.. *\n");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
+				this.serviceDetailService.findByIdentifier(identifier.strip())));
+	}
+	
 	/**
 	 * Secured Resource
 	 * Added WHITE_BLACKLISTED_URLS_GET

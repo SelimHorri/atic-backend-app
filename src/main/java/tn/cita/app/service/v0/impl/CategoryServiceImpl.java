@@ -47,6 +47,13 @@ public class CategoryServiceImpl implements CategoryService {
 	}
 	
 	@Override
+	public CategoryDto findByIdentifier(final String identifier) {
+		return this.categoryRepository.findByIdentifier(identifier.strip())
+				.map(CategoryMapper::map)
+				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+	}
+	
+	@Override
 	public List<CategoryDto> findAllBySaloonId(final Integer saloonId) {
 		log.info("** Find all categories by saloonId.. *\n");
 		return this.categoryRepository.findAllBySaloonId(saloonId).stream()

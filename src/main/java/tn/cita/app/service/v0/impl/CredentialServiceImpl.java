@@ -28,6 +28,13 @@ public class CredentialServiceImpl implements CredentialService {
 	}
 	
 	@Override
+	public CredentialDto findByIdentifier(final String identifier) {
+		return this.credentialRepository.findByIdentifier(identifier.strip())
+				.map(CredentialMapper::map)
+				.orElseThrow(() -> new CredentialNotFoundException("Credential not found"));
+	}
+	
+	@Override
 	public CredentialDto findByUsername(final String username) {
 		log.info("** Find user by username.. *\n");
 		return this.credentialRepository.findByUsernameIgnoreCase(username)
