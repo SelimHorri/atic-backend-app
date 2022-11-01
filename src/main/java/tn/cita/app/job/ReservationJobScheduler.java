@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.domain.ReservationStatus;
+import tn.cita.app.model.domain.ReservationStatus;
 import tn.cita.app.repository.ReservationRepository;
 
 @Component

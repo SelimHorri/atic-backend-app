@@ -2,8 +2,8 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Location;
-import tn.cita.app.dto.LocationDto;
+import tn.cita.app.model.domain.entity.Location;
+import tn.cita.app.model.dto.LocationDto;
 
 public interface LocationMapper {
 	

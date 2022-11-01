@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.request.RegisterRequest;
-import tn.cita.app.dto.response.RegisterResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.model.dto.request.RegisterRequest;
+import tn.cita.app.model.dto.response.RegisterResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.RegistrationService;
 
 @RestController

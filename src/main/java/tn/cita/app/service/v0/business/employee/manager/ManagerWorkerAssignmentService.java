@@ -1,7 +1,7 @@
 package tn.cita.app.service.v0.business.employee.manager;
 
-import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.ManagerWorkerAssignmentResponse;
+import tn.cita.app.model.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.response.ManagerWorkerAssignmentResponse;
 
 public interface ManagerWorkerAssignmentService {
 	

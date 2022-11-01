@@ -1,6 +1,6 @@
 package tn.cita.app.service.v0;
 
-import tn.cita.app.dto.VerificationTokenDto;
+import tn.cita.app.model.dto.VerificationTokenDto;
 
 public interface VerificationTokenService {
 	

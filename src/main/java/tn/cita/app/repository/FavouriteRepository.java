@@ -9,8 +9,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import tn.cita.app.domain.entity.Favourite;
-import tn.cita.app.domain.id.FavouriteId;
+import tn.cita.app.model.domain.entity.Favourite;
+import tn.cita.app.model.domain.id.FavouriteId;
 
 public interface FavouriteRepository extends JpaRepository<Favourite, FavouriteId> {
 	

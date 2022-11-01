@@ -7,8 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import tn.cita.app.domain.entity.Rating;
-import tn.cita.app.domain.id.RatingId;
+import tn.cita.app.model.domain.entity.Rating;
+import tn.cita.app.model.domain.id.RatingId;
 
 public interface RatingRepository extends JpaRepository<Rating, RatingId> {
 	

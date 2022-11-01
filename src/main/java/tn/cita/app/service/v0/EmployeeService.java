@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.dto.EmployeeDto;
+import tn.cita.app.model.dto.EmployeeDto;
 
 public interface EmployeeService {
 	

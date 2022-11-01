@@ -4,13 +4,13 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.UserImageDto;
-import tn.cita.app.dto.request.RegisterRequest;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Customer;
+import tn.cita.app.model.domain.entity.UserImage;
+import tn.cita.app.model.dto.CredentialDto;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.UserImageDto;
+import tn.cita.app.model.dto.request.RegisterRequest;
 import tn.cita.app.util.RegistrationUtils;
 
 public interface CustomerMapper {

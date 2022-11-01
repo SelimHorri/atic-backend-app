@@ -11,9 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.EmployeeDto;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
+import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.service.v0.EmployeeService;
 

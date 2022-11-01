@@ -1,8 +1,8 @@
 package tn.cita.app.service.v0.business.customer;
 
-import tn.cita.app.dto.FavouriteDto;
-import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.CustomerFavouriteResponse;
+import tn.cita.app.model.dto.FavouriteDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.response.CustomerFavouriteResponse;
 
 public interface CustomerFavouriteService {
 	

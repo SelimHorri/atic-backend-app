@@ -1,6 +1,6 @@
 package tn.cita.app.util;
 
-import tn.cita.app.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
 
 public interface RegistrationUtils {
 	

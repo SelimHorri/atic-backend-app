@@ -4,9 +4,9 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.domain.id.TaskId;
-import tn.cita.app.dto.TaskDto;
-import tn.cita.app.dto.request.ClientPageRequest;
+import tn.cita.app.model.domain.id.TaskId;
+import tn.cita.app.model.dto.TaskDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 
 public interface TaskService {
 	

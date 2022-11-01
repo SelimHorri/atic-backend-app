@@ -21,11 +21,11 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.request.ReservationRequest;
-import tn.cita.app.dto.response.CustomerReservationResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.request.ReservationRequest;
+import tn.cita.app.model.dto.response.CustomerReservationResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerReservationService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 

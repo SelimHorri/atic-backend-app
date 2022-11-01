@@ -2,7 +2,7 @@ package tn.cita.app.service.v0;
 
 import java.util.List;
 
-import tn.cita.app.dto.SaloonTagDto;
+import tn.cita.app.model.dto.SaloonTagDto;
 
 public interface SaloonTagService {
 	

@@ -1,9 +1,9 @@
 package tn.cita.app.service.v0.business.customer;
 
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.request.ReservationRequest;
-import tn.cita.app.dto.response.CustomerReservationResponse;
+import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.request.ReservationRequest;
+import tn.cita.app.model.dto.response.CustomerReservationResponse;
 
 public interface CustomerReservationService {
 	

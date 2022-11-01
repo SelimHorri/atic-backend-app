@@ -7,7 +7,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import tn.cita.app.dto.CredentialDto;
+import tn.cita.app.model.dto.CredentialDto;
 
 public record CustomUserDetails(CredentialDto credentialDto) implements UserDetails {
 	

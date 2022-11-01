@@ -19,7 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.config.filter.JwtRequestFilter;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
 
 @EnableWebSecurity
 @RequiredArgsConstructor

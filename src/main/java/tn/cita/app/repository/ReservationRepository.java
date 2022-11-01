@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import tn.cita.app.domain.ReservationStatus;
-import tn.cita.app.domain.entity.Reservation;
+import tn.cita.app.model.domain.ReservationStatus;
+import tn.cita.app.model.domain.entity.Reservation;
 
 public interface ReservationRepository extends JpaRepository<Reservation, Integer> {
 	

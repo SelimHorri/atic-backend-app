@@ -5,7 +5,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import tn.cita.app.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	

@@ -15,10 +15,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import tn.cita.app.domain.entity.Tag;
-import tn.cita.app.dto.TagDto;
-import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
+import tn.cita.app.model.domain.entity.Tag;
+import tn.cita.app.model.dto.TagDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.TagRepository;
 import tn.cita.app.service.v0.TagService;
 

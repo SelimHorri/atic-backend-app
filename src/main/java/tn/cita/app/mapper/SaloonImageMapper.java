@@ -2,10 +2,10 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Saloon;
-import tn.cita.app.domain.entity.SaloonImage;
-import tn.cita.app.dto.SaloonDto;
-import tn.cita.app.dto.SaloonImageDto;
+import tn.cita.app.model.domain.entity.Saloon;
+import tn.cita.app.model.domain.entity.SaloonImage;
+import tn.cita.app.model.dto.SaloonDto;
+import tn.cita.app.model.dto.SaloonImageDto;
 
 public interface SaloonImageMapper {
 	

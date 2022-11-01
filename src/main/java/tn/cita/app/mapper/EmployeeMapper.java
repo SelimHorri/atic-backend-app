@@ -4,15 +4,15 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Employee;
-import tn.cita.app.domain.entity.Saloon;
-import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.SaloonDto;
-import tn.cita.app.dto.UserImageDto;
-import tn.cita.app.dto.request.RegisterRequest;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.Saloon;
+import tn.cita.app.model.domain.entity.UserImage;
+import tn.cita.app.model.dto.CredentialDto;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.SaloonDto;
+import tn.cita.app.model.dto.UserImageDto;
+import tn.cita.app.model.dto.request.RegisterRequest;
 import tn.cita.app.util.RegistrationUtils;
 
 public interface EmployeeMapper {

@@ -10,8 +10,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import tn.cita.app.domain.entity.Task;
-import tn.cita.app.domain.id.TaskId;
+import tn.cita.app.model.domain.entity.Task;
+import tn.cita.app.model.domain.id.TaskId;
 
 public interface TaskRepository extends JpaRepository<Task, TaskId> {
 	

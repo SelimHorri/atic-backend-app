@@ -8,11 +8,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.response.ManagerWorkerAssignmentResponse;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.model.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.response.ManagerWorkerAssignmentResponse;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.business.employee.manager.ManagerWorkerAssignmentService;

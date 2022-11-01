@@ -2,8 +2,8 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Tag;
-import tn.cita.app.dto.TagDto;
+import tn.cita.app.model.domain.entity.Tag;
+import tn.cita.app.model.dto.TagDto;
 
 public interface TagMapper {
 	

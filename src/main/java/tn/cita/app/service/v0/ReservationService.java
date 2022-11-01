@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 
 public interface ReservationService {
 	

@@ -7,7 +7,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import tn.cita.app.domain.entity.Saloon;
+import tn.cita.app.model.domain.entity.Saloon;
 
 public interface SaloonRepository extends JpaRepository<Saloon, Integer> {
 	

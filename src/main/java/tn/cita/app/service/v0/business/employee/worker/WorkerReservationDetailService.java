@@ -1,6 +1,6 @@
 package tn.cita.app.service.v0.business.employee.worker;
 
-import tn.cita.app.dto.response.ReservationDetailResponse;
+import tn.cita.app.model.dto.response.ReservationDetailResponse;
 
 public interface WorkerReservationDetailService {
 	

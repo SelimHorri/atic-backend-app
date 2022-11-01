@@ -1,8 +1,8 @@
 package tn.cita.app.service.v0.business.employee.manager;
 
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.request.ManagerProfileRequest;
-import tn.cita.app.dto.response.ManagerProfileResponse;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.request.ManagerProfileRequest;
+import tn.cita.app.model.dto.response.ManagerProfileResponse;
 
 public interface ManagerProfileService {
 	

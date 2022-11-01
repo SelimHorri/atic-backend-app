@@ -12,9 +12,9 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.ServiceDetailDto;
-import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.model.dto.ServiceDetailDto;
+import tn.cita.app.model.dto.response.ServiceDetailsReservationContainerResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.ServiceDetailService;
 
 @RestController

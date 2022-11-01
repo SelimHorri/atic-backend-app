@@ -5,8 +5,8 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.domain.entity.Credential;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.entity.Credential;
 
 public interface CredentialRepository extends JpaRepository<Credential, Integer> {
 	
