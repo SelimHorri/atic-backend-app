@@ -2,12 +2,12 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.Reservation;
-import tn.cita.app.domain.entity.Saloon;
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.SaloonDto;
+import tn.cita.app.model.domain.entity.Customer;
+import tn.cita.app.model.domain.entity.Reservation;
+import tn.cita.app.model.domain.entity.Saloon;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.SaloonDto;
 
 public interface ReservationMapper {
 	

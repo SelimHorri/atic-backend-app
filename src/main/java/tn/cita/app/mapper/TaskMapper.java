@@ -2,12 +2,12 @@ package tn.cita.app.mapper;
 
 import java.util.Optional;
 
-import tn.cita.app.domain.entity.Employee;
-import tn.cita.app.domain.entity.Reservation;
-import tn.cita.app.domain.entity.Task;
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.TaskDto;
+import tn.cita.app.model.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.Reservation;
+import tn.cita.app.model.domain.entity.Task;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.TaskDto;
 
 public interface TaskMapper {
 	

@@ -4,10 +4,10 @@ import java.util.Optional;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Category;
-import tn.cita.app.domain.entity.Saloon;
-import tn.cita.app.dto.CategoryDto;
-import tn.cita.app.dto.SaloonDto;
+import tn.cita.app.model.domain.entity.Category;
+import tn.cita.app.model.domain.entity.Saloon;
+import tn.cita.app.model.dto.CategoryDto;
+import tn.cita.app.model.dto.SaloonDto;
 
 public interface CategoryMapper {
 	

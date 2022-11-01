@@ -2,12 +2,12 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.Employee;
-import tn.cita.app.domain.entity.Rating;
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.RatingDto;
+import tn.cita.app.model.domain.entity.Customer;
+import tn.cita.app.model.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.Rating;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.RatingDto;
 
 public interface RatingMapper {
 	

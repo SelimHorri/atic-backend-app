@@ -15,10 +15,10 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.request.ManagerProfileRequest;
-import tn.cita.app.dto.response.ManagerProfileResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.request.ManagerProfileRequest;
+import tn.cita.app.model.dto.response.ManagerProfileResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.employee.manager.ManagerProfileService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 

@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 
 public interface CustomerService {
 	

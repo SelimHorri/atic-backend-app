@@ -2,10 +2,10 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Category;
-import tn.cita.app.domain.entity.ServiceDetail;
-import tn.cita.app.dto.CategoryDto;
-import tn.cita.app.dto.ServiceDetailDto;
+import tn.cita.app.model.domain.entity.Category;
+import tn.cita.app.model.domain.entity.ServiceDetail;
+import tn.cita.app.model.dto.CategoryDto;
+import tn.cita.app.model.dto.ServiceDetailDto;
 
 public interface ServiceDetailMapper {
 	

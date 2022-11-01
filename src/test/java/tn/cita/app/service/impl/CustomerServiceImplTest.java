@@ -18,15 +18,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.UserImageDto;
-import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Customer;
+import tn.cita.app.model.domain.entity.UserImage;
+import tn.cita.app.model.dto.CredentialDto;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.UserImageDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.service.v0.CustomerService;
 

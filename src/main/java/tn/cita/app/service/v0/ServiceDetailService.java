@@ -5,9 +5,9 @@ import java.util.Set;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.dto.ServiceDetailDto;
-import tn.cita.app.dto.request.ServiceDetailRequest;
-import tn.cita.app.dto.response.ServiceDetailsReservationContainerResponse;
+import tn.cita.app.model.dto.ServiceDetailDto;
+import tn.cita.app.model.dto.request.ServiceDetailRequest;
+import tn.cita.app.model.dto.response.ServiceDetailsReservationContainerResponse;
 
 public interface ServiceDetailService {
 	

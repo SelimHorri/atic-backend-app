@@ -11,7 +11,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.EmployeeRepository;

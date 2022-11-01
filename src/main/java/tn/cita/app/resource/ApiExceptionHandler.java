@@ -22,7 +22,6 @@ import org.springframework.web.context.request.WebRequest;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
@@ -61,6 +60,7 @@ import tn.cita.app.exception.wrapper.UnauthorizedUserException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.UsernameNotMatchException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestControllerAdvice
 @Slf4j

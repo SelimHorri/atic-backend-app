@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.RatingDto;
 import tn.cita.app.mapper.RatingMapper;
+import tn.cita.app.model.dto.RatingDto;
 import tn.cita.app.repository.RatingRepository;
 import tn.cita.app.service.v0.RatingService;
 

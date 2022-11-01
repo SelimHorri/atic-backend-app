@@ -1,9 +1,9 @@
 package tn.cita.app.service.v0.business.employee.manager;
 
-import tn.cita.app.dto.request.ReservationAssignWorkerRequest;
-import tn.cita.app.dto.response.ReservationBeginEndTask;
-import tn.cita.app.dto.response.ReservationDetailResponse;
-import tn.cita.app.dto.response.ReservationSubWorkerResponse;
+import tn.cita.app.model.dto.request.ReservationAssignWorkerRequest;
+import tn.cita.app.model.dto.response.ReservationBeginEndTask;
+import tn.cita.app.model.dto.response.ReservationDetailResponse;
+import tn.cita.app.model.dto.response.ReservationSubWorkerResponse;
 
 public interface ManagerReservationDetailService {
 	

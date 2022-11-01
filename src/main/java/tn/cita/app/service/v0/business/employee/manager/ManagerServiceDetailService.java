@@ -2,8 +2,8 @@ package tn.cita.app.service.v0.business.employee.manager;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.dto.ServiceDetailDto;
-import tn.cita.app.dto.request.ServiceDetailRequest;
+import tn.cita.app.model.dto.ServiceDetailDto;
+import tn.cita.app.model.dto.request.ServiceDetailRequest;
 
 public interface ManagerServiceDetailService {
 	

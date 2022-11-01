@@ -2,9 +2,9 @@ package tn.cita.app.service.v0;
 
 import java.util.List;
 
-import tn.cita.app.domain.id.OrderedDetailId;
-import tn.cita.app.dto.OrderedDetailDto;
-import tn.cita.app.dto.request.OrderedDetailRequest;
+import tn.cita.app.model.domain.id.OrderedDetailId;
+import tn.cita.app.model.dto.OrderedDetailDto;
+import tn.cita.app.model.dto.request.OrderedDetailRequest;
 
 public interface OrderedDetailService {
 	

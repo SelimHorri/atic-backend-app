@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.domain.id.OrderedDetailId;
-import tn.cita.app.dto.OrderedDetailDto;
-import tn.cita.app.dto.request.OrderedDetailRequest;
 import tn.cita.app.exception.wrapper.OrderedDetailAlreadyExistsException;
 import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
 import tn.cita.app.mapper.OrderedDetailMapper;
+import tn.cita.app.model.domain.id.OrderedDetailId;
+import tn.cita.app.model.dto.OrderedDetailDto;
+import tn.cita.app.model.dto.request.OrderedDetailRequest;
 import tn.cita.app.repository.OrderedDetailRepository;
 import tn.cita.app.service.v0.OrderedDetailService;
 

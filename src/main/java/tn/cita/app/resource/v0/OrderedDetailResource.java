@@ -18,10 +18,10 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.domain.id.OrderedDetailId;
-import tn.cita.app.dto.OrderedDetailDto;
-import tn.cita.app.dto.request.OrderedDetailRequest;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.model.domain.id.OrderedDetailId;
+import tn.cita.app.model.dto.OrderedDetailDto;
+import tn.cita.app.model.dto.request.OrderedDetailRequest;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.OrderedDetailService;
 
 @RestController

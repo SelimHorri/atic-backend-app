@@ -4,7 +4,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 
 import lombok.NonNull;
-import tn.cita.app.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 
 public interface ClientPageRequestUtils {
 	

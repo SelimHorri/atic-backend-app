@@ -10,14 +10,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.domain.entity.ServiceDetail;
-import tn.cita.app.dto.ServiceDetailDto;
-import tn.cita.app.dto.request.ServiceDetailRequest;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ServiceDetailMapper;
+import tn.cita.app.model.domain.entity.ServiceDetail;
+import tn.cita.app.model.dto.ServiceDetailDto;
+import tn.cita.app.model.dto.request.ServiceDetailRequest;
 import tn.cita.app.repository.CategoryRepository;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ServiceDetailRepository;

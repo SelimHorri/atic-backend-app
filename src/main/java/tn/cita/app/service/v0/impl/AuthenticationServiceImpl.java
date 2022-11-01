@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.request.LoginRequest;
-import tn.cita.app.dto.response.LoginResponse;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
+import tn.cita.app.model.dto.request.LoginRequest;
+import tn.cita.app.model.dto.response.LoginResponse;
 import tn.cita.app.service.v0.AuthenticationService;
 import tn.cita.app.util.JwtUtils;
 

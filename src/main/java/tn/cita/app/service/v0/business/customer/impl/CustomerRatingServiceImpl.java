@@ -8,10 +8,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.response.CustomerRatingResponse;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.mapper.RatingMapper;
+import tn.cita.app.model.dto.response.CustomerRatingResponse;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.RatingRepository;
 import tn.cita.app.service.v0.business.customer.CustomerRatingService;

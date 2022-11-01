@@ -13,9 +13,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.response.actuator.HealthActuatorResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
+import tn.cita.app.model.dto.response.actuator.HealthActuatorResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/actuator")

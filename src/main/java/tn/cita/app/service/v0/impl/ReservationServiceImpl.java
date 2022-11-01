@@ -11,10 +11,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.mapper.ReservationMapper;
+import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.service.v0.ReservationService;
 import tn.cita.app.util.ClientPageRequestUtils;

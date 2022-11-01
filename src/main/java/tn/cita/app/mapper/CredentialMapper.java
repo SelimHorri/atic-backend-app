@@ -2,8 +2,8 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.dto.CredentialDto;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.dto.CredentialDto;
 
 public interface CredentialMapper {
 	

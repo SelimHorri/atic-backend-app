@@ -8,8 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.SaloonTagDto;
 import tn.cita.app.mapper.SaloonTagMapper;
+import tn.cita.app.model.dto.SaloonTagDto;
 import tn.cita.app.repository.SaloonTagRepository;
 import tn.cita.app.service.v0.SaloonTagService;
 

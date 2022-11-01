@@ -2,8 +2,8 @@ package tn.cita.app.service.v0;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.dto.TagDto;
-import tn.cita.app.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.TagDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 
 public interface TagService {
 	

@@ -18,11 +18,11 @@ import org.springframework.web.context.request.WebRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.request.ClientPageRequest;
-import tn.cita.app.dto.request.CustomerProfileRequest;
-import tn.cita.app.dto.response.CustomerProfileResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.request.CustomerProfileRequest;
+import tn.cita.app.model.dto.response.CustomerProfileResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.service.v0.business.customer.CustomerProfileService;
 import tn.cita.app.util.UserRequestExtractorUtil;
 

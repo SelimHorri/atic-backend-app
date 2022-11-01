@@ -6,11 +6,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.response.ReservationDetailResponse;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.mapper.OrderedDetailMapper;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.model.dto.response.ReservationDetailResponse;
 import tn.cita.app.repository.OrderedDetailRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.TaskRepository;

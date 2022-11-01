@@ -2,8 +2,8 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.UserImageDto;
+import tn.cita.app.model.domain.entity.UserImage;
+import tn.cita.app.model.dto.UserImageDto;
 
 public interface UserImageMapper {
 	

@@ -5,9 +5,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.CredentialDto;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.mapper.CredentialMapper;
+import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.service.v0.CredentialService;
 

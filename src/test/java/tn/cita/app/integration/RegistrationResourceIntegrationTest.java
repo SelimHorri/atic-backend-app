@@ -23,11 +23,11 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.dto.request.RegisterRequest;
-import tn.cita.app.dto.response.RegisterResponse;
-import tn.cita.app.dto.response.api.ApiResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.dto.request.RegisterRequest;
+import tn.cita.app.model.dto.response.RegisterResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient

@@ -5,7 +5,7 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.dto.notif.MailBodyContentBuilder;
+import tn.cita.app.model.dto.notif.MailBodyContentBuilder;
 
 @Component
 @RequiredArgsConstructor

@@ -10,11 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.domain.entity.Location;
-import tn.cita.app.dto.LocationDto;
-import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.LocationNotFoundException;
 import tn.cita.app.mapper.LocationMapper;
+import tn.cita.app.model.domain.entity.Location;
+import tn.cita.app.model.dto.LocationDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.LocationRepository;
 import tn.cita.app.service.v0.LocationService;
 

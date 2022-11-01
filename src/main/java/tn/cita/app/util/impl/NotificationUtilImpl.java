@@ -9,8 +9,8 @@ import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.dto.notif.MailNotification;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
+import tn.cita.app.model.dto.notif.MailNotification;
 import tn.cita.app.util.MailContentBuilder;
 import tn.cita.app.util.NotificationUtil;
 

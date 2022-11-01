@@ -12,9 +12,9 @@ import org.springframework.data.domain.PageRequest;
 
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
-import tn.cita.app.domain.ReservationStatus;
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.Reservation;
+import tn.cita.app.model.domain.ReservationStatus;
+import tn.cita.app.model.domain.entity.Customer;
+import tn.cita.app.model.domain.entity.Reservation;
 
 @DataJpaTest(showSql = true)
 class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {

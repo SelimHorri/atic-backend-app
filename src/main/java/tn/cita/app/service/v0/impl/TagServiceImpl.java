@@ -7,10 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.dto.TagDto;
-import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
 import tn.cita.app.mapper.TagMapper;
+import tn.cita.app.model.dto.TagDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.TagRepository;
 import tn.cita.app.service.v0.TagService;
 

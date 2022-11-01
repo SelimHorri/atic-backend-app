@@ -2,8 +2,8 @@ package tn.cita.app.service.v0.business.employee.manager;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.dto.CategoryDto;
-import tn.cita.app.dto.request.CategoryRequest;
+import tn.cita.app.model.dto.CategoryDto;
+import tn.cita.app.model.dto.request.CategoryRequest;
 
 public interface ManagerCategoryService {
 	

@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
-import tn.cita.app.domain.entity.VerificationToken;
+import tn.cita.app.model.domain.entity.VerificationToken;
 
 @DataJpaTest(showSql = true)
 @AutoConfigureDataJpa

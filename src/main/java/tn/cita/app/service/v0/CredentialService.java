@@ -1,6 +1,6 @@
 package tn.cita.app.service.v0;
 
-import tn.cita.app.dto.CredentialDto;
+import tn.cita.app.model.dto.CredentialDto;
 
 public interface CredentialService {
 	

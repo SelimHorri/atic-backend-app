@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.domain.id.TaskId;
-import tn.cita.app.dto.TaskDto;
-import tn.cita.app.dto.request.ClientPageRequest;
 import tn.cita.app.exception.wrapper.TaskNotFoundException;
 import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.model.domain.id.TaskId;
+import tn.cita.app.model.dto.TaskDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.TaskService;
 import tn.cita.app.util.ClientPageRequestUtils;
