@@ -48,7 +48,7 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@Column(name = "employee_id", nullable = false, insertable = false, updatable = false)
+	@Column(name = "worker_id", nullable = false, insertable = false, updatable = false)
 	private Integer workerId;
 	
 	@Id
@@ -71,7 +71,7 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	private String description;
 	
 	@ManyToOne
-	@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)
+	@JoinColumn(name = "worker_id", referencedColumnName = "id", nullable = false, updatable = false)
 	@ToString.Exclude
 	@EqualsAndHashCode.Exclude
 	private Employee worker;
