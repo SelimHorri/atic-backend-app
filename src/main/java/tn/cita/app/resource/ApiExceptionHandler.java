@@ -52,7 +52,7 @@ import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
-import tn.cita.app.exception.wrapper.TaskAlreadyAssigned;
+import tn.cita.app.exception.wrapper.TaskAlreadyAssignedException;
 import tn.cita.app.exception.wrapper.TaskAlreadyBeganException;
 import tn.cita.app.exception.wrapper.TaskAlreadyEndedException;
 import tn.cita.app.exception.wrapper.TaskNotBeganException;
@@ -135,7 +135,7 @@ public class ApiExceptionHandler {
 		TaskNotBeganException.class,
 		TaskAlreadyBeganException.class,
 		TaskAlreadyEndedException.class,
-		TaskAlreadyAssigned.class,
+		TaskAlreadyAssignedException.class,
 		FavouriteAlreadyExists.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
