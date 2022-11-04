@@ -18,7 +18,7 @@ import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyNotClosedException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyOutdatedException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
-import tn.cita.app.exception.wrapper.TaskAlreadyAssigned;
+import tn.cita.app.exception.wrapper.TaskAlreadyAssignedException;
 import tn.cita.app.exception.wrapper.TaskNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ReservationMapper;
@@ -112,18 +112,19 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 						.map(workerId -> new TaskId(workerId, reservation.getId()))
 						.anyMatch(this.taskRepository::existsById);
 		if (isAlreadyAssigned)
-			throw new TaskAlreadyAssigned("Worker is already assigned");
+			throw new TaskAlreadyAssignedException("Worker is already assigned");
 		
 		final List<Task> assignedWorkers = new ArrayList<>();
 		final var task = new Task();
 		task.setReservationId(reservation.getId());
 		task.setReservation(reservation);
-		task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..
-		task.setIdentifier(UUID.randomUUID().toString());
 		task.setManagerDescription((reservationAssignWorkerRequest.getManagerDescription() == null 
 					|| reservationAssignWorkerRequest.getManagerDescription().isBlank()) ? 
 				null : reservationAssignWorkerRequest.getManagerDescription().strip());
+		
 		reservationAssignWorkerRequest.getAssignedWorkersIds().forEach(workerId -> {
+			task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..
+			task.setIdentifier(UUID.randomUUID().toString());
 			task.setWorkerId(workerId);
 			task.setWorker(this.employeeRepository.findById(workerId)
 					.orElseThrow(() -> new EmployeeNotFoundException("Employee not found")));
