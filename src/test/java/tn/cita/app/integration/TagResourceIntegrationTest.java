@@ -92,10 +92,10 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 					.is2xxSuccessful()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.size()").value(is(expectedPayload.getResponseBody().size()));
+					.jsonPath("$.responseBody.size()").value(is(expectedPayload.responseBody().size()));
 	}
 	
 	@Test
@@ -116,11 +116,11 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 					.is2xxSuccessful()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.id").value(notNullValue())
-					.jsonPath("$.responseBody.name").value(is(expectedPayload.getResponseBody().getName()));
+					.jsonPath("$.responseBody.name").value(is(expectedPayload.responseBody().getName()));
 	}
 	
 	@Test
@@ -138,12 +138,12 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 					.isBadRequest()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().getErrorMsg()));
 	}
 	
 	

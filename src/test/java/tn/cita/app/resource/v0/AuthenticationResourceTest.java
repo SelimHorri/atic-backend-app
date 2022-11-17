@@ -60,12 +60,12 @@ class AuthenticationResourceTest {
 					.contentType(MediaType.APPLICATION_JSON_VALUE)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.totalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.httpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().username()))
-					.jsonPath("$.responseBody.jwtToken").value(is(apiPayloadResponse.getResponseBody().jwtToken()));
+					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.responseBody().username()))
+					.jsonPath("$.responseBody.jwtToken").value(is(apiPayloadResponse.responseBody().jwtToken()));
 	}
 	
 	

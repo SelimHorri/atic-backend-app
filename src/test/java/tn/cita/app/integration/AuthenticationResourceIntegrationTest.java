@@ -69,11 +69,11 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.totalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.httpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.getResponseBody().username()));
+					.jsonPath("$.responseBody.username").value(is(apiPayloadResponse.responseBody().username()));
 		
 		final boolean validateToken = this.jwtUtils.validateToken(this.loginResponse.jwtToken(), 
 				this.userDetailsService.loadUserByUsername(this.loginResponse.username()));
@@ -100,15 +100,15 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.totalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.httpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
 					.jsonPath("$.responseBody.errorMsg")
 						.value(containsStringIgnoringCase("Username is not registered"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
 	}
 	
 	@Test
@@ -131,14 +131,14 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.totalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.httpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
 					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Incorrect password"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
 	}
 	
 	@Test
@@ -161,14 +161,14 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.totalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.httpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("*"))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("!**"))
 					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Input username should not be blank"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
 	}
 	
 	@Test
@@ -191,14 +191,14 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.contentType(MediaType.APPLICATION_JSON)
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(apiPayloadResponse.getTotalResult()))
-					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.getHttpStatus().name()))
-					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(apiPayloadResponse.totalResult()))
+					.jsonPath("$.httpStatus").value(is(apiPayloadResponse.httpStatus().name()))
+					.jsonPath("$.acknowledge").value(is(apiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("*"))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("!**"))
 					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Input password should not be blank"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
 	}
 	
 	
