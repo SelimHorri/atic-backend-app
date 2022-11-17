@@ -13,28 +13,29 @@ import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 
-@RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode
-@Getter
 @Builder
-public final class ApiResponse<T> implements Serializable {
+public record ApiResponse<T>(
+		
+		@JsonFormat(shape = Shape.STRING)
+		@JsonSerialize(using = InstantSerializer.class)
+		@JsonDeserialize(using = InstantDeserializer.class)
+		Instant timestamp,
+		Integer totalResult,
+		HttpStatus httpStatus,
+		Boolean acknowledge,
+		T responseBody) implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	/*
+	 * Important: responseBody MUST be an immutable object!
+	 * for List: we may use Java9+ factory methods of List interface: 
+	 * for example: List.copyOf(responseBody)
+	 */
+	public ApiResponse(final Integer totalResult, final HttpStatus httpStatus, final Boolean acknowledge, final T responseBody) {
+		this(Instant.now(), totalResult, httpStatus, acknowledge, responseBody);
+	}
 	
-	@JsonFormat(shape = Shape.STRING)
-	@JsonSerialize(using = InstantSerializer.class)
-	@JsonDeserialize(using = InstantDeserializer.class)
-	private final Instant timestamp = Instant.now();
-	private final Integer totalResult;
-	private final HttpStatus httpStatus;
-	private final Boolean acknowledge;
-	private final T responseBody;
+	
 	
 }
 

@@ -55,15 +55,15 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 					.is2xxSuccessful()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.username").value(is(expectedPayload.getResponseBody().getUsername()))
-					.jsonPath("$.responseBody.role").value(is(expectedPayload.getResponseBody().getUserRoleBasedAuthority().name()))
-					.jsonPath("$.responseBody.isEnabled").value(is(expectedPayload.getResponseBody().getIsEnabled()))
-					.jsonPath("$.responseBody.isAccountNonExpired").value(is(expectedPayload.getResponseBody().getIsAccountNonExpired()))
-					.jsonPath("$.responseBody.isAccountNonLocked").value(is(expectedPayload.getResponseBody().getIsAccountNonLocked()))
-					.jsonPath("$.responseBody.isCredentialsNonExpired").value(is(expectedPayload.getResponseBody().getIsCredentialsNonExpired()));
+					.jsonPath("$.responseBody.username").value(is(expectedPayload.responseBody().getUsername()))
+					.jsonPath("$.responseBody.role").value(is(expectedPayload.responseBody().getUserRoleBasedAuthority().name()))
+					.jsonPath("$.responseBody.isEnabled").value(is(expectedPayload.responseBody().getIsEnabled()))
+					.jsonPath("$.responseBody.isAccountNonExpired").value(is(expectedPayload.responseBody().getIsAccountNonExpired()))
+					.jsonPath("$.responseBody.isAccountNonLocked").value(is(expectedPayload.responseBody().getIsAccountNonLocked()))
+					.jsonPath("$.responseBody.isCredentialsNonExpired").value(is(expectedPayload.responseBody().getIsCredentialsNonExpired()));
 	}
 	
 	@Test
@@ -85,10 +85,10 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 					.isBadRequest()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().getErrorMsg()));
 					
 	}
 	
