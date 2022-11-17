@@ -26,10 +26,11 @@ public record ApiResponse<T>(
 		Boolean acknowledge,
 		T responseBody) implements Serializable {
 	
-	/*
-	 * Important: responseBody MUST be an immutable object!
-	 * for List: we may use Java9+ factory methods of List interface: 
-	 * for example: List.copyOf(responseBody)
+	/**
+	 * CAREFUL: <strong>"responseBody"</strong> generic type parameter MUST be an immutable object! <br>
+	 * for List: we may use Java9+ factory methods of List interface <br>
+	 * for example:<br>
+	 * use: <code>List.copyOf(responseBody)</code> to create an immutable copy of the passed list in generic type.
 	 */
 	public ApiResponse(final Integer totalResult, final HttpStatus httpStatus, final Boolean acknowledge, final T responseBody) {
 		this(Instant.now(), totalResult, httpStatus, acknowledge, responseBody);
