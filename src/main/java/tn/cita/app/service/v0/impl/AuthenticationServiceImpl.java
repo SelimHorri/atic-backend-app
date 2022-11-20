@@ -31,13 +31,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		
 		log.info("** Authenticate user.. *\n");
 		
-		final var userDetails = this.userDetailsService.loadUserByUsername(loginRequest.getUsername());
+		final var userDetails = this.userDetailsService.loadUserByUsername(loginRequest.username());
 		
-		if (userDetails == null || !this.passwordEncoder.matches(loginRequest.getPassword(), userDetails.getPassword()))
+		if (userDetails == null || !this.passwordEncoder.matches(loginRequest.password(), userDetails.getPassword()))
 			throw new PasswordNotMatchException("Incorrect password");
 		
 		final var authentication = this.authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), loginRequest.getPassword()));
+				.authenticate(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), loginRequest.password()));
 		
 		return new LoginResponse(authentication.getName(), this.jwtUtils.generateToken(userDetails));
 	}
