@@ -12,9 +12,6 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
 
-import lombok.Builder;
-
-@Builder
 public record ApiResponse<T>(
 		
 		@JsonFormat(shape = Shape.STRING)

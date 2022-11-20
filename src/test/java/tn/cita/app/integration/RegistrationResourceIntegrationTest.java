@@ -239,7 +239,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
@@ -276,7 +276,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
@@ -313,7 +313,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test

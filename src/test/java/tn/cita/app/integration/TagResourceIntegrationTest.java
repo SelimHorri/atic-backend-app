@@ -143,7 +143,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().errorMsg()));
 	}
 	
 	
