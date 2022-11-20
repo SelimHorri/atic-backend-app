@@ -60,40 +60,50 @@ public class RegistrationServiceImpl implements RegistrationService {
 	 * Step5: check role type and process to the right roletype
 	 */
 	@Override
-	public RegisterResponse register(final RegisterRequest registerRequest) {
+	public RegisterResponse register(RegisterRequest registerRequest) {
 		
 		log.info("** Register..*\n");
 		
 		// Step1
-		if (!RegistrationUtils.isCustomerRole(registerRequest.getRole())
-				&& !RegistrationUtils.isWorkerRole(registerRequest.getRole())
-				&& !RegistrationUtils.isManagerRole(registerRequest.getRole())
-				&& !RegistrationUtils.isOwnerRole(registerRequest.getRole()))
+		if (!RegistrationUtils.isCustomerRole(registerRequest.role())
+				&& !RegistrationUtils.isWorkerRole(registerRequest.role())
+				&& !RegistrationUtils.isManagerRole(registerRequest.role())
+				&& !RegistrationUtils.isOwnerRole(registerRequest.role()))
 			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, "
 					+ "it should be Customer/Worker/Manager/Owner role");
 		log.info("** User role checked successfully! *\n");
 		
 		// Step2
-		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()).ifPresent((c) -> {
+		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.username()).ifPresent((c) -> {
 			throw new UsernameAlreadyExistsException("Account with username: %s already exists".formatted(c.getUsername()));
 		});
 		log.info("** User not exist by username checked successfully! *\n");
 		
 		// Step3
-		if (!registerRequest.getPassword().equals(registerRequest.getConfirmPassword()))
+		if (!registerRequest.password().equals(registerRequest.confirmPassword()))
 			throw new PasswordNotMatchException("Unmatched passwords! please check again");
 		log.info("** User password confirmation checked successfully! *\n");
 		
 		// Step4
-		registerRequest.setPassword(this.passwordEncoder.encode(registerRequest.getConfirmPassword()));
+		registerRequest = RegisterRequest.builder()
+				.firstname(registerRequest.firstname())
+				.lastname(registerRequest.lastname())
+				.email(registerRequest.email())
+				.phone(registerRequest.phone())
+				.birthdate(registerRequest.birthdate())
+				.username(registerRequest.username())
+				.password(this.passwordEncoder.encode(registerRequest.password()))
+				.confirmPassword(this.passwordEncoder.encode(registerRequest.confirmPassword()))
+				.role(registerRequest.role())
+				.build();
 		log.info("** User password encrypted successfully! *\n");
 		
 		// Step 5
-		if (RegistrationUtils.isCustomerRole(registerRequest.getRole()))
+		if (RegistrationUtils.isCustomerRole(registerRequest.role()))
 			return this.registerCustomer(registerRequest);
-		else if (RegistrationUtils.isWorkerRole(registerRequest.getRole())
-				|| RegistrationUtils.isManagerRole(registerRequest.getRole())
-				|| RegistrationUtils.isOwnerRole(registerRequest.getRole()))
+		else if (RegistrationUtils.isWorkerRole(registerRequest.role())
+				|| RegistrationUtils.isManagerRole(registerRequest.role())
+				|| RegistrationUtils.isOwnerRole(registerRequest.role()))
 			return this.registerEmployee(registerRequest);
 		else 
 			return null;

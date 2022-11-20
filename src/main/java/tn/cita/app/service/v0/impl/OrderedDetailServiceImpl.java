@@ -52,18 +52,21 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	
 	@Transactional
 	@Override
-	public OrderedDetailDto save(final OrderedDetailRequest orderedDetailRequest) {
+	public OrderedDetailDto save(OrderedDetailRequest orderedDetailRequest) {
 		
 		log.info("** Save ordered detail.. *\n");
 		
-		final OrderedDetailId orderedDetailId = new OrderedDetailId(orderedDetailRequest.getReservationId(), 
-				orderedDetailRequest.getServiceDetailId());
+		final var orderedDetailId = new OrderedDetailId(orderedDetailRequest.reservationId(), 
+				orderedDetailRequest.serviceDetailId());
 		
 		if (this.orderedDetailRepository.existsById(orderedDetailId))
 			throw new OrderedDetailAlreadyExistsException("Service is already ordered");
 		
-		if (orderedDetailRequest.getOrderedDate() == null)
-			orderedDetailRequest.setOrderedDate(LocalDateTime.now());
+		if (orderedDetailRequest.orderedDate() == null)
+			orderedDetailRequest = new OrderedDetailRequest(
+					orderedDetailId.getReservationId(), 
+					orderedDetailId.getServiceDetailId(), 
+					LocalDateTime.now());
 		
 		this.orderedDetailRepository.saveOrderedDetail(orderedDetailRequest);
 		return OrderedDetailMapper.map(this.orderedDetailRepository.findById(orderedDetailId).orElseThrow());

@@ -17,57 +17,42 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
 import tn.cita.app.constant.AppConstants;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 @Builder
-public final class RegisterRequest implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	@NotBlank(message = "Input firstname should not be blank")
-	private String firstname;
-	
-	@NotBlank(message = "Input lastname should not be blank")
-	private String lastname;
-	
-	@Email(message = "Input email should be in email format")
-	@NotBlank(message = "Input email should not be blank")
-	private String email;
-	
-	@Size(message = "Input phone should be in a phone number format", min = 8, max = 12)
-	private String phone;
-	
-	@JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = Shape.STRING)
-	@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
-	@JsonSerialize(using = LocalDateSerializer.class)
-	@JsonDeserialize(using = LocalDateDeserializer.class)
-	private LocalDate birthdate;
-	
-	@NotBlank(message = "Input username should not be blank")
-	private String username;
-	
-	@NotNull(message = "Input password should not be null")
-	private String password;
-	
-	@NotNull(message = "Input confirmPassword should not be null")
-	private String confirmPassword;
-	
-	@NotBlank(message = "Input role should not be blank")
-	private String role;
-	
-}
-
-
-
-
-
+public record RegisterRequest(
+		
+		@NotBlank(message = "Input firstname should not be blank")
+		String firstname,
+		
+		@NotBlank(message = "Input lastname should not be blank")
+		String lastname,
+		
+		@Email(message = "Input email should be in email format")
+		@NotBlank(message = "Input email should not be blank")
+		String email,
+		
+		@Size(message = "Input phone should be in a phone number format", min = 8, max = 12)
+		String phone,
+		
+		@JsonFormat(pattern = AppConstants.LOCAL_DATE_FORMAT, shape = Shape.STRING)
+		@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_FORMAT)
+		@JsonSerialize(using = LocalDateSerializer.class)
+		@JsonDeserialize(using = LocalDateDeserializer.class)
+		LocalDate birthdate,
+		
+		@NotBlank(message = "Input username should not be blank")
+		String username,
+		
+		@NotNull(message = "Input password should not be null")
+		String password,
+		
+		@NotNull(message = "Input confirmPassword should not be null")
+		String confirmPassword,
+		
+		@NotBlank(message = "Input role should not be blank")
+		String role) implements Serializable {}
 
 
 

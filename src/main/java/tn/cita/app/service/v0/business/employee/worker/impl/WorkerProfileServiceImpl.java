@@ -48,25 +48,25 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 		log.info("** Update worker profile.. *\n");
 
 		this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(workerProfileRequest.getUsername().strip()).ifPresent(c -> {
-			if (!c.getCredential().getUsername().equals(workerProfileRequest.getAuthenticatedUsername()))
+				.findByCredentialUsernameIgnoringCase(workerProfileRequest.username().strip()).ifPresent(c -> {
+			if (!c.getCredential().getUsername().equals(workerProfileRequest.authenticatedUsername()))
 				throw new UsernameAlreadyExistsException("Username already exists, please choose another");
 		});
 		
-		if (!workerProfileRequest.getPassword().equals(workerProfileRequest.getConfirmPassword()))
+		if (!workerProfileRequest.password().equals(workerProfileRequest.confirmPassword()))
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
 		final var authenticatedWorker = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(workerProfileRequest.getAuthenticatedUsername().strip())
+				.findByCredentialUsernameIgnoringCase(workerProfileRequest.authenticatedUsername().strip())
 				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
-		authenticatedWorker.setFirstname(workerProfileRequest.getFirstname().strip());
-		authenticatedWorker.setLastname(workerProfileRequest.getLastname().strip());
-		authenticatedWorker.setEmail(workerProfileRequest.getEmail().strip());
-		authenticatedWorker.setPhone(workerProfileRequest.getPhone().strip());
-		authenticatedWorker.setBirthdate(workerProfileRequest.getBirthdate());
-		authenticatedWorker.setHiredate(workerProfileRequest.getHiredate());
-		authenticatedWorker.getCredential().setUsername(workerProfileRequest.getUsername().strip().toLowerCase());
-		authenticatedWorker.getCredential().setPassword(this.passwordEncoder.encode(workerProfileRequest.getPassword()));
+		authenticatedWorker.setFirstname(workerProfileRequest.firstname().strip());
+		authenticatedWorker.setLastname(workerProfileRequest.lastname().strip());
+		authenticatedWorker.setEmail(workerProfileRequest.email().strip());
+		authenticatedWorker.setPhone(workerProfileRequest.phone().strip());
+		authenticatedWorker.setBirthdate(workerProfileRequest.birthdate());
+		authenticatedWorker.setHiredate(workerProfileRequest.hiredate());
+		authenticatedWorker.getCredential().setUsername(workerProfileRequest.username().strip().toLowerCase());
+		authenticatedWorker.getCredential().setPassword(this.passwordEncoder.encode(workerProfileRequest.password()));
 		
 		return EmployeeMapper.map(this.employeeRepository.save(authenticatedWorker));
 	}

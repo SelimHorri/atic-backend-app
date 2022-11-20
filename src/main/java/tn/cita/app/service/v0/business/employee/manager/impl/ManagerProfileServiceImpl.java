@@ -78,26 +78,26 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 		log.info("** Update manager profile.. *\n");
 		
 		this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(managerProfileRequest.getUsername().strip()).ifPresent(c -> {
-					if (!c.getCredential().getUsername().equals(managerProfileRequest.getAuthenticatedUsername()))
+				.findByCredentialUsernameIgnoringCase(managerProfileRequest.username().strip()).ifPresent(c -> {
+					if (!c.getCredential().getUsername().equals(managerProfileRequest.authenticatedUsername()))
 						throw new UsernameAlreadyExistsException("Username already exists, please choose another");
 		});
 		
-		if (!managerProfileRequest.getPassword().equals(managerProfileRequest.getConfirmPassword()))
+		if (!managerProfileRequest.password().equals(managerProfileRequest.confirmPassword()))
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
 		final var authenticatedManager = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(managerProfileRequest.getAuthenticatedUsername().strip())
+				.findByCredentialUsernameIgnoringCase(managerProfileRequest.authenticatedUsername().strip())
 					.orElseThrow(() -> new EmployeeNotFoundException("Manager not found"));
-		authenticatedManager.setFirstname(managerProfileRequest.getFirstname().strip());
-		authenticatedManager.setLastname(managerProfileRequest.getLastname().strip());
-		authenticatedManager.setEmail(managerProfileRequest.getEmail().strip());
-		authenticatedManager.setPhone(managerProfileRequest.getPhone().strip());
-		authenticatedManager.setBirthdate(managerProfileRequest.getBirthdate());
-		authenticatedManager.setHiredate(managerProfileRequest.getHiredate());
-		authenticatedManager.getCredential().setUsername(managerProfileRequest.getUsername().strip().toLowerCase());
+		authenticatedManager.setFirstname(managerProfileRequest.firstname().strip());
+		authenticatedManager.setLastname(managerProfileRequest.lastname().strip());
+		authenticatedManager.setEmail(managerProfileRequest.email().strip());
+		authenticatedManager.setPhone(managerProfileRequest.phone().strip());
+		authenticatedManager.setBirthdate(managerProfileRequest.birthdate());
+		authenticatedManager.setHiredate(managerProfileRequest.hiredate());
+		authenticatedManager.getCredential().setUsername(managerProfileRequest.username().strip().toLowerCase());
 		authenticatedManager.getCredential()
-				.setPassword(this.passwordEncoder.encode(managerProfileRequest.getPassword()));
+				.setPassword(this.passwordEncoder.encode(managerProfileRequest.password()));
 		
 		return EmployeeMapper.map(this.employeeRepository.save(authenticatedManager));
 	}
