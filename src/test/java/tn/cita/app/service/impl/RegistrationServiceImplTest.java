@@ -115,14 +115,14 @@ class RegistrationServiceImplTest {
 				.role(UserRoleBasedAuthority.WORKER.name())
 				.build();
 		
-		when(this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()))
-				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.getUsername() + " already exists"));
+		when(this.credentialRepository.findByUsernameIgnoreCase(registerRequest.username()))
+				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.username() + " already exists"));
 		
 		assertThatExceptionOfType(UsernameAlreadyExistsException.class)
 				.isThrownBy(() -> this.registrationService.register(registerRequest))
 				.withMessageStartingWith("")
 				.withMessageEndingWith("")
-				.withMessage("Account with username: " + registerRequest.getUsername() + " already exists");
+				.withMessage("Account with username: " + registerRequest.username() + " already exists");
 	}
 	
 	@Test

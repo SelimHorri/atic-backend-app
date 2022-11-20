@@ -73,14 +73,14 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 		
 		log.info("** Save category by manager.. *\n");
 		
-		final var parentCategory = (categoryRequest.getParentCategoryId() != null) ?
-				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
+		final var parentCategory = (categoryRequest.parentCategoryId() != null) ?
+				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
 		
-		final var saloon = this.saloonRepository.findById(categoryRequest.getSaloonId())
+		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
 				.orElseThrow(SaloonNotFoundException::new);
 		
 		final var category = Category.builder()
-				.name(categoryRequest.getName().strip().toLowerCase())
+				.name(categoryRequest.name().strip().toLowerCase())
 				.parentCategory(parentCategory)
 				.saloon(saloon)
 				.build();
@@ -94,16 +94,16 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 		
 		log.info("** Update category by manager.. *\n");
 		
-		final var parentCategory = (categoryRequest.getParentCategoryId() != null) ?
-				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
+		final var parentCategory = (categoryRequest.parentCategoryId() != null) ?
+				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
 		
-		final var saloon = this.saloonRepository.findById(categoryRequest.getSaloonId())
+		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
 				.orElseThrow(SaloonNotFoundException::new);
 		
-		final var category = this.categoryRepository.findById(categoryRequest.getCategoryId())
+		final var category = this.categoryRepository.findById(categoryRequest.categoryId())
 				.orElseThrow(CategoryNotFoundException::new);
-		category.setId(categoryRequest.getCategoryId());
-		category.setName(categoryRequest.getName().strip().toLowerCase());
+		category.setId(categoryRequest.categoryId());
+		category.setName(categoryRequest.name().strip().toLowerCase());
 		category.setParentCategory(parentCategory);
 		category.setSaloon(saloon);
 		

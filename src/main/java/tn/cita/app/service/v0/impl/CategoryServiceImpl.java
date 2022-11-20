@@ -69,14 +69,14 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		log.info("** Save a category.. *\n");
 		
-		final var parentCategory = Optional.ofNullable(categoryRequest.getParentCategoryId()).isPresent() ?
-				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
+		final var parentCategory = Optional.ofNullable(categoryRequest.parentCategoryId()).isPresent() ?
+				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
 		
-		final var saloon = this.saloonRepository.findById(categoryRequest.getSaloonId())
+		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
 				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
 		
 		final var category = Category.builder()
-				.name(categoryRequest.getName().strip().toLowerCase())
+				.name(categoryRequest.name().strip().toLowerCase())
 				.parentCategory(parentCategory)
 				.saloon(saloon)
 				.build();
@@ -90,16 +90,16 @@ public class CategoryServiceImpl implements CategoryService {
 		
 		log.info("** Update a category.. *\n");
 		
-		final var parentCategory = Optional.ofNullable(categoryRequest.getParentCategoryId()).isPresent() ?
-				this.categoryRepository.findById(categoryRequest.getParentCategoryId()).orElseGet(Category::new) : null;
+		final var parentCategory = Optional.ofNullable(categoryRequest.parentCategoryId()).isPresent() ?
+				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
 		
-		final var saloon = this.saloonRepository.findById(categoryRequest.getSaloonId())
+		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
 				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
 		
-		final var category = this.categoryRepository.findById(categoryRequest.getCategoryId())
+		final var category = this.categoryRepository.findById(categoryRequest.categoryId())
 				.orElseThrow(CategoryNotFoundException::new);
-		category.setId(categoryRequest.getCategoryId());
-		category.setName(categoryRequest.getName().strip().toLowerCase());
+		category.setId(categoryRequest.categoryId());
+		category.setName(categoryRequest.name().strip().toLowerCase());
 		category.setParentCategory(parentCategory);
 		category.setSaloon(saloon);
 		

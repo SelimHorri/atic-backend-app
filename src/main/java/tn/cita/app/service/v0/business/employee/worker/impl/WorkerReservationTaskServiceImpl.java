@@ -58,12 +58,12 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		log.info("** Update description by worker.. *\n");
 		
 		final var worker = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(taskUpdateDescriptionRequest.getUsername())
+				.findByCredentialUsernameIgnoringCase(taskUpdateDescriptionRequest.username())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", taskUpdateDescriptionRequest.getUsername())));
+						.format("Employee with username: %s not found", taskUpdateDescriptionRequest.username())));
 		final var reservation = this.reservationRepository
-				.findById(taskUpdateDescriptionRequest.getReservationId())
+				.findById(taskUpdateDescriptionRequest.reservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final var task = this.taskRepository
 				.findById(new TaskId(worker.getId(), reservation.getId()))
@@ -75,9 +75,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		});
 		
 		// update worker description..
-		task.setWorkerDescription((taskUpdateDescriptionRequest.getWorkerDescription() == null 
-					|| taskUpdateDescriptionRequest.getWorkerDescription().isBlank()) ? 
-				null : taskUpdateDescriptionRequest.getWorkerDescription().strip());
+		task.setWorkerDescription((taskUpdateDescriptionRequest.workerDescription() == null 
+					|| taskUpdateDescriptionRequest.workerDescription().isBlank()) ? 
+				null : taskUpdateDescriptionRequest.workerDescription().strip());
 		return TaskMapper.map(this.taskRepository.save(task));
 	}
 	
@@ -87,12 +87,12 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		log.info("** Begin task by worker.. *\n");
 		
-		final var worker = this.employeeRepository.findByCredentialUsernameIgnoringCase(taskBeginRequest.getUsername())
+		final var worker = this.employeeRepository.findByCredentialUsernameIgnoringCase(taskBeginRequest.username())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", taskBeginRequest.getUsername())));
+						.format("Employee with username: %s not found", taskBeginRequest.username())));
 		final var reservation = this.reservationRepository
-				.findById(taskBeginRequest.getReservationId())
+				.findById(taskBeginRequest.reservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final var task = this.taskRepository
 				.findById(new TaskId(worker.getId(), reservation.getId()))
@@ -107,9 +107,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// begin task..
 		task.setStartDate(LocalDateTime.now());
-		task.setWorkerDescription((taskBeginRequest.getWorkerDescription() == null 
-					|| taskBeginRequest.getWorkerDescription().isBlank()) ? 
-				null : taskBeginRequest.getWorkerDescription().strip());
+		task.setWorkerDescription((taskBeginRequest.workerDescription() == null 
+					|| taskBeginRequest.workerDescription().isBlank()) ? 
+				null : taskBeginRequest.workerDescription().strip());
 		
 		// make reservation as in_progress..
 		if (!reservation.getStatus().equals(ReservationStatus.NOT_STARTED)
@@ -133,12 +133,12 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		log.info("** End task by worker.. *\n");
 		
 		final var workerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(taskEndRequest.getUsername())
+				.findByCredentialUsernameIgnoringCase(taskEndRequest.username())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", taskEndRequest.getUsername())));
+						.format("Employee with username: %s not found", taskEndRequest.username())));
 		final var reservation = this.reservationRepository
-				.findById(taskEndRequest.getReservationId())
+				.findById(taskEndRequest.reservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		final var task = this.taskRepository
 				.findById(new TaskId(workerDto.getId(), reservation.getId()))
@@ -153,13 +153,13 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// update task to be ended..
 		task.setEndDate(LocalDateTime.now());
-		task.setWorkerDescription((taskEndRequest.getWorkerDescription() == null 
-					|| taskEndRequest.getWorkerDescription().isBlank()) ? 
-				null : taskEndRequest.getWorkerDescription().strip());
+		task.setWorkerDescription((taskEndRequest.workerDescription() == null 
+					|| taskEndRequest.workerDescription().isBlank()) ? 
+				null : taskEndRequest.workerDescription().strip());
 		
 		// fetch all assigned workers to this reservation..
 		final var assignedOtherTaskDtos = this.taskRepository
-				.findAllByReservationId(taskEndRequest.getReservationId()).stream()
+				.findAllByReservationId(taskEndRequest.reservationId()).stream()
 					.filter(t -> !t.getWorkerId().equals(workerDto.getId()))
 					.distinct()
 					.collect(Collectors.toUnmodifiableList());

@@ -106,9 +106,9 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		log.info("** Assign workers to a reservation.. *\n");
 		
-		final var reservation = this.reservationRepository.findById(reservationAssignWorkerRequest.getReservationId())
+		final var reservation = this.reservationRepository.findById(reservationAssignWorkerRequest.reservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
-		final boolean isAlreadyAssigned = reservationAssignWorkerRequest.getAssignedWorkersIds().stream()
+		final boolean isAlreadyAssigned = reservationAssignWorkerRequest.assignedWorkersIds().stream()
 						.map(workerId -> new TaskId(workerId, reservation.getId()))
 						.anyMatch(this.taskRepository::existsById);
 		if (isAlreadyAssigned)
@@ -118,11 +118,11 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		final var task = new Task();
 		task.setReservationId(reservation.getId());
 		task.setReservation(reservation);
-		task.setManagerDescription((reservationAssignWorkerRequest.getManagerDescription() == null 
-					|| reservationAssignWorkerRequest.getManagerDescription().isBlank()) ? 
-				null : reservationAssignWorkerRequest.getManagerDescription().strip());
+		task.setManagerDescription((reservationAssignWorkerRequest.managerDescription() == null 
+					|| reservationAssignWorkerRequest.managerDescription().isBlank()) ? 
+				null : reservationAssignWorkerRequest.managerDescription().strip());
 		
-		reservationAssignWorkerRequest.getAssignedWorkersIds().forEach(workerId -> {
+		reservationAssignWorkerRequest.assignedWorkersIds().forEach(workerId -> {
 			task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..
 			task.setIdentifier(UUID.randomUUID().toString());
 			task.setWorkerId(workerId);

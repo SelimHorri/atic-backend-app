@@ -69,27 +69,27 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		log.info("** Update customer profile.. *\n");
 		
 		this.customerRepository
-				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getUsername().strip()).ifPresent(c -> {
-			if (!c.getCredential().getUsername().equals(customerProfileRequest.getAuthenticatedUsername()))
+				.findByCredentialUsernameIgnoringCase(customerProfileRequest.username().strip()).ifPresent(c -> {
+			if (!c.getCredential().getUsername().equals(customerProfileRequest.authenticatedUsername()))
 				throw new UsernameAlreadyExistsException("Username already exists, please choose another");
 		});
 		
-		if (!customerProfileRequest.getPassword().equals(customerProfileRequest.getConfirmPassword()))
+		if (!customerProfileRequest.password().equals(customerProfileRequest.confirmPassword()))
 			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
 		
 		final var authenticatedCustomer = this.customerRepository
-				.findByCredentialUsernameIgnoringCase(customerProfileRequest.getAuthenticatedUsername())
+				.findByCredentialUsernameIgnoringCase(customerProfileRequest.authenticatedUsername())
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
-		authenticatedCustomer.setFirstname(customerProfileRequest.getFirstname().strip());
-		authenticatedCustomer.setLastname(customerProfileRequest.getLastname().strip());
-		authenticatedCustomer.setEmail(customerProfileRequest.getEmail().strip());
-		authenticatedCustomer.setPhone(customerProfileRequest.getPhone().strip());
-		authenticatedCustomer.setBirthdate(customerProfileRequest.getBirthdate());
-		authenticatedCustomer.setFacebookUrl(customerProfileRequest.getFacebookUrl().strip());
-		authenticatedCustomer.setInstagramUrl(customerProfileRequest.getInstagramUrl().strip());
-		authenticatedCustomer.setLinkedinUrl(customerProfileRequest.getLinkedinUrl().strip());
-		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.getUsername().strip().toLowerCase());
-		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileRequest.getPassword()));
+		authenticatedCustomer.setFirstname(customerProfileRequest.firstname().strip());
+		authenticatedCustomer.setLastname(customerProfileRequest.lastname().strip());
+		authenticatedCustomer.setEmail(customerProfileRequest.email().strip());
+		authenticatedCustomer.setPhone(customerProfileRequest.phone().strip());
+		authenticatedCustomer.setBirthdate(customerProfileRequest.birthdate());
+		authenticatedCustomer.setFacebookUrl(customerProfileRequest.facebookUrl().strip());
+		authenticatedCustomer.setInstagramUrl(customerProfileRequest.instagramUrl().strip());
+		authenticatedCustomer.setLinkedinUrl(customerProfileRequest.linkedinUrl().strip());
+		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.username().strip().toLowerCase());
+		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileRequest.password()));
 		
 		return CustomerMapper.map(this.customerRepository.save(authenticatedCustomer));
 	}

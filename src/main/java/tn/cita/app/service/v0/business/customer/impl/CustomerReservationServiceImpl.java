@@ -91,33 +91,33 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		
 		log.info("** Create new reservation by customer.. *\n");
 		
-		if (reservationRequest.getStartDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER))
-				|| reservationRequest.getStartDate().getMinute() != 0 && reservationRequest.getStartDate().getMinute() != 30)
+		if (reservationRequest.startDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER))
+				|| reservationRequest.startDate().getMinute() != 0 && reservationRequest.startDate().getMinute() != 30)
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
 		this.reservationRepository
-				.findByStartDateAndStatus(reservationRequest.getStartDate(), ReservationStatus.NOT_STARTED).ifPresent(r -> {
+				.findByStartDateAndStatus(reservationRequest.startDate(), ReservationStatus.NOT_STARTED).ifPresent(r -> {
 			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		});
 		
 		final var serviceDetailsIds = reservationRequest
-				.getServiceDetailsIds().stream()
+				.serviceDetailsIds().stream()
 					.distinct()
 					.sorted()
-					.collect(Collectors.toUnmodifiableList());
+					.toList();
 		
 		final var reservation = Reservation.builder()
-				.startDate(reservationRequest.getStartDate())
+				.startDate(reservationRequest.startDate())
 				.customer(this.customerRepository
-						.findByCredentialUsernameIgnoringCase(reservationRequest.getUsername())
+						.findByCredentialUsernameIgnoringCase(reservationRequest.username().strip())
 						.orElseThrow(() -> new CustomerNotFoundException(String
-								.format("Customer with username %s not found", reservationRequest.getUsername()))))
+								.format("Customer with username %s not found", reservationRequest.username()))))
 				.saloon(this.saloonRepository
-						.findById(reservationRequest.getSaloonId())
+						.findById(reservationRequest.saloonId())
 						.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
-				.description((reservationRequest.getDescription() == null 
-							|| reservationRequest.getDescription().isBlank()) ? 
-						null : reservationRequest.getDescription().strip())
+				.description((reservationRequest.description() == null 
+							|| reservationRequest.description().isBlank()) ? 
+						null : reservationRequest.description().strip())
 				.build();
 		
 		final var savedReservation = this.reservationRepository.save(reservation);

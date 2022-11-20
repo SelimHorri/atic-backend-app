@@ -69,7 +69,7 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
+						registerRequest.username(), 
 						AppConstants.EXPIRES_AT_FROM_NOW));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
@@ -114,7 +114,7 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
+						registerRequest.username(), 
 						AppConstants.EXPIRES_AT_FROM_NOW));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
@@ -159,7 +159,7 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
+						registerRequest.username(), 
 						AppConstants.EXPIRES_AT_FROM_NOW));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
@@ -204,7 +204,7 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
+						registerRequest.username(), 
 						AppConstants.EXPIRES_AT_FROM_NOW));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
@@ -286,10 +286,10 @@ class RegistrationResourceTest {
 				.build();
 		
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
-				new ExceptionMsg("#### Account with username: " + registerRequest.getUsername() + " already exists! ####"));
+				new ExceptionMsg("#### Account with username: " + registerRequest.username() + " already exists! ####"));
 		
 		when(this.registrationService.register(registerRequest))
-				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.getUsername() + " already exists"));
+				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.username() + " already exists"));
 		
 		this.webTestClient
 				.post()

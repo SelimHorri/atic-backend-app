@@ -74,11 +74,11 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	@Override
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
 		log.info("** Update reservation details by customer.. *\n");
-		final var reservation = this.reservationRepository.findById(reservationDetailRequest.getReservationId())
+		final var reservation = this.reservationRepository.findById(reservationDetailRequest.reservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation with id: %s not found"));
-		reservation.setDescription((reservationDetailRequest.getDescription() == null 
-					|| reservationDetailRequest.getDescription().isBlank()) ? 
-				null : reservationDetailRequest.getDescription().strip());
+		reservation.setDescription((reservationDetailRequest.description() == null 
+					|| reservationDetailRequest.description().isBlank()) ? 
+				null : reservationDetailRequest.description().strip());
 		
 		return ReservationMapper.map(this.reservationRepository.save(reservation));
 	}
