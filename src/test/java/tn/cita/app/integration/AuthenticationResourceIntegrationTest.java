@@ -83,7 +83,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	@Test
 	void givenLoginApiUrl_whenRequestWithInvalidUsername_thenExceptionMsgShouldBeReturned() {
 		
-		final var wrongUsernameLoginRequest = new LoginRequest(this.loginRequest + "iiii", this.loginRequest.getPassword());
+		final var wrongUsernameLoginRequest = new LoginRequest(this.loginRequest + "iiii", this.loginRequest.password());
 		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("#### Username is not registered! ####"));
 		
@@ -114,7 +114,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	@Test
 	void givenLoginApiUrl_whenRequestWithInvalidPasswordOrElse_thenExceptionMsgShouldBeReturned() {
 		
-		final var wrongCredentialsLoginRequest = new LoginRequest(this.loginRequest.getUsername(), this.loginRequest.getPassword() + "012545");
+		final var wrongCredentialsLoginRequest = new LoginRequest(this.loginRequest.username(), this.loginRequest.password() + "012545");
 		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("#### Incorrect password! ####"));
 		
@@ -144,7 +144,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	@Test
 	void givenLoginApiUrl_whenRequestUsernameIsBlank_thenCustomValidationExceptionMsgShouldBeReturned() {
 		
-		final var wrongCredentialsLoginRequest = new LoginRequest(null, this.loginRequest.getPassword());
+		final var wrongCredentialsLoginRequest = new LoginRequest(null, this.loginRequest.password());
 		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("*Input username should not be blank!**"));
 		
@@ -174,7 +174,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 	@Test
 	void givenLoginApiUrl_whenRequestPasswordIsEmpty_thenCustomValidationExceptionMsgShouldBeReturned() {
 		
-		final var wrongCredentialsLoginRequest = new LoginRequest(this.loginRequest.getUsername(), null);
+		final var wrongCredentialsLoginRequest = new LoginRequest(this.loginRequest.username(), null);
 		final var apiPayloadResponse = new ApiResponse<ExceptionMsg>(1, HttpStatus.BAD_REQUEST, false, 
 				new ExceptionMsg("*Input password should not be blank!**"));
 		
