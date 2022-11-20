@@ -71,9 +71,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 		
 		final var username = "selimhorri" + UUID.randomUUID().toString();
 		
-		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg(String.format("#### Credential with username %s not found! ####", username))
-				.build();
+		final var exceptionMsg = new ExceptionMsg("#### Credential with username %s not found! ####".formatted(username));
 		
 		final var expectedPayload = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false, exceptionMsg);
 		
@@ -88,7 +86,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
 					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().errorMsg()));
 					
 	}
 	

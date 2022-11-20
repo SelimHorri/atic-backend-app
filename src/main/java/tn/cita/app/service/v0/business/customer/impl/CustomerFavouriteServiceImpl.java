@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
-import tn.cita.app.exception.wrapper.FavouriteAlreadyExists;
+import tn.cita.app.exception.wrapper.FavouriteAlreadyExistsException;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
@@ -77,7 +77,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 		// Check if this favourite already exists..
 		final var favouriteId = new FavouriteId(customer.getId(), saloonId);
 		this.favouriteRepository.findById(favouriteId).ifPresent(f -> {
-				throw new FavouriteAlreadyExists("This is already part of your favourites");
+				throw new FavouriteAlreadyExistsException("This is already part of your favourites");
 		});
 		
 		// persist..

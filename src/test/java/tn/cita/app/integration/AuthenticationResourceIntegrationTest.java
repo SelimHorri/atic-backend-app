@@ -108,7 +108,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
 					.jsonPath("$.responseBody.errorMsg")
 						.value(containsStringIgnoringCase("Username is not registered"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
@@ -138,7 +138,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
 					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Incorrect password"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
@@ -168,7 +168,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("*"))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("!**"))
 					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Input username should not be blank"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
@@ -198,7 +198,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("*"))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("!**"))
 					.jsonPath("$.responseBody.errorMsg").value(containsStringIgnoringCase("Input password should not be blank"))
-					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	

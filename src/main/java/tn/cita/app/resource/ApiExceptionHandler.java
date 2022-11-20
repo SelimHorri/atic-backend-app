@@ -30,7 +30,7 @@ import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
-import tn.cita.app.exception.wrapper.FavouriteAlreadyExists;
+import tn.cita.app.exception.wrapper.FavouriteAlreadyExistsException;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalCredentialsException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
@@ -81,9 +81,7 @@ public class ApiExceptionHandler {
 				.orElseGet(() -> new FieldError(null, null, "Validation error happened, check again"));
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
-		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg(String.format("*%s!**", fieldError.getDefaultMessage()))
-				.build();
+		final var exceptionMsg = new ExceptionMsg("*%s!**".formatted(fieldError.getDefaultMessage()));
 		final var apiPayloadResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
@@ -136,16 +134,14 @@ public class ApiExceptionHandler {
 		TaskAlreadyBeganException.class,
 		TaskAlreadyEndedException.class,
 		TaskAlreadyAssignedException.class,
-		FavouriteAlreadyExists.class,
+		FavouriteAlreadyExistsException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
 		log.info("** Handle API request custom exception.. *\n");
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
-		final var exceptionMsg = ExceptionMsg.builder()
-				.errorMsg(String.format("#### %s! ####", e.getMessage()))
-				.build();
+		final var exceptionMsg = new ExceptionMsg("#### %s! ####".formatted(e.getMessage()));
 		final var apiPayloadResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
