@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -53,9 +52,8 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 							.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
 							.map(ReservationMapper::map)
 							.distinct()
-							.collect(Collectors.toUnmodifiableList()).stream()
-								.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
-								.collect(Collectors.toUnmodifiableList())));
+							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
+							.toList()));
 	}
 	
 	@Transactional
@@ -78,7 +76,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 							.map(ReservationMapper::map)
 							.distinct()
 							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
-							.collect(Collectors.toUnmodifiableList())));
+							.toList()));
 	}
 	
 	@Override

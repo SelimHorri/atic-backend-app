@@ -1,7 +1,5 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -55,10 +53,11 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 				.favouriteDtos(this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
 						ClientPageRequestUtils.from(clientPageRequest))
 					.map(FavouriteMapper::map))
-				.ratingDtos(new PageImpl<>(this.ratingRepository.findAllByCustomerId(customerDto.getId()).stream()
-						.map(RatingMapper::map)
-						.distinct()
-						.collect(Collectors.toUnmodifiableList())))
+				.ratingDtos(new PageImpl<>(this.ratingRepository
+						.findAllByCustomerId(customerDto.getId()).stream()
+							.map(RatingMapper::map)
+							.distinct()
+							.toList()))
 				.build();
 	}
 	

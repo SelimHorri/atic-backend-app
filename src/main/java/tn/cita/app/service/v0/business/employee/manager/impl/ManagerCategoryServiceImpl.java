@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -48,7 +47,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 					.map(CategoryMapper::map)
 					.distinct()
 					.sorted(Comparator.comparing(CategoryDto::getName))
-					.collect(Collectors.toUnmodifiableList()));
+					.toList());
 	}
 	
 	@Override

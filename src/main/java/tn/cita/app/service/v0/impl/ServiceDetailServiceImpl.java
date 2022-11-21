@@ -46,7 +46,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		return this.serviceDetailRepository.findAll().stream()
 				.map(ServiceDetailMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	@Override
@@ -70,7 +70,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		final var list = this.serviceDetailRepository.findAllById(ids).stream()
 				.map(ServiceDetailMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 		return new PageImpl<>(list);
 	}
 	
@@ -125,7 +125,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 				.findAllByCategoryId(categoryId).stream()
 					.map(ServiceDetailMapper::map)
 					.distinct()
-					.collect(Collectors.toUnmodifiableList()));
+					.toList());
 	}
 	
 	@Override
@@ -136,7 +136,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 				.distinct()
 				.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
 						.thenComparing(ServiceDetailDto::getName))
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	@Transactional

@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -49,7 +48,7 @@ public class LocationServiceImpl implements LocationService {
 				.map(Location::getCity)
 				.map(String::toLowerCase)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	@Override
@@ -59,7 +58,7 @@ public class LocationServiceImpl implements LocationService {
 				.map(Location::getState)
 				.map(String::toLowerCase)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	

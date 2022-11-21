@@ -3,7 +3,6 @@ package tn.cita.app.service.v0.impl;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
 		return this.categoryRepository.findAll().stream()
 				.map(CategoryMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	@Override
@@ -60,7 +59,7 @@ public class CategoryServiceImpl implements CategoryService {
 				.map(CategoryMapper::map)
 				.distinct()
 				.sorted(Comparator.comparing(CategoryDto::getName))
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	@Transactional

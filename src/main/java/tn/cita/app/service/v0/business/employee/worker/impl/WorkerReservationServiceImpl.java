@@ -1,7 +1,5 @@
 package tn.cita.app.service.v0.business.employee.worker.impl;
 
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -62,7 +60,7 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.strip().toLowerCase()).stream()
 					.map(TaskMapper::map)
 					.distinct()
-					.collect(Collectors.toUnmodifiableList()));
+					.toList());
 	}
 	
 	

@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,7 +26,7 @@ public class RatingServiceImpl implements RatingService {
 		return this.ratingRepository.findAllByCustomerId(customerId).stream()
 				.map(RatingMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	

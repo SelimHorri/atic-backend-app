@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -49,7 +48,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 					.distinct()
 					.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
 							.thenComparing(ServiceDetailDto::getName))
-					.collect(Collectors.toUnmodifiableList()));
+					.toList());
 	}
 	
 	@Override

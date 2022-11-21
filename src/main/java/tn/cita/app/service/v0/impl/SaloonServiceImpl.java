@@ -1,7 +1,5 @@
 package tn.cita.app.service.v0.impl;
 
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
@@ -62,7 +60,7 @@ public class SaloonServiceImpl implements SaloonService {
 		return new PageImpl<>(this.saloonRepository.findAllByCode(code).stream()
 				.map(SaloonMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList()));
+				.toList());
 	}
 	
 	

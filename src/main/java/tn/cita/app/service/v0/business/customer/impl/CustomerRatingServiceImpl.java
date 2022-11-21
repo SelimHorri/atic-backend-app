@@ -1,7 +1,5 @@
 package tn.cita.app.service.v0.business.customer.impl;
 
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,10 +32,11 @@ public class CustomerRatingServiceImpl implements CustomerRatingService {
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
 		return new CustomerRatingResponse(
 				customerDto,
-				new PageImpl<>(this.ratingRepository.findAllByCustomerId(customerDto.getId()).stream()
-						.map(RatingMapper::map)
-						.distinct()
-						.collect(Collectors.toUnmodifiableList())));
+				new PageImpl<>(this.ratingRepository
+						.findAllByCustomerId(customerDto.getId()).stream()
+							.map(RatingMapper::map)
+							.distinct()
+							.toList()));
 	}
 	
 	

@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -80,7 +79,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return this.employeeRepository.findAllByManagerId(managerId).stream()
 				.map(EmployeeMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	
