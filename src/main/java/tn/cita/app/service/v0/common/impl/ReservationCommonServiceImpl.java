@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -85,14 +84,14 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 					.map(TaskMapper::map)
 					.map(TaskDto::getWorkerId)
 					.distinct()
-					.collect(Collectors.toUnmodifiableSet());
+					.toList();
 		
 		final var unassignedWorkerDtos = this.employeeRepository
 				.findAllByManagerId(managerDto.getId()).stream()
 					.map(EmployeeMapper::map)
 					.filter(w -> !assignedWorkersIds.contains(w.getId()))
 					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+					.toList();
 		
 		return new ReservationSubWorkerResponse(this.reservationRepository.findById(reservationId)
 				.map(ReservationMapper::map)
@@ -139,7 +138,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 						.map(EmployeeMapper::map)
 						.orElseThrow(() -> new EmployeeNotFoundException("Employee not found")))
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 		
 		return new ReservationSubWorkerResponse(ReservationMapper.map(reservation), new PageImpl<>(savedAssignedWorkers));
 	}

@@ -1,7 +1,5 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +31,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 		log.info("** Fetch all worker tasks by manager.. *\n");
 		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
 		return new ManagerWorkerAssignmentResponse(managerDto, 
 				this.taskRepository.findAllByWorkerId(workerId, 
 						ClientPageRequestUtils.from(clientPageRequest))
@@ -53,7 +50,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 						.searchAllByWorkerIdLikeKey(workerId, key.strip().toLowerCase()).stream()
 							.map(TaskMapper::map)
 							.distinct()
-							.collect(Collectors.toUnmodifiableList())));
+							.toList()));
 	}
 	
 	

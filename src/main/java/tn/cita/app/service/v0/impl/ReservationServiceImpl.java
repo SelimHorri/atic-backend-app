@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -74,7 +73,7 @@ public class ReservationServiceImpl implements ReservationService {
 		return this.reservationRepository.findAllBySaloonId(saloonId).stream()
 				.map(ReservationMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	

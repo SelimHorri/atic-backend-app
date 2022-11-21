@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.impl;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -47,7 +46,7 @@ public class TaskServiceImpl implements TaskService {
 		return this.taskRepository.findAllByReservationId(reservationId).stream()
 				.map(TaskMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	@Override
@@ -56,7 +55,7 @@ public class TaskServiceImpl implements TaskService {
 		return this.taskRepository.findAllByWorkerId(workerId).stream()
 				.map(TaskMapper::map)
 				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+				.toList();
 	}
 	
 	@Override

@@ -1,7 +1,5 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
-import java.util.stream.Collectors;
-
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,7 +33,7 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 				new PageImpl<>(this.employeeRepository.findAllByManagerId(managerDto.getId()).stream()
 						.map(EmployeeMapper::map)
 						.distinct()
-						.collect(Collectors.toUnmodifiableList())));
+						.toList()));
 	}
 	
 	@Override

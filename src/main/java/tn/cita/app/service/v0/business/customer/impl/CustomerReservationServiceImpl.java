@@ -2,7 +2,6 @@ package tn.cita.app.service.v0.business.customer.impl;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -76,7 +75,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 							.map(ReservationMapper::map)
 							.distinct()
 							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
-							.collect(Collectors.toUnmodifiableList())));
+							.toList()));
 	}
 	
 	@Transactional

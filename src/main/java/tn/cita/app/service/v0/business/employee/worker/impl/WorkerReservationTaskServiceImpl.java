@@ -3,7 +3,6 @@ package tn.cita.app.service.v0.business.employee.worker.impl;
 import java.time.LocalDateTime;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -162,7 +161,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.findAllByReservationId(taskEndRequest.reservationId()).stream()
 					.filter(t -> !t.getWorkerId().equals(workerDto.getId()))
 					.distinct()
-					.collect(Collectors.toUnmodifiableList());
+					.toList();
 		
 		final boolean isAllTasksEnded = assignedOtherTaskDtos.stream()
 					.map(Task::getEndDate)

@@ -2,7 +2,6 @@ package tn.cita.app.service.v0.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,7 +38,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 		return this.orderedDetailRepository.findAllByReservationId(reservationId).stream()
 				.map(OrderedDetailMapper::map)
 				.distinct()
-				.collect(Collectors.toList());
+				.toList();
 	}
 	
 	@Transactional
