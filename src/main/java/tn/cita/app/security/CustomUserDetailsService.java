@@ -34,7 +34,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		if (!userDetails.isEnabled())
 			throw new IllegalUserDetailsStateException(String
-					.format("User with username: %s is disabled, checkout your mail to activate", userDetails.getUsername()));
+					.format("User with username: %s is disabled, checkout your mail to activate it", userDetails.getUsername()));
 		if (!userDetails.isAccountNonExpired())
 			throw new IllegalUserDetailsStateException(String
 					.format("User account with username: %s is expired", userDetails.getUsername()));

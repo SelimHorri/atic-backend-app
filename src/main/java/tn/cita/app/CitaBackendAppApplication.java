@@ -18,11 +18,7 @@ public class CitaBackendAppApplication {
 		SpringApplication.run(CitaBackendAppApplication.class, args);
 	}
 	
-	
-	
 }
-
-
 
 
 

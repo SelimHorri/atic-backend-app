@@ -113,9 +113,9 @@ class CustomUserDetailsServiceTest {
 				.isInstanceOf(IllegalUserDetailsStateException.class);
 		assertThat(illegalUserDetailsStateException.getMessage())
 				.startsWith("User ")
-				.endsWith(" to activate")
+				.endsWith(" to activate it")
 				.isEqualTo(String
-						.format("User with username: %s is disabled, checkout your mail to activate", 
+						.format("User with username: %s is disabled, checkout your mail to activate it", 
 								userDetails.getUsername()));
 	}
 	

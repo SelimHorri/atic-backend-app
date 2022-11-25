@@ -42,7 +42,7 @@ public class ActuatorLiveness {
 			System.err.println(e.getMessage());
 		}
 		finally {
-			if (health == null || !health.getStatus().equalsIgnoreCase("UP"))
+			if (health == null || !health.status().equalsIgnoreCase("UP"))
 				throw new ActuatorHealthException("We're running into an issue 😬 \n"
 						+ "Will be FIXED very soon, stay tunned..🤗");
 		}
