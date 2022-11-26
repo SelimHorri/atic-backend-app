@@ -30,12 +30,12 @@ public final class ClientPageRequest implements Serializable {
 	@Builder.Default
 	private Sort.Direction sortDirection = Sort.Direction.DESC;
 	
-	public ClientPageRequest(final int offset, final int size) {
+	private ClientPageRequest(final int offset, final int size) {
 		this.offset = offset;
 		this.size = size;
 	}
 	
-	public ClientPageRequest(final Map<String, String> params) {
+	private ClientPageRequest(final Map<String, String> params) {
 		this(Integer.parseInt(params.get("offset")), Integer.parseInt(params.get("size")));
 		
 		if (params.get("sortBy") != null && !params.get("sortBy").isBlank())
@@ -46,6 +46,10 @@ public final class ClientPageRequest implements Serializable {
 			this.sortDirection = (params.get("sortDirection").equalsIgnoreCase("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC;
 		else
 			this.sortDirection = Sort.Direction.DESC;
+	}
+	
+	public static ClientPageRequest of(final Map<String, String> params) {
+		return new ClientPageRequest(params);
 	}
 	
 	

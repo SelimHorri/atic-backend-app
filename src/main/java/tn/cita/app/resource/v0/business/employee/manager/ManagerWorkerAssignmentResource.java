@@ -38,7 +38,7 @@ public class ManagerWorkerAssignmentResource {
 		log.info("** Fetch all worker tasks by manager.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,this.managerWorkerAssignmentService
 				.fetchAllWorkerTasks(this.userRequestExtractorUtil.extractUsername(webRequest), 
-						Integer.parseInt(workerId), new ClientPageRequest(params))));
+						Integer.parseInt(workerId), ClientPageRequest.of(params))));
 	}
 	
 	@GetMapping("/{workerId}/search/{key}")

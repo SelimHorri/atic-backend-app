@@ -45,7 +45,7 @@ public class ManagerReservationResource {
 		log.info("** Fetch all paged reservations by manager.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerReservationService.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest), 
-						new ClientPageRequest(params))));
+						ClientPageRequest.of(params))));
 	}
 	
 	@GetMapping("/all")

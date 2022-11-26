@@ -30,7 +30,7 @@ public class TagResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<TagDto>>> findAll(@RequestParam final Map<String, String> params) {
 		log.info("** Find all tags.. *\n");
-		final var tags = this.tagService.findAll(new ClientPageRequest(params));
+		final var tags = this.tagService.findAll(ClientPageRequest.of(params));
 		return ResponseEntity.ok(new ApiResponse<>(tags.toList().size(), HttpStatus.OK, true, tags));
 	}
 	
