@@ -18,6 +18,7 @@ import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.mapper.EmployeeMapper;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.domain.entity.VerificationToken;
 import tn.cita.app.model.dto.notif.MailBodyContentBuilder;
 import tn.cita.app.model.dto.notif.MailNotification;
@@ -99,14 +100,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** User password encrypted successfully! *\n");
 		
 		// Step 5
-		if (RegistrationUtils.isCustomerRole(registerRequest.role()))
-			return this.registerCustomer(registerRequest);
-		else if (RegistrationUtils.isWorkerRole(registerRequest.role())
-				|| RegistrationUtils.isManagerRole(registerRequest.role())
-				|| RegistrationUtils.isOwnerRole(registerRequest.role()))
-			return this.registerEmployee(registerRequest);
-		else 
-			return null;
+		return switch(UserRoleBasedAuthority.valueOf(registerRequest.role())) {
+			case CUSTOMER -> this.registerCustomer(registerRequest);
+			case WORKER, MANAGER, OWNER -> this.registerEmployee(registerRequest);
+			case ADMIN -> null;
+		};
 	}
 	
 	private RegisterResponse registerCustomer(final RegisterRequest registerRequest) {

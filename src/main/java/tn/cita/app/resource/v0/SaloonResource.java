@@ -30,7 +30,7 @@ public class SaloonResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAll(@RequestParam final Map<String, String> params) {
 		log.info("** Find all saloons.. *\n");
-		final var saloons = this.saloonService.findAll(new ClientPageRequest(params));
+		final var saloons = this.saloonService.findAll(ClientPageRequest.of(params));
 		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
@@ -38,7 +38,7 @@ public class SaloonResource {
 	public ResponseEntity<ApiResponse<Page<SaloonDto>>> findAllByLocationState(@PathVariable final String state, 
 			@RequestParam final Map<String, String> params) {
 		log.info("** Find all saloons by location state.. *\n");
-		final var saloons = this.saloonService.findAllByLocationState(state, new ClientPageRequest(params));
+		final var saloons = this.saloonService.findAllByLocationState(state, ClientPageRequest.of(params));
 		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	

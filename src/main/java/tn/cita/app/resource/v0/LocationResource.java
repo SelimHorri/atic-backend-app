@@ -31,7 +31,7 @@ public class LocationResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<Page<LocationDto>>> findAll(@RequestParam final Map<String, String> params) {
 		log.info("** Find all paged locations.. *\n");
-		final var locations = this.locationService.findAll(new ClientPageRequest(params));
+		final var locations = this.locationService.findAll(ClientPageRequest.of(params));
 		return ResponseEntity.ok(new ApiResponse<>(locations.toList().size(), HttpStatus.OK, true, locations));
 	}
 	

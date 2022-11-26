@@ -60,7 +60,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 			case CANCELLED -> throw new ReservationAlreadyCancelledException("Reservation is already cancelled");
 			case OUTDATED -> throw new ReservationAlreadyOutdatedException("Reservation is already outdated");
 			case NOT_CLOSED -> throw new ReservationAlreadyNotClosedException("Reservation is already not-closed");
-			default -> {
+			case NOT_STARTED, IN_PROGRESS -> {
 				reservation.setCancelDate(LocalDateTime.now());
 				reservation.setStatus(ReservationStatus.CANCELLED);
 			}
