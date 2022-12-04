@@ -1,9 +1,6 @@
 package tn.cita.app.mapper;
 
-import javax.validation.constraints.NotNull;
-
-import tn.cita.app.model.domain.entity.Customer;
-import tn.cita.app.model.domain.entity.Employee;
+import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Rating;
 import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.EmployeeDto;
@@ -11,7 +8,7 @@ import tn.cita.app.model.dto.RatingDto;
 
 public interface RatingMapper {
 	
-	public static RatingDto map(@NotNull final Rating rating) {
+	public static RatingDto map(@NonNull final Rating rating) {
 		return RatingDto.builder()
 				.identifier(rating.getIdentifier())
 				.workerId(rating.getWorkerId())
@@ -42,41 +39,6 @@ public interface RatingMapper {
 						.email(rating.getCustomer().getEmail())
 						.phone(rating.getCustomer().getPhone())
 						.birthdate(rating.getCustomer().getBirthdate())
-						.build())
-				.build();
-	}
-	
-	public static Rating map(@NotNull final RatingDto ratingDto) {
-		return Rating.builder()
-				.identifier(ratingDto.getIdentifier())
-				.workerId(ratingDto.getWorkerId())
-				.customerId(ratingDto.getCustomerId())
-				.rateDate(ratingDto.getRateDate())
-				.rate(ratingDto.getRate())
-				.description(ratingDto.getDescription())
-				.worker(
-					Employee.builder()
-						.id(ratingDto.getWorkerDto().getId())
-						.identifier(ratingDto.getWorkerDto().getIdentifier())
-						.ssn(ratingDto.getWorkerDto().getSsn())
-						.firstname(ratingDto.getWorkerDto().getFirstname())
-						.lastname(ratingDto.getWorkerDto().getLastname())
-						.isMale(ratingDto.getWorkerDto().getIsMale())
-						.email(ratingDto.getWorkerDto().getEmail())
-						.phone(ratingDto.getWorkerDto().getPhone())
-						.birthdate(ratingDto.getWorkerDto().getBirthdate())
-						.build())
-				.customer(
-					Customer.builder()
-						.id(ratingDto.getCustomerDto().getId())
-						.identifier(ratingDto.getCustomerDto().getIdentifier())
-						.ssn(ratingDto.getCustomerDto().getSsn())
-						.firstname(ratingDto.getCustomerDto().getFirstname())
-						.lastname(ratingDto.getCustomerDto().getLastname())
-						.isMale(ratingDto.getCustomerDto().getIsMale())
-						.email(ratingDto.getCustomerDto().getEmail())
-						.phone(ratingDto.getCustomerDto().getPhone())
-						.birthdate(ratingDto.getCustomerDto().getBirthdate())
 						.build())
 				.build();
 	}

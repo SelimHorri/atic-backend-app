@@ -2,7 +2,6 @@ package tn.cita.app.mapper;
 
 import javax.validation.constraints.NotNull;
 
-import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.VerificationToken;
 import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.VerificationTokenDto;
@@ -25,26 +24,6 @@ public interface VerificationTokenMapper {
 						.isAccountNonExpired(verificationToken.getCredential().getIsAccountNonExpired())
 						.isAccountNonLocked(verificationToken.getCredential().getIsAccountNonLocked())
 						.isCredentialsNonExpired(verificationToken.getCredential().getIsCredentialsNonExpired())
-						.build())
-				.build();
-	}
-	
-	public static VerificationToken map(@NotNull final VerificationTokenDto verificationTokenDto) {
-		return VerificationToken.builder()
-				.id(verificationTokenDto.getId())
-				.identifier(verificationTokenDto.getIdentifier())
-				.token(verificationTokenDto.getToken())
-				.expireDate(verificationTokenDto.getExpireDate())
-				.credential(
-					Credential.builder()
-						.id(verificationTokenDto.getCredentialDto().getId())
-						.identifier(verificationTokenDto.getCredentialDto().getIdentifier())
-						.username(verificationTokenDto.getCredentialDto().getUsername())
-						.password(verificationTokenDto.getCredentialDto().getPassword())
-						.isEnabled(verificationTokenDto.getCredentialDto().getIsEnabled())
-						.isAccountNonExpired(verificationTokenDto.getCredentialDto().getIsAccountNonExpired())
-						.isAccountNonLocked(verificationTokenDto.getCredentialDto().getIsAccountNonLocked())
-						.isCredentialsNonExpired(verificationTokenDto.getCredentialDto().getIsCredentialsNonExpired())
 						.build())
 				.build();
 	}

@@ -2,21 +2,13 @@ package tn.cita.app.model.dto.response;
 
 import java.io.Serializable;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
-
-@RequiredArgsConstructor
-@ToString
-@EqualsAndHashCode
-@Getter
-public final class RegisterResponse implements Serializable {
+public record RegisterResponse(Boolean isSuccess, String msg) implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	public RegisterResponse(final String msg) {
+		this(true, msg);
+	}
 	
-	private Boolean isSuccess = true;
-	private final String msg;
+	
 	
 }
 

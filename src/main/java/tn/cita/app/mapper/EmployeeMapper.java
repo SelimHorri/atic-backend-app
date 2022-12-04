@@ -2,8 +2,7 @@ package tn.cita.app.mapper;
 
 import java.util.Optional;
 
-import javax.validation.constraints.NotNull;
-
+import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.model.domain.entity.Saloon;
@@ -17,7 +16,7 @@ import tn.cita.app.util.RegistrationUtils;
 
 public interface EmployeeMapper {
 	
-public static EmployeeDto map(@NotNull final Employee employee) {
+public static EmployeeDto map(@NonNull final Employee employee) {
 		
 		final var userImage = Optional
 				.ofNullable(employee.getUserImage())
@@ -85,75 +84,7 @@ public static EmployeeDto map(@NotNull final Employee employee) {
 				.build();
 	}
 	
-	public static Employee map(@NotNull final EmployeeDto employeeDto) {
-		
-		final var userImageDto = Optional
-				.ofNullable(employeeDto.getUserImageDto())
-				.orElseGet(UserImageDto::new);
-		final var managerDto = Optional
-				.ofNullable(employeeDto.getManagerDto())
-				.orElseGet(EmployeeDto::new);
-		final var saloonDto = Optional
-				.ofNullable(employeeDto.getSaloonDto())
-				.orElseGet(SaloonDto::new);
-		
-		return Employee.builder()
-				.id(employeeDto.getId())
-				.identifier(employeeDto.getIdentifier())
-				.ssn(employeeDto.getSsn())
-				.firstname(employeeDto.getFirstname())
-				.lastname(employeeDto.getLastname())
-				.isMale(employeeDto.getIsMale())
-				.email(employeeDto.getEmail())
-				.phone(employeeDto.getPhone())
-				.birthdate(employeeDto.getBirthdate())
-				.hiredate(employeeDto.getHiredate())
-				.userImage(
-					UserImage.builder()
-						.id(userImageDto.getId())
-						.identifier(userImageDto.getIdentifier())
-						.imageLob(userImageDto.getImageLob())
-						.build())
-				.manager(
-					Employee.builder()
-						.id(managerDto.getId())
-						.identifier(managerDto.getIdentifier())
-						.firstname(managerDto.getFirstname())
-						.lastname(managerDto.getLastname())
-						.isMale(managerDto.getIsMale())
-						.email(managerDto.getEmail())
-						.phone(managerDto.getPhone())
-						.birthdate(managerDto.getBirthdate())
-						.hiredate(managerDto.getHiredate())
-						.build())
-				.credential(
-					Credential.builder()
-						.id(employeeDto.getCredentialDto().getId())
-						.identifier(employeeDto.getCredentialDto().getIdentifier())
-						.username(employeeDto.getCredentialDto().getUsername())
-						.password(employeeDto.getCredentialDto().getPassword())
-						.userRoleBasedAuthority(employeeDto.getCredentialDto().getUserRoleBasedAuthority())
-						.isEnabled(employeeDto.getCredentialDto().getIsEnabled())
-						.isAccountNonExpired(employeeDto.getCredentialDto().getIsAccountNonExpired())
-						.isAccountNonLocked(employeeDto.getCredentialDto().getIsAccountNonLocked())
-						.isCredentialsNonExpired(employeeDto.getCredentialDto().getIsCredentialsNonExpired())
-						.build())
-				.saloon(
-					Saloon.builder()
-						.id(saloonDto.getId())
-						.identifier(saloonDto.getIdentifier())
-						.code(saloonDto.getCode())
-						.taxRef(saloonDto.getTaxRef())
-						.name(saloonDto.getName())
-						.isPrimary(saloonDto.getIsPrimary())
-						.openingDate(saloonDto.getOpeningDate())
-						.fullAdr(saloonDto.getFullAdr())
-						.email(saloonDto.getEmail())
-						.build())
-				.build();
-	}
-	
-	public static Employee map(final RegisterRequest registerRequest) {
+	public static Employee map(@NonNull final RegisterRequest registerRequest) {
 		return Employee.builder()
 				.firstname(registerRequest.firstname())
 				.lastname(registerRequest.lastname())

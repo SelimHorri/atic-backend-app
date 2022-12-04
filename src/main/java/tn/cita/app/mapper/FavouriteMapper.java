@@ -1,17 +1,14 @@
 package tn.cita.app.mapper;
 
-import javax.validation.constraints.NotNull;
-
-import tn.cita.app.model.domain.entity.Customer;
+import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Favourite;
-import tn.cita.app.model.domain.entity.Saloon;
 import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.FavouriteDto;
 import tn.cita.app.model.dto.SaloonDto;
 
 public interface FavouriteMapper {
 	
-	public static FavouriteDto map(@NotNull final Favourite favourite) {
+	public static FavouriteDto map(@NonNull final Favourite favourite) {
 		return FavouriteDto.builder()
 				.customerId(favourite.getCustomerId())
 				.saloonId(favourite.getSaloonId())
@@ -40,39 +37,6 @@ public interface FavouriteMapper {
 						.openingDate(favourite.getSaloon().getOpeningDate())
 						.fullAdr(favourite.getSaloon().getFullAdr())
 						.email(favourite.getSaloon().getEmail())
-						.build())
-				.build();
-	}
-	
-	public static Favourite map(@NotNull final FavouriteDto favouriteDto) {
-		return Favourite.builder()
-				.customerId(favouriteDto.getCustomerId())
-				.saloonId(favouriteDto.getSaloonId())
-				.favouriteDate(favouriteDto.getFavouriteDate())
-				.identifier(favouriteDto.getIdentifier())
-				.customer(
-					Customer.builder()
-						.id(favouriteDto.getCustomerDto().getId())
-						.identifier(favouriteDto.getCustomerDto().getIdentifier())
-						.ssn(favouriteDto.getCustomerDto().getSsn())
-						.firstname(favouriteDto.getCustomerDto().getFirstname())
-						.lastname(favouriteDto.getCustomerDto().getLastname())
-						.isMale(favouriteDto.getCustomerDto().getIsMale())
-						.email(favouriteDto.getCustomerDto().getEmail())
-						.phone(favouriteDto.getCustomerDto().getPhone())
-						.birthdate(favouriteDto.getCustomerDto().getBirthdate())
-						.build())
-				.saloon(
-					Saloon.builder()
-						.id(favouriteDto.getSaloonDto().getId())
-						.identifier(favouriteDto.getSaloonDto().getIdentifier())
-						.code(favouriteDto.getSaloonDto().getCode())
-						.taxRef(favouriteDto.getSaloonDto().getTaxRef())
-						.name(favouriteDto.getSaloonDto().getName())
-						.isPrimary(favouriteDto.getSaloonDto().getIsPrimary())
-						.openingDate(favouriteDto.getSaloonDto().getOpeningDate())
-						.fullAdr(favouriteDto.getSaloonDto().getFullAdr())
-						.email(favouriteDto.getSaloonDto().getEmail())
 						.build())
 				.build();
 	}

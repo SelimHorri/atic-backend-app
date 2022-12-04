@@ -90,8 +90,8 @@ class RegistrationResourceTest {
 					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
 					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
@@ -135,8 +135,8 @@ class RegistrationResourceTest {
 					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
 					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
@@ -180,8 +180,8 @@ class RegistrationResourceTest {
 					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
 					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
@@ -225,8 +225,8 @@ class RegistrationResourceTest {
 					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
 					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
