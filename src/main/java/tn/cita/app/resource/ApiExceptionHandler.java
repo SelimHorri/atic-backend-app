@@ -3,7 +3,6 @@ package tn.cita.app.resource;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
-import javax.naming.AuthenticationException;
 import javax.validation.ConstraintViolationException;
 
 import org.springframework.http.HttpStatus;
@@ -20,7 +19,6 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
@@ -116,13 +114,11 @@ public class ApiExceptionHandler {
 		IllegalUserDetailsStateException.class,
 		UsernameAlreadyExistsException.class,
 		AccessTokenExpiredException.class,
-		SignatureException.class,
 		ExpiredJwtException.class,
 		NumberFormatException.class,
 		UsernameNotMatchException.class,
 		UnauthorizedUserException.class, // already works for filter using resolver
 		ActuatorHealthException.class,
-		AuthenticationException.class,
 		OrderedDetailAlreadyExistsException.class,
 		OutdatedStartDateReservationException.class,
 		ReservationAlreadyExistsException.class,
