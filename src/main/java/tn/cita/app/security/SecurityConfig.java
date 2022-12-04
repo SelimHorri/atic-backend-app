@@ -41,7 +41,7 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
 		return http.cors(cors -> cors.disable())
 				.csrf(csrf -> csrf.disable())
-				.authorizeRequests(authorizeRequests -> authorizeRequests
+				.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
 						.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 						.antMatchers(AppConstants.WHITELIST_URLS).permitAll()
 						.mvcMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()

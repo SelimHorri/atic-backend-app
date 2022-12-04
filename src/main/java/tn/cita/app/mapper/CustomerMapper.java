@@ -2,8 +2,7 @@ package tn.cita.app.mapper;
 
 import java.util.Optional;
 
-import javax.validation.constraints.NotNull;
-
+import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Customer;
 import tn.cita.app.model.domain.entity.UserImage;
@@ -15,7 +14,7 @@ import tn.cita.app.util.RegistrationUtils;
 
 public interface CustomerMapper {
 	
-public static CustomerDto map(@NotNull final Customer customer) {
+public static CustomerDto map(@NonNull final Customer customer) {
 		
 		final var userImage = Optional
 				.ofNullable(customer.getUserImage())
@@ -55,47 +54,7 @@ public static CustomerDto map(@NotNull final Customer customer) {
 				.build();
 	}
 	
-	public static Customer map(@NotNull final CustomerDto customerDto) {
-		
-		final var userImageDto = Optional
-				.ofNullable(customerDto.getUserImageDto())
-				.orElseGet(UserImageDto::new);
-		
-		return Customer.builder()
-				.id(customerDto.getId())
-				.identifier(customerDto.getIdentifier())
-				.ssn(customerDto.getSsn())
-				.firstname(customerDto.getFirstname())
-				.lastname(customerDto.getLastname())
-				.isMale(customerDto.getIsMale())
-				.email(customerDto.getEmail())
-				.phone(customerDto.getPhone())
-				.birthdate(customerDto.getBirthdate())
-				.facebookUrl(customerDto.getFacebookUrl())
-				.instagramUrl(customerDto.getInstagramUrl())
-				.linkedinUrl(customerDto.getLinkedinUrl())
-				.userImage(
-					UserImage.builder()
-						.id(userImageDto.getId())
-						.identifier(userImageDto.getIdentifier())
-						.imageLob(userImageDto.getImageLob())
-						.build())
-				.credential(
-					Credential.builder()
-						.id(customerDto.getCredentialDto().getId())
-						.identifier(customerDto.getCredentialDto().getIdentifier())
-						.username(customerDto.getCredentialDto().getUsername())
-						.password(customerDto.getCredentialDto().getPassword())
-						.userRoleBasedAuthority(customerDto.getCredentialDto().getUserRoleBasedAuthority())
-						.isEnabled(customerDto.getCredentialDto().getIsEnabled())
-						.isAccountNonExpired(customerDto.getCredentialDto().getIsAccountNonExpired())
-						.isAccountNonLocked(customerDto.getCredentialDto().getIsAccountNonLocked())
-						.isCredentialsNonExpired(customerDto.getCredentialDto().getIsCredentialsNonExpired())
-						.build())
-				.build();
-	}
-	
-	public static Customer map(final RegisterRequest registerRequest) {
+	public static Customer map(@NonNull final RegisterRequest registerRequest) {
 		return Customer.builder()
 				.firstname(registerRequest.firstname())
 				.lastname(registerRequest.lastname())
