@@ -68,10 +68,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.findById(new TaskId(worker.getId(), reservation.getId()))
 				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
 		
-		Optional.ofNullable(task.getEndDate()).ifPresent(endDate -> {
-			throw new TaskAlreadyEndedException("Task is already ended.\n"
+		if (Objects.nonNull(task.getEndDate()))
+			throw new TaskAlreadyEndedException("Task is already ended. "
 					+ "Unfortunately, you cannot comment it anymore");
-		});
 		
 		// update worker description..
 		task.setWorkerDescription((taskUpdateDescriptionRequest.workerDescription() == null 
@@ -97,12 +96,10 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.findById(new TaskId(worker.getId(), reservation.getId()))
 				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
 		
-		Optional.ofNullable(task.getEndDate()).ifPresent(endDate -> {
+		if (Objects.nonNull(task.getEndDate()))
 			throw new TaskAlreadyEndedException("Task already ended");
-		});
-		Optional.ofNullable(task.getStartDate()).ifPresent(startDate -> {
+		if (Objects.nonNull(task.getStartDate()))
 			throw new TaskAlreadyBeganException("Task already began");
-		});
 		
 		// begin task..
 		task.setStartDate(LocalDateTime.now());

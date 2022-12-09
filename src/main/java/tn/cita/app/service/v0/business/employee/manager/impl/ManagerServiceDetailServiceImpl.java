@@ -39,8 +39,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 		
 		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
 		
 		return new PageImpl<>(this.serviceDetailRepository
 				.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()).stream()

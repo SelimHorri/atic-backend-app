@@ -1,7 +1,6 @@
 package tn.cita.app.service.v0.business.employee.manager.impl;
 
 import java.util.Comparator;
-import java.util.stream.Collectors;
 
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
@@ -57,10 +56,11 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		
 		log.info("** Fetch begin end task by manager.. *\n");
 		
-		final var taskDtos = this.taskRepository.findAllByReservationId(reservationId).stream()
-				.map(TaskMapper::map)
-				.distinct()
-				.collect(Collectors.toUnmodifiableList());
+		final var taskDtos = this.taskRepository
+				.findAllByReservationId(reservationId).stream()
+					.map(TaskMapper::map)
+					.distinct()
+					.toList();
 		
 		final var firstTaskBegin = taskDtos.stream()
 				.filter(t -> t.getStartDate() != null)

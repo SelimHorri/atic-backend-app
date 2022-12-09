@@ -93,9 +93,11 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 					.distinct()
 					.toList();
 		
-		return new ReservationSubWorkerResponse(this.reservationRepository.findById(reservationId)
-				.map(ReservationMapper::map)
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found")), new PageImpl<>(unassignedWorkerDtos));
+		return new ReservationSubWorkerResponse(
+				this.reservationRepository.findById(reservationId)
+						.map(ReservationMapper::map)
+						.orElseThrow(() -> new ReservationNotFoundException("Reservation not found")), 
+				new PageImpl<>(unassignedWorkerDtos));
 	}
 	
 	@Transactional
@@ -121,7 +123,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 					|| reservationAssignWorkerRequest.managerDescription().isBlank()) ? 
 				null : reservationAssignWorkerRequest.managerDescription().strip());
 		
-		reservationAssignWorkerRequest.assignedWorkersIds().forEach(workerId -> {
+		for (int workerId: reservationAssignWorkerRequest.assignedWorkersIds()) {
 			task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..
 			task.setIdentifier(UUID.randomUUID().toString());
 			task.setWorkerId(workerId);
@@ -130,7 +132,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 			this.taskRepository.saveTask(task);
 			assignedWorkers.add(this.taskRepository.findById(new TaskId(task.getWorkerId(), task.getReservationId()))
 					.orElseThrow(() -> new TaskNotFoundException("Task not found")));
-		});
+		}
 		
 		final var savedAssignedWorkers = assignedWorkers.stream()
 				.map(Task::getWorkerId)
