@@ -122,7 +122,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		final var savedReservation = this.reservationRepository.save(reservation);
 		
 		final var orderedDetail = new OrderedDetail();
-		serviceDetailsIds.forEach(serviceDetailId -> {
+		
+		for (int serviceDetailId: serviceDetailsIds) {
 			orderedDetail.setReservationId(savedReservation.getId());
 			orderedDetail.setServiceDetailId(serviceDetailId);
 			orderedDetail.setOrderedDate(LocalDateTime.now());
@@ -134,7 +135,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 					orderedDetail.getReservationId(), 
 					orderedDetail.getServiceDetailId(), 
 					orderedDetail.getOrderedDate()));
-		});
+		}
 		
 		return ReservationMapper.map(savedReservation);
 	}

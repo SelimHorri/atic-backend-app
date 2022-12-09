@@ -32,7 +32,8 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
-		return new ManagerWorkerAssignmentResponse(managerDto, 
+		return new ManagerWorkerAssignmentResponse(
+				managerDto, 
 				this.taskRepository.findAllByWorkerId(workerId, 
 						ClientPageRequestUtils.from(clientPageRequest))
 					.map(TaskMapper::map));
