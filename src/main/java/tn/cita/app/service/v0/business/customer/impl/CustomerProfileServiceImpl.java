@@ -4,6 +4,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -84,9 +85,9 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		authenticatedCustomer.setEmail(customerProfileRequest.email().strip());
 		authenticatedCustomer.setPhone(customerProfileRequest.phone().strip());
 		authenticatedCustomer.setBirthdate(customerProfileRequest.birthdate());
-		authenticatedCustomer.setFacebookUrl(customerProfileRequest.facebookUrl().strip());
-		authenticatedCustomer.setInstagramUrl(customerProfileRequest.instagramUrl().strip());
-		authenticatedCustomer.setLinkedinUrl(customerProfileRequest.linkedinUrl().strip());
+		authenticatedCustomer.setFacebookUrl(StringUtils.trimAllWhitespace(customerProfileRequest.facebookUrl()));
+		authenticatedCustomer.setInstagramUrl(StringUtils.trimAllWhitespace(customerProfileRequest.instagramUrl()));
+		authenticatedCustomer.setLinkedinUrl(StringUtils.trimAllWhitespace(customerProfileRequest.linkedinUrl()));
 		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.username().strip().toLowerCase());
 		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileRequest.password()));
 		
