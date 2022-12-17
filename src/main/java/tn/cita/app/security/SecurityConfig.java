@@ -42,10 +42,10 @@ public class SecurityConfig {
 		return http.cors(cors -> cors.disable())
 				.csrf(csrf -> csrf.disable())
 				.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-						.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.antMatchers(AppConstants.WHITELIST_URLS).permitAll()
+						.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+						.mvcMatchers(AppConstants.WHITELIST_URLS).permitAll()
 						.mvcMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()
-						.antMatchers(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET).permitAll()
+						.mvcMatchers(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET).permitAll()
 						.mvcMatchers("/api/v*/customers/**")
 							.hasRole(UserRoleBasedAuthority.CUSTOMER.name())
 						.mvcMatchers("/api/v*/employees/workers/**")
