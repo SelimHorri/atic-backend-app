@@ -30,22 +30,25 @@ public final class ClientPageRequest implements Serializable {
 	@Builder.Default
 	private Sort.Direction sortDirection = Sort.Direction.DESC;
 	
-	private ClientPageRequest(final int offset, final int size) {
+	private ClientPageRequest(final int offset) {
 		this.offset = offset;
-		this.size = size;
+		this.size = AppConstants.PAGE_SIZE;
 	}
 	
 	private ClientPageRequest(final Map<String, String> params) {
-		this(Integer.parseInt(params.get("offset")), Integer.parseInt(params.get("size")));
 		
-		if (params.get("sortBy") != null && !params.get("sortBy").isBlank())
-			this.sortBy = params.get("sortBy").split(",");
-		else
-			this.sortBy = new String[] {};
-		if (params.get("sortDirection") != null && !params.get("sortDirection").isBlank())
-			this.sortDirection = (params.get("sortDirection").equalsIgnoreCase("desc")) ? Sort.Direction.DESC : Sort.Direction.ASC;
-		else
-			this.sortDirection = Sort.Direction.DESC;
+		this(Integer.parseInt(params.get("offset")));
+		
+		final Integer sizeParam = Integer.parseInt(params.get("size"));
+		final String sortByParam = params.get("sortBy");
+		final String sortDirectionParam = params.get("sortDirection");
+		
+		this.size = (sizeParam != null) ? sizeParam : AppConstants.PAGE_SIZE;
+		this.sortBy = (sortByParam != null && !sortByParam.isBlank()) ? sortByParam.split(",") : new String[] {"createdAt"};
+		this.sortDirection = (sortDirectionParam != null && !sortDirectionParam.isBlank()) ? 
+				(sortDirectionParam.equalsIgnoreCase("desc")) ? 
+						Sort.Direction.DESC : Sort.Direction.ASC 
+				: Sort.Direction.DESC;
 	}
 	
 	public static ClientPageRequest of(final Map<String, String> params) {

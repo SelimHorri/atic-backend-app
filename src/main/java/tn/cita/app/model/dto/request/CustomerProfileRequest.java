@@ -44,6 +44,7 @@ public record CustomerProfileRequest(
 		@JsonSerialize(using = LocalDateSerializer.class)
 		@JsonDeserialize(using = LocalDateDeserializer.class)
 		LocalDate birthdate,
+		
 		String facebookUrl,
 		String instagramUrl,
 		String linkedinUrl,
