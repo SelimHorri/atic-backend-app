@@ -18,7 +18,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
+import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
@@ -232,7 +232,7 @@ class RegistrationServiceImplTest {
 		doNothing().when(this.verificationTokenRepository)
 				.deleteByToken(verificationToken.getToken());
 		
-		final var expiredVerificationTokenException = assertThrows(ExpiredVerificationTokenException.class, 
+		final var expiredVerificationTokenException = assertThrows(VerificationTokenExpiredException.class, 
 				() -> this.registrationService.validateToken(token));
 		
 		assertThat(expiredVerificationTokenException).isNotNull();

@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationAlreadyCancelledException extends RuntimeException {
+public class ReservationAlreadyCancelledException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4871665031843891042L;
 	
 	public ReservationAlreadyCancelledException() {
-		super();
+		super("Reservation already cancelled");
 	}
 	
 	public ReservationAlreadyCancelledException(String message, Throwable cause) {
@@ -16,16 +16,7 @@ public class ReservationAlreadyCancelledException extends RuntimeException {
 		super(message);
 	}
 	
-	public ReservationAlreadyCancelledException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
 
 
 

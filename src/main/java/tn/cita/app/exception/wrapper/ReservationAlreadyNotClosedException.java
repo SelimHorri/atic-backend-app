@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationAlreadyNotClosedException extends RuntimeException {
+public class ReservationAlreadyNotClosedException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4639049784262488983L;
 	
 	public ReservationAlreadyNotClosedException() {
-		super();
+		super("Reservation already not closed");
 	}
 	
 	public ReservationAlreadyNotClosedException(String message, Throwable cause) {
@@ -16,21 +16,7 @@ public class ReservationAlreadyNotClosedException extends RuntimeException {
 		super(message);
 	}
 	
-	public ReservationAlreadyNotClosedException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationAlreadyCompletedException extends RuntimeException {
+public class ReservationAlreadyCompletedException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -9029362194361139901L;
 	
 	public ReservationAlreadyCompletedException() {
-		super();
+		super("Reservation already completed");
 	}
 	
 	public ReservationAlreadyCompletedException(String message, Throwable cause) {
@@ -16,20 +16,7 @@ public class ReservationAlreadyCompletedException extends RuntimeException {
 		super(message);
 	}
 	
-	public ReservationAlreadyCompletedException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

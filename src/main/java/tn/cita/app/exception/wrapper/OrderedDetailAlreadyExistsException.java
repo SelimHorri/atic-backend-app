@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class OrderedDetailAlreadyExistsException extends RuntimeException {
+public class OrderedDetailAlreadyExistsException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2672959932252642625L;
 	
 	public OrderedDetailAlreadyExistsException() {
-		super();
+		super("OrderedDetail already exists");
 	}
 	
 	public OrderedDetailAlreadyExistsException(String message, Throwable cause) {
@@ -16,22 +16,7 @@ public class OrderedDetailAlreadyExistsException extends RuntimeException {
 		super(message);
 	}
 	
-	public OrderedDetailAlreadyExistsException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

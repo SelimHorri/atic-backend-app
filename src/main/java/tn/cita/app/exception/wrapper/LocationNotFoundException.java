@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class LocationNotFoundException extends RuntimeException {
+public class LocationNotFoundException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -991158339716479285L;
 	
 	public LocationNotFoundException() {
-		super();
+		super("Location not found");
 	}
 	
 	public LocationNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class LocationNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public LocationNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

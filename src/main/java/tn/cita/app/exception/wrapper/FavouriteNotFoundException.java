@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class FavouriteNotFoundException extends RuntimeException {
+public class FavouriteNotFoundException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6526680450755325192L;
 	
 	public FavouriteNotFoundException() {
-		super();
+		super("Favourite not found");
 	}
 	
 	public FavouriteNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class FavouriteNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public FavouriteNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

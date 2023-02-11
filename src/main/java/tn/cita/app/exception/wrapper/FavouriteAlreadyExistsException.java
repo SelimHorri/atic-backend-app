@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class FavouriteAlreadyExistsException extends RuntimeException {
+public class FavouriteAlreadyExistsException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7226231704433985429L;
 	
 	public FavouriteAlreadyExistsException() {
-		super();
+		super("Favourite already exists");
 	}
 	
 	public FavouriteAlreadyExistsException(String message, Throwable cause) {
@@ -16,16 +16,8 @@ public class FavouriteAlreadyExistsException extends RuntimeException {
 		super(message);
 	}
 	
-	public FavouriteAlreadyExistsException(Throwable cause) {
-		super(cause);
-	}
-	
-	
 	
 }
-
-
-
 
 
 

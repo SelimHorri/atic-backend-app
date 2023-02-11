@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class TaskAlreadyAssignedException extends RuntimeException {
+public class TaskAlreadyAssignedException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1249056480757914103L;
 	
 	public TaskAlreadyAssignedException() {
-		super();
+		super("Task already assigned");
 	}
 	
 	public TaskAlreadyAssignedException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class TaskAlreadyAssignedException extends RuntimeException {
 		super(message);
 	}
 	
-	public TaskAlreadyAssignedException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

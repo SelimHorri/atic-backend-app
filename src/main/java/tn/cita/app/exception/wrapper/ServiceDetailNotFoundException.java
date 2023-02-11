@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class ServiceDetailNotFoundException extends RuntimeException {
+public class ServiceDetailNotFoundException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7758474423049391283L;
 	
 	public ServiceDetailNotFoundException() {
-		super();
+		super("ServiceDetail not found");
 	}
 	
 	public ServiceDetailNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class ServiceDetailNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public ServiceDetailNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

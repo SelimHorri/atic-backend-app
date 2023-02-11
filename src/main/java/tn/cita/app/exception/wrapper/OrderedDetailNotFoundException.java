@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class OrderedDetailNotFoundException extends RuntimeException {
+public class OrderedDetailNotFoundException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -6877038970731972594L;
 	
 	public OrderedDetailNotFoundException() {
-		super();
+		super("OrderedDetail not found");
 	}
 	
 	public OrderedDetailNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class OrderedDetailNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public OrderedDetailNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

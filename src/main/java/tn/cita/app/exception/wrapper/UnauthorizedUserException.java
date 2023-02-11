@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class UnauthorizedUserException extends RuntimeException {
+public class UnauthorizedUserException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5774436707657106358L;
 	
 	public UnauthorizedUserException() {
-		super();
+		super("Unauthorized user");
 	}
 	
 	public UnauthorizedUserException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class UnauthorizedUserException extends RuntimeException {
 		super(message);
 	}
 	
-	public UnauthorizedUserException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

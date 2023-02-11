@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class UsernameNotMatchException extends RuntimeException {
+public class UsernameNotMatchException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 715770344457227422L;
 	
 	public UsernameNotMatchException() {
-		super();
+		super("Username does not match");
 	}
 	
 	public UsernameNotMatchException(String message, Throwable cause) {
@@ -16,19 +16,7 @@ public class UsernameNotMatchException extends RuntimeException {
 		super(message);
 	}
 	
-	public UsernameNotMatchException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
 
 
 

@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationAlreadyExistsException extends RuntimeException {
+public class ReservationAlreadyExistsException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6155740968218458681L;
 	
 	public ReservationAlreadyExistsException() {
-		super();
+		super("Reservation already exists");
 	}
 	
 	public ReservationAlreadyExistsException(String message, Throwable cause) {
@@ -16,22 +16,7 @@ public class ReservationAlreadyExistsException extends RuntimeException {
 		super(message);
 	}
 	
-	public ReservationAlreadyExistsException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 
