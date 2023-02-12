@@ -1,28 +1,28 @@
 package tn.cita.app.config.cors;
 
 import java.util.Arrays;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
+import lombok.RequiredArgsConstructor;
+import tn.cita.app.config.props.ClientConfigProps;
 import tn.cita.app.constant.AppConstants;
 
 @Configuration
+@RequiredArgsConstructor
 public class CorsConfig {
 	
-	@Value("${app.client.domains}")
-	private List<String> domains;
+	private final ClientConfigProps clientConfigProps;
 	
 	@Bean
 	CorsFilter corsFilter() {
 		CorsConfiguration corsConfiguration = new CorsConfiguration();
 		corsConfiguration.setAllowCredentials(true);
-		corsConfiguration.setAllowedOrigins(this.domains);
+		corsConfiguration.setAllowedOrigins(this.clientConfigProps.domains());
 		corsConfiguration.setAllowedHeaders(Arrays.asList("Origin", "Access-Control-Allow-Origin", "Content-Type",
 				"Accept", "Authorization", AppConstants.USERNAME_AUTH_HEADER, "Origin, Accept", "X-Requested-With",
 				"Access-Control-Request-Method", "Access-Control-Request-Headers"));
