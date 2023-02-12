@@ -37,9 +37,11 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 		
 		log.info("** Fetch all service details by manager.. *\n");
 		
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username.strip())
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
+				.orElseThrow(() -> 
+						new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
 		
 		return new PageImpl<>(this.serviceDetailRepository
 				.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()).stream()
@@ -55,7 +57,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 		log.info("** Fetch service detail by id by manager.. *\n");
 		return this.serviceDetailRepository.findById(serviceDetailId)
 				.map(ServiceDetailMapper::map)
-				.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
+				.orElseThrow(ServiceDetailNotFoundException::new);
 	}
 	
 	@Transactional
@@ -113,15 +115,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 		return ServiceDetailMapper.map(this.serviceDetailRepository.save(serviceDetail));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

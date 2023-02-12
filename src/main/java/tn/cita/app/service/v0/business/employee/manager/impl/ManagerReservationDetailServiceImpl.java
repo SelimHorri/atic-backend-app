@@ -38,9 +38,10 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
 		log.info("** Fetch reservation details by reservationId by manager.. *\n");
-		final var reservationDto = this.reservationRepository.findById(reservationId)
+		final var reservationDto = this.reservationRepository
+				.findById(reservationId)
 				.map(ReservationMapper::map)
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
 				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
@@ -88,15 +89,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		return this.reservationCommonService.assignReservationWorkers(username, reservationAssignWorkerRequest);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

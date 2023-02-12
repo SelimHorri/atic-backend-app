@@ -35,7 +35,8 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	@Override
 	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch all paged reservations by manager.. *\n");
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
@@ -65,7 +66,8 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	@Override
 	public ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key) {
 		log.info("** Search all reservations by saloonId like key by manager.. *\n");
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
@@ -91,17 +93,7 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 		return this.reservationCommonService.assignReservationWorkers(username, reservationAssignWorkerRequest);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

@@ -2,7 +2,6 @@ package tn.cita.app.service.v0.business.employee.worker.impl;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,7 +46,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 					.orElseThrow(() -> new EmployeeNotFoundException(String
 							.format("Employee with username: %s not found", username))).getId(), reservationId))
 				.map(TaskMapper::map)
-				.orElseThrow(() -> new TaskNotFoundException("Task not found"));
+				.orElseThrow(TaskNotFoundException::new);
 	}
 	
 	@Transactional
@@ -61,12 +60,14 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", taskUpdateDescriptionRequest.username())));
+		
 		final var reservation = this.reservationRepository
 				.findById(taskUpdateDescriptionRequest.reservationId())
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
+		
 		final var task = this.taskRepository
 				.findById(new TaskId(worker.getId(), reservation.getId()))
-				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
+				.orElseThrow(TaskNotFoundException::new);
 		
 		if (Objects.nonNull(task.getEndDate()))
 			throw new TaskAlreadyEndedException("Task is already ended. "
@@ -85,16 +86,19 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		log.info("** Begin task by worker.. *\n");
 		
-		final var worker = this.employeeRepository.findByCredentialUsernameIgnoringCase(taskBeginRequest.username())
+		final var worker = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(taskBeginRequest.username())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", taskBeginRequest.username())));
+		
 		final var reservation = this.reservationRepository
 				.findById(taskBeginRequest.reservationId())
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
+		
 		final var task = this.taskRepository
 				.findById(new TaskId(worker.getId(), reservation.getId()))
-				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
+				.orElseThrow(TaskNotFoundException::new);
 		
 		if (Objects.nonNull(task.getEndDate()))
 			throw new TaskAlreadyEndedException("Task already ended");
@@ -133,19 +137,19 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", taskEndRequest.username())));
+		
 		final var reservation = this.reservationRepository
 				.findById(taskEndRequest.reservationId())
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
+		
 		final var task = this.taskRepository
 				.findById(new TaskId(workerDto.getId(), reservation.getId()))
-				.orElseThrow(() -> new TaskNotFoundException(String.format("Task not found")));
+				.orElseThrow(TaskNotFoundException::new);
 		
 		if (task.getStartDate() == null)
 			throw new TaskNotBeganException("Task have not began yet");
-		
-		Optional.ofNullable(task.getEndDate()).ifPresent(endDate -> {
+		if (task.getEndDate() != null)
 			throw new TaskAlreadyEndedException("Task is already ended");
-		});
 		
 		// update task to be ended..
 		task.setEndDate(LocalDateTime.now());
@@ -176,14 +180,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		return TaskMapper.map(this.taskRepository.save(task));
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

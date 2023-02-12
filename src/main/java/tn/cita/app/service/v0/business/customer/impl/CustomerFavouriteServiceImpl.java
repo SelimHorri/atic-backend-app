@@ -54,13 +54,13 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	@Override
 	public Boolean deleteFavourite(final String username, final Integer saloonId) {
 		log.info("** Delete favourite by customer.. *\n");
-		final var favouriteId = new FavouriteId(this.customerRepository
+		final var customer = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::map)
 				.orElseThrow(() -> new CustomerNotFoundException(String
-						.format("Customer with username: %s not found", username)))
-				.getId(), 
-				saloonId);
+						.format("Customer with username: %s not found", username)));
+		final var favouriteId = new FavouriteId(customer.getId(), saloonId);
+		
 		this.favouriteRepository.deleteById(favouriteId);
 		return !this.favouriteRepository.existsById(favouriteId);
 	}
@@ -88,21 +88,15 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 					.identifier(UUID.randomUUID().toString())
 					.customer(customer)
 					.saloon(this.saloonRepository.findById(saloonId)
-							.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
+							.orElseThrow(SaloonNotFoundException::new))
 					.build());
 		
 		return this.favouriteRepository.findById(favouriteId)
 				.map(FavouriteMapper::map)
-				.orElseThrow(() -> new FavouriteNotFoundException("Favourite not found"));
+				.orElseThrow(FavouriteNotFoundException::new);
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

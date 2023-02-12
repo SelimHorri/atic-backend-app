@@ -43,7 +43,8 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 	@Override
 	public ManagerProfileResponse fetchProfile(final String username) {
 		log.info("** Fetch manager profile.. *\n");
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username.strip())
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
@@ -102,18 +103,7 @@ public class ManagerProfileServiceImpl implements ManagerProfileService {
 		return EmployeeMapper.map(this.employeeRepository.save(authenticatedManager));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

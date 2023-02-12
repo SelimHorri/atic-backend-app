@@ -41,18 +41,21 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 	@Override
 	public Page<TaskDto> fetchAllReservations(final String username) {
 		log.info("** Fetch all reservations by worker.. *\n");
-		return new PageImpl<>(this.taskRepository.findAllByWorkerId(this.employeeRepository
+		final var workerDto = this.employeeRepository
 					.findByCredentialUsernameIgnoringCase(username.strip())
 					.map(EmployeeMapper::map)
 					.orElseThrow(() -> new EmployeeNotFoundException(String
-							.format("Employee with username: %s not found", username))).getId()))
+							.format("Employee with username: %s not found", username)));
+		return new PageImpl<>(this.taskRepository
+					.findAllByWorkerId(workerDto.getId()))
 				.map(TaskMapper::map);
 	}
 	
 	@Override
 	public Page<TaskDto> searchAllLikeKey(final String username, final String key) {
 		log.info("** Search all reservations like key by worker.. *\n");
-		final var workerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username.strip())
+		final var workerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
@@ -63,14 +66,7 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 					.toList());
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 
