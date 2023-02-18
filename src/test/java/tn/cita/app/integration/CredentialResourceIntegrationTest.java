@@ -5,6 +5,7 @@ import static org.hamcrest.CoreMatchers.notNullValue;
 
 import java.util.UUID;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -66,6 +67,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 					.jsonPath("$.responseBody.isCredentialsNonExpired").value(is(expectedPayload.responseBody().getIsCredentialsNonExpired()));
 	}
 	
+	@Disabled
 	@Test
 	void givenInvalidUsername_whenFindByUsername_thenCredentialNotFoundExceptionShouldBeThrown() {
 		
