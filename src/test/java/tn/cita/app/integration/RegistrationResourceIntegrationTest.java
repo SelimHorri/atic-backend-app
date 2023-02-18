@@ -63,7 +63,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
-								AppConstants.EXPIRES_AT_FROM_NOW)));
+								AppConstants.USER_EXPIRES_AFTER)));
 		
 		this.webTestClient
 				.post()
@@ -104,7 +104,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
-								AppConstants.EXPIRES_AT_FROM_NOW)));
+								AppConstants.USER_EXPIRES_AFTER)));
 		
 		this.webTestClient
 				.post()
@@ -145,7 +145,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
-								AppConstants.EXPIRES_AT_FROM_NOW)));
+								AppConstants.USER_EXPIRES_AFTER)));
 		
 		this.webTestClient
 				.post()
@@ -186,7 +186,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 								+ "Check your email to enbale your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
-								AppConstants.EXPIRES_AT_FROM_NOW)));
+								AppConstants.USER_EXPIRES_AFTER)));
 		
 		this.webTestClient
 				.post()
