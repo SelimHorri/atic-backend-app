@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.domain.ReservationStatus;
+import tn.cita.app.model.domain.entity.Reservation;
 import tn.cita.app.repository.ReservationRepository;
 
 @Component
@@ -37,10 +38,7 @@ public class ReservationJobScheduler {
 		
 		final long updatedReservationsCount = this.reservationRepository
 				.findAllByStatusAndStartDateBetween(ReservationStatus.NOT_STARTED, from, to).stream()
-					.map(r -> {
-						r.setStatus(ReservationStatus.OUTDATED);
-						return r;
-					})
+					.map(this::markOutdated)
 					.distinct()
 					.map(this.reservationRepository::save)
 					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
@@ -65,10 +63,7 @@ public class ReservationJobScheduler {
 		
 		final long updatedReservationsCount = this.reservationRepository
 				.findAllByStatusAndStartDateBetween(ReservationStatus.IN_PROGRESS, from, to).stream()
-					.map(r -> {
-						r.setStatus(ReservationStatus.NOT_CLOSED);
-						return r;
-					})
+					.map(this::markNotClosed)
 					.distinct()
 					.map(this.reservationRepository::save)
 					.peek(r -> log.info("** Reservation with code {} has been switched to {} **\n", 
@@ -78,6 +73,16 @@ public class ReservationJobScheduler {
 				updatedReservationsCount, 
 				from.toLocalDate().format(DateTimeFormatter.ofPattern("dd-MM-yyyy")), 
 				Instant.now().atZone(ZoneId.systemDefault()));
+	}
+	
+	private Reservation markOutdated(final Reservation reservation) {
+		reservation.setStatus(ReservationStatus.OUTDATED);
+		return reservation;
+	}
+	
+	private Reservation markNotClosed(final Reservation reservation) {
+		reservation.setStatus(ReservationStatus.NOT_CLOSED);
+		return reservation;
 	}
 	
 }

@@ -77,7 +77,7 @@ public final class AppConstants {
 	/**
 	 * Verification Token expires after specified minutes from localdatetime.now
 	 */
-	public static final long EXPIRES_AT_FROM_NOW = Duration.ofMinutes(30).toMinutes();
+	public static final long USER_EXPIRES_AFTER = Duration.ofMinutes(30).toMinutes();
 	
 	/**
 	 * Delay that customer can pass a valid reservation from localdatetime.now
