@@ -10,6 +10,8 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
+import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -39,8 +41,9 @@ public class SecurityConfig {
 	
 	@Bean
 	SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
-		return http.cors(cors -> cors.disable())
-				.csrf(csrf -> csrf.disable())
+		return http
+				.cors(CorsConfigurer<HttpSecurity>::disable)
+				.csrf(CsrfConfigurer<HttpSecurity>::disable)
 				.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
 						.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
 						.mvcMatchers(AppConstants.WHITELIST_URLS).permitAll()
