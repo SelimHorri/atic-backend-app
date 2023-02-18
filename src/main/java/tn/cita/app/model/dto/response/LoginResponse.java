@@ -9,5 +9,3 @@ public record LoginResponse(String username, String jwtToken) implements Seriali
 
 
 
-
-

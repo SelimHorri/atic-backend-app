@@ -42,7 +42,7 @@ import tn.cita.app.model.domain.listener.TaskEntityListener;
 @SuperBuilder
 public class Task extends AbstractAuditingMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4019147962632495083L;
 	
 	@Id
 	@Column(name = "worker_id", nullable = false, insertable = false, updatable = false)
@@ -92,14 +92,6 @@ public class Task extends AbstractAuditingMappedEntity implements Serializable {
 	private Reservation reservation;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

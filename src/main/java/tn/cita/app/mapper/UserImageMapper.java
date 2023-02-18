@@ -17,17 +17,7 @@ public interface UserImageMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

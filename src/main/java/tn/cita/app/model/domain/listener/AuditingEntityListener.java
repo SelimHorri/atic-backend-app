@@ -29,17 +29,7 @@ public class AuditingEntityListener {
 		auditable.setUpdatedAt(now);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

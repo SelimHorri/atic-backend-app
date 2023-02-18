@@ -33,18 +33,7 @@ public class AuthenticationResource {
 						this.authenticationService.authenticate(loginRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

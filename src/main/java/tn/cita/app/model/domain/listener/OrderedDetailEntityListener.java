@@ -16,17 +16,7 @@ public class OrderedDetailEntityListener {
 		orderedDetail.setOrderedDate(LocalDateTime.now());
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

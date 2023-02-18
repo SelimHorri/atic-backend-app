@@ -42,20 +42,7 @@ class VerificationTokenRepositoryTest extends AbstractSharedMySQLTestContainer {
 		assertThat(optionalVerificationToken).isEmpty();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

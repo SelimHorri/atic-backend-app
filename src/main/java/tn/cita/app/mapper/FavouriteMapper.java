@@ -41,16 +41,7 @@ public interface FavouriteMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

@@ -15,10 +15,7 @@ public abstract class AbstractSharedMySQLTestContainer {
 		return (MYSQL_CONTAINER == null) ? new MySQLContainer<>("mysql:5.7") : MYSQL_CONTAINER;
 	}
 	
-	
-	
 }
-
 
 
 

@@ -37,6 +37,3 @@ public record OrderedDetailRequest(
 		LocalDateTime orderedDate) implements Serializable {}
 
 
-
-
-

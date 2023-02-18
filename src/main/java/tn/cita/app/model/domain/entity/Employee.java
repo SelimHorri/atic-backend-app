@@ -40,7 +40,7 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public class Employee extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7575884590373676497L;
 	
 	@Column(precision = 8, nullable = true)
 	private String ssn;
@@ -112,14 +112,6 @@ public class Employee extends AbstractMappedEntity implements Serializable {
 	private Set<Task> tasks;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

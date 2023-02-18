@@ -31,7 +31,7 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 		log.info("** Fetch reservation details by reservationId by worker.. *\n");
 		final var reservationDto = this.reservationRepository.findById(reservationId)
 				.map(ReservationMapper::map)
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
 				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
@@ -47,15 +47,7 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

@@ -26,12 +26,14 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 	private final TaskRepository taskRepository;
 	
 	@Override
-	public ManagerWorkerAssignmentResponse fetchAllWorkerTasks(final String username, final Integer workerId, 
-			final ClientPageRequest clientPageRequest) {
+	public ManagerWorkerAssignmentResponse fetchAllWorkerTasks(final String username, 
+			final Integer workerId, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch all worker tasks by manager.. *\n");
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
+				.orElseThrow(() -> 
+						new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
 		return new ManagerWorkerAssignmentResponse(
 				managerDto, 
 				this.taskRepository.findAllByWorkerId(workerId, 
@@ -43,7 +45,8 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 	public ManagerWorkerAssignmentResponse searchAllLikeKey(final String username, final Integer workerId, final String key) {
 		log.info("** Search all worker tasks like key by manager.. *\n");
 		return new ManagerWorkerAssignmentResponse(
-				this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+				this.employeeRepository
+						.findByCredentialUsernameIgnoringCase(username)
 						.map(EmployeeMapper::map)
 						.orElseThrow(() -> new EmployeeNotFoundException(String
 								.format("Employee with username: %s not found", username))), 
@@ -54,10 +57,7 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 							.toList()));
 	}
 	
-	
-	
 }
-
 
 
 

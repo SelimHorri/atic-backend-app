@@ -34,7 +34,7 @@ import tn.cita.app.model.domain.ReservationStatus;
 @SuperBuilder
 public final class ReservationDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4419793295892933879L;
 	
 	@NotBlank(message = "Input code should not be blank")
 	private String code;
@@ -68,14 +68,6 @@ public final class ReservationDto extends AbstractMappedDto implements Serializa
 	private SaloonDto saloonDto;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

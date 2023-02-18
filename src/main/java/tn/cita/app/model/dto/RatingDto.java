@@ -33,7 +33,7 @@ import tn.cita.app.model.domain.UserRating;
 @SuperBuilder
 public final class RatingDto extends AbstractAuditingMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -585251500769914221L;
 	
 	@NotNull(message = "Input workerId should not be null")
 	private Integer workerId;
@@ -58,12 +58,6 @@ public final class RatingDto extends AbstractAuditingMappedDto implements Serial
 	private CustomerDto customerDto;
 	
 }
-
-
-
-
-
-
 
 
 

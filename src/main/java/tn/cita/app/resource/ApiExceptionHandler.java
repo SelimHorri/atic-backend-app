@@ -18,46 +18,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 
-import io.jsonwebtoken.ExpiredJwtException;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.exception.payload.ExceptionMsg;
-import tn.cita.app.exception.wrapper.AccessTokenExpiredException;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
-import tn.cita.app.exception.wrapper.CategoryNotFoundException;
-import tn.cita.app.exception.wrapper.CredentialNotFoundException;
-import tn.cita.app.exception.wrapper.CustomerNotFoundException;
-import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
-import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
-import tn.cita.app.exception.wrapper.FavouriteAlreadyExistsException;
-import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
-import tn.cita.app.exception.wrapper.IllegalCredentialsException;
-import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
-import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
-import tn.cita.app.exception.wrapper.LocationNotFoundException;
-import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
-import tn.cita.app.exception.wrapper.OrderedDetailAlreadyExistsException;
-import tn.cita.app.exception.wrapper.OrderedDetailNotFoundException;
-import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
-import tn.cita.app.exception.wrapper.PasswordNotMatchException;
-import tn.cita.app.exception.wrapper.RatingNotFoundException;
-import tn.cita.app.exception.wrapper.ReservationAlreadyCancelledException;
-import tn.cita.app.exception.wrapper.ReservationAlreadyCompletedException;
-import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
-import tn.cita.app.exception.wrapper.ReservationAlreadyNotClosedException;
-import tn.cita.app.exception.wrapper.ReservationAlreadyOutdatedException;
-import tn.cita.app.exception.wrapper.ReservationNotFoundException;
-import tn.cita.app.exception.wrapper.SaloonNotFoundException;
-import tn.cita.app.exception.wrapper.SaloonTagNotFoundException;
-import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
-import tn.cita.app.exception.wrapper.TagNotFoundException;
-import tn.cita.app.exception.wrapper.TaskAlreadyAssignedException;
-import tn.cita.app.exception.wrapper.TaskAlreadyBeganException;
-import tn.cita.app.exception.wrapper.TaskAlreadyEndedException;
-import tn.cita.app.exception.wrapper.TaskNotBeganException;
-import tn.cita.app.exception.wrapper.UnauthorizedUserException;
-import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
-import tn.cita.app.exception.wrapper.UsernameNotMatchException;
-import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
+import tn.cita.app.exception.wrapper.CustomRuntimeException;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestControllerAdvice
@@ -88,49 +52,14 @@ public class ApiExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = {
+		CustomRuntimeException.class,
 		NoSuchElementException.class,
 		BadCredentialsException.class,
-		IllegalCredentialsException.class,
 		IllegalStateException.class,
-		CategoryNotFoundException.class,
-		CredentialNotFoundException.class,
-		CustomerNotFoundException.class,
-		EmployeeNotFoundException.class,
-		FavouriteNotFoundException.class,
-		LocationNotFoundException.class,
-		OrderedDetailNotFoundException.class,
-		RatingNotFoundException.class,
-		ReservationNotFoundException.class,
-		SaloonNotFoundException.class,
-		SaloonTagNotFoundException.class,
-		ServiceDetailNotFoundException.class,
-		TagNotFoundException.class,
-		VerificationTokenNotFoundException.class,
-		IllegalRegistrationRoleTypeException.class,
-		PasswordNotMatchException.class,
-		MailNotificationNotProcessedException.class,
-		ExpiredVerificationTokenException.class,
 		DisabledException.class,
-		IllegalUserDetailsStateException.class,
-		UsernameAlreadyExistsException.class,
-		AccessTokenExpiredException.class,
-		ExpiredJwtException.class,
 		NumberFormatException.class,
-		UsernameNotMatchException.class,
-		UnauthorizedUserException.class, // already works for filter using resolver
+		// UnauthorizedUserException.class, // already works for filter using resolver
 		ActuatorHealthException.class,
-		OrderedDetailAlreadyExistsException.class,
-		OutdatedStartDateReservationException.class,
-		ReservationAlreadyExistsException.class,
-		ReservationAlreadyCompletedException.class,
-		ReservationAlreadyCancelledException.class,
-		ReservationAlreadyOutdatedException.class,
-		ReservationAlreadyNotClosedException.class,
-		TaskNotBeganException.class,
-		TaskAlreadyBeganException.class,
-		TaskAlreadyEndedException.class,
-		TaskAlreadyAssignedException.class,
-		FavouriteAlreadyExistsException.class,
 	})
 	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
 			final WebRequest webRequest) {
@@ -145,14 +74,7 @@ public class ApiExceptionHandler {
 				.body(apiPayloadResponse);
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

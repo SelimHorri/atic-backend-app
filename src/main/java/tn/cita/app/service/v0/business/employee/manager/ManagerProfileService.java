@@ -16,8 +16,3 @@ public interface ManagerProfileService {
 
 
 
-
-
-
-
-

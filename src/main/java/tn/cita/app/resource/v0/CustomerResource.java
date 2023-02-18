@@ -52,15 +52,7 @@ public class CustomerResource {
 				new PageImpl<>(this.customerService.findAllBySsn(ssn))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

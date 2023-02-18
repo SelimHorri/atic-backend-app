@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class TaskNotBeganException extends RuntimeException {
+public class TaskNotBeganException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -75770358696424075L;
 	
 	public TaskNotBeganException() {
-		super();
+		super("Task not began");
 	}
 	
 	public TaskNotBeganException(String message, Throwable cause) {
@@ -16,15 +16,7 @@ public class TaskNotBeganException extends RuntimeException {
 		super(message);
 	}
 	
-	public TaskNotBeganException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
 
 
 

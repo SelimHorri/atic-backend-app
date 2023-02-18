@@ -20,17 +20,7 @@ public interface CredentialMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

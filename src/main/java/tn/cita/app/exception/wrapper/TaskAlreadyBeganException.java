@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class TaskAlreadyBeganException extends RuntimeException {
+public class TaskAlreadyBeganException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3055460136107519430L;
 	
 	public TaskAlreadyBeganException() {
-		super();
+		super("Task already began");
 	}
 	
 	public TaskAlreadyBeganException(String message, Throwable cause) {
@@ -16,16 +16,7 @@ public class TaskAlreadyBeganException extends RuntimeException {
 		super(message);
 	}
 	
-	public TaskAlreadyBeganException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
 
 
 

@@ -71,20 +71,11 @@ public class CustomerReservationResource {
 			@PathVariable final String key) {
 		log.info("** Search all customer reservations by saloonId like key.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerReservationService.searchAllByCustomerIdLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
+				this.customerReservationService
+					.searchAllByCustomerIdLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

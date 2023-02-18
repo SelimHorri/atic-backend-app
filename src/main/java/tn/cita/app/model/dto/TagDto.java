@@ -21,20 +21,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public final class TagDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2808674187377290613L;
 	
 	@NotBlank(message = "Input name should not be blank")
 	private String name;
 	private String description;
 	
 }
-
-
-
-
-
-
-
 
 
 

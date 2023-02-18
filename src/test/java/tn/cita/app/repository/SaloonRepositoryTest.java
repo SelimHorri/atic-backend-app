@@ -32,13 +32,7 @@ class SaloonRepositoryTest extends AbstractSharedMySQLTestContainer {
 		
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

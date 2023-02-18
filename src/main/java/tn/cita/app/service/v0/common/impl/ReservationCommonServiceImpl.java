@@ -51,7 +51,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		log.info("** Cancelling reservation.. *\n");
 		
 		final var reservation = this.reservationRepository.findById(reservationId)
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
 		
 		// TODO: check if reservation has been completed, should not be cancelled (or changed) anymore
 		// Add completeDate of reservation along with COMPLETED status to this check
@@ -96,7 +96,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		return new ReservationSubWorkerResponse(
 				this.reservationRepository.findById(reservationId)
 						.map(ReservationMapper::map)
-						.orElseThrow(() -> new ReservationNotFoundException("Reservation not found")), 
+						.orElseThrow(ReservationNotFoundException::new), 
 				new PageImpl<>(unassignedWorkerDtos));
 	}
 	
@@ -128,31 +128,24 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 			task.setIdentifier(UUID.randomUUID().toString());
 			task.setWorkerId(workerId);
 			task.setWorker(this.employeeRepository.findById(workerId)
-					.orElseThrow(() -> new EmployeeNotFoundException("Employee not found")));
+					.orElseThrow(EmployeeNotFoundException::new));
 			this.taskRepository.saveTask(task);
 			assignedWorkers.add(this.taskRepository.findById(new TaskId(task.getWorkerId(), task.getReservationId()))
-					.orElseThrow(() -> new TaskNotFoundException("Task not found")));
+					.orElseThrow(TaskNotFoundException::new));
 		}
 		
 		final var savedAssignedWorkers = assignedWorkers.stream()
 				.map(Task::getWorkerId)
 				.map(workerId -> this.employeeRepository.findById(workerId)
 						.map(EmployeeMapper::map)
-						.orElseThrow(() -> new EmployeeNotFoundException("Employee not found")))
+						.orElseThrow(EmployeeNotFoundException::new))
 				.distinct()
 				.toList();
 		
 		return new ReservationSubWorkerResponse(ReservationMapper.map(reservation), new PageImpl<>(savedAssignedWorkers));
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

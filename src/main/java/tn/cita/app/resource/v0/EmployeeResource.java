@@ -52,19 +52,7 @@ public class EmployeeResource {
 				new PageImpl<>(this.employeeService.findAllBySsn(ssn))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

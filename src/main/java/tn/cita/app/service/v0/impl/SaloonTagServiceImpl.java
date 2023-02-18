@@ -29,16 +29,7 @@ public class SaloonTagServiceImpl implements SaloonTagService {
 				.toList();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

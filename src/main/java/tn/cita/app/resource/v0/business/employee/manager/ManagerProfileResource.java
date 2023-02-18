@@ -48,17 +48,7 @@ public class ManagerProfileResource {
 				this.managerProfileService.updateProfileInfo(managerProfileRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

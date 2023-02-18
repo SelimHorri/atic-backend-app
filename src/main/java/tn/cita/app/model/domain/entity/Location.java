@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Location extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1729873323870938738L;
 	private String zipcode;
 	private String city;
 	private String state;
@@ -36,13 +36,6 @@ public class Location extends AbstractMappedEntity implements Serializable {
 	private Set<Saloon> saloons;
 	
 }
-
-
-
-
-
-
-
 
 
 

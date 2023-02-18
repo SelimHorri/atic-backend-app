@@ -40,17 +40,7 @@ public class TaskResource {
 		return ResponseEntity.ok(new ApiResponse<>(taskDtos.size(), HttpStatus.OK, true, new PageImpl<>(taskDtos)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

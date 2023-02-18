@@ -80,14 +80,7 @@ public class ReservationJobScheduler {
 				Instant.now().atZone(ZoneId.systemDefault()));
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

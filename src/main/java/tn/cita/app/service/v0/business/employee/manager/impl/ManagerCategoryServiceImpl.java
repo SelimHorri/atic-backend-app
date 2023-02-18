@@ -37,7 +37,8 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 		
 		log.info("** Fetch all categories by manager.. *\n");
 		
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username.strip())
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
@@ -55,7 +56,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 		log.info("** Fetch category by id by manager.. *\n");
 		return this.categoryRepository.findById(categoryId)
 				.map(CategoryMapper::map)
-				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+				.orElseThrow(CategoryNotFoundException::new);
 	}
 	
 	@Transactional
@@ -109,17 +110,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 		return CategoryMapper.map(this.categoryRepository.save(category));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

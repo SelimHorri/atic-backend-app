@@ -68,18 +68,7 @@ class AuthenticationResourceTest {
 					.jsonPath("$.responseBody.jwtToken").value(is(apiPayloadResponse.responseBody().jwtToken()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -56,17 +56,7 @@ public class LocationResource {
 		return ResponseEntity.ok(new ApiResponse<>(states.size(), HttpStatus.OK, true, states));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

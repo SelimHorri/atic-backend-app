@@ -15,13 +15,7 @@ public interface ClientPageRequestUtils {
 				clientPageRequest.getSortBy());
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

@@ -24,12 +24,15 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	@Override
 	public ManagerWorkerInfoResponse fetchAllSubWorkers(final String username) {
 		log.info("** Fetch all sub workers by manager.. *\n");
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::map)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
+		
 		return new ManagerWorkerInfoResponse(managerDto, 
-				new PageImpl<>(this.employeeRepository.findAllByManagerId(managerDto.getId()).stream()
+				new PageImpl<>(this.employeeRepository
+						.findAllByManagerId(managerDto.getId()).stream()
 						.map(EmployeeMapper::map)
 						.distinct()
 						.toList()));
@@ -40,20 +43,10 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 		log.info("** Fetch worker infos by manager.. *\n");
 		return this.employeeRepository.findById(workerId)
 				.map(EmployeeMapper::map)
-				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
+				.orElseThrow(EmployeeNotFoundException::new);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

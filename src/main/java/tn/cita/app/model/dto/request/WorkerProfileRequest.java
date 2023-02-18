@@ -62,10 +62,3 @@ public record WorkerProfileRequest(
 
 
 
-
-
-
-
-
-
-

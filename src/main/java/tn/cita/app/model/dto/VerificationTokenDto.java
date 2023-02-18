@@ -8,8 +8,8 @@ import javax.validation.constraints.NotBlank;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
@@ -32,7 +32,7 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public final class VerificationTokenDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2659172611683073684L;
 	
 	@NotBlank(message = "Input should not be blank")
 	private String token;
@@ -47,15 +47,6 @@ public final class VerificationTokenDto extends AbstractMappedDto implements Ser
 	private CredentialDto credentialDto;
 	
 }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -42,7 +42,7 @@ import tn.cita.app.model.domain.listener.OrderedDetailEntityListener;
 @SuperBuilder
 public class OrderedDetail extends AbstractAuditingMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -1384024973693896748L;
 	
 	@Id
 	@Column(name = "reservation_id", nullable = false, insertable = false, updatable = false)
@@ -72,14 +72,6 @@ public class OrderedDetail extends AbstractAuditingMappedEntity implements Seria
 	private ServiceDetail serviceDetail;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

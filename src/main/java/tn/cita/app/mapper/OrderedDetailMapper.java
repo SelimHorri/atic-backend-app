@@ -38,15 +38,7 @@ public interface OrderedDetailMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

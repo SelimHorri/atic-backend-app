@@ -119,18 +119,7 @@ class VerificationTokenServiceImplTest {
 		assertThat(deleteByToken).isTrue();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -187,17 +187,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		return ServiceDetailMapper.map(this.serviceDetailRepository.save(serviceDetail));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

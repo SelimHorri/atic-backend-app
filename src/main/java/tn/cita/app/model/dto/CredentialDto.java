@@ -26,7 +26,7 @@ import tn.cita.app.model.domain.UserRoleBasedAuthority;
 @SuperBuilder
 public final class CredentialDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2844699799301772494L;
 	
 	@NotBlank(message = "Input username should be unique & not blank")
 	private String username;
@@ -44,12 +44,6 @@ public final class CredentialDto extends AbstractMappedDto implements Serializab
 	private Boolean isCredentialsNonExpired;
 	
 }
-
-
-
-
-
-
 
 
 

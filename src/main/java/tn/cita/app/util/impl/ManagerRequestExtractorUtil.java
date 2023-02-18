@@ -32,14 +32,7 @@ public class ManagerRequestExtractorUtil implements UserRequestExtractorUtil {
 		return authenticatedUsername;
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

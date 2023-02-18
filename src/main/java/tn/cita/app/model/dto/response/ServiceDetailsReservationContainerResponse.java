@@ -20,8 +20,3 @@ public record ServiceDetailsReservationContainerResponse(
 		Page<ServiceDetailDto> serviceDetailDtos) implements Serializable {}
 
 
-
-
-
-
-

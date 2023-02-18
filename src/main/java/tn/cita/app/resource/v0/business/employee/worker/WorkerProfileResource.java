@@ -48,17 +48,7 @@ public class WorkerProfileResource {
 				this.workerProfileService.updateProfileInfo(workerProfileRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

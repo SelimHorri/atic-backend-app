@@ -6,6 +6,3 @@ public record HealthActuatorResponse(String status) implements Serializable {}
 
 
 
-
-
-

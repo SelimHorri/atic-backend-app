@@ -24,7 +24,3 @@ public record ManagerWorkerAssignmentResponse(
 		Page<TaskDto> tasksDtos) implements Serializable {}
 
 
-
-
-
-

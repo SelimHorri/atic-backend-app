@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class TaskNotFoundException extends RuntimeException {
+public class TaskNotFoundException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3264074807160612232L;
 	
 	public TaskNotFoundException() {
-		super();
+		super("Task not found");
 	}
 	
 	public TaskNotFoundException(String message, Throwable cause) {
@@ -16,20 +16,7 @@ public class TaskNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public TaskNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

@@ -24,6 +24,3 @@ public interface RatingRepository extends JpaRepository<Rating, RatingId> {
 
 
 
-
-
-

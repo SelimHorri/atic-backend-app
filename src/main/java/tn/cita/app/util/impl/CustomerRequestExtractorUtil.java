@@ -32,15 +32,7 @@ public class CustomerRequestExtractorUtil implements UserRequestExtractorUtil {
 		return authenticatedUsername;
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

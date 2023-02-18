@@ -1,9 +1,7 @@
 package tn.cita.app.security;
 
-import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,14 +21,14 @@ public class CustomUserDetailsService implements UserDetailsService {
 	private final CredentialRepository credentialRepository;
 	
 	@Override
-	public UserDetails loadUserByUsername(final String username) throws UsernameNotFoundException, BadCredentialsException {
+	public UserDetails loadUserByUsername(final String username) {
 		
 		log.info("** Load user by username.. *\n");
 		
 		final UserDetails userDetails = new CustomUserDetails(this.credentialRepository
 				.findByUsernameIgnoreCase(username.strip().toLowerCase())
-					.map(CredentialMapper::map)
-					.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
+				.map(CredentialMapper::map)
+				.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
 		
 		if (!userDetails.isEnabled())
 			throw new IllegalUserDetailsStateException(String
@@ -48,16 +46,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		return userDetails;
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

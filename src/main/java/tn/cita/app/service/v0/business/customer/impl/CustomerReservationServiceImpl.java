@@ -95,7 +95,10 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
 		this.reservationRepository
-				.findByStartDateAndStatus(reservationRequest.startDate(), ReservationStatus.NOT_STARTED).ifPresent(r -> {
+				.findByStartDateAndStatus(
+						reservationRequest.startDate(), 
+						ReservationStatus.NOT_STARTED)
+				.ifPresent(r -> {
 			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		});
 		
@@ -129,7 +132,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 			orderedDetail.setOrderedDate(LocalDateTime.now());
 			orderedDetail.setReservation(savedReservation);
 			orderedDetail.setServiceDetail(this.serviceDetailRepository.findById(serviceDetailId)
-					.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found")));
+					.orElseThrow(ServiceDetailNotFoundException::new));
 			// persist...
 			this.orderedDetailRepository.saveOrderedDetail(new OrderedDetailRequest(
 					orderedDetail.getReservationId(), 
@@ -140,16 +143,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		return ReservationMapper.map(savedReservation);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

@@ -50,13 +50,7 @@ public class ActuatorLiveness {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, health));
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

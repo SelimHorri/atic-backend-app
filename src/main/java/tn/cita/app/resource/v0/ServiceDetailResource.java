@@ -74,17 +74,7 @@ public class ServiceDetailResource {
 		return ResponseEntity.ok(new ApiResponse<>(serviceDetails.size(), HttpStatus.OK, true, new PageImpl<>(serviceDetails)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

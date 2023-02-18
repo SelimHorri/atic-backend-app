@@ -42,7 +42,7 @@ import tn.cita.app.model.domain.listener.FavouriteEntityListener;
 @SuperBuilder
 public class Favourite extends AbstractAuditingMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7405143971226663517L;
 	
 	@Id
 	@Column(name = "customer_id", nullable = false, insertable = false, updatable = false)
@@ -72,14 +72,6 @@ public class Favourite extends AbstractAuditingMappedEntity implements Serializa
 	private Saloon saloon;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

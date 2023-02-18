@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class IllegalUserDetailsStateException extends RuntimeException {
+public class IllegalUserDetailsStateException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -355404732636991167L;
 	
 	public IllegalUserDetailsStateException() {
-		super();
+		super("Illegal user details state");
 	}
 	
 	public IllegalUserDetailsStateException(String message, Throwable cause) {
@@ -16,22 +16,7 @@ public class IllegalUserDetailsStateException extends RuntimeException {
 		super(message);
 	}
 	
-	public IllegalUserDetailsStateException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

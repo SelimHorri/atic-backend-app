@@ -32,6 +32,3 @@ public record ReservationDetailResponse(
 		Page<TaskDto> taskDtos) implements Serializable {}
 
 
-
-
-	

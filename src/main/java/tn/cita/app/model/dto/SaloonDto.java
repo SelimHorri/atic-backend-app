@@ -34,7 +34,7 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -7826738843820083095L;
 	
 	@NotBlank(message = "Input code should not be blank")
 	private String code;
@@ -63,15 +63,6 @@ public final class SaloonDto extends AbstractMappedDto implements Serializable {
 	private LocationDto locationDto;
 	
 }
-
-
-
-
-
-
-
-
-
 
 
 

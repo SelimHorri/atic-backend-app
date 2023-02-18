@@ -13,16 +13,7 @@ public class FavouriteEntityListener {
 		favourite.setFavouriteDate(LocalDateTime.now());
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

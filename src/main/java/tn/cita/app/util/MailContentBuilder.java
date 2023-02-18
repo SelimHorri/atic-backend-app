@@ -19,18 +19,7 @@ public class MailContentBuilder {
 		return this.templateEngine.process("confirm-register", context);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

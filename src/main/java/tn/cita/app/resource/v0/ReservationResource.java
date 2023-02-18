@@ -61,16 +61,7 @@ public class ReservationResource {
 				HttpStatus.OK, true, new PageImpl<>(reservations)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

@@ -33,16 +33,7 @@ public class CustomerRatingResource {
 				this.customerRatingService.fetchAllRatings(this.userRequestExtractorUtil.extractUsername(request))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

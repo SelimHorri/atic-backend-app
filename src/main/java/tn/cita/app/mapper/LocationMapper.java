@@ -16,14 +16,7 @@ public interface LocationMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

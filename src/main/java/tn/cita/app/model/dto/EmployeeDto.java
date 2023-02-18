@@ -34,8 +34,8 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public final class EmployeeDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = 3174195318990321101L;
+
 	private String ssn;
 	
 	@NotBlank(message = "Input firstname should not be blank")
@@ -78,13 +78,6 @@ public final class EmployeeDto extends AbstractMappedDto implements Serializable
 	private SaloonDto saloonDto;
 	
 }
-
-
-
-
-
-
-
 
 
 

@@ -11,7 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
+import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
@@ -182,7 +182,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 			
 			// TODO: instead of just removing the verification token, we need to remove the whole user chain on cascade: User->Credential->VerificationToken
 			this.verificationTokenRepository.deleteByToken(token);
-			throw new ExpiredVerificationTokenException("Verification token has been expired");
+			throw new VerificationTokenExpiredException("Verification token has been expired");
 		}
 		
 		// activate user
@@ -199,15 +199,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return "User has been activated successfully, go and login!";
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

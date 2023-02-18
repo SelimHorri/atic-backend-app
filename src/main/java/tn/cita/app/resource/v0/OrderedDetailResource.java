@@ -62,17 +62,7 @@ public class OrderedDetailResource {
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.orderedDetailService.save(orderedDetailRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

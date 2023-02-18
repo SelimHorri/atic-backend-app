@@ -8,12 +8,7 @@ public record RegisterResponse(Boolean isSuccess, String msg) implements Seriali
 		this(true, msg);
 	}
 	
-	
-	
 }
-
-
-
 
 
 

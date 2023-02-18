@@ -39,17 +39,7 @@ public class CustomerRatingServiceImpl implements CustomerRatingService {
 							.toList()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class AbstractMappedEntity extends AbstractAuditingMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 9028605060548748190L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,11 +31,6 @@ public abstract class AbstractMappedEntity extends AbstractAuditingMappedEntity 
 	private Integer id;
 	
 }
-
-
-
-
-
 
 
 

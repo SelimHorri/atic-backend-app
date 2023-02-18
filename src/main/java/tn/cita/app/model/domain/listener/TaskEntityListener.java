@@ -13,14 +13,7 @@ public class TaskEntityListener {
 		task.setTaskDate(LocalDateTime.now());
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

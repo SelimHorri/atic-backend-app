@@ -45,7 +45,7 @@ import tn.cita.app.model.domain.listener.RatingEntityListener;
 @SuperBuilder
 public class Rating extends AbstractAuditingMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1391301889230563789L;
 	
 	@Id
 	@Column(name = "worker_id", nullable = false, insertable = false, updatable = false)
@@ -83,12 +83,6 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 	private Customer customer;
 	
 }
-
-
-
-
-
-
 
 
 

@@ -78,16 +78,7 @@ public class ManagerServiceDetailResource {
 				this.managerServiceDetailService.deleteServiceDetail(Integer.parseInt(serviceDetailId))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

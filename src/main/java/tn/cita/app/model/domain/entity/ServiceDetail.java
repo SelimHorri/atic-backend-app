@@ -28,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class ServiceDetail extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 3108796601233790032L;
 	
 	@Column(nullable = false)
 	private String name;
@@ -57,14 +57,6 @@ public class ServiceDetail extends AbstractMappedEntity implements Serializable 
 	private Set<OrderedDetail> orderedDetails;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

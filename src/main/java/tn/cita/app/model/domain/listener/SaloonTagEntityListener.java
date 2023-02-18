@@ -13,16 +13,7 @@ public class SaloonTagEntityListener {
 		saloonTag.setTaggedDate(LocalDateTime.now());
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

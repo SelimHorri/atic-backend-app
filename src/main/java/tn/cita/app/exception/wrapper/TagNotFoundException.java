@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class TagNotFoundException extends RuntimeException {
+public class TagNotFoundException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5200220936244874787L;
 	
 	public TagNotFoundException() {
-		super();
+		super("Tag not found");
 	}
 	
 	public TagNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class TagNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public TagNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

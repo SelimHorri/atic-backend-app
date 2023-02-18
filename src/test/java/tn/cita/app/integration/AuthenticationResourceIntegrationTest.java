@@ -201,16 +201,7 @@ class AuthenticationResourceIntegrationTest extends AbstractSharedMySQLTestConta
 					.jsonPath("$.responseBody.errorMsg").value(is(apiPayloadResponse.responseBody().errorMsg()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

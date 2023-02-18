@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationAlreadyOutdatedException extends RuntimeException {
+public class ReservationAlreadyOutdatedException extends CustomRuntimeException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8448905315182968451L;
 	
 	public ReservationAlreadyOutdatedException() {
-		super();
+		super("Reservation already outdated");
 	}
 	
 	public ReservationAlreadyOutdatedException(String message, Throwable cause) {
@@ -16,13 +16,8 @@ public class ReservationAlreadyOutdatedException extends RuntimeException {
 		super(message);
 	}
 	
-	public ReservationAlreadyOutdatedException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
+
 
 
 

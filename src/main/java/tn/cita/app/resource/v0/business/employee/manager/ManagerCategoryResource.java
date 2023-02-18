@@ -78,15 +78,7 @@ public class ManagerCategoryResource {
 				this.managerCategoryService.deleteCategory(Integer.parseInt(categoryId))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

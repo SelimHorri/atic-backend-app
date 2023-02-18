@@ -373,16 +373,7 @@ class RegistrationResourceTest {
 					.jsonPath("$.responseBody").value(is(expectedApiPayloadResponse.responseBody()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public final class ServiceDetailDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -4963632929810972853L;
 	
 	@NotBlank(message = "Input name should not be blank")
 	private String name;
@@ -35,14 +35,6 @@ public final class ServiceDetailDto extends AbstractMappedDto implements Seriali
 	private CategoryDto categoryDto;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

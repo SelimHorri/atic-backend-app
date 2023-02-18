@@ -84,12 +84,7 @@ public class RegistrationJobScheduler {
 					.count();
 	}
 	
-	
-	
 }
-
-
-
 
 
 

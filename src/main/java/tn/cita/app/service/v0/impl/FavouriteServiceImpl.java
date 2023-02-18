@@ -46,14 +46,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 		return !this.favouriteRepository.existsById(favouriteId);
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

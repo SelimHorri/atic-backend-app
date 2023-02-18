@@ -212,18 +212,7 @@ class CustomUserDetailsServiceTest {
 				.isEqualTo(String.format("User credentials with username: %s are expired", userDetails.getUsername()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

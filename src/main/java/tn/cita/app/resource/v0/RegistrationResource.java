@@ -43,14 +43,7 @@ public class RegistrationResource {
 		return ResponseEntity.ok(apiPayloadResponse);
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 
