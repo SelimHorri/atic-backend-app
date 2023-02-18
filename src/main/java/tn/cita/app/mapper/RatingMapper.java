@@ -43,16 +43,7 @@ public interface RatingMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

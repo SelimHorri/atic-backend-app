@@ -42,14 +42,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 		return new LoginResponse(authentication.getName(), this.jwtUtils.generateToken(userDetails));
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

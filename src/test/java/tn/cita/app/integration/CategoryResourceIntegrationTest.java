@@ -40,15 +40,7 @@ class CategoryResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 		
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

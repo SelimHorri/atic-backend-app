@@ -19,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public final class UserImageDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3959138540893986430L;
 	
 	private String name;
 	private String type;
@@ -27,14 +27,6 @@ public final class UserImageDto extends AbstractMappedDto implements Serializabl
 	private byte[] imageLob;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

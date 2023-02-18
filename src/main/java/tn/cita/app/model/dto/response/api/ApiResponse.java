@@ -33,14 +33,7 @@ public record ApiResponse<T>(
 		this(Instant.now(), totalResult, httpStatus, acknowledge, responseBody);
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

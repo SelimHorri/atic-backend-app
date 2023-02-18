@@ -11,21 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class SaloonTagId implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6463719947333911023L;
 	private Integer saloonId;
 	private Integer tagId;
 	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

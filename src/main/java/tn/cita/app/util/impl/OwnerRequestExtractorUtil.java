@@ -32,13 +32,7 @@ public class OwnerRequestExtractorUtil implements UserRequestExtractorUtil {
 		return authenticatedUsername;
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

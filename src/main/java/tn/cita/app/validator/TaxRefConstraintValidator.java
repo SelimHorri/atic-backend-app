@@ -18,14 +18,7 @@ public class TaxRefConstraintValidator implements ConstraintValidator<TaxRefForm
 				&& taxRef.matches("[0-9][0-9][0-9][0-9][0-9][0-9][0-9][A-Z]");
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

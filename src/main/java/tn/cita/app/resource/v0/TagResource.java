@@ -47,15 +47,7 @@ public class TagResource {
 				this.tagService.findByIdentifier(identifier.strip())));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

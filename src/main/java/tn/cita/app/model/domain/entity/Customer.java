@@ -39,7 +39,7 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public class Customer extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4605663219739969043L;
 	
 	@Column(precision = 8, nullable = true)
 	private String ssn;
@@ -102,16 +102,6 @@ public class Customer extends AbstractMappedEntity implements Serializable {
 	private Set<Reservation> reservations;
 	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

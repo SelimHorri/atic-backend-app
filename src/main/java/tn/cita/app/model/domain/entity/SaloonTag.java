@@ -42,8 +42,8 @@ import tn.cita.app.model.domain.listener.SaloonTagEntityListener;
 @SuperBuilder
 public class SaloonTag extends AbstractAuditingMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -5193869326657338687L;
+
 	@Id
 	@Column(name = "saloon_id", nullable = false, insertable = false, updatable = false)
 	private Integer saloonId;
@@ -72,16 +72,6 @@ public class SaloonTag extends AbstractAuditingMappedEntity implements Serializa
 	private Tag tag;
 	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -74,17 +74,7 @@ class CredentialServiceImplTest {
 				.isEqualTo(String.format("Credential with username %s not found", newUsername));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

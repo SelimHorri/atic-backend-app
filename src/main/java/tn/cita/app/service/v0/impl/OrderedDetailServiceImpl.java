@@ -71,16 +71,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 		return OrderedDetailMapper.map(this.orderedDetailRepository.findById(orderedDetailId).orElseThrow());
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

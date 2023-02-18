@@ -63,14 +63,7 @@ public class SaloonServiceImpl implements SaloonService {
 				.toList());
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

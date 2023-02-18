@@ -17,7 +17,7 @@ import tn.cita.app.constant.AppConstants;
 @Builder
 public final class ClientPageRequest implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6428616552006298688L;
 	
 	@Builder.Default
 	private int offset = 1;
@@ -55,19 +55,7 @@ public final class ClientPageRequest implements Serializable {
 		return new ClientPageRequest(params);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

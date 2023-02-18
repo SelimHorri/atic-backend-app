@@ -83,10 +83,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		log.info("**Jwt request filtered!*\n");
 	}
 	
-	
-	
 }
-
 
 
 

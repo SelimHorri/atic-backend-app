@@ -20,8 +20,3 @@ public interface ManagerCategoryService {
 
 
 
-
-
-
-
-

@@ -45,7 +45,7 @@ import tn.cita.app.model.domain.listener.ReservationEntityListener;
 @SuperBuilder
 public class Reservation extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3765103550348033742L;
 	
 	@Column(nullable = false, unique = true)
 	private String code;
@@ -101,16 +101,6 @@ public class Reservation extends AbstractMappedEntity implements Serializable {
 	private Saloon saloon;
 	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

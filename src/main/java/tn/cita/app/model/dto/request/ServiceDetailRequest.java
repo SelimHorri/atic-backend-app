@@ -16,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public final class ServiceDetailRequest implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7288108275012703210L;
 	
 	private Integer serviceDetailId;
 	
@@ -37,15 +37,6 @@ public final class ServiceDetailRequest implements Serializable {
 	private Integer categoryId;
 	
 }
-
-
-
-
-
-
-
-
-
 
 
 

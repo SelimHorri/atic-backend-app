@@ -34,7 +34,7 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public final class CustomerDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1684974433204053225L;
 	
 	private String ssn;
 	
@@ -69,15 +69,6 @@ public final class CustomerDto extends AbstractMappedDto implements Serializable
 	private CredentialDto credentialDto;
 	
 }
-
-
-
-
-
-
-
-
-
 
 
 

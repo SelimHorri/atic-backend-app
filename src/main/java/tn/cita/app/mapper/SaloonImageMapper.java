@@ -30,15 +30,7 @@ public interface SaloonImageMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

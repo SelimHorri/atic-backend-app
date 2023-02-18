@@ -21,6 +21,3 @@ public record ReservationAssignWorkerRequest(
 		String managerDescription) implements Serializable {}
 
 
-
-
-

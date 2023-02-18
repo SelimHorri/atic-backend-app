@@ -338,19 +338,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 					.jsonPath("$.responseBody").value(is(expectedApiPayloadResponse.responseBody()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

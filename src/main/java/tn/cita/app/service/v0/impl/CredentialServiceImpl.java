@@ -43,16 +43,7 @@ public class CredentialServiceImpl implements CredentialService {
 						.format("Credential with username %s not found", username)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

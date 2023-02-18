@@ -23,7 +23,3 @@ public record CustomerFavouriteResponse(
 		Page<FavouriteDto> favouriteDtos) implements Serializable {}
 
 
-
-
-
-

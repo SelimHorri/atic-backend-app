@@ -20,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public final class SaloonImageDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2416618752965015845L;
 	
 	private String name;
 	private String type;
@@ -31,12 +31,6 @@ public final class SaloonImageDto extends AbstractMappedDto implements Serializa
 	private SaloonDto saloonDto;
 	
 }
-
-
-
-
-
-
 
 
 

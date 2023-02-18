@@ -11,8 +11,6 @@ import tn.cita.app.model.dto.CredentialDto;
 
 public record CustomUserDetails(CredentialDto credentialDto) implements UserDetails {
 	
-	private static final long serialVersionUID = 1L;
-	
 	@Override
 	public String getUsername() {
 		return this.credentialDto.getUsername();
@@ -49,14 +47,7 @@ public record CustomUserDetails(CredentialDto credentialDto) implements UserDeta
 		return this.credentialDto.getIsCredentialsNonExpired();
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

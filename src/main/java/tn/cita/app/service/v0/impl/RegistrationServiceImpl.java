@@ -199,15 +199,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return "User has been activated successfully, go and login!";
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

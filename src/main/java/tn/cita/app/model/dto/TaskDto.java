@@ -29,7 +29,7 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public final class TaskDto extends AbstractAuditingMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 6192810968272383634L;
 	
 	private Integer workerId;
 	private Integer reservationId;
@@ -63,14 +63,6 @@ public final class TaskDto extends AbstractAuditingMappedDto implements Serializ
 	private ReservationDto reservationDto;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

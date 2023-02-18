@@ -32,7 +32,7 @@ import tn.cita.app.model.domain.listener.AuditingEntityListener;
 @SuperBuilder
 public abstract class AbstractAuditingMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8350163998223519875L;
 	
 	@Column(nullable = false, unique = true)
 	private String identifier;
@@ -52,10 +52,6 @@ public abstract class AbstractAuditingMappedEntity implements Serializable {
 	private Instant updatedAt;
 	
 }
-
-
-
-
 
 
 

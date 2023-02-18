@@ -60,19 +60,7 @@ public class CustomerReservationDetailResource {
 				this.customerReservationDetailService.updateReservationDetails(reservationDetailRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

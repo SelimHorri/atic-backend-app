@@ -224,19 +224,7 @@ class EmployeeServiceImplTest {
 		assertThat(deleteById).isTrue();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

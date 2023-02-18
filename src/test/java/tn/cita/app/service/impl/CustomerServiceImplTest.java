@@ -223,19 +223,7 @@ class CustomerServiceImplTest {
 		assertThat(deleteById).isTrue();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

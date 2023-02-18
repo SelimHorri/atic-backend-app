@@ -11,20 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class OrderedDetailId implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2151289755647603515L;
 	private Integer reservationId;
 	private Integer serviceDetailId;
 	
 }
-
-
-
-
-
-
-
-
-
 
 
 

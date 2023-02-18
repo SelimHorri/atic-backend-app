@@ -242,19 +242,7 @@ class RegistrationServiceImplTest {
 				.isEqualTo("Verification token has been expired");
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

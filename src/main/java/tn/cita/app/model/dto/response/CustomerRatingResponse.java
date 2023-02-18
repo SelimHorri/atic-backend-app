@@ -23,6 +23,3 @@ public record CustomerRatingResponse(
 		Page<RatingDto> ratingDtos) implements Serializable {}
 
 
-
-
-

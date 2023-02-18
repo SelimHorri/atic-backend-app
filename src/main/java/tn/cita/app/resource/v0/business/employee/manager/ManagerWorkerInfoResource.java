@@ -44,18 +44,7 @@ public class ManagerWorkerInfoResource {
 				this.managerWorkerInfoService.fetchWorkerInfo(Integer.parseInt(workerId))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

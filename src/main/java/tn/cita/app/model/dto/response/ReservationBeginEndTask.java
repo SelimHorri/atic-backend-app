@@ -9,5 +9,3 @@ import tn.cita.app.model.dto.TaskDto;
 public record ReservationBeginEndTask(TaskDto taskBegin, TaskDto taskEnd) implements Serializable {}
 
 
-
-

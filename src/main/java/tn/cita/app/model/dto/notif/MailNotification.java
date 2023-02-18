@@ -9,4 +9,3 @@ public record MailNotification(String to, String subject, MailBodyContentBuilder
 
 
 
-

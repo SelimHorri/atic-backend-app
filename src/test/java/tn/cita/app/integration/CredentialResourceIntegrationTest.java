@@ -90,18 +90,7 @@ class CredentialResourceIntegrationTest extends AbstractSharedMySQLTestContainer
 					
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

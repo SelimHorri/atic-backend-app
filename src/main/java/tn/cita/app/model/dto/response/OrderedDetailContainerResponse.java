@@ -22,6 +22,3 @@ public record OrderedDetailContainerResponse(
 		ServiceDetailDto serviceDetailDto) implements Serializable {}
 
 
-
-
-

@@ -57,17 +57,7 @@ public class WorkerReservationResource {
 				this.workerReservationService.searchAllLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), key)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

@@ -50,16 +50,7 @@ public class ManagerWorkerAssignmentResource {
 				.searchAllLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), Integer.parseInt(workerId), key)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

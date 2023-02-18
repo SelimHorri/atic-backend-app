@@ -90,20 +90,7 @@ public class ManagerReservationResource {
 						reservationAssignWorkerRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

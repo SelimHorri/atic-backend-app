@@ -13,16 +13,7 @@ public class TemplateConfig {
 		return restTemplateBuilder.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

@@ -32,13 +32,7 @@ public class WorkerRequestExtractorUtil implements UserRequestExtractorUtil {
 		return authenticatedUsername;
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

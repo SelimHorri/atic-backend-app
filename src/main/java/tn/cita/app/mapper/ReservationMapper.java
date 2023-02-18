@@ -46,17 +46,7 @@ public interface ReservationMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

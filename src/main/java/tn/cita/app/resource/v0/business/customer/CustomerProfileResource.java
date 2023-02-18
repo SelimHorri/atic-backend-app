@@ -54,16 +54,7 @@ public class CustomerProfileResource {
 				this.customerProfileService.updateProfileInfo(customerProfileRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

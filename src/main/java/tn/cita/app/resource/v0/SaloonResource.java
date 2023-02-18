@@ -63,16 +63,7 @@ public class SaloonResource {
 		return ResponseEntity.ok(new ApiResponse<>(saloons.toList().size(), HttpStatus.OK, true, saloons));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

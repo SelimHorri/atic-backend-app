@@ -16,17 +16,7 @@ public class ReservationEntityListener {
 		reservation.setStatus(ReservationStatus.NOT_STARTED);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

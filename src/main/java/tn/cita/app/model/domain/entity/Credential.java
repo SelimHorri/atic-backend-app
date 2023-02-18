@@ -33,7 +33,7 @@ import tn.cita.app.model.domain.listener.CredentialEntityListener;
 @SuperBuilder
 public class Credential extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2948962397283709878L;
 	
 	@Column(unique = true, nullable = false)
 	private String username;
@@ -73,14 +73,6 @@ public class Credential extends AbstractMappedEntity implements Serializable {
 	private Set<VerificationToken> verificationTokens;
 	
 }
-
-
-
-
-
-
-
-
 
 
 

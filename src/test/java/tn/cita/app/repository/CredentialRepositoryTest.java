@@ -33,16 +33,7 @@ class CredentialRepositoryTest extends AbstractSharedMySQLTestContainer {
 		assertThat(optionalCredential.get().getCustomer()).isNull();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

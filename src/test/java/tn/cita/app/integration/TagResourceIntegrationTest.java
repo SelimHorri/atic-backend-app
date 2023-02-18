@@ -146,17 +146,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().errorMsg()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

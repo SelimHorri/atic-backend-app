@@ -36,13 +36,7 @@ public interface SaloonTagMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

@@ -24,5 +24,3 @@ public record ManagerReservationResponse(
 		Page<ReservationDto> reservationDtos) implements Serializable {}
 
 
-
-

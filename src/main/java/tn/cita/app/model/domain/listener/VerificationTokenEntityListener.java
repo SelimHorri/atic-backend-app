@@ -13,14 +13,7 @@ public class VerificationTokenEntityListener {
 		verificationToken.setToken(UUID.randomUUID().toString());
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

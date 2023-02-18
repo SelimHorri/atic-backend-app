@@ -11,20 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class FavouriteId implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -5433078834954903470L;
 	private Integer customerId;
 	private Integer saloonId;
 	
 }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -28,7 +28,3 @@ public record WorkerProfileResponse(
 		Page<TaskDto> taskDtos) implements Serializable {}
 
 
-
-
-
-

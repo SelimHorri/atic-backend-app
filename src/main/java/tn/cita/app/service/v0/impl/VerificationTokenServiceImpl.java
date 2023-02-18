@@ -36,15 +36,7 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 		return true;
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

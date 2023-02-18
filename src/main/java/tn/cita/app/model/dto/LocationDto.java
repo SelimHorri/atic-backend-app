@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public final class LocationDto extends AbstractMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 5424410748327656191L;
 	
 	@NotBlank(message = "Input zipcode should not be blank")
 	private String zipcode;
@@ -33,13 +33,6 @@ public final class LocationDto extends AbstractMappedDto implements Serializable
 	private String state;
 	
 }
-
-
-
-
-
-
-
 
 
 

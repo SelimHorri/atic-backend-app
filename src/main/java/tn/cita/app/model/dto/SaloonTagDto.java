@@ -32,7 +32,7 @@ import tn.cita.app.constant.AppConstants;
 @SuperBuilder
 public final class SaloonTagDto extends AbstractAuditingMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7563192668430808636L;
 	
 	@NotNull(message = "Input saloonId should not be null")
 	private Integer saloonId;
@@ -53,17 +53,6 @@ public final class SaloonTagDto extends AbstractAuditingMappedDto implements Ser
 	private TagDto tagDto;
 	
 }
-
-
-
-
-
-
-
-
-
-
-
 
 
 

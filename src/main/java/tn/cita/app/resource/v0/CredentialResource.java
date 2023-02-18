@@ -36,13 +36,7 @@ public class CredentialResource {
 				this.credentialService.findByUsername(username)));
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

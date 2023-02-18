@@ -42,6 +42,3 @@ public record ManagerProfileResponse(
 		Page<ServiceDetailDto> serviceDetailDtos) implements Serializable {}
 
 
-
-
-

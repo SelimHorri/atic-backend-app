@@ -73,14 +73,7 @@ public class CustomerServiceImpl implements CustomerService {
 		return !this.customerRepository.existsById(id);
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

@@ -28,16 +28,7 @@ public interface VerificationTokenMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

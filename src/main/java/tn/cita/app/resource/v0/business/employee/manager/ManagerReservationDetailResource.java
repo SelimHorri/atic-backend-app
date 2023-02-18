@@ -70,17 +70,7 @@ public class ManagerReservationDetailResource {
 						reservationAssignWorkerRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

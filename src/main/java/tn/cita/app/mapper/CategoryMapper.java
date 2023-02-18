@@ -9,7 +9,7 @@ import tn.cita.app.model.dto.SaloonDto;
 
 public interface CategoryMapper {
 	
-public static CategoryDto map(@NonNull final Category category) {
+	public static CategoryDto map(@NonNull final Category category) {
 		
 		final var parentCategory = Optional
 				.ofNullable(category.getParentCategory())
@@ -40,16 +40,7 @@ public static CategoryDto map(@NonNull final Category category) {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

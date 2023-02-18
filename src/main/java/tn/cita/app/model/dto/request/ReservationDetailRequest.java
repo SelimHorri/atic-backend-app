@@ -18,6 +18,3 @@ public record ReservationDetailRequest(
 
 
 
-
-
-

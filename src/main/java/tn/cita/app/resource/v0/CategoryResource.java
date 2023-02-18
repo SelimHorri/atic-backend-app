@@ -38,16 +38,7 @@ public class CategoryResource {
 				new PageImpl<>(this.categoryService.findAllBySaloonId(Integer.parseInt(saloonId)))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

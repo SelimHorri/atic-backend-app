@@ -26,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Tag extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 7987558757654889363L;
 	
 	@Column(nullable = false)
 	private String name;
@@ -40,13 +40,6 @@ public class Tag extends AbstractMappedEntity implements Serializable {
 	private Set<SaloonTag> saloonTags;
 	
 }
-
-
-
-
-
-
-
 
 
 

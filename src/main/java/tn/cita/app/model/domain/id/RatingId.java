@@ -22,7 +22,7 @@ import tn.cita.app.constant.AppConstants;
 @Data
 public class RatingId implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8429929777985465781L;
 	private Integer workerId;
 	private Integer customerId;
 	
@@ -33,13 +33,6 @@ public class RatingId implements Serializable {
 	private LocalDateTime rateDate;
 	
 }
-
-
-
-
-
-
-
 
 
 

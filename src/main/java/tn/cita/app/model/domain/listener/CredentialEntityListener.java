@@ -17,17 +17,7 @@ public class CredentialEntityListener {
 		credential.setIsCredentialsNonExpired(true);
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

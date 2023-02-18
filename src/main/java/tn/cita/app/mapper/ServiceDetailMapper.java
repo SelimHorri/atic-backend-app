@@ -25,16 +25,7 @@ public interface ServiceDetailMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

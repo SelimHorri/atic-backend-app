@@ -36,17 +36,7 @@ public class WorkerReservationDetailResource {
 				this.workerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

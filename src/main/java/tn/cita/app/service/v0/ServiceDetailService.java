@@ -29,10 +29,3 @@ public interface ServiceDetailService {
 
 
 
-
-
-
-
-
-
-

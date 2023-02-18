@@ -26,7 +26,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class SaloonImage extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 4616883902905139667L;
 	
 	@Column(nullable = true)
 	private String name;
@@ -48,11 +48,6 @@ public class SaloonImage extends AbstractMappedEntity implements Serializable {
 	private Saloon saloon;
 	
 }
-
-
-
-
-
 
 
 

@@ -16,7 +16,7 @@ import tn.cita.app.util.RegistrationUtils;
 
 public interface EmployeeMapper {
 	
-public static EmployeeDto map(@NonNull final Employee employee) {
+	public static EmployeeDto map(@NonNull final Employee employee) {
 		
 		final var userImage = Optional
 				.ofNullable(employee.getUserImage())
@@ -105,15 +105,7 @@ public static EmployeeDto map(@NonNull final Employee employee) {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

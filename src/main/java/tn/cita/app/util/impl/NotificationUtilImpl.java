@@ -53,17 +53,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 		return false;
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

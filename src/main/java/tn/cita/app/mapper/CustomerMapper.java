@@ -14,7 +14,7 @@ import tn.cita.app.util.RegistrationUtils;
 
 public interface CustomerMapper {
 	
-public static CustomerDto map(@NonNull final Customer customer) {
+	public static CustomerDto map(@NonNull final Customer customer) {
 		
 		final var userImage = Optional
 				.ofNullable(customer.getUserImage())
@@ -74,16 +74,7 @@ public static CustomerDto map(@NonNull final Customer customer) {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

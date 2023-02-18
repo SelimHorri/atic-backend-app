@@ -39,16 +39,7 @@ public interface RegistrationUtils {
 		return null;
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

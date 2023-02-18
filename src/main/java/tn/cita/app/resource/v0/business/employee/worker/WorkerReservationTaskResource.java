@@ -68,16 +68,7 @@ public class WorkerReservationTaskResource {
 				this.workerReservationTaskService.endTask(taskEndRequest)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

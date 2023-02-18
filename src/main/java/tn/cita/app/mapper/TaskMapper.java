@@ -54,14 +54,7 @@ public static TaskDto map(@NonNull final Task task) {
 				.build();
 	}
 	
-	
 }
-
-
-
-
-
-
 
 
 

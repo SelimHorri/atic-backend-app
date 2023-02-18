@@ -13,13 +13,7 @@ public class RatingEntityListener {
 		rating.setRateDate(LocalDateTime.now());
 	}
 	
-	
-	
 }
-
-
-
-
 
 
 

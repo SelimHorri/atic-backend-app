@@ -11,17 +11,11 @@ import lombok.NoArgsConstructor;
 @Data
 public class TaskId implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
-	
+	private static final long serialVersionUID = -5033050639136364710L;
 	private Integer workerId;
 	private Integer reservationId;
 	
 }
-
-
-
-
-
 
 
 

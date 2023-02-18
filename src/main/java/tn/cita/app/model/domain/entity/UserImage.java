@@ -25,7 +25,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class UserImage extends AbstractMappedEntity implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2231768482496554103L;
 	
 	@Column(nullable = true)
 	private String name;
@@ -53,12 +53,6 @@ public class UserImage extends AbstractMappedEntity implements Serializable {
 	private Customer customer;
 	
 }
-
-
-
-
-
-
 
 
 

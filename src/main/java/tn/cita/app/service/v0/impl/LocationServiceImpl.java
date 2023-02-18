@@ -61,14 +61,7 @@ public class LocationServiceImpl implements LocationService {
 				.toList();
 	}
 	
-	
-	
 }
-
-
-
-
-
 
 
 

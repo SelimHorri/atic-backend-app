@@ -14,15 +14,10 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public abstract class AbstractAuditingMappedDto implements Serializable {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8389934050125230226L;
 	private String identifier;
 	
 }
-
-
-
-
-
 
 
 

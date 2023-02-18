@@ -58,17 +58,7 @@ public class CustomerFavouriteResource {
 				.addFavourite(this.userRequestExtractorUtil.extractUsername(webRequest), saloonId)));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 
