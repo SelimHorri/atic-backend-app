@@ -17,6 +17,7 @@ import tn.cita.app.repository.OrderedDetailRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.business.customer.CustomerReservationDetailService;
+import tn.cita.app.util.StringWrapperUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -76,9 +77,8 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 		log.info("** Update reservation details by customer.. *\n");
 		final var reservation = this.reservationRepository.findById(reservationDetailRequest.reservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation with id: %s not found"));
-		reservation.setDescription((reservationDetailRequest.description() == null 
-					|| reservationDetailRequest.description().isBlank()) ? 
-				null : reservationDetailRequest.description().strip());
+		reservation.setDescription(StringWrapperUtils
+				.trimIfBlank(reservationDetailRequest.description()));
 		
 		return ReservationMapper.map(this.reservationRepository.save(reservation));
 	}

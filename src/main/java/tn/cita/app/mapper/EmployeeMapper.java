@@ -12,7 +12,7 @@ import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.SaloonDto;
 import tn.cita.app.model.dto.UserImageDto;
 import tn.cita.app.model.dto.request.RegisterRequest;
-import tn.cita.app.util.RegistrationUtils;
+import tn.cita.app.util.UserRoleUtils;
 
 public interface EmployeeMapper {
 	
@@ -96,7 +96,7 @@ public interface EmployeeMapper {
 						Credential.builder()
 						.username(registerRequest.username())
 						.password(registerRequest.password())
-						.userRoleBasedAuthority(RegistrationUtils.checkUserRoleBasedAuthority(registerRequest.role()))
+						.userRoleBasedAuthority(UserRoleUtils.checkUserRoleBasedAuthority(registerRequest.role()))
 						.isEnabled(false)
 						.isAccountNonExpired(true)
 						.isAccountNonLocked(true)

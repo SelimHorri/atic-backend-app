@@ -33,6 +33,7 @@ import tn.cita.app.repository.ServiceDetailRepository;
 import tn.cita.app.service.v0.business.customer.CustomerReservationService;
 import tn.cita.app.service.v0.common.ReservationCommonService;
 import tn.cita.app.util.ClientPageRequestUtils;
+import tn.cita.app.util.StringWrapperUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -117,9 +118,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				.saloon(this.saloonRepository
 						.findById(reservationRequest.saloonId())
 						.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
-				.description((reservationRequest.description() == null 
-							|| reservationRequest.description().isBlank()) ? 
-						null : reservationRequest.description().strip())
+				.description(StringWrapperUtils
+						.trimIfBlank(reservationRequest.description()))
 				.build();
 		
 		final var savedReservation = this.reservationRepository.save(reservation);

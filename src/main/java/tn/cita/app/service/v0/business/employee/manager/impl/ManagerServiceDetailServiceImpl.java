@@ -21,6 +21,7 @@ import tn.cita.app.repository.CategoryRepository;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ServiceDetailRepository;
 import tn.cita.app.service.v0.business.employee.manager.ManagerServiceDetailService;
+import tn.cita.app.util.StringWrapperUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -79,10 +80,9 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 		
 		final var serviceDetail = ServiceDetail.builder()
 				.name(serviceDetailRequest.getName().strip().toLowerCase())
-				.description((serviceDetailRequest.getDescription() == null 
-							|| serviceDetailRequest.getDescription().isBlank()) ?
-						null : serviceDetailRequest.getDescription().strip())
-				.isAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable())
+				.description(StringWrapperUtils
+						.trimIfBlank(serviceDetailRequest.getDescription()))
+					.isAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable())
 				.duration(serviceDetailRequest.getDuration())
 				.priceUnit(serviceDetailRequest.getPriceUnit())
 				.category(category)
@@ -104,9 +104,8 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 				.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
 		
 		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
-		serviceDetail.setDescription((serviceDetailRequest.getDescription() == null 
-					|| serviceDetailRequest.getDescription().isBlank()) ?
-				null : serviceDetailRequest.getDescription().strip());
+		serviceDetail.setDescription(StringWrapperUtils
+				.trimIfBlank(serviceDetailRequest.getDescription()));
 		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable());
 		serviceDetail.setDuration(serviceDetailRequest.getDuration());
 		serviceDetail.setPriceUnit(serviceDetailRequest.getPriceUnit());

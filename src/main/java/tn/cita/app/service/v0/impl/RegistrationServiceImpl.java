@@ -30,7 +30,7 @@ import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.service.v0.RegistrationService;
 import tn.cita.app.util.NotificationUtil;
-import tn.cita.app.util.RegistrationUtils;
+import tn.cita.app.util.UserRoleUtils;
 
 @Service
 @Transactional
@@ -66,10 +66,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Register..*\n");
 		
 		// Step1
-		if (!RegistrationUtils.isCustomerRole(registerRequest.role())
-				&& !RegistrationUtils.isWorkerRole(registerRequest.role())
-				&& !RegistrationUtils.isManagerRole(registerRequest.role())
-				&& !RegistrationUtils.isOwnerRole(registerRequest.role()))
+		if (!UserRoleUtils.isCustomerRole(registerRequest.role())
+				&& !UserRoleUtils.isWorkerRole(registerRequest.role())
+				&& !UserRoleUtils.isManagerRole(registerRequest.role())
+				&& !UserRoleUtils.isOwnerRole(registerRequest.role()))
 			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, "
 					+ "it should be Customer/Worker/Manager/Owner role");
 		log.info("** User role checked successfully! *\n");

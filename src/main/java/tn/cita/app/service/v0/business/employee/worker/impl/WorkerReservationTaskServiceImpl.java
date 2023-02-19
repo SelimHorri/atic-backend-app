@@ -26,6 +26,7 @@ import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.business.employee.worker.WorkerReservationTaskService;
+import tn.cita.app.util.StringWrapperUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -74,9 +75,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 					+ "Unfortunately, you cannot comment it anymore");
 		
 		// update worker description..
-		task.setWorkerDescription((taskUpdateDescriptionRequest.workerDescription() == null 
-					|| taskUpdateDescriptionRequest.workerDescription().isBlank()) ? 
-				null : taskUpdateDescriptionRequest.workerDescription().strip());
+		task.setWorkerDescription(StringWrapperUtils
+				.trimIfBlank(taskUpdateDescriptionRequest.workerDescription()));
 		return TaskMapper.map(this.taskRepository.save(task));
 	}
 	
@@ -107,9 +107,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// begin task..
 		task.setStartDate(LocalDateTime.now());
-		task.setWorkerDescription((taskBeginRequest.workerDescription() == null 
-					|| taskBeginRequest.workerDescription().isBlank()) ? 
-				null : taskBeginRequest.workerDescription().strip());
+		task.setWorkerDescription(StringWrapperUtils
+				.trimIfBlank(taskBeginRequest.workerDescription()));
 		
 		// make reservation as in_progress..
 		if (!reservation.getStatus().equals(ReservationStatus.NOT_STARTED)
@@ -153,9 +152,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		
 		// update task to be ended..
 		task.setEndDate(LocalDateTime.now());
-		task.setWorkerDescription((taskEndRequest.workerDescription() == null 
-					|| taskEndRequest.workerDescription().isBlank()) ? 
-				null : taskEndRequest.workerDescription().strip());
+		task.setWorkerDescription(StringWrapperUtils
+				.trimIfBlank(taskEndRequest.workerDescription()));
 		
 		// fetch all assigned workers to this reservation..
 		final var assignedOtherTaskDtos = this.taskRepository

@@ -85,9 +85,12 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		authenticatedCustomer.setEmail(customerProfileRequest.email().strip());
 		authenticatedCustomer.setPhone(customerProfileRequest.phone().strip());
 		authenticatedCustomer.setBirthdate(customerProfileRequest.birthdate());
-		authenticatedCustomer.setFacebookUrl(StringUtils.trimAllWhitespace(customerProfileRequest.facebookUrl()));
-		authenticatedCustomer.setInstagramUrl(StringUtils.trimAllWhitespace(customerProfileRequest.instagramUrl()));
-		authenticatedCustomer.setLinkedinUrl(StringUtils.trimAllWhitespace(customerProfileRequest.linkedinUrl()));
+		authenticatedCustomer.setFacebookUrl(StringUtils
+				.trimAllWhitespace(customerProfileRequest.facebookUrl()));
+		authenticatedCustomer.setInstagramUrl(StringUtils
+				.trimAllWhitespace(customerProfileRequest.instagramUrl()));
+		authenticatedCustomer.setLinkedinUrl(StringUtils
+				.trimAllWhitespace(customerProfileRequest.linkedinUrl()));
 		authenticatedCustomer.getCredential().setUsername(customerProfileRequest.username().strip().toLowerCase());
 		authenticatedCustomer.getCredential().setPassword(this.passwordEncoder.encode(customerProfileRequest.password()));
 		

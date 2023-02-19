@@ -2,7 +2,7 @@ package tn.cita.app.util;
 
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 
-public interface RegistrationUtils {
+public interface UserRoleUtils {
 	
 	public static boolean isCustomerRole(final String role) {
 		return role.equals(UserRoleBasedAuthority.CUSTOMER.name());

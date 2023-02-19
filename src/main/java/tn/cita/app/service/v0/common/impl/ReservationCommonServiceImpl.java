@@ -33,6 +33,7 @@ import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.TaskRepository;
 import tn.cita.app.service.v0.common.ReservationCommonService;
+import tn.cita.app.util.StringWrapperUtils;
 
 @Service
 @Transactional(readOnly = true)
@@ -119,9 +120,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		final var task = new Task();
 		task.setReservationId(reservation.getId());
 		task.setReservation(reservation);
-		task.setManagerDescription((reservationAssignWorkerRequest.managerDescription() == null 
-					|| reservationAssignWorkerRequest.managerDescription().isBlank()) ? 
-				null : reservationAssignWorkerRequest.managerDescription().strip());
+		task.setManagerDescription(StringWrapperUtils
+				.trimIfBlank(reservationAssignWorkerRequest.managerDescription()));
 		
 		for (int workerId: reservationAssignWorkerRequest.assignedWorkersIds()) {
 			task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..

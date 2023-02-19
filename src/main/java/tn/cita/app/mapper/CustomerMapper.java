@@ -10,7 +10,7 @@ import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.UserImageDto;
 import tn.cita.app.model.dto.request.RegisterRequest;
-import tn.cita.app.util.RegistrationUtils;
+import tn.cita.app.util.UserRoleUtils;
 
 public interface CustomerMapper {
 	
@@ -65,7 +65,7 @@ public interface CustomerMapper {
 						Credential.builder()
 						.username(registerRequest.username())
 						.password(registerRequest.password())
-						.userRoleBasedAuthority(RegistrationUtils.checkUserRoleBasedAuthority(registerRequest.role()))
+						.userRoleBasedAuthority(UserRoleUtils.checkUserRoleBasedAuthority(registerRequest.role()))
 						.isEnabled(false)
 						.isAccountNonExpired(true)
 						.isAccountNonLocked(true)
