@@ -34,7 +34,7 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 	@Test
 	void givenValidPageOffset_whenFindAll_thenAllTagsBasedOnPageOffsetShouldBeReturned() {
 		
-		final var clientPageRequest = new ClientPageRequest();
+		final var clientPageRequest = new ClientPageRequest(0, 0, null, null);
 		
 		final var list = List.of(
 				TagDto.builder()

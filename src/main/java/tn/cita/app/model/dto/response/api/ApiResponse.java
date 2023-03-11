@@ -18,9 +18,9 @@ public record ApiResponse<T>(
 		@JsonSerialize(using = InstantSerializer.class)
 		@JsonDeserialize(using = InstantDeserializer.class)
 		Instant timestamp,
-		Integer totalResult,
+		int totalResult,
 		HttpStatus httpStatus,
-		Boolean acknowledge,
+		boolean acknowledge,
 		T responseBody) implements Serializable {
 	
 	/**

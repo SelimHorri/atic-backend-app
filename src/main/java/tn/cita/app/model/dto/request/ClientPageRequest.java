@@ -6,28 +6,18 @@ import java.util.Map;
 import org.springframework.data.domain.Sort;
 
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 import tn.cita.app.constant.AppConstants;
 
-@NoArgsConstructor
 @AllArgsConstructor
 @Data
-@Builder
 public final class ClientPageRequest implements Serializable {
 	
 	private static final long serialVersionUID = 6428616552006298688L;
 	
-	@Builder.Default
 	private int offset = 1;
-	
-	@Builder.Default
 	private int size = AppConstants.PAGE_SIZE;
-	
 	private String[] sortBy;
-	
-	@Builder.Default
 	private Sort.Direction sortDirection = Sort.Direction.DESC;
 	
 	private ClientPageRequest(final int offset) {
@@ -51,7 +41,7 @@ public final class ClientPageRequest implements Serializable {
 				: Sort.Direction.DESC;
 	}
 	
-	public static ClientPageRequest of(final Map<String, String> params) {
+	public static ClientPageRequest from(final Map<String, String> params) {
 		return new ClientPageRequest(params);
 	}
 	

@@ -37,7 +37,7 @@ public class WorkerReservationResource {
 			@RequestParam final Map<String, String> params) {
 		log.info("** Fetch all paged worker reservations.. *\n");
 		final var reservations = this.workerReservationService.fetchAllReservations(this.userRequestExtractorUtil
-				.extractUsername(webRequest), ClientPageRequest.of(params));
+				.extractUsername(webRequest), ClientPageRequest.from(params));
 		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
 	}
 	

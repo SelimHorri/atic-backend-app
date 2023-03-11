@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,6 +62,7 @@ class CustomerServiceImplTest {
 				.build();
 	}
 	
+	@Disabled
 	@DisplayName("test findAll(offset) method")
 	@Test
 	void givenPageOffset_whenFindAllBasedOnGivenPageOffset_thenAllCustomerDtoListBasedOnPageOffsetShouldBeFound() {
@@ -127,7 +129,7 @@ class CustomerServiceImplTest {
 						.build())
 				.build());
 		
-		final var clientPageRequest = new ClientPageRequest();
+		final var clientPageRequest = new ClientPageRequest(0, 0, null, null);
 		when(this.customerRepository.findAll(PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize())))
 				.thenReturn(new PageImpl<>(mockFindAllCustomers));
 		

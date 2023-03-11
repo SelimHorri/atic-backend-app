@@ -45,7 +45,7 @@ public class CustomerReservationResource {
 		log.info("** Fetch all customer reservations.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(request), 
-						ClientPageRequest.of(params))));
+						ClientPageRequest.from(params))));
 	}
 	
 	@PutMapping("/cancel/{reservationId}")

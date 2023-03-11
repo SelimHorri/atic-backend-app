@@ -1,7 +1,7 @@
 package tn.cita.app.resource;
 
 import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.Objects;
 
 import javax.validation.ConstraintViolationException;
 
@@ -16,7 +16,6 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import org.springframework.web.context.request.WebRequest;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.exception.payload.ExceptionMsg;
@@ -33,26 +32,25 @@ public class ApiExceptionHandler {
 		HttpMessageNotReadableException.class,
 		ConstraintViolationException.class,
 	})
-	public <T extends BindException> ResponseEntity<ApiResponse<ExceptionMsg>> handleValidationException(final T e, 
-			final WebRequest webRequest) {
+	public <T extends BindException> ResponseEntity<ApiResponse<ExceptionMsg>> handleValidationException(final T e) {
 		
 		log.info("** Handle validation exception.. *\n");
 		
-		final var fieldError = Optional
-				.ofNullable(e.getBindingResult().getFieldError())
-				.orElseGet(() -> new FieldError(null, null, "Validation error happened, check again"));
+		final var fieldError = Objects.requireNonNullElseGet(e.getBindingResult().getFieldError(), 
+				() -> new FieldError(null, null, "Validation error happened, check again"));
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = new ExceptionMsg("*%s!**".formatted(fieldError.getDefaultMessage()));
-		final var apiPayloadResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
+		final var apiResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(apiPayloadResponse);
+				.body(apiResponse);
 	}
 	
 	@ExceptionHandler(value = {
 		CustomRuntimeException.class,
+		NullPointerException.class,
 		NoSuchElementException.class,
 		BadCredentialsException.class,
 		IllegalStateException.class,
@@ -61,17 +59,29 @@ public class ApiExceptionHandler {
 		// UnauthorizedUserException.class, // already works for filter using resolver
 		ActuatorHealthException.class,
 	})
-	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e, 
-			final WebRequest webRequest) {
+	public <T extends RuntimeException> ResponseEntity<ApiResponse<ExceptionMsg>> handleApiRequestException(final T e) {
 		log.info("** Handle API request custom exception.. *\n");
 		
 		final var httpStatus = HttpStatus.BAD_REQUEST;
 		final var exceptionMsg = new ExceptionMsg("#### %s! ####".formatted(e.getMessage()));
-		final var apiPayloadResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
+		final var apiResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
 		
 		return ResponseEntity.status(httpStatus)
 				.contentType(MediaType.APPLICATION_JSON)
-				.body(apiPayloadResponse);
+				.body(apiResponse);
+	}
+	
+	@ExceptionHandler
+	public ResponseEntity<ApiResponse<ExceptionMsg>> handleGeneralException(final Exception e) {
+		log.info("** Handle API request custom exception.. *\n");
+		
+		final var httpStatus = HttpStatus.BAD_REQUEST;
+		final var exceptionMsg = new ExceptionMsg("#### %s! ####".formatted(e.getMessage()));
+		final var apiResponse = new ApiResponse<>(1, httpStatus, false, exceptionMsg);
+		
+		return ResponseEntity.status(httpStatus)
+				.contentType(MediaType.APPLICATION_JSON)
+				.body(apiResponse);
 	}
 	
 }

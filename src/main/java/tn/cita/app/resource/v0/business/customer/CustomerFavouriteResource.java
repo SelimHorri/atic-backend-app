@@ -40,7 +40,7 @@ public class CustomerFavouriteResource {
 		log.info("** Fetch all customer favourites.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerFavouriteService.fetchAllFavourites(this.userRequestExtractorUtil.extractUsername(request), 
-						ClientPageRequest.of(params))));
+						ClientPageRequest.from(params))));
 	}
 	
 	@DeleteMapping("/{saloonId}")

@@ -42,7 +42,7 @@ public class CustomerProfileResource {
 		log.info("** Fetch customer profile info.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerProfileService.fetchProfile(this.userRequestExtractorUtil.extractUsername(request), 
-						ClientPageRequest.of(params))));
+						ClientPageRequest.from(params))));
 	}
 	
 	@PutMapping
