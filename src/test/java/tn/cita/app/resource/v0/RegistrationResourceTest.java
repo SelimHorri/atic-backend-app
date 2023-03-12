@@ -70,7 +70,7 @@ class RegistrationResourceTest {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.username(), 
-						AppConstants.USER_EXPIRES_AFTER));
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
@@ -115,7 +115,7 @@ class RegistrationResourceTest {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.username(), 
-						AppConstants.USER_EXPIRES_AFTER));
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
@@ -160,7 +160,7 @@ class RegistrationResourceTest {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.username(), 
-						AppConstants.USER_EXPIRES_AFTER));
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
@@ -205,7 +205,7 @@ class RegistrationResourceTest {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						registerRequest.username(), 
-						AppConstants.USER_EXPIRES_AFTER));
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		

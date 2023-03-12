@@ -14,20 +14,21 @@ import org.springframework.security.authentication.DisabledException;
 import org.springframework.validation.BindException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
-import tn.cita.app.exception.wrapper.CustomRuntimeException;
+import tn.cita.app.exception.wrapper.BusinessException;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
-@RestControllerAdvice
+@ControllerAdvice
 @Slf4j
 public class ApiExceptionHandler {
 	
 	@ExceptionHandler(value = {
+		BindException.class,
 		MethodArgumentNotValidException.class,
 		HttpMessageNotReadableException.class,
 		ConstraintViolationException.class,
@@ -49,7 +50,7 @@ public class ApiExceptionHandler {
 	}
 	
 	@ExceptionHandler(value = {
-		CustomRuntimeException.class,
+		BusinessException.class,
 		NullPointerException.class,
 		NoSuchElementException.class,
 		BadCredentialsException.class,

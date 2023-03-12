@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class PasswordNotMatchException extends CustomRuntimeException {
+public class PasswordNotMatchException extends BusinessException {
 	
 	private static final long serialVersionUID = 8031260988284099874L;
 	

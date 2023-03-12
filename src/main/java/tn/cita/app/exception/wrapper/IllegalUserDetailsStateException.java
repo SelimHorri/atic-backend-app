@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class IllegalUserDetailsStateException extends CustomRuntimeException {
+public class IllegalUserDetailsStateException extends BusinessException {
 	
 	private static final long serialVersionUID = -355404732636991167L;
 	

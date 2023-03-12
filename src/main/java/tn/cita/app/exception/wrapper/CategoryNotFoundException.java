@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class CategoryNotFoundException extends CustomRuntimeException {
+public class CategoryNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = 180299371640031717L;
 	

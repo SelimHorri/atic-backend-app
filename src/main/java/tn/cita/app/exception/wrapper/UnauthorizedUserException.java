@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class UnauthorizedUserException extends CustomRuntimeException {
+public class UnauthorizedUserException extends BusinessException {
 	
 	private static final long serialVersionUID = 5774436707657106358L;
 	

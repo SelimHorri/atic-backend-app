@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class UsernameAlreadyExistsException extends CustomRuntimeException {
+public class UsernameAlreadyExistsException extends BusinessException {
 	
 	private static final long serialVersionUID = -3147715092199725614L;
 	

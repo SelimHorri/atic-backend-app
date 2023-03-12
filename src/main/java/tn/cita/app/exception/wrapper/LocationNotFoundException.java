@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class LocationNotFoundException extends CustomRuntimeException {
+public class LocationNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = -991158339716479285L;
 	

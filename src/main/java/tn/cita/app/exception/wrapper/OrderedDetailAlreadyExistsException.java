@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class OrderedDetailAlreadyExistsException extends CustomRuntimeException {
+public class OrderedDetailAlreadyExistsException extends BusinessException {
 	
 	private static final long serialVersionUID = 2672959932252642625L;
 	

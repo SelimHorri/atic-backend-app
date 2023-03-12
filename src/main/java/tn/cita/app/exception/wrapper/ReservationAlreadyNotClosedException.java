@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationAlreadyNotClosedException extends CustomRuntimeException {
+public class ReservationAlreadyNotClosedException extends BusinessException {
 	
 	private static final long serialVersionUID = -4639049784262488983L;
 	

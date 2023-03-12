@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class OutdatedStartDateReservationException extends CustomRuntimeException {
+public class OutdatedStartDateReservationException extends BusinessException {
 	
 	private static final long serialVersionUID = 1615026632578026087L;
 	

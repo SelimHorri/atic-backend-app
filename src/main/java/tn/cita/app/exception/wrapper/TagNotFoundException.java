@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class TagNotFoundException extends CustomRuntimeException {
+public class TagNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = 5200220936244874787L;
 	

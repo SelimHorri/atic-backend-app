@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class UsernameNotMatchException extends CustomRuntimeException {
+public class UsernameNotMatchException extends BusinessException {
 	
 	private static final long serialVersionUID = 715770344457227422L;
 	

@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class SaloonTagNotFoundException extends CustomRuntimeException {
+public class SaloonTagNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = -1948567129776942280L;
 	

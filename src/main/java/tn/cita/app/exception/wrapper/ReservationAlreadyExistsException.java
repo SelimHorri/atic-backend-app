@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationAlreadyExistsException extends CustomRuntimeException {
+public class ReservationAlreadyExistsException extends BusinessException {
 	
 	private static final long serialVersionUID = 6155740968218458681L;
 	

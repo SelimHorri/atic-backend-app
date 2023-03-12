@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class TaskNotFoundException extends CustomRuntimeException {
+public class TaskNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = -3264074807160612232L;
 	

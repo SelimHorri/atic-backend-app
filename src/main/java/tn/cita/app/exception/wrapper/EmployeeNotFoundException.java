@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class EmployeeNotFoundException extends CustomRuntimeException {
+public class EmployeeNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = 2821524102084201685L;
 	

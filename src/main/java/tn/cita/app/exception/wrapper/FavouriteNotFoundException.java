@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class FavouriteNotFoundException extends CustomRuntimeException {
+public class FavouriteNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = 6526680450755325192L;
 	

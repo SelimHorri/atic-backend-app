@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class ServiceDetailNotFoundException extends CustomRuntimeException {
+public class ServiceDetailNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = -7758474423049391283L;
 	

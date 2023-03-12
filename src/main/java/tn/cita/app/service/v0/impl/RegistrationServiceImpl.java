@@ -115,7 +115,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Customer saved successfully! *\n");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
-				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER), 
+				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER_MINUTES), 
 				savedCustomer.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *\n");
@@ -133,7 +133,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						savedCustomer.getCredential().getUsername(), 
-						AppConstants.USER_EXPIRES_AFTER));
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
 	}
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
@@ -144,8 +144,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Employee saved successfully! *\n");
 		
 		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
-				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER), 
-				// AppConstants.USER_EXPIRES_AFTER, 
+				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER_MINUTES), 
+				// AppConstants.USER_EXPIRES_AFTER_MINUTES, 
 				savedEmployee.getCredential());
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *\n");
@@ -163,7 +163,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
 						savedEmployee.getCredential().getUsername(), 
-						AppConstants.USER_EXPIRES_AFTER));
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
 	}
 	
 	@Override

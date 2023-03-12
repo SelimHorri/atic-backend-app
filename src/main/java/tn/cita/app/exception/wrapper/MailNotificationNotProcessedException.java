@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class MailNotificationNotProcessedException extends CustomRuntimeException {
+public class MailNotificationNotProcessedException extends BusinessException {
 	
 	private static final long serialVersionUID = -8987832144259422358L;
 	

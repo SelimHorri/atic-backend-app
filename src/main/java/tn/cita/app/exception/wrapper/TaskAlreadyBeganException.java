@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class TaskAlreadyBeganException extends CustomRuntimeException {
+public class TaskAlreadyBeganException extends BusinessException {
 	
 	private static final long serialVersionUID = 3055460136107519430L;
 	

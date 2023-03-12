@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class CustomerNotFoundException extends CustomRuntimeException {
+public class CustomerNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = -2515356372938824307L;
 	

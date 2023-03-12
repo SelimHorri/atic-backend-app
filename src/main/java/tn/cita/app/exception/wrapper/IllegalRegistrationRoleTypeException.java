@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class IllegalRegistrationRoleTypeException extends CustomRuntimeException {
+public class IllegalRegistrationRoleTypeException extends BusinessException {
 	
 	private static final long serialVersionUID = 6702405793892562133L;
 	

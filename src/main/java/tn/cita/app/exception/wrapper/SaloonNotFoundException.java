@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class SaloonNotFoundException extends CustomRuntimeException {
+public class SaloonNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = 2010044366647954585L;
 	

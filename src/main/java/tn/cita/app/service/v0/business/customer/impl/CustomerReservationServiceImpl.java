@@ -91,7 +91,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		
 		log.info("** Create new reservation by customer.. *\n");
 		
-		if (reservationRequest.startDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER))
+		if (reservationRequest.startDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER_MINUTES))
 				|| reservationRequest.startDate().getMinute() != 0 && reservationRequest.startDate().getMinute() != 30)
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		

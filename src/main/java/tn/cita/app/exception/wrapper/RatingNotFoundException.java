@@ -1,6 +1,6 @@
 package tn.cita.app.exception.wrapper;
 
-public class RatingNotFoundException extends CustomRuntimeException {
+public class RatingNotFoundException extends BusinessException {
 	
 	private static final long serialVersionUID = -1556209975174886493L;
 	
