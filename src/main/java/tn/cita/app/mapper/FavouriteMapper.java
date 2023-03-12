@@ -1,26 +1,27 @@
 package tn.cita.app.mapper;
 
-import javax.validation.constraints.NotNull;
-
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.Favourite;
-import tn.cita.app.domain.entity.Saloon;
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.FavouriteDto;
-import tn.cita.app.dto.SaloonDto;
+import lombok.NonNull;
+import tn.cita.app.model.domain.entity.Favourite;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.FavouriteDto;
+import tn.cita.app.model.dto.SaloonDto;
 
 public interface FavouriteMapper {
 	
-	public static FavouriteDto map(@NotNull final Favourite favourite) {
+	public static FavouriteDto map(@NonNull final Favourite favourite) {
 		return FavouriteDto.builder()
 				.customerId(favourite.getCustomerId())
 				.saloonId(favourite.getSaloonId())
 				.favouriteDate(favourite.getFavouriteDate())
+				.identifier(favourite.getIdentifier())
 				.customerDto(
 					CustomerDto.builder()
 						.id(favourite.getCustomer().getId())
+						.identifier(favourite.getCustomer().getIdentifier())
+						.ssn(favourite.getCustomer().getSsn())
 						.firstname(favourite.getCustomer().getFirstname())
 						.lastname(favourite.getCustomer().getLastname())
+						.isMale(favourite.getCustomer().getIsMale())
 						.email(favourite.getCustomer().getEmail())
 						.phone(favourite.getCustomer().getPhone())
 						.birthdate(favourite.getCustomer().getBirthdate())
@@ -28,7 +29,9 @@ public interface FavouriteMapper {
 				.saloonDto(
 					SaloonDto.builder()
 						.id(favourite.getSaloon().getId())
+						.identifier(favourite.getSaloon().getIdentifier())
 						.code(favourite.getSaloon().getCode())
+						.taxRef(favourite.getSaloon().getTaxRef())
 						.name(favourite.getSaloon().getName())
 						.isPrimary(favourite.getSaloon().getIsPrimary())
 						.openingDate(favourite.getSaloon().getOpeningDate())
@@ -38,43 +41,7 @@ public interface FavouriteMapper {
 				.build();
 	}
 	
-	public static Favourite map(@NotNull final FavouriteDto favouriteDto) {
-		return Favourite.builder()
-				.customerId(favouriteDto.getCustomerId())
-				.saloonId(favouriteDto.getSaloonId())
-				.favouriteDate(favouriteDto.getFavouriteDate())
-				.customer(
-					Customer.builder()
-						.id(favouriteDto.getCustomerDto().getId())
-						.firstname(favouriteDto.getCustomerDto().getFirstname())
-						.lastname(favouriteDto.getCustomerDto().getLastname())
-						.email(favouriteDto.getCustomerDto().getEmail())
-						.phone(favouriteDto.getCustomerDto().getPhone())
-						.birthdate(favouriteDto.getCustomerDto().getBirthdate())
-						.build())
-				.saloon(
-					Saloon.builder()
-						.id(favouriteDto.getSaloonDto().getId())
-						.code(favouriteDto.getSaloonDto().getCode())
-						.name(favouriteDto.getSaloonDto().getName())
-						.isPrimary(favouriteDto.getSaloonDto().getIsPrimary())
-						.openingDate(favouriteDto.getSaloonDto().getOpeningDate())
-						.fullAdr(favouriteDto.getSaloonDto().getFullAdr())
-						.email(favouriteDto.getSaloonDto().getEmail())
-						.build())
-				.build();
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

@@ -32,6 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
+static/
 script/
 secrets/
-.secrets.env
+

@@ -1,41 +1,47 @@
 package tn.cita.app.mapper;
 
-import java.util.Optional;
+import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
-
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Customer;
-import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.CustomerDto;
-import tn.cita.app.dto.UserImageDto;
-import tn.cita.app.dto.request.RegisterRequest;
-import tn.cita.app.util.RegistrationUtils;
+import lombok.NonNull;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Customer;
+import tn.cita.app.model.domain.entity.UserImage;
+import tn.cita.app.model.dto.CredentialDto;
+import tn.cita.app.model.dto.CustomerDto;
+import tn.cita.app.model.dto.UserImageDto;
+import tn.cita.app.model.dto.request.RegisterRequest;
+import tn.cita.app.util.UserRoleUtils;
 
 public interface CustomerMapper {
 	
-	public static CustomerDto map(@NotNull final Customer customer) {
+	public static CustomerDto map(@NonNull final Customer customer) {
 		
-		final var userImage = Optional
-				.ofNullable(customer.getUserImage())
-				.orElseGet(UserImage::new);
+		final var userImage = Objects
+				.requireNonNullElseGet(customer.getUserImage(), UserImage::new);
 		
 		return CustomerDto.builder()
 				.id(customer.getId())
+				.identifier(customer.getIdentifier())
+				.ssn(customer.getSsn())
 				.firstname(customer.getFirstname())
 				.lastname(customer.getLastname())
+				.isMale(customer.getIsMale())
 				.email(customer.getEmail())
 				.phone(customer.getPhone())
 				.birthdate(customer.getBirthdate())
+				.facebookUrl(customer.getFacebookUrl())
+				.instagramUrl(customer.getInstagramUrl())
+				.linkedinUrl(customer.getLinkedinUrl())
 				.userImageDto(
 					UserImageDto.builder()
 						.id(userImage.getId())
+						.identifier(userImage.getIdentifier())
 						.imageLob(userImage.getImageLob())
 						.build())
 				.credentialDto(
 					CredentialDto.builder()
-						.id(customer.getId())
+						.id(customer.getCredential().getId())
+						.identifier(customer.getCredential().getIdentifier())
 						.username(customer.getCredential().getUsername())
 						.password(customer.getCredential().getPassword())
 						.userRoleBasedAuthority(customer.getCredential().getUserRoleBasedAuthority())
@@ -47,51 +53,18 @@ public interface CustomerMapper {
 				.build();
 	}
 	
-	public static Customer map(@NotNull final CustomerDto customerDto) {
-		
-		final var userImageDto = Optional
-				.ofNullable(customerDto.getUserImageDto())
-				.orElseGet(UserImageDto::new);
-		
+	public static Customer map(@NonNull final RegisterRequest registerRequest) {
 		return Customer.builder()
-				.id(customerDto.getId())
-				.firstname(customerDto.getFirstname())
-				.lastname(customerDto.getLastname())
-				.email(customerDto.getEmail())
-				.phone(customerDto.getPhone())
-				.birthdate(customerDto.getBirthdate())
-				.userImage(
-					UserImage.builder()
-						.id(userImageDto.getId())
-						.imageLob(userImageDto.getImageLob())
-						.build())
-				.credential(
-					Credential.builder()
-						.id(customerDto.getId())
-						.username(customerDto.getCredentialDto().getUsername())
-						.password(customerDto.getCredentialDto().getPassword())
-						.userRoleBasedAuthority(customerDto.getCredentialDto().getUserRoleBasedAuthority())
-						.isEnabled(customerDto.getCredentialDto().getIsEnabled())
-						.isAccountNonExpired(customerDto.getCredentialDto().getIsAccountNonExpired())
-						.isAccountNonLocked(customerDto.getCredentialDto().getIsAccountNonLocked())
-						.isCredentialsNonExpired(customerDto.getCredentialDto().getIsCredentialsNonExpired())
-						.build())
-				.build();
-	}
-	
-	public static Customer map(final RegisterRequest registerRequest) {
-		return Customer.builder()
-				.firstname(registerRequest.getFirstname())
-				.lastname(registerRequest.getLastname())
-				.email(registerRequest.getEmail())
-				.phone(registerRequest.getPhone())
-				.birthdate(registerRequest.getBirthdate())
-				.userImage(null)
+				.firstname(registerRequest.firstname())
+				.lastname(registerRequest.lastname())
+				.email(registerRequest.email())
+				.phone(registerRequest.phone())
+				.birthdate(registerRequest.birthdate())
 				.credential(
 						Credential.builder()
-						.username(registerRequest.getUsername())
-						.password(registerRequest.getPassword())
-						.userRoleBasedAuthority(RegistrationUtils.checkUserRoleBasedAuthority(registerRequest.getRole()))
+						.username(registerRequest.username())
+						.password(registerRequest.password())
+						.userRoleBasedAuthority(UserRoleUtils.checkUserRoleBasedAuthority(registerRequest.role()))
 						.isEnabled(false)
 						.isAccountNonExpired(true)
 						.isAccountNonLocked(true)
@@ -100,16 +73,7 @@ public interface CustomerMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

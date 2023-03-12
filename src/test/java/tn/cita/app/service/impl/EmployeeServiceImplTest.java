@@ -18,17 +18,17 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import tn.cita.app.constant.AppConstant;
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Employee;
-import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.UserImageDto;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.UserImage;
+import tn.cita.app.model.dto.CredentialDto;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.UserImageDto;
 import tn.cita.app.repository.EmployeeRepository;
-import tn.cita.app.service.EmployeeService;
+import tn.cita.app.service.v0.EmployeeService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class EmployeeServiceImplTest {
@@ -128,7 +128,7 @@ class EmployeeServiceImplTest {
 				.build());
 		
 		final int pageOffset = 1;
-		when(this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstant.PAGE_SIZE)))
+		when(this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE)))
 				.thenReturn(new PageImpl<>(mockFindAllEmployees));
 		
 		final var findAll = this.employeeService.findAll(pageOffset);
@@ -203,7 +203,7 @@ class EmployeeServiceImplTest {
 				.isNotBlank()
 				.startsWith("Employee ")
 				.endsWith("not found")
-				.isEqualTo(String.format("Employee with id: %d not found", wrongId));
+				.isEqualTo(String.format("Employee not found", wrongId));
 	}
 	
 	@Test
@@ -224,19 +224,7 @@ class EmployeeServiceImplTest {
 		assertThat(deleteById).isTrue();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

@@ -1,27 +1,29 @@
 package tn.cita.app.mapper;
 
-import java.util.Optional;
+import java.util.Objects;
 
-import tn.cita.app.domain.entity.Employee;
-import tn.cita.app.domain.entity.Reservation;
-import tn.cita.app.domain.entity.Task;
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.ReservationDto;
-import tn.cita.app.dto.TaskDto;
+import lombok.NonNull;
+import tn.cita.app.model.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.Reservation;
+import tn.cita.app.model.domain.entity.Task;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.TaskDto;
 
 public interface TaskMapper {
 	
-	public static TaskDto map(final Task task) {
+public static TaskDto map(@NonNull final Task task) {
 		
-		final var worker = Optional.ofNullable(task.getWorker())
-				.orElseGet(Employee::new);
-		final var reservation = Optional.ofNullable(task.getReservation())
-				.orElseGet(Reservation::new);
+		final var worker = Objects
+				.requireNonNullElseGet(task.getWorker(), Employee::new);
+		final var reservation = Objects
+				.requireNonNullElseGet(task.getReservation(), Reservation::new);
 		
 		return TaskDto.builder()
 				.workerId(task.getWorkerId())
 				.reservationId(task.getReservationId())
 				.taskDate(task.getTaskDate())
+				.identifier(task.getIdentifier())
 				.startDate(task.getStartDate())
 				.endDate(task.getEndDate())
 				.workerDescription(task.getWorkerDescription())
@@ -29,8 +31,11 @@ public interface TaskMapper {
 				.workerDto(
 					EmployeeDto.builder()
 						.id(worker.getId())
+						.identifier(worker.getIdentifier())
+						.ssn(worker.getSsn())
 						.firstname(worker.getFirstname())
 						.lastname(worker.getLastname())
+						.isMale(worker.getIsMale())
 						.email(worker.getEmail())
 						.phone(worker.getPhone())
 						.birthdate(worker.getBirthdate())
@@ -38,60 +43,18 @@ public interface TaskMapper {
 				.reservationDto(
 					ReservationDto.builder()
 						.id(reservation.getId())
+						.identifier(reservation.getIdentifier())
 						.code(reservation.getCode())
 						.description(reservation.getDescription())
 						.startDate(reservation.getStartDate())
 						.cancelDate(reservation.getCancelDate())
-						.reservationStatus(reservation.getReservationStatus())
+						.completeDate(reservation.getCompleteDate())
+						.status(reservation.getStatus())
 						.build())
 				.build();
 	}
-	
-	public static Task map(final TaskDto taskDto) {
-		
-		final var workerDto = Optional.ofNullable(taskDto.getWorkerDto())
-				.orElseGet(EmployeeDto::new);
-		final var reservationDto = Optional.ofNullable(taskDto.getReservationDto())
-				.orElseGet(ReservationDto::new);
-		
-		return Task.builder()
-				.workerId(taskDto.getWorkerId())
-				.reservationId(taskDto.getReservationId())
-				.taskDate(taskDto.getTaskDate())
-				.startDate(taskDto.getStartDate())
-				.endDate(taskDto.getEndDate())
-				.workerDescription(taskDto.getWorkerDescription())
-				.managerDescription(taskDto.getManagerDescription())
-				.worker(
-					Employee.builder()
-						.id(workerDto.getId())
-						.firstname(workerDto.getFirstname())
-						.lastname(workerDto.getLastname())
-						.email(workerDto.getEmail())
-						.phone(workerDto.getPhone())
-						.birthdate(workerDto.getBirthdate())
-						.build())
-				.reservation(
-					Reservation.builder()
-						.id(reservationDto.getId())
-						.code(reservationDto.getCode())
-						.description(reservationDto.getDescription())
-						.startDate(reservationDto.getStartDate())
-						.cancelDate(reservationDto.getCancelDate())
-						.reservationStatus(reservationDto.getReservationStatus())
-						.build())
-				.build();
-	}
-	
-	
 	
 }
-
-
-
-
-
-
 
 
 

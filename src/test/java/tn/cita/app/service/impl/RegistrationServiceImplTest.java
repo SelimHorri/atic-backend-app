@@ -18,21 +18,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Employee;
-import tn.cita.app.domain.entity.VerificationToken;
-import tn.cita.app.dto.request.RegisterRequest;
-import tn.cita.app.exception.wrapper.ExpiredVerificationTokenException;
+import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.VerificationToken;
+import tn.cita.app.model.dto.request.RegisterRequest;
 import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
-import tn.cita.app.service.RegistrationService;
+import tn.cita.app.service.v0.RegistrationService;
 import tn.cita.app.util.NotificationUtil;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
@@ -115,14 +115,14 @@ class RegistrationServiceImplTest {
 				.role(UserRoleBasedAuthority.WORKER.name())
 				.build();
 		
-		when(this.credentialRepository.findByUsernameIgnoreCase(registerRequest.getUsername()))
-				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.getUsername() + " already exists"));
+		when(this.credentialRepository.findByUsernameIgnoreCase(registerRequest.username()))
+				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.username() + " already exists"));
 		
 		assertThatExceptionOfType(UsernameAlreadyExistsException.class)
 				.isThrownBy(() -> this.registrationService.register(registerRequest))
 				.withMessageStartingWith("")
 				.withMessageEndingWith("")
-				.withMessage("Account with username: " + registerRequest.getUsername() + " already exists");
+				.withMessage("Account with username: " + registerRequest.username() + " already exists");
 	}
 	
 	@Test
@@ -232,7 +232,7 @@ class RegistrationServiceImplTest {
 		doNothing().when(this.verificationTokenRepository)
 				.deleteByToken(verificationToken.getToken());
 		
-		final var expiredVerificationTokenException = assertThrows(ExpiredVerificationTokenException.class, 
+		final var expiredVerificationTokenException = assertThrows(VerificationTokenExpiredException.class, 
 				() -> this.registrationService.validateToken(token));
 		
 		assertThat(expiredVerificationTokenException).isNotNull();
@@ -242,19 +242,7 @@ class RegistrationServiceImplTest {
 				.isEqualTo("Verification token has been expired");
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
 
 
 

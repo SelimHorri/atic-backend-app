@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class MailNotificationNotProcessedException extends RuntimeException {
+public class MailNotificationNotProcessedException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -8987832144259422358L;
 	
 	public MailNotificationNotProcessedException() {
-		super();
+		super("Mail notification not processed");
 	}
 	
 	public MailNotificationNotProcessedException(String message, Throwable cause) {
@@ -16,22 +16,7 @@ public class MailNotificationNotProcessedException extends RuntimeException {
 		super(message);
 	}
 	
-	public MailNotificationNotProcessedException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
-
 
 
 

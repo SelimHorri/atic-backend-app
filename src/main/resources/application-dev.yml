@@ -1,18 +1,26 @@
 
-server:
-  port: 8400
+app:
+  security:
+    jwt:
+      secret-key: ${APP_SECURITY_JWT_SECRET_KEY:@app.security.jwt.secret-key@}
 
 management:
   endpoints:
     web:
       exposure:
         include: "*"
+  health:
+    redis:
+      enabled: false
 
 spring:
   datasource:
-    url: jdbc:h2:mem:${DB_NAME:cita_dev_db};DB_CLOSE_ON_EXIT=FALSE
+    url: ${SPRING_DATASOURCE_URL:jdbc:h2:mem:${DB_NAME:cita_dev_db};DB_CLOSE_ON_EXIT=FALSE}
     username: ${SPRING_DATASOURCE_USERNAME:sa}
     password: ${SPRING_DATASOURCE_PASSWORD:}
+  config:
+    import:
+      - 'optional:import/secrets/jwt-secrets.yml'
   jpa:
     show-sql: true
     hibernate:
@@ -30,21 +38,32 @@ spring:
         web-allow-others: true
   flyway:
     locations:
-    - classpath:db/migration/dev
+      - classpath:db/migration/dev
   #  baseline-on-migrate: true
   #  enabled: true
 
 logging:
   level:
-      springframework:
-        web: DEBUG
-        data: DEBUG
-      boot:
-        autoconfigure:
-          data:
-            rest: DEBUG
-            jpa: DEBUG
-            orm: DEBUG
+    springframework:
+      web: DEBUG
+      data: DEBUG
+    boot:
+      autoconfigure:
+        data:
+          rest: DEBUG
+          jpa: DEBUG
+          orm: DEBUG
+
+---
+
+spring:
+  config:
+    activate:
+      on-cloud-platform: kubernetes
+    import:
+      - 'classpath:import/conf/k8s-config.yml'
+
+
 
 
 

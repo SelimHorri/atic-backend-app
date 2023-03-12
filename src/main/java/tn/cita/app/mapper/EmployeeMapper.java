@@ -1,58 +1,63 @@
 package tn.cita.app.mapper;
 
-import java.util.Optional;
+import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
-
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Employee;
-import tn.cita.app.domain.entity.Saloon;
-import tn.cita.app.domain.entity.UserImage;
-import tn.cita.app.dto.CredentialDto;
-import tn.cita.app.dto.EmployeeDto;
-import tn.cita.app.dto.SaloonDto;
-import tn.cita.app.dto.UserImageDto;
-import tn.cita.app.dto.request.RegisterRequest;
-import tn.cita.app.util.RegistrationUtils;
+import lombok.NonNull;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Employee;
+import tn.cita.app.model.domain.entity.Saloon;
+import tn.cita.app.model.domain.entity.UserImage;
+import tn.cita.app.model.dto.CredentialDto;
+import tn.cita.app.model.dto.EmployeeDto;
+import tn.cita.app.model.dto.SaloonDto;
+import tn.cita.app.model.dto.UserImageDto;
+import tn.cita.app.model.dto.request.RegisterRequest;
+import tn.cita.app.util.UserRoleUtils;
 
 public interface EmployeeMapper {
 	
-	public static EmployeeDto map(@NotNull final Employee employee) {
+	public static EmployeeDto map(@NonNull final Employee employee) {
 		
-		final var userImage = Optional
-				.ofNullable(employee.getUserImage())
-				.orElseGet(UserImage::new);
-		final var manager = Optional
-				.ofNullable(employee.getManager())
-				.orElseGet(Employee::new);
-		final var saloon = Optional
-				.ofNullable(employee.getSaloon())
-				.orElseGet(Saloon::new);
+		final var userImage = Objects
+				.requireNonNullElseGet(employee.getUserImage(), UserImage::new);
+		final var manager = Objects
+				.requireNonNullElseGet(employee.getManager(), Employee::new);
+		final var saloon = Objects
+				.requireNonNullElseGet(employee.getSaloon(), Saloon::new);
 		
 		return EmployeeDto.builder()
 				.id(employee.getId())
+				.identifier(employee.getIdentifier())
+				.ssn(employee.getSsn())
 				.firstname(employee.getFirstname())
 				.lastname(employee.getLastname())
+				.isMale(employee.getIsMale())
 				.email(employee.getEmail())
 				.phone(employee.getPhone())
 				.birthdate(employee.getBirthdate())
+				.hiredate(employee.getHiredate())
 				.userImageDto(
 					UserImageDto.builder()
 						.id(userImage.getId())
+						.identifier(userImage.getIdentifier())
 						.imageLob(userImage.getImageLob())
 						.build())
 				.managerDto(
 					EmployeeDto.builder()
 						.id(manager.getId())
+						.identifier(manager.getIdentifier())
 						.firstname(manager.getFirstname())
 						.lastname(manager.getLastname())
+						.isMale(manager.getIsMale())
 						.email(manager.getEmail())
 						.phone(manager.getPhone())
 						.birthdate(manager.getBirthdate())
+						.hiredate(manager.getHiredate())
 						.build())
 				.credentialDto(
 					CredentialDto.builder()
 						.id(employee.getCredential().getId())
+						.identifier(employee.getCredential().getIdentifier())
 						.username(employee.getCredential().getUsername())
 						.password(employee.getCredential().getPassword())
 						.userRoleBasedAuthority(employee.getCredential().getUserRoleBasedAuthority())
@@ -64,7 +69,9 @@ public interface EmployeeMapper {
 				.saloonDto(
 					SaloonDto.builder()
 						.id(saloon.getId())
+						.identifier(saloon.getIdentifier())
 						.code(saloon.getCode())
+						.taxRef(saloon.getTaxRef())
 						.name(saloon.getName())
 						.isPrimary(saloon.getIsPrimary())
 						.openingDate(saloon.getOpeningDate())
@@ -74,76 +81,19 @@ public interface EmployeeMapper {
 				.build();
 	}
 	
-	public static Employee map(@NotNull final EmployeeDto employeeDto) {
-		
-		final var userImageDto = Optional
-				.ofNullable(employeeDto.getUserImageDto())
-				.orElseGet(UserImageDto::new);
-		final var managerDto = Optional
-				.ofNullable(employeeDto.getManagerDto())
-				.orElseGet(EmployeeDto::new);
-		final var saloonDto = Optional
-				.ofNullable(employeeDto.getSaloonDto())
-				.orElseGet(SaloonDto::new);
-		
+	public static Employee map(@NonNull final RegisterRequest registerRequest) {
 		return Employee.builder()
-				.id(employeeDto.getId())
-				.firstname(employeeDto.getFirstname())
-				.lastname(employeeDto.getLastname())
-				.email(employeeDto.getEmail())
-				.phone(employeeDto.getPhone())
-				.birthdate(employeeDto.getBirthdate())
-				.userImage(
-					UserImage.builder()
-						.id(userImageDto.getId())
-						.imageLob(userImageDto.getImageLob())
-						.build())
-				.manager(
-					Employee.builder()
-						.id(managerDto.getId())
-						.firstname(managerDto.getFirstname())
-						.lastname(managerDto.getLastname())
-						.email(managerDto.getEmail())
-						.phone(managerDto.getPhone())
-						.birthdate(managerDto.getBirthdate())
-						.build())
-				.credential(
-					Credential.builder()
-						.id(employeeDto.getCredentialDto().getId())
-						.username(employeeDto.getCredentialDto().getUsername())
-						.password(employeeDto.getCredentialDto().getPassword())
-						.userRoleBasedAuthority(employeeDto.getCredentialDto().getUserRoleBasedAuthority())
-						.isEnabled(employeeDto.getCredentialDto().getIsEnabled())
-						.isAccountNonExpired(employeeDto.getCredentialDto().getIsAccountNonExpired())
-						.isAccountNonLocked(employeeDto.getCredentialDto().getIsAccountNonLocked())
-						.isCredentialsNonExpired(employeeDto.getCredentialDto().getIsCredentialsNonExpired())
-						.build())
-				.saloon(
-					Saloon.builder()
-						.id(saloonDto.getId())
-						.code(saloonDto.getCode())
-						.name(saloonDto.getName())
-						.isPrimary(saloonDto.getIsPrimary())
-						.openingDate(saloonDto.getOpeningDate())
-						.fullAdr(saloonDto.getFullAdr())
-						.email(saloonDto.getEmail())
-						.build())
-				.build();
-	}
-	
-	public static Employee map(final RegisterRequest registerRequest) {
-		return Employee.builder()
-				.firstname(registerRequest.getFirstname())
-				.lastname(registerRequest.getLastname())
-				.email(registerRequest.getEmail())
-				.phone(registerRequest.getPhone())
-				.birthdate(registerRequest.getBirthdate())
+				.firstname(registerRequest.firstname())
+				.lastname(registerRequest.lastname())
+				.email(registerRequest.email())
+				.phone(registerRequest.phone())
+				.birthdate(registerRequest.birthdate())
 				.userImage(null)
 				.credential(
 						Credential.builder()
-						.username(registerRequest.getUsername())
-						.password(registerRequest.getPassword())
-						.userRoleBasedAuthority(RegistrationUtils.checkUserRoleBasedAuthority(registerRequest.getRole()))
+						.username(registerRequest.username())
+						.password(registerRequest.password())
+						.userRoleBasedAuthority(UserRoleUtils.checkUserRoleBasedAuthority(registerRequest.role()))
 						.isEnabled(false)
 						.isAccountNonExpired(true)
 						.isAccountNonLocked(true)
@@ -152,15 +102,7 @@ public interface EmployeeMapper {
 				.build();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
 
 
 

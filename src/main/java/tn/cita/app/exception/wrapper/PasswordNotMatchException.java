@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class PasswordNotMatchException extends RuntimeException {
+public class PasswordNotMatchException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 8031260988284099874L;
 	
 	public PasswordNotMatchException() {
-		super();
+		super("Password does not match");
 	}
 	
 	public PasswordNotMatchException(String message, Throwable cause) {
@@ -16,21 +16,7 @@ public class PasswordNotMatchException extends RuntimeException {
 		super(message);
 	}
 	
-	public PasswordNotMatchException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

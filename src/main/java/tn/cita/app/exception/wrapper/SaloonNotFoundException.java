@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class SaloonNotFoundException extends RuntimeException {
+public class SaloonNotFoundException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 2010044366647954585L;
 	
 	public SaloonNotFoundException() {
-		super();
+		super("Saloon not found");
 	}
 	
 	public SaloonNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class SaloonNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public SaloonNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

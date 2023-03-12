@@ -29,7 +29,7 @@ scrape_configs:
   - job_name: "cita-actuator-prometheus"
     metrics_path: '/actuator/prometheus'
     scrape_interval: 5s
-    #bearer_token:
+    bearer_token: eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJjcjciLCJpYXQiOjE2NzAxNzYxNzEsImV4cCI6MTY3MDc4MDk3MX0.DrNctTjMBhy3qKAdXxlMk1ZQ9DRVkbGm9va5ry3iFwoQKaxWoZG4ziMohrwII0CODuOJ3cy3O9N9bNF3CJhigg
     static_configs:
       - targets: ["cita-backend-app:8400", "localhost:8400"]
 

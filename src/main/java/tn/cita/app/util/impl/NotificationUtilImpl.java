@@ -8,9 +8,9 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.constant.AppConstant;
-import tn.cita.app.dto.notif.MailNotification;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.MailNotificationNotProcessedException;
+import tn.cita.app.model.dto.notif.MailNotification;
 import tn.cita.app.util.MailContentBuilder;
 import tn.cita.app.util.NotificationUtil;
 
@@ -29,10 +29,10 @@ public class NotificationUtilImpl implements NotificationUtil {
 		
 		final MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
 			final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
-			mimeMessageHelper.setFrom(AppConstant.MAIL_SOURCE);
-			mimeMessageHelper.setTo(mailNotification.getTo());
-			mimeMessageHelper.setSubject(mailNotification.getSubject());
-			mimeMessageHelper.setText(this.mailContentBuilder.build(mailNotification.getBody()), true);
+			mimeMessageHelper.setFrom(AppConstants.MAIL_SOURCE);
+			mimeMessageHelper.setTo(mailNotification.to());
+			mimeMessageHelper.setSubject(mailNotification.subject());
+			mimeMessageHelper.setText(this.mailContentBuilder.build(mailNotification.body()), true);
 		};
 		
 		try {
@@ -40,9 +40,8 @@ public class NotificationUtilImpl implements NotificationUtil {
 			isSent = true;
 		}
 		catch (MailException e) {
-			e.printStackTrace();
-			throw new MailNotificationNotProcessedException(String
-					.format("Sending mail to %s not processed as expected", mailNotification.getTo()));
+			throw new MailNotificationNotProcessedException("Sending mail to %s not processed as expected"
+					.formatted(mailNotification.to()));
 		}
 		
 		return isSent;
@@ -54,17 +53,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 		return false;
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

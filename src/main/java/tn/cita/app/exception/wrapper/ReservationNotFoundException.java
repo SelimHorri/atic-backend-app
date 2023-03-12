@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class ReservationNotFoundException extends RuntimeException {
+public class ReservationNotFoundException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 619294856688367853L;
 	
 	public ReservationNotFoundException() {
-		super();
+		super("Reservation not found");
 	}
 	
 	public ReservationNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class ReservationNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public ReservationNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

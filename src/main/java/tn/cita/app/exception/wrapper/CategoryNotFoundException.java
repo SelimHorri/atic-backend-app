@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class CategoryNotFoundException extends RuntimeException {
+public class CategoryNotFoundException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 180299371640031717L;
 	
 	public CategoryNotFoundException() {
-		super();
+		super("Category not found");
 	}
 	
 	public CategoryNotFoundException(String message, Throwable cause) {
@@ -16,12 +16,6 @@ public class CategoryNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public CategoryNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
 
 
@@ -29,9 +23,5 @@ public class CategoryNotFoundException extends RuntimeException {
 
 
 
-
-
-
-
-
+ 
 
