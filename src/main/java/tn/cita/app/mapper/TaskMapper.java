@@ -1,6 +1,6 @@
 package tn.cita.app.mapper;
 
-import java.util.Optional;
+import java.util.Objects;
 
 import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Employee;
@@ -14,10 +14,10 @@ public interface TaskMapper {
 	
 public static TaskDto map(@NonNull final Task task) {
 		
-		final var worker = Optional.ofNullable(task.getWorker())
-				.orElseGet(Employee::new);
-		final var reservation = Optional.ofNullable(task.getReservation())
-				.orElseGet(Reservation::new);
+		final var worker = Objects
+				.requireNonNullElseGet(task.getWorker(), Employee::new);
+		final var reservation = Objects
+				.requireNonNullElseGet(task.getReservation(), Reservation::new);
 		
 		return TaskDto.builder()
 				.workerId(task.getWorkerId())

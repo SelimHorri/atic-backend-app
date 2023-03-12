@@ -1,6 +1,6 @@
 package tn.cita.app.mapper;
 
-import java.util.Optional;
+import java.util.Objects;
 
 import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Category;
@@ -11,9 +11,8 @@ public interface CategoryMapper {
 	
 	public static CategoryDto map(@NonNull final Category category) {
 		
-		final var parentCategory = Optional
-				.ofNullable(category.getParentCategory())
-				.orElseGet(Category::new);
+		final var parentCategory = Objects
+				.requireNonNullElseGet(category.getParentCategory(), Category::new);
 		
 		return CategoryDto.builder()
 				.id(category.getId())

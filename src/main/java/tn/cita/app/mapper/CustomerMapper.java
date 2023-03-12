@@ -1,6 +1,6 @@
 package tn.cita.app.mapper;
 
-import java.util.Optional;
+import java.util.Objects;
 
 import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Credential;
@@ -16,9 +16,8 @@ public interface CustomerMapper {
 	
 	public static CustomerDto map(@NonNull final Customer customer) {
 		
-		final var userImage = Optional
-				.ofNullable(customer.getUserImage())
-				.orElseGet(UserImage::new);
+		final var userImage = Objects
+				.requireNonNullElseGet(customer.getUserImage(), UserImage::new);
 		
 		return CustomerDto.builder()
 				.id(customer.getId())
