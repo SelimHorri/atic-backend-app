@@ -10,16 +10,16 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import tn.cita.app.dto.request.LoginRequest;
-import tn.cita.app.exception.wrapper.IllegalCredentialsException;
-import tn.cita.app.service.AuthenticationService;
-import tn.cita.app.util.JwtUtil;
+import tn.cita.app.exception.wrapper.PasswordNotMatchException;
+import tn.cita.app.model.dto.request.LoginRequest;
+import tn.cita.app.service.v0.AuthenticationService;
+import tn.cita.app.util.JwtUtils;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class AuthenticationServiceImplTest {
 	
 	@Autowired
-	private JwtUtil jwtUtil;
+	private JwtUtils jwtUtils;
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
@@ -27,11 +27,9 @@ class AuthenticationServiceImplTest {
 	@Autowired
 	private AuthenticationService authenticationService;
 	private LoginRequest loginRequest;
-	// private LoginResponse loginResponse;
 	
 	@BeforeEach
 	void setUp() throws Exception {
-		
 		loginRequest = new LoginRequest("selimhorri", "0000");
 	}
 	
@@ -40,37 +38,23 @@ class AuthenticationServiceImplTest {
 		
 		final var expectedLoginResponse = this.authenticationService.authenticate(this.loginRequest);
 		assertThat(expectedLoginResponse).isNotNull();
-		assertThat(expectedLoginResponse.getUsername()).isEqualTo(loginRequest.getUsername());
+		assertThat(expectedLoginResponse.username()).isEqualTo(loginRequest.username());
 		
-		final var validateToken = this.jwtUtil.validateToken(expectedLoginResponse.getJwtToken(), 
-				this.userDetailsService.loadUserByUsername(loginRequest.getUsername()));
+		final var validateToken = this.jwtUtils.validateToken(expectedLoginResponse.jwtToken(), 
+				this.userDetailsService.loadUserByUsername(expectedLoginResponse.username()));
 		assertThat(validateToken).isTrue();
 	}
 	
 	@Test
 	void givenInvalidLoginRequest_whenCredentialsAreInvalid_thenShouldThrowIllegalCredentialsException() {
 		this.loginRequest = new LoginRequest("selimhorri", "1111");
-		final var illegalCredentialsException = assertThrows(IllegalCredentialsException.class, 
+		final var passwordNotMatchException = assertThrows(PasswordNotMatchException.class, 
 				() -> this.authenticationService.authenticate(this.loginRequest));
-		assertThat(illegalCredentialsException).isNotNull();
-		assertThat(illegalCredentialsException.getMessage()).isEqualTo("Bad credentials");
+		assertThat(passwordNotMatchException).isNotNull();
+		assertThat(passwordNotMatchException.getMessage()).isEqualTo("Incorrect password");
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

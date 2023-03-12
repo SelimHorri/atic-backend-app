@@ -8,7 +8,7 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
-import tn.cita.app.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Credential;
 
 @DataJpaTest(showSql = true)
 @AutoConfigureDataJpa
@@ -33,16 +33,7 @@ class CredentialRepositoryTest extends AbstractSharedMySQLTestContainer {
 		assertThat(optionalCredential.get().getCustomer()).isNull();
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

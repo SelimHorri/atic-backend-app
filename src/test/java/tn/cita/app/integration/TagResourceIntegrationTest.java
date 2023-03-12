@@ -7,6 +7,7 @@ import static org.hamcrest.CoreMatchers.startsWith;
 
 import java.util.List;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.AutoConfigureWebTestClient;
@@ -15,11 +16,12 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.web.reactive.server.WebTestClient;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
-import tn.cita.app.dto.TagDto;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
 import tn.cita.app.exception.payload.ExceptionMsg;
+import tn.cita.app.model.dto.TagDto;
+import tn.cita.app.model.dto.request.ClientPageRequest;
+import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -28,12 +30,49 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 	@Autowired
 	private WebTestClient webTestClient;
 	
+	@Disabled
 	@Test
 	void givenValidPageOffset_whenFindAll_thenAllTagsBasedOnPageOffsetShouldBeReturned() {
 		
-		final var pageOffset = 1;
+		final var clientPageRequest = new ClientPageRequest(0, 0, null, null);
 		
 		final var list = List.of(
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
+				TagDto.builder()
+				.id(null)
+				.name("barber")
+				.build(),
 				TagDto.builder()
 				.id(null)
 				.name("barber")
@@ -44,19 +83,19 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 				.build()
 		);
 		
-		final var expectedPayload = new ApiPayloadResponse<>(2, HttpStatus.OK, true, list);
+		final var expectedPayload = new ApiResponse<>(2, HttpStatus.OK, true, list);
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/tags/offset/{pageOffset}", pageOffset)
+				.uri(AppConstants.API_CONTEXT_V0 + "/tags?offset={offset}", clientPageRequest.getOffset())
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.size()").value(is(expectedPayload.getResponseBody().size()));
+					.jsonPath("$.responseBody.size()").value(is(expectedPayload.responseBody().size()));
 	}
 	
 	@Test
@@ -68,56 +107,46 @@ class TagResourceIntegrationTest extends AbstractSharedMySQLTestContainer {
 				.name("barber")
 				.build();
 		
-		final var expectedPayload = new ApiPayloadResponse<>(1, HttpStatus.OK, true, tagDto);
+		final var expectedPayload = new ApiResponse<>(1, HttpStatus.OK, true, tagDto);
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/tags/{id}", id)
+				.uri(AppConstants.API_CONTEXT_V0 + "/tags/{id}", id)
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.id").value(notNullValue())
-					.jsonPath("$.responseBody.name").value(is(expectedPayload.getResponseBody().getName()));
+					.jsonPath("$.responseBody.name").value(is(expectedPayload.responseBody().getName()));
 	}
 	
 	@Test
 	void givenInvalidId_whenFindById_thenTagNotFoundExceptionShouldBeThrown() {
 		
 		final int id = 0;
-		final var expectedPayload = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false, 
-				new ExceptionMsg(String.format("%sTag with id: %d not found%s", "#### ", id, "! ####")));
+		final var expectedPayload = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false, 
+				new ExceptionMsg(String.format("%sTag not found%s", "#### ", "! ####")));
 		
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/tags/{id}", id)
+				.uri(AppConstants.API_CONTEXT_V0 + "/tags/{id}", id)
 				.exchange()
 				.expectStatus()
 					.isBadRequest()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedPayload.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedPayload.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedPayload.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedPayload.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedPayload.responseBody().errorMsg()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class CustomerNotFoundException extends RuntimeException {
+public class CustomerNotFoundException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -2515356372938824307L;
 	
 	public CustomerNotFoundException() {
-		super();
+		super("Customer not found");
 	}
 	
 	public CustomerNotFoundException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class CustomerNotFoundException extends RuntimeException {
 		super(message);
 	}
 	
-	public CustomerNotFoundException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

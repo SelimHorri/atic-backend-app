@@ -23,16 +23,16 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import tn.cita.app.constant.AppConstant;
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.dto.request.RegisterRequest;
-import tn.cita.app.dto.response.RegisterResponse;
-import tn.cita.app.dto.response.api.ApiPayloadResponse;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
-import tn.cita.app.service.RegistrationService;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.dto.request.RegisterRequest;
+import tn.cita.app.model.dto.response.RegisterResponse;
+import tn.cita.app.model.dto.response.api.ApiResponse;
+import tn.cita.app.service.v0.RegistrationService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient
@@ -69,9 +69,9 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
-						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+						registerRequest.username(), 
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -79,7 +79,7 @@ class RegistrationResourceTest {
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -87,11 +87,11 @@ class RegistrationResourceTest {
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectBody()
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.getResponseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.getResponseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
@@ -114,9 +114,9 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
-						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+						registerRequest.username(), 
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -124,7 +124,7 @@ class RegistrationResourceTest {
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -132,11 +132,11 @@ class RegistrationResourceTest {
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectBody()
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.getResponseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.getResponseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
@@ -159,9 +159,9 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
-						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+						registerRequest.username(), 
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -169,7 +169,7 @@ class RegistrationResourceTest {
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -177,11 +177,11 @@ class RegistrationResourceTest {
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectBody()
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.getResponseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.getResponseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
@@ -204,9 +204,9 @@ class RegistrationResourceTest {
 				.format("User with username %s has been saved successfully. "
 						+ "Check your email to enbale your account. "
 						+ "Please consider that link will expire after %dmin from registration", 
-						registerRequest.getUsername(), 
-						AppConstant.EXPIRES_AT_FROM_NOW));
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+						registerRequest.username(), 
+						AppConstants.USER_EXPIRES_AFTER_MINUTES));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				registerResponse);
 		
 		when(this.registrationService.register(registerRequest))
@@ -214,7 +214,7 @@ class RegistrationResourceTest {
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -222,11 +222,11 @@ class RegistrationResourceTest {
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectBody()
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.getResponseBody().getIsSuccess()))
-					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.getResponseBody().getMsg()));
+					.jsonPath("$.responseBody.isSuccess").value(is(expectedApiPayloadResponse.responseBody().isSuccess()))
+					.jsonPath("$.responseBody.msg").value(is(expectedApiPayloadResponse.responseBody().msg()));
 	}
 	
 	@Test
@@ -245,7 +245,7 @@ class RegistrationResourceTest {
 				.role("XXX")
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Wrong role type for registration, it should be Customer/Worker/Manager/Owner role! ####"));
 		
 		when(this.registrationService.register(registerRequest))
@@ -253,7 +253,7 @@ class RegistrationResourceTest {
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -261,12 +261,12 @@ class RegistrationResourceTest {
 				.expectStatus()
 					.isBadRequest()
 				.expectBody()
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
@@ -285,15 +285,15 @@ class RegistrationResourceTest {
 				.role(UserRoleBasedAuthority.WORKER.name())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
-				new ExceptionMsg("#### Account with username: " + registerRequest.getUsername() + " already exists! ####"));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
+				new ExceptionMsg("#### Account with username: " + registerRequest.username() + " already exists! ####"));
 		
 		when(this.registrationService.register(registerRequest))
-				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.getUsername() + " already exists"));
+				.thenThrow(new UsernameAlreadyExistsException("Account with username: " + registerRequest.username() + " already exists"));
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -301,12 +301,12 @@ class RegistrationResourceTest {
 				.expectStatus()
 					.isBadRequest()
 				.expectBody()
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
@@ -325,7 +325,7 @@ class RegistrationResourceTest {
 				.role(UserRoleBasedAuthority.CUSTOMER.name())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.BAD_REQUEST, false,
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
 				new ExceptionMsg("#### Unmatched passwords! please check again! ####"));
 		
 		when(this.registrationService.register(registerRequest))
@@ -333,7 +333,7 @@ class RegistrationResourceTest {
 		
 		this.webTestClient
 				.post()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register")
+				.uri(AppConstants.API_CONTEXT_V0 + "/register")
 				.accept(MediaType.APPLICATION_JSON)
 				.contentType(MediaType.APPLICATION_JSON)
 				.bodyValue(registerRequest)
@@ -341,19 +341,19 @@ class RegistrationResourceTest {
 				.expectStatus()
 					.isBadRequest()
 				.expectBody()
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
 					.jsonPath("$.responseBody.errorMsg").value(startsWith("#### "))
 					.jsonPath("$.responseBody.errorMsg").value(endsWith("! ####"))
-					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.getResponseBody().getErrorMsg()));
+					.jsonPath("$.responseBody.errorMsg").value(is(expectedApiPayloadResponse.responseBody().errorMsg()));
 	}
 	
 	@Test
 	void givenValidToken_whenValidateToken_thenConfirmationMsgStringShouldBeReturned() {
 		
 		final var token = "c856b457-ed66-4dd4-bc1a-f0be552a28e5";
-		final var expectedApiPayloadResponse = new ApiPayloadResponse<>(1, HttpStatus.OK, true, 
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				"User has been activated successfully, go and login!");
 		
 		when(this.registrationService.validateToken(token))
@@ -361,28 +361,19 @@ class RegistrationResourceTest {
 		
 		this.webTestClient
 				.get()
-				.uri(AppConstant.API_CONTEXT_V0 + "/register/" + token)
+				.uri(AppConstants.API_CONTEXT_V0 + "/register/" + token)
 				.exchange()
 				.expectStatus()
 					.is2xxSuccessful()
 				.expectBody()
 					.jsonPath("$").value(notNullValue())
-					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.getTotalResult()))
-					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.getAcknowledge()))
+					.jsonPath("$.totalResult").value(is(expectedApiPayloadResponse.totalResult()))
+					.jsonPath("$.acknowledge").value(is(expectedApiPayloadResponse.acknowledge()))
 					.jsonPath("$.responseBody").value(notNullValue())
-					.jsonPath("$.responseBody").value(is(expectedApiPayloadResponse.getResponseBody()));
+					.jsonPath("$.responseBody").value(is(expectedApiPayloadResponse.responseBody()));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 

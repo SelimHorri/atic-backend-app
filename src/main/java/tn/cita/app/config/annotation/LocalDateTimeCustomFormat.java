@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 
-import tn.cita.app.constant.AppConstant;
+import tn.cita.app.constant.AppConstants;
 
 @Target(value = {
 		ElementType.ANNOTATION_TYPE, 
@@ -26,13 +26,13 @@ import tn.cita.app.constant.AppConstant;
 })
 @Documented
 @Retention(RetentionPolicy.RUNTIME)
-@JsonFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
-@DateTimeFormat(pattern = AppConstant.LOCAL_DATE_TIME_FORMAT)
+@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
+@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 @JsonSerialize(using = LocalDateTimeSerializer.class)
 @JsonDeserialize(using = LocalDateTimeDeserializer.class)
 public @interface LocalDateTimeCustomFormat {
 	
-	String format() default AppConstant.LOCAL_DATE_TIME_FORMAT;
+	String format() default AppConstants.LOCAL_DATE_TIME_FORMAT;
 	
 }
 

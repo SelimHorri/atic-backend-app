@@ -1,7 +1,5 @@
 package tn.cita.app.container;
 
-import java.util.Optional;
-
 import org.testcontainers.containers.MySQLContainer;
 
 public abstract class AbstractSharedMySQLTestContainer {
@@ -14,17 +12,10 @@ public abstract class AbstractSharedMySQLTestContainer {
 	}
 	
 	private synchronized static final MySQLContainer<?> getInstance() {
-		
-		if (!Optional.ofNullable(MYSQL_CONTAINER).isPresent())
-			return new MySQLContainer<>("mysql:5.7");
-		
-		return MYSQL_CONTAINER;
+		return (MYSQL_CONTAINER == null) ? new MySQLContainer<>("mysql:5.7") : MYSQL_CONTAINER;
 	}
 	
-	
-	
 }
-
 
 
 

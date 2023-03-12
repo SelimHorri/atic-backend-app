@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class IllegalCredentialsException extends RuntimeException {
+public class IllegalCredentialsException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -841146555237855823L;
 	
 	public IllegalCredentialsException() {
-		super();
+		super("Illegal credentials");
 	}
 	
 	public IllegalCredentialsException(String message, Throwable cause) {
@@ -16,18 +16,7 @@ public class IllegalCredentialsException extends RuntimeException {
 		super(message);
 	}
 	
-	public IllegalCredentialsException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
 
 
 

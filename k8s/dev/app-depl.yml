@@ -9,12 +9,12 @@ metadata:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cita-backend-app-deployment
+  name: cita-backend-app
   namespace: cita-dev-ns
   labels:
     app: cita-backend-app
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: cita-backend-app
@@ -25,10 +25,25 @@ spec:
     spec:
       containers:
         - name: cita-backend-app
-          image: selimhorri/cita-backend-app
+          image: selimhorri/cita-backend-app:dev
+          imagePullPolicy: IfNotPresent
+          #readinessProbe: 
+          #  httpGet: 
+          #    path: /actuator/health/readiness
+          #    port: 8400
+          #  initialDelaySeconds: 15
+          #  periodSeconds: 30
+          #  failureThreshold: 3
+          #livenessProbe: 
+          #  httpGet: 
+          #    path: /actuator/health/liveness
+          #    port: 8400
+          #  initialDelaySeconds: 30
+          #  periodSeconds: 30
+          #  failureThreshold: 3
           resources:
             limits:
-              memory: "128Mi"
+              memory: "1024Mi"
               cpu: "500m"
           ports:
             - containerPort: 8400
@@ -64,12 +79,12 @@ metadata:
 spec:
   selector:
     app: cita-backend-app
-  type: LoadBalancer
+  #type: LoadBalancer
   ports:
     - protocol: TCP
       port: 8400
       targetPort: 8400
-      nodePort: 30001
+      #nodePort: 30001
 
 
 

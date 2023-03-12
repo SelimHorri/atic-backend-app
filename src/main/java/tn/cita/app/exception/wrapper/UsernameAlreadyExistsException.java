@@ -1,11 +1,11 @@
 package tn.cita.app.exception.wrapper;
 
-public class UsernameAlreadyExistsException extends RuntimeException {
+public class UsernameAlreadyExistsException extends BusinessException {
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = -3147715092199725614L;
 	
 	public UsernameAlreadyExistsException() {
-		super();
+		super("Username already exists");
 	}
 	
 	public UsernameAlreadyExistsException(String message, Throwable cause) {
@@ -16,21 +16,7 @@ public class UsernameAlreadyExistsException extends RuntimeException {
 		super(message);
 	}
 	
-	public UsernameAlreadyExistsException(Throwable cause) {
-		super(cause);
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

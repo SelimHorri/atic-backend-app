@@ -7,38 +7,51 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>2.6.7</version>
+		<version>2.7.7</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>tn.cita</groupId>
 	<artifactId>cita-backend-app</artifactId>
-	<version>0.1.1</version>
-	<name>Cita Backend application</name>
+	<version>0.5.5</version>
+	<name>Cita Backend Application</name>
 	<description>Demo project for Spring Boot</description>
 	<packaging>jar</packaging>
 	
 	<properties>
-		<java.version>11</java.version>
+		<java.version>17</java.version>
 		<maven.compiler.source>${java.version}</maven.compiler.source>
 		<maven.compiler.target>${java.version}</maven.compiler.target>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-		<springdoc.version>1.6.5</springdoc.version>
-		<spring-cloud.version>2021.0.0</spring-cloud.version>
-		<testcontainers.version>1.16.2</testcontainers.version>
-		<jacoco.version>0.8.6</jacoco.version>
+		<springdoc.version>1.6.12</springdoc.version>
+		<spring-cloud.version>2021.0.4</spring-cloud.version>
+		<jjwt.version>0.11.5</jjwt.version>
+		<testcontainers.version>1.17.6</testcontainers.version>
+		<jacoco.version>0.8.8</jacoco.version>
 		<sonar.organization>selimhorri</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 		<sonar.inclusions>**/repository/**/*.java</sonar.inclusions>
 		<sonar.inclusions>**/service/**/*.java</sonar.inclusions>
 		<sonar.inclusions>**/resource/**/*.java</sonar.inclusions>
-		<sonar.exclusions>**/resource/ApiExceptionHandler.java</sonar.exclusions>
+		<sonar.exclusions>**/config/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/constant/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/domain/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/dto/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/exception/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/job/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/mapper/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/resource/*.java</sonar.exclusions>
+		<sonar.exclusions>**/security/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/util/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/validator/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/CitaBackendAppApplication.java</sonar.exclusions>
 		<sonar.language>java</sonar.language>
 		<sonar.java.coveragePlugin>jacoco</sonar.java.coveragePlugin>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-it/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.coverage.jacoco.xmlReportPaths>${project.basedir}/target/site/jacoco-ut/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
 		<sonar.dynamicAnalysis>reuseReports</sonar.dynamicAnalysis>
 		<spring.mail.password>${SPRING_MAIL_PASSWORD}</spring.mail.password>
+		<app.security.jwt.secret-key>${APP_SECURITY_JWT_SECRET_KEY}</app.security.jwt.secret-key>
 	</properties>
 	
 	<dependencies>
@@ -83,6 +96,10 @@
 			<artifactId>flyway-core</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-mysql</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.cloud</groupId>
 			<artifactId>spring-cloud-sleuth-zipkin</artifactId>
 		</dependency>
@@ -121,6 +138,11 @@
 			<optional>true</optional>
 		</dependency>
 		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
 			<groupId>org.springdoc</groupId>
 			<artifactId>springdoc-openapi-ui</artifactId>
 			<version>${springdoc.version}</version>
@@ -137,17 +159,25 @@
 		</dependency>
 		<dependency>
 			<groupId>io.jsonwebtoken</groupId>
-			<artifactId>jjwt</artifactId>
-			<version>0.9.1</version>
+			<artifactId>jjwt-api</artifactId>
+			<version>${jjwt.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>${jjwt.version}</version>
+			<scope>runtime</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.xml.bind</groupId>
 			<artifactId>jaxb-api</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>org.projectlombok</groupId>
-			<artifactId>lombok</artifactId>
-			<optional>true</optional>
+			<!-- <version>2.3.1</version> -->
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -220,10 +250,12 @@
 						<exclude>**/domain/**/*.class</exclude>
 						<exclude>**/dto/**/*.class</exclude>
 						<exclude>**/exception/**/*.class</exclude>
-						<exclude>**/resource/ApiExceptionHandler.class</exclude>
+						<exclude>**/job/**/*.class</exclude>
 						<exclude>**/mapper/**/*.class</exclude>
+						<exclude>**/resource/*.class</exclude>
 						<exclude>**/security/**/*.class</exclude>
 						<exclude>**/util/**/*.class</exclude>
+						<exclude>**/validator/**/*.class</exclude>
 						<exclude>**/CitaBackendAppApplication.class</exclude>
 					</excludes>
 				</configuration>

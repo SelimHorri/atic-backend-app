@@ -13,12 +13,12 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import tn.cita.app.domain.UserRoleBasedAuthority;
-import tn.cita.app.domain.entity.Credential;
-import tn.cita.app.domain.entity.Employee;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
+import tn.cita.app.model.domain.UserRoleBasedAuthority;
+import tn.cita.app.model.domain.entity.Credential;
+import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.repository.CredentialRepository;
-import tn.cita.app.service.CredentialService;
+import tn.cita.app.service.v0.CredentialService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CredentialServiceImplTest {
@@ -74,17 +74,7 @@ class CredentialServiceImplTest {
 				.isEqualTo(String.format("Credential with username %s not found", newUsername));
 	}
 	
-	
-	
 }
-
-
-
-
-
-
-
-
 
 
 

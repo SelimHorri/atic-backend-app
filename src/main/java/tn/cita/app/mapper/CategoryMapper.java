@@ -1,34 +1,35 @@
 package tn.cita.app.mapper;
 
-import java.util.Optional;
+import java.util.Objects;
 
-import javax.validation.constraints.NotNull;
-
-import tn.cita.app.domain.entity.Category;
-import tn.cita.app.domain.entity.Saloon;
-import tn.cita.app.dto.CategoryDto;
-import tn.cita.app.dto.SaloonDto;
+import lombok.NonNull;
+import tn.cita.app.model.domain.entity.Category;
+import tn.cita.app.model.dto.CategoryDto;
+import tn.cita.app.model.dto.SaloonDto;
 
 public interface CategoryMapper {
 	
-	public static CategoryDto map(@NotNull final Category category) {
+	public static CategoryDto map(@NonNull final Category category) {
 		
-		final var parentCategory = Optional
-				.ofNullable(category.getParentCategory())
-				.orElseGet(Category::new);
+		final var parentCategory = Objects
+				.requireNonNullElseGet(category.getParentCategory(), Category::new);
 		
 		return CategoryDto.builder()
 				.id(category.getId())
+				.identifier(category.getIdentifier())
 				.name(category.getName())
 				.parentCategoryDto(
 					CategoryDto.builder()
 						.id(parentCategory.getId())
+						.identifier(parentCategory.getIdentifier())
 						.name(parentCategory.getName())
 						.build())
 				.saloonDto(
 					SaloonDto.builder()
 						.id(category.getSaloon().getId())
+						.identifier(category.getSaloon().getIdentifier())
 						.code(category.getSaloon().getCode())
+						.taxRef(category.getSaloon().getTaxRef())
 						.name(category.getSaloon().getName())
 						.isPrimary(category.getSaloon().getIsPrimary())
 						.openingDate(category.getSaloon().getOpeningDate())
@@ -38,43 +39,7 @@ public interface CategoryMapper {
 				.build();
 	}
 	
-	public static Category map(@NotNull final CategoryDto categoryDto) {
-		
-		final var parentCategoryDto = Optional
-				.ofNullable(categoryDto.getParentCategoryDto())
-				.orElseGet(CategoryDto::new);
-		
-		return Category.builder()
-				.id(categoryDto.getId())
-				.name(categoryDto.getName())
-				.parentCategory(
-					Category.builder()
-						.id(parentCategoryDto.getId())
-						.name(parentCategoryDto.getName())
-						.build())
-				.saloon(
-					Saloon.builder()
-						.id(categoryDto.getSaloonDto().getId())
-						.code(categoryDto.getSaloonDto().getCode())
-						.name(categoryDto.getSaloonDto().getName())
-						.isPrimary(categoryDto.getSaloonDto().getIsPrimary())
-						.openingDate(categoryDto.getSaloonDto().getOpeningDate())
-						.fullAdr(categoryDto.getSaloonDto().getFullAdr())
-						.email(categoryDto.getSaloonDto().getEmail())
-						.build())
-				.build();
-	}
-	
-	
-	
 }
-
-
-
-
-
-
-
 
 
 
