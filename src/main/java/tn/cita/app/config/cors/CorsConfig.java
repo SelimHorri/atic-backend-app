@@ -9,8 +9,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.config.props.ClientConfigProps;
 import tn.cita.app.constant.AppConstants;
+import tn.cita.app.model.props.ClientConfigProps;
 
 @Configuration
 @RequiredArgsConstructor

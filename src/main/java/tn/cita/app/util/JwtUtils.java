@@ -14,7 +14,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.config.props.JwtConfigProps;
+import tn.cita.app.model.props.JwtConfigProps;
 
 @Component
 @RequiredArgsConstructor
@@ -44,7 +44,7 @@ public class JwtUtils {
 		return this.extractClaims(token, Claims::getExpiration);
 	}
 	
-	private <T> T extractClaims(final String token, Function<Claims, T> claimsResolver) {
+	private <T> T extractClaims(final String token, final Function<Claims, T> claimsResolver) {
 		final Claims claims = this.extractAllClaims(token);
 		return claimsResolver.apply(claims);
 	}

@@ -1,4 +1,4 @@
-package tn.cita.app.config.props;
+package tn.cita.app.model.props;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
