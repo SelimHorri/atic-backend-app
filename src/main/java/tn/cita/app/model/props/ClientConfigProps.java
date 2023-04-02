@@ -1,4 +1,4 @@
-package tn.cita.app.config.props;
+package tn.cita.app.model.props;
 
 import java.util.List;
 

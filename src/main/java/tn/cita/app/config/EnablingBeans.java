@@ -5,11 +5,15 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
+record EnablingBeans() {}
+
+
+
 @Lazy
 @Configuration
-@ConfigurationPropertiesScan(basePackages = "tn.cita.app.config.props")
+@ConfigurationPropertiesScan(basePackages = "tn.cita.app.model.props")
 @EnableConfigurationProperties
-public class EnablingConfigurationPropsConfig {}
+class EnablingConfigPropsConfig {}
 
 
 
