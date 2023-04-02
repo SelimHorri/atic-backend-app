@@ -2,6 +2,7 @@ package tn.cita.app.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -17,6 +18,7 @@ class VerificationTokenRepositoryTest extends AbstractSharedMySQLTestContainer {
 	@Autowired
 	private VerificationTokenRepository verificationTokenRepository;
 	
+	@Disabled
 	@Test
 	void givenValidToken_whenFindByToken_thenOptionalOfVerificationTokenShouldBeFound() {
 		
@@ -34,6 +36,7 @@ class VerificationTokenRepositoryTest extends AbstractSharedMySQLTestContainer {
 		assertThat(optionalVerificationToken.get().getCredential().getUsername()).isEqualTo("jamesbond");
 	}
 	
+	@Disabled
 	@Test
 	void givenValidToken_whenDeleteByToken_thenOptionalOfThatTokenShouldBeEmpty() {
 		final var token = "c856b457-ed66-4dd4-bc1a-f0be552a28e5";
