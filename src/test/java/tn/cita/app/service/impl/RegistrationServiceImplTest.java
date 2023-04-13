@@ -19,6 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
+import tn.cita.app.domain.auth.register.model.RegisterRequest;
+import tn.cita.app.domain.auth.register.service.RegistrationService;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
@@ -27,12 +29,10 @@ import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.model.domain.entity.VerificationToken;
-import tn.cita.app.model.dto.request.RegisterRequest;
 import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
-import tn.cita.app.service.v0.RegistrationService;
 import tn.cita.app.util.NotificationUtil;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

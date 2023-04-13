@@ -21,7 +21,7 @@ import tn.cita.app.model.domain.entity.VerificationToken;
 import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.VerificationTokenDto;
 import tn.cita.app.repository.VerificationTokenRepository;
-import tn.cita.app.service.v0.VerificationTokenService;
+import tn.cita.app.service.VerificationTokenService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class VerificationTokenServiceImplTest {
