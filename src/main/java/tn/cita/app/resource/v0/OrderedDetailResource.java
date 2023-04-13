@@ -22,7 +22,7 @@ import tn.cita.app.model.domain.id.OrderedDetailId;
 import tn.cita.app.model.dto.OrderedDetailDto;
 import tn.cita.app.model.dto.request.OrderedDetailRequest;
 import tn.cita.app.model.dto.response.api.ApiResponse;
-import tn.cita.app.service.v0.OrderedDetailService;
+import tn.cita.app.service.OrderedDetailService;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/ordered-details")

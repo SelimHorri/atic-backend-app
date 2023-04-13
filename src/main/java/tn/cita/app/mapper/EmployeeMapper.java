@@ -3,6 +3,7 @@ package tn.cita.app.mapper;
 import java.util.Objects;
 
 import lombok.NonNull;
+import tn.cita.app.domain.auth.register.model.RegisterRequest;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.model.domain.entity.Saloon;
@@ -11,7 +12,6 @@ import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.SaloonDto;
 import tn.cita.app.model.dto.UserImageDto;
-import tn.cita.app.model.dto.request.RegisterRequest;
 import tn.cita.app.util.UserRoleUtils;
 
 public interface EmployeeMapper {

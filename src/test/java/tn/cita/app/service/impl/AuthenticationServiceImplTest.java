@@ -10,9 +10,9 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
+import tn.cita.app.domain.auth.authentication.model.LoginRequest;
+import tn.cita.app.domain.auth.authentication.service.AuthenticationService;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
-import tn.cita.app.model.dto.request.LoginRequest;
-import tn.cita.app.service.v0.AuthenticationService;
 import tn.cita.app.util.JwtUtils;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

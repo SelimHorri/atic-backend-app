@@ -35,7 +35,8 @@
 		<sonar.inclusions>**/resource/**/*.java</sonar.inclusions>
 		<sonar.exclusions>**/config/**/*.java</sonar.exclusions>
 		<sonar.exclusions>**/constant/**/*.java</sonar.exclusions>
-		<sonar.exclusions>**/domain/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/model/**/*.java</sonar.exclusions>
+		<sonar.exclusions>**/domain/**/model/**/*.java</sonar.exclusions>
 		<sonar.exclusions>**/dto/**/*.java</sonar.exclusions>
 		<sonar.exclusions>**/exception/**/*.java</sonar.exclusions>
 		<sonar.exclusions>**/job/**/*.java</sonar.exclusions>
@@ -237,6 +238,21 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+					<image>
+						<!-- <name>selimhorri/${project.artifactId}:${project.version}</name> -->
+						<publish>false</publish>
+						<env>
+							<BP_JVM_VERSION>${java.version}</BP_JVM_VERSION>
+						</env>
+					</image>
+					<!--
+					<docker>
+						<publishRegistry>
+							<username>${DOCKER_USERNAME}</username>
+							<password>${DOCKER_PASSWORD}</password>
+						</publishRegistry>
+					</docker>
+					-->
 				</configuration>
 			</plugin>
 			<plugin>
@@ -247,7 +263,8 @@
 					<excludes>
 						<exclude>**/config/**/*.class</exclude>
 						<exclude>**/constant/**/*.class</exclude>
-						<exclude>**/domain/**/*.class</exclude>
+						<exclude>**/model/**/*.class</exclude>
+						<exclude>**/domain/**/model/**/*.class</exclude>
 						<exclude>**/dto/**/*.class</exclude>
 						<exclude>**/exception/**/*.class</exclude>
 						<exclude>**/job/**/*.class</exclude>

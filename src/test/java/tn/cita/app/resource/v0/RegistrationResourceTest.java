@@ -24,15 +24,15 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tn.cita.app.constant.AppConstants;
+import tn.cita.app.domain.auth.register.model.RegisterRequest;
+import tn.cita.app.domain.auth.register.model.RegisterResponse;
+import tn.cita.app.domain.auth.register.service.RegistrationService;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
-import tn.cita.app.model.dto.request.RegisterRequest;
-import tn.cita.app.model.dto.response.RegisterResponse;
 import tn.cita.app.model.dto.response.api.ApiResponse;
-import tn.cita.app.service.v0.RegistrationService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient

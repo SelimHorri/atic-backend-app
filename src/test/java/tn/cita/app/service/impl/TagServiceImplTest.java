@@ -21,7 +21,7 @@ import tn.cita.app.model.domain.entity.Tag;
 import tn.cita.app.model.dto.TagDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.TagRepository;
-import tn.cita.app.service.v0.TagService;
+import tn.cita.app.service.TagService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class TagServiceImplTest {

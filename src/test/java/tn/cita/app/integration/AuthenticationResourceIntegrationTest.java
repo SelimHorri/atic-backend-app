@@ -20,11 +20,11 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
+import tn.cita.app.domain.auth.authentication.model.LoginRequest;
+import tn.cita.app.domain.auth.authentication.model.LoginResponse;
+import tn.cita.app.domain.auth.authentication.service.AuthenticationService;
 import tn.cita.app.exception.payload.ExceptionMsg;
-import tn.cita.app.model.dto.request.LoginRequest;
-import tn.cita.app.model.dto.response.LoginResponse;
 import tn.cita.app.model.dto.response.api.ApiResponse;
-import tn.cita.app.service.v0.AuthenticationService;
 import tn.cita.app.util.JwtUtils;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)

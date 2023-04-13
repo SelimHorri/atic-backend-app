@@ -28,7 +28,7 @@ import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.UserImageDto;
 import tn.cita.app.repository.EmployeeRepository;
-import tn.cita.app.service.v0.EmployeeService;
+import tn.cita.app.service.EmployeeService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class EmployeeServiceImplTest {

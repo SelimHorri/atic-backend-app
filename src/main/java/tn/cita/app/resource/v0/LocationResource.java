@@ -18,7 +18,7 @@ import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.LocationDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.model.dto.response.api.ApiResponse;
-import tn.cita.app.service.v0.LocationService;
+import tn.cita.app.service.LocationService;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/locations")

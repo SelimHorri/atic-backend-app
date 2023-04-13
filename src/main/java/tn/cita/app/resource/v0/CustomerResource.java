@@ -14,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.response.api.ApiResponse;
-import tn.cita.app.service.v0.CustomerService;
+import tn.cita.app.service.CustomerService;
 
 @RestController
 @RequestMapping(AppConstants.API_CONTEXT_V0 + "/customers")

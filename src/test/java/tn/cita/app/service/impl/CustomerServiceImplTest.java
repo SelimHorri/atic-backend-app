@@ -29,7 +29,7 @@ import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.UserImageDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.CustomerRepository;
-import tn.cita.app.service.v0.CustomerService;
+import tn.cita.app.service.CustomerService;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CustomerServiceImplTest {
