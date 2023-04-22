@@ -13,7 +13,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import tn.cita.app.domain.auth.CredentialService;
+import tn.cita.app.business.auth.CredentialService;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;

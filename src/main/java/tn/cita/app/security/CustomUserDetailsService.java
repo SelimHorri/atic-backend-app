@@ -27,7 +27,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		
 		final UserDetails userDetails = new CustomUserDetails(this.credentialRepository
 				.findByUsernameIgnoreCase(username.strip().toLowerCase())
-				.map(CredentialMapper::map)
+				.map(CredentialMapper::toDto)
 				.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
 		
 		if (!userDetails.isEnabled())

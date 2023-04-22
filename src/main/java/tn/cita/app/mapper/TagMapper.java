@@ -6,7 +6,7 @@ import tn.cita.app.model.dto.TagDto;
 
 public interface TagMapper {
 	
-	public static TagDto map(@NonNull Tag tag) {
+	public static TagDto toDto(@NonNull Tag tag) {
 		return TagDto.builder()
 				.id(tag.getId())
 				.identifier(tag.getIdentifier())

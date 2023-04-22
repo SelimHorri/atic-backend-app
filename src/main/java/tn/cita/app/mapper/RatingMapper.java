@@ -8,7 +8,7 @@ import tn.cita.app.model.dto.RatingDto;
 
 public interface RatingMapper {
 	
-	public static RatingDto map(@NonNull final Rating rating) {
+	public static RatingDto toDto(@NonNull final Rating rating) {
 		return RatingDto.builder()
 				.identifier(rating.getIdentifier())
 				.workerId(rating.getWorkerId())

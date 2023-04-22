@@ -3,7 +3,7 @@ package tn.cita.app.mapper;
 import java.util.Objects;
 
 import lombok.NonNull;
-import tn.cita.app.domain.auth.register.model.RegisterRequest;
+import tn.cita.app.business.auth.register.model.RegisterRequest;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Customer;
 import tn.cita.app.model.domain.entity.UserImage;
@@ -14,7 +14,7 @@ import tn.cita.app.util.UserRoleUtils;
 
 public interface CustomerMapper {
 	
-	public static CustomerDto map(@NonNull final Customer customer) {
+	public static CustomerDto toDto(@NonNull final Customer customer) {
 		
 		final var userImage = Objects
 				.requireNonNullElseGet(customer.getUserImage(), UserImage::new);

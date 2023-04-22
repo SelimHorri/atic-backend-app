@@ -24,7 +24,7 @@ public class RatingServiceImpl implements RatingService {
 	public List<RatingDto> findAllByCustomerId(final Integer customerId) {
 		log.info("** Find all ratings by customerId.. *\n");
 		return this.ratingRepository.findAllByCustomerId(customerId).stream()
-				.map(RatingMapper::map)
+				.map(RatingMapper::toDto)
 				.distinct()
 				.toList();
 	}

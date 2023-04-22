@@ -19,8 +19,8 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
-import tn.cita.app.domain.auth.register.model.RegisterRequest;
-import tn.cita.app.domain.auth.register.service.RegistrationService;
+import tn.cita.app.business.auth.register.model.RegisterRequest;
+import tn.cita.app.business.auth.register.service.RegistrationService;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;

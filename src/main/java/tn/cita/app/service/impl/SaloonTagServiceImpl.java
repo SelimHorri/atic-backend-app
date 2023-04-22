@@ -24,7 +24,7 @@ public class SaloonTagServiceImpl implements SaloonTagService {
 	public List<SaloonTagDto> findAllBySaloonId(final Integer saloonId) {
 		log.info("** Find all saloonTags by saloonId.. *\n");
 		return this.saloonTagRepository.findAllBySaloonId(saloonId).stream()
-				.map(SaloonTagMapper::map)
+				.map(SaloonTagMapper::toDto)
 				.distinct()
 				.toList();
 	}

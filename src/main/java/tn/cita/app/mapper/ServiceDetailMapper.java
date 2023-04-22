@@ -7,7 +7,7 @@ import tn.cita.app.model.dto.ServiceDetailDto;
 
 public interface ServiceDetailMapper {
 	
-	public static ServiceDetailDto map(@NonNull final ServiceDetail serviceDetail) {
+	public static ServiceDetailDto toDto(@NonNull final ServiceDetail serviceDetail) {
 		return ServiceDetailDto.builder()
 				.id(serviceDetail.getId())
 				.identifier(serviceDetail.getIdentifier())

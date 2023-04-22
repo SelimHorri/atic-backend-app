@@ -29,14 +29,14 @@ public class TaskServiceImpl implements TaskService {
 	public TaskDto findById(final TaskId taskId) {
 		log.info("** Find task by id.. *\n");
 		return this.taskRepository.findById(taskId)
-				.map(TaskMapper::map)
+				.map(TaskMapper::toDto)
 				.orElseThrow(() -> new TaskNotFoundException("Task not found"));
 	}
 	
 	@Override
 	public TaskDto findByIdentifier(final String identifier) {
 		return this.taskRepository.findByIdentifier(identifier.strip())
-				.map(TaskMapper::map)
+				.map(TaskMapper::toDto)
 				.orElseThrow(() -> new TaskNotFoundException("Task not found"));
 	}
 	
@@ -44,7 +44,7 @@ public class TaskServiceImpl implements TaskService {
 	public List<TaskDto> findAllByReservationId(final Integer reservationId) {
 		log.info("** Find all tasks by reservationId.. *\n");
 		return this.taskRepository.findAllByReservationId(reservationId).stream()
-				.map(TaskMapper::map)
+				.map(TaskMapper::toDto)
 				.distinct()
 				.toList();
 	}
@@ -53,7 +53,7 @@ public class TaskServiceImpl implements TaskService {
 	public List<TaskDto> findAllByWorkerId(final Integer workerId) {
 		log.info("** Find all tasls by workerId.. *\n");
 		return this.taskRepository.findAllByWorkerId(workerId).stream()
-				.map(TaskMapper::map)
+				.map(TaskMapper::toDto)
 				.distinct()
 				.toList();
 	}
@@ -63,7 +63,7 @@ public class TaskServiceImpl implements TaskService {
 		log.info("** Find all paged tasks by workerId.. *\n");
 		return this.taskRepository.findAllByWorkerId(workerId, 
 					ClientPageRequestUtils.from(clientPageRequest))
-				.map(TaskMapper::map);
+				.map(TaskMapper::toDto);
 	}
 	
 }

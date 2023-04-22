@@ -8,7 +8,7 @@ import tn.cita.app.model.dto.ServiceDetailDto;
 
 public interface OrderedDetailMapper {
 	
-	public static OrderedDetailDto map(@NonNull final OrderedDetail orderedDetail) {
+	public static OrderedDetailDto toDto(@NonNull final OrderedDetail orderedDetail) {
 		return OrderedDetailDto.builder()
 				.reservationId(orderedDetail.getReservationId())
 				.serviceDetailId(orderedDetail.getServiceDetailId())

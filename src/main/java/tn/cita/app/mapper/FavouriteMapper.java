@@ -8,7 +8,7 @@ import tn.cita.app.model.dto.SaloonDto;
 
 public interface FavouriteMapper {
 	
-	public static FavouriteDto map(@NonNull final Favourite favourite) {
+	public static FavouriteDto toDto(@NonNull final Favourite favourite) {
 		return FavouriteDto.builder()
 				.customerId(favourite.getCustomerId())
 				.saloonId(favourite.getSaloonId())

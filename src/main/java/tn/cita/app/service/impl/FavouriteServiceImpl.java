@@ -26,7 +26,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 	@Override
 	public FavouriteDto findById(final FavouriteId favouriteId) {
 		return this.favouriteRepository.findById(favouriteId)
-				.map(FavouriteMapper::map)
+				.map(FavouriteMapper::toDto)
 				.orElseThrow(() -> new FavouriteNotFoundException("Favourite not found"));
 	}
 	
@@ -35,7 +35,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 		log.info("** Find all favourites by customerId.. *\n");
 		return this.favouriteRepository.findAllByCustomerId(customerId, 
 					ClientPageRequestUtils.from(clientPageRequest))
-				.map(FavouriteMapper::map);
+				.map(FavouriteMapper::toDto);
 	}
 	
 	@Transactional

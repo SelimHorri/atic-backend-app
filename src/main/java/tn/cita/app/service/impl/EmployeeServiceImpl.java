@@ -28,14 +28,14 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public Page<EmployeeDto> findAll(final int pageOffset) {
 		log.info("** Find all employees offset paged..*\n");
 		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE))
-				.map(EmployeeMapper::map);
+				.map(EmployeeMapper::toDto);
 	}
 	
 	@Override
 	public EmployeeDto findById(final Integer id) {
 		log.info("** Find employee by id..*\n");
 		return this.employeeRepository.findById(id)
-				.map(EmployeeMapper::map)
+				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
 	}
 	
@@ -43,7 +43,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeDto findByIdentifier(final String identifier) {
 		log.info("** Find employee by identifier.. *\n");
 		return this.employeeRepository.findByIdentifier(identifier.strip())
-				.map(EmployeeMapper::map)
+				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
 	}
 	
@@ -51,7 +51,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public EmployeeDto findByCredentialUsername(final String username) {
 		log.info("** Find employee by credential username.. *\n");
 		return this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
-				.map(EmployeeMapper::map)
+				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
 	}
@@ -60,7 +60,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<EmployeeDto> findAllBySsn(final String ssn) {
 		log.info("** Find employee(s) by ssn.. *\n");
 		return this.employeeRepository.findAllBySsn(ssn.strip()).stream()
-				.map(EmployeeMapper::map)
+				.map(EmployeeMapper::toDto)
 				.distinct()
 				.toList();
 	}
@@ -77,7 +77,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	public List<EmployeeDto> findAllByManagerId(final Integer managerId) {
 		log.info("** Find all employees by managerId.. *\n");
 		return this.employeeRepository.findAllByManagerId(managerId).stream()
-				.map(EmployeeMapper::map)
+				.map(EmployeeMapper::toDto)
 				.distinct()
 				.toList();
 	}

@@ -6,7 +6,7 @@ import tn.cita.app.model.dto.CredentialDto;
 
 public interface CredentialMapper {
 	
-	public static CredentialDto map(@NonNull final Credential credential) {
+	public static CredentialDto toDto(@NonNull final Credential credential) {
 		return CredentialDto.builder()
 				.id(credential.getId())
 				.identifier(credential.getIdentifier())

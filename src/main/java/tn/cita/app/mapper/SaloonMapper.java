@@ -7,7 +7,7 @@ import tn.cita.app.model.dto.SaloonDto;
 
 public interface SaloonMapper {
 	
-	public static SaloonDto map(@NonNull final Saloon saloon) {
+	public static SaloonDto toDto(@NonNull final Saloon saloon) {
 		return SaloonDto.builder()
 				.id(saloon.getId())
 				.identifier(saloon.getIdentifier())

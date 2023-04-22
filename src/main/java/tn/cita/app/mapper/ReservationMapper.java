@@ -8,7 +8,7 @@ import tn.cita.app.model.dto.SaloonDto;
 
 public interface ReservationMapper {
 	
-	public static ReservationDto map(@NonNull final Reservation reservation) {
+	public static ReservationDto toDto(@NonNull final Reservation reservation) {
 		return ReservationDto.builder()
 				.id(reservation.getId())
 				.identifier(reservation.getIdentifier())

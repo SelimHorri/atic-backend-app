@@ -9,7 +9,7 @@ import tn.cita.app.model.dto.SaloonDto;
 
 public interface CategoryMapper {
 	
-	public static CategoryDto map(@NonNull final Category category) {
+	public static CategoryDto toDto(@NonNull final Category category) {
 		
 		final var parentCategory = Objects
 				.requireNonNullElseGet(category.getParentCategory(), Category::new);

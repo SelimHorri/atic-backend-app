@@ -28,7 +28,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	@Override
 	public OrderedDetailDto findByIdentifier(final String identifier) {
 		return this.orderedDetailRepository.findByIdentifier(identifier)
-				.map(OrderedDetailMapper::map)
+				.map(OrderedDetailMapper::toDto)
 				.orElseThrow(() -> new OrderedDetailNotFoundException("OrderDetail not found"));
 	}
 	
@@ -36,7 +36,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
 		log.info("** Find all ordered detail by reservationId.. *\n");
 		return this.orderedDetailRepository.findAllByReservationId(reservationId).stream()
-				.map(OrderedDetailMapper::map)
+				.map(OrderedDetailMapper::toDto)
 				.distinct()
 				.toList();
 	}
@@ -68,7 +68,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 					LocalDateTime.now());
 		
 		this.orderedDetailRepository.saveOrderedDetail(orderedDetailRequest);
-		return OrderedDetailMapper.map(this.orderedDetailRepository.findById(orderedDetailId).orElseThrow());
+		return OrderedDetailMapper.toDto(this.orderedDetailRepository.findById(orderedDetailId).orElseThrow());
 	}
 	
 }

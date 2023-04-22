@@ -6,7 +6,7 @@ import tn.cita.app.model.dto.LocationDto;
 
 public interface LocationMapper {
 	
-	public static LocationDto map(@NonNull final Location location) {
+	public static LocationDto toDto(@NonNull final Location location) {
 		return LocationDto.builder()
 				.id(location.getId())
 				.identifier(location.getIdentifier())

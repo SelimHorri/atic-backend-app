@@ -12,7 +12,7 @@ import tn.cita.app.model.dto.TaskDto;
 
 public interface TaskMapper {
 	
-public static TaskDto map(@NonNull final Task task) {
+public static TaskDto toDto(@NonNull final Task task) {
 		
 		final var worker = Objects
 				.requireNonNullElseGet(task.getWorker(), Employee::new);

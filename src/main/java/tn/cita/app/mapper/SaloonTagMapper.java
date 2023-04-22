@@ -8,7 +8,7 @@ import tn.cita.app.model.dto.TagDto;
 
 public interface SaloonTagMapper {
 	
-	public static SaloonTagDto map(@NonNull final SaloonTag saloonTag) {
+	public static SaloonTagDto toDto(@NonNull final SaloonTag saloonTag) {
 		return SaloonTagDto.builder()
 				.saloonId(saloonTag.getSaloonId())
 				.tagId(saloonTag.getTagId())

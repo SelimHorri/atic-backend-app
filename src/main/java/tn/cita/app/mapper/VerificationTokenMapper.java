@@ -8,7 +8,7 @@ import tn.cita.app.model.dto.VerificationTokenDto;
 
 public interface VerificationTokenMapper {
 	
-	public static VerificationTokenDto map(@NotNull final VerificationToken verificationToken) {
+	public static VerificationTokenDto toDto(@NotNull final VerificationToken verificationToken) {
 		return VerificationTokenDto.builder()
 				.id(verificationToken.getId())
 				.identifier(verificationToken.getIdentifier())

@@ -29,14 +29,14 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** Find All paged customers.. *\n");
 		return this.customerRepository.findAll(PageRequest
 					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
-				.map(CustomerMapper::map);
+				.map(CustomerMapper::toDto);
 	}
 	
 	@Override
 	public CustomerDto findById(final Integer id) {
 		log.info("** Find customer by id.. *\n");
 		return this.customerRepository.findById(id)
-				.map(CustomerMapper::map)
+				.map(CustomerMapper::toDto)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 	}
 	
@@ -44,7 +44,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerDto findByIdentifier(final String identifier) {
 		log.info("** Find customer by identifier.. *\n");
 		return this.customerRepository.findByIdentifier(identifier.strip())
-				.map(CustomerMapper::map)
+				.map(CustomerMapper::toDto)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
 	}
 	
@@ -52,7 +52,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public CustomerDto findByCredentialUsername(final String username) {
 		log.info("** Find customer by credential username.. *\n");
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
-				.map(CustomerMapper::map)
+				.map(CustomerMapper::toDto)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
 	}
 	
@@ -60,7 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<CustomerDto> findAllBySsn(final String ssn) {
 		log.info("** Find customer(s) by ssn.. *\n");
 		return this.customerRepository.findAllBySsn(ssn.strip()).stream()
-				.map(CustomerMapper::map)
+				.map(CustomerMapper::toDto)
 				.distinct()
 				.toList();
 	}

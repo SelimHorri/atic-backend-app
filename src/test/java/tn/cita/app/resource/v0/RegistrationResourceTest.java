@@ -24,9 +24,9 @@ import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.domain.auth.register.model.RegisterRequest;
-import tn.cita.app.domain.auth.register.model.RegisterResponse;
-import tn.cita.app.domain.auth.register.service.RegistrationService;
+import tn.cita.app.business.auth.register.model.RegisterRequest;
+import tn.cita.app.business.auth.register.model.RegisterResponse;
+import tn.cita.app.business.auth.register.service.RegistrationService;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;

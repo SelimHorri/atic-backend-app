@@ -6,7 +6,7 @@ import tn.cita.app.model.dto.UserImageDto;
 
 public interface UserImageMapper {
 	
-	public static UserImageDto map(@NonNull final UserImage userImage) {
+	public static UserImageDto toDto(@NonNull final UserImage userImage) {
 		return UserImageDto.builder()
 				.id(userImage.getId())
 				.identifier(userImage.getIdentifier())
