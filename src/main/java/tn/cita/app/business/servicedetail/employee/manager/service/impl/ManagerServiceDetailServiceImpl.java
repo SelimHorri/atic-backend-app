@@ -1,4 +1,4 @@
-package tn.cita.app.business.servicedetails.employee.manager.service.impl;
+package tn.cita.app.business.servicedetail.employee.manager.service.impl;
 
 import java.util.Comparator;
 
@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.business.servicedetails.employee.manager.model.ServiceDetailRequest;
-import tn.cita.app.business.servicedetails.employee.manager.service.ManagerServiceDetailService;
+import tn.cita.app.business.servicedetail.employee.manager.model.ServiceDetailRequest;
+import tn.cita.app.business.servicedetail.employee.manager.service.ManagerServiceDetailService;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;

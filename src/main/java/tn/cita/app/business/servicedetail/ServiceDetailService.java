@@ -1,11 +1,11 @@
-package tn.cita.app.business.servicedetails;
+package tn.cita.app.business.servicedetail;
 
 import java.util.List;
 import java.util.Set;
 
 import org.springframework.data.domain.Page;
 
-import tn.cita.app.business.servicedetails.employee.manager.model.ServiceDetailRequest;
+import tn.cita.app.business.servicedetail.employee.manager.model.ServiceDetailRequest;
 import tn.cita.app.model.dto.ServiceDetailDto;
 import tn.cita.app.model.dto.response.ServiceDetailsReservationContainerResponse;
 

@@ -1,4 +1,4 @@
-package tn.cita.app.business.servicedetails.employee.manager.resource;
+package tn.cita.app.business.servicedetail.employee.manager.resource;
 
 import javax.validation.Valid;
 
@@ -18,9 +18,9 @@ import org.springframework.web.context.request.WebRequest;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import tn.cita.app.business.servicedetail.employee.manager.model.ServiceDetailRequest;
+import tn.cita.app.business.servicedetail.employee.manager.service.ManagerServiceDetailService;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.business.servicedetails.employee.manager.model.ServiceDetailRequest;
-import tn.cita.app.business.servicedetails.employee.manager.service.ManagerServiceDetailService;
 import tn.cita.app.model.dto.ServiceDetailDto;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.util.UserRequestExtractorUtil;

@@ -1,4 +1,4 @@
-package tn.cita.app.business.servicedetails.employee.manager.model;
+package tn.cita.app.business.servicedetail.employee.manager.model;
 
 import java.io.Serializable;
 

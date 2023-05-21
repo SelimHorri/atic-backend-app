@@ -1,4 +1,4 @@
-package tn.cita.app.business.servicedetails;
+package tn.cita.app.business.servicedetail;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

@@ -1,4 +1,4 @@
-package tn.cita.app.business.servicedetails;
+package tn.cita.app.business.servicedetail;
 
 import java.util.Comparator;
 import java.util.List;
@@ -12,7 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.business.servicedetails.employee.manager.model.ServiceDetailRequest;
+import tn.cita.app.business.servicedetail.employee.manager.model.ServiceDetailRequest;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
