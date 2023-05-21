@@ -2,7 +2,7 @@ package tn.cita.app.model.domain.listener;
 
 import java.time.LocalDateTime;
 
-import javax.persistence.PrePersist;
+import jakarta.persistence.PrePersist;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

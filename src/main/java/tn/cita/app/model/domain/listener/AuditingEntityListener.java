@@ -3,8 +3,8 @@ package tn.cita.app.model.domain.listener;
 import java.time.Instant;
 import java.util.UUID;
 
-import javax.persistence.PrePersist;
-import javax.persistence.PreUpdate;
+import jakarta.persistence.PrePersist;
+import jakarta.persistence.PreUpdate;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

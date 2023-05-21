@@ -1,6 +1,6 @@
 package tn.cita.app.business.profile.employee.manager.resource;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;

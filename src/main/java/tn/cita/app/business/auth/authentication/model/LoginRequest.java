@@ -2,7 +2,7 @@ package tn.cita.app.business.auth.authentication.model;
 
 import java.io.Serializable;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
 
 public record LoginRequest(
 		

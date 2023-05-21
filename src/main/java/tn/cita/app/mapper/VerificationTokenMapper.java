@@ -1,6 +1,6 @@
 package tn.cita.app.mapper;
 
-import javax.validation.constraints.NotNull;
+import jakarta.validation.constraints.NotNull;
 
 import tn.cita.app.model.domain.entity.VerificationToken;
 import tn.cita.app.model.dto.CredentialDto;

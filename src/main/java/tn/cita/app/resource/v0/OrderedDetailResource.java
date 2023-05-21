@@ -1,6 +1,6 @@
 package tn.cita.app.resource.v0;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;

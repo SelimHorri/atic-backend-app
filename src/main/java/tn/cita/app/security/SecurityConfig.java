@@ -1,8 +1,7 @@
 package tn.cita.app.security;
 
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -12,17 +11,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.CorsConfigurer;
 import org.springframework.security.config.annotation.web.configurers.CsrfConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer.FrameOptionsConfig;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.config.filter.JwtRequestFilter;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 
+@Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
@@ -45,26 +47,26 @@ public class SecurityConfig {
 				.cors(CorsConfigurer<HttpSecurity>::disable)
 				.csrf(CsrfConfigurer<HttpSecurity>::disable)
 				.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-						.mvcMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.mvcMatchers(AppConstants.WHITELIST_URLS).permitAll()
-						.mvcMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()
-						.mvcMatchers(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET).permitAll()
-						.mvcMatchers("/api/v*/customers/**")
+						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
+						.requestMatchers(AppConstants.WHITELIST_URLS).permitAll()
+						.requestMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()
+						.requestMatchers(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET).permitAll()
+						.requestMatchers("/api/v*/customers/**")
 							.hasRole(UserRoleBasedAuthority.CUSTOMER.name())
-						.mvcMatchers("/api/v*/employees/workers/**")
+						.requestMatchers("/api/v*/employees/workers/**")
 							.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
 									UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.mvcMatchers("/api/v*/employees/managers/**")
+						.requestMatchers("/api/v*/employees/managers/**")
 							.hasAnyRole(UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.mvcMatchers("/api/v*/employees/owners/**")
+						.requestMatchers("/api/v*/employees/owners/**")
 							.hasRole(UserRoleBasedAuthority.OWNER.name())
-						.mvcMatchers("/api/v*/employees/**")
+						.requestMatchers("/api/v*/employees/**")
 							.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
 									UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.mvcMatchers("/api/v*/admins/**")
+						.requestMatchers("/api/v*/admins/**")
 							.hasRole(UserRoleBasedAuthority.ADMIN.name())
 						.anyRequest().authenticated())
 				.authenticationProvider(this.authenticationProvider())
@@ -72,8 +74,7 @@ public class SecurityConfig {
 						.sendError(HttpServletResponse.SC_FORBIDDEN, 
 							"Error: Forbidden request, unauthorized access point")))
 				.headers(headers -> headers
-						.frameOptions()
-						.sameOrigin())
+						.frameOptions(FrameOptionsConfig::sameOrigin))
 				.sessionManagement(sessionManagement -> sessionManagement
 						.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.addFilterBefore(this.jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)

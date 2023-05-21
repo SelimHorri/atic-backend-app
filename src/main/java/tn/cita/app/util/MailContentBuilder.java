@@ -2,7 +2,7 @@ package tn.cita.app.util;
 
 import org.springframework.stereotype.Component;
 import org.thymeleaf.context.Context;
-import org.thymeleaf.spring5.SpringTemplateEngine;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import lombok.RequiredArgsConstructor;
 import tn.cita.app.model.dto.notif.MailBodyContentBuilder;
