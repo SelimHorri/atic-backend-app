@@ -3,8 +3,6 @@ package tn.cita.app.mapper;
 import java.util.Objects;
 
 import lombok.NonNull;
-import tn.cita.app.business.auth.register.model.RegisterRequest;
-import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.model.domain.entity.Saloon;
 import tn.cita.app.model.domain.entity.UserImage;
@@ -12,7 +10,6 @@ import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.SaloonDto;
 import tn.cita.app.model.dto.UserImageDto;
-import tn.cita.app.util.UserRoleUtils;
 
 public interface EmployeeMapper {
 	
@@ -77,27 +74,6 @@ public interface EmployeeMapper {
 						.openingDate(saloon.getOpeningDate())
 						.fullAdr(saloon.getFullAdr())
 						.email(saloon.getEmail())
-						.build())
-				.build();
-	}
-	
-	public static Employee map(@NonNull final RegisterRequest registerRequest) {
-		return Employee.builder()
-				.firstname(registerRequest.firstname())
-				.lastname(registerRequest.lastname())
-				.email(registerRequest.email())
-				.phone(registerRequest.phone())
-				.birthdate(registerRequest.birthdate())
-				.userImage(null)
-				.credential(
-						Credential.builder()
-						.username(registerRequest.username())
-						.password(registerRequest.password())
-						.userRoleBasedAuthority(UserRoleUtils.checkUserRoleBasedAuthority(registerRequest.role()))
-						.isEnabled(false)
-						.isAccountNonExpired(true)
-						.isAccountNonLocked(true)
-						.isCredentialsNonExpired(true)
 						.build())
 				.build();
 	}
