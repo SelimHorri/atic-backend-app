@@ -199,8 +199,8 @@ class RegistrationServiceImplTest {
 		assertThat(verificationTokenNotFoundException).isNotNull();
 		assertThat(verificationTokenNotFoundException.getMessage())
 				.startsWith("Link ")
-				.endsWith(" disactivated")
-				.isEqualTo("Link has been disactivated");
+				.endsWith(" disabled")
+				.isEqualTo("Link has been disabled");
 	}
 	
 	@Test

@@ -119,7 +119,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		return new RegisterResponse("""
 				User with username %s has been saved successfully.
-				Check your email to enbale your account.
+				Check your email to enable your account.
 				Please consider that link will expire after %dmin from registration.
 				""".formatted(savedCustomer.getCredential().getUsername(), AppConstants.USER_EXPIRES_AFTER_MINUTES));
 	}
@@ -148,7 +148,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		return new RegisterResponse("""
 				User with username %s has been saved successfully.
-				Check your email to enbale your account.
+				Check your email to enable your account.
 				Please consider that link will expire after %dmin from registration.
 				""".formatted(savedEmployee.getCredential().getUsername(), AppConstants.USER_EXPIRES_AFTER_MINUTES));
 	}
@@ -160,7 +160,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		// fetch verificationToken by provided token
 		final var verificationToken = this.verificationTokenRepository.findByToken(token)
-				.orElseThrow(() -> new VerificationTokenNotFoundException("Link has been disactivated"));
+				.orElseThrow(() -> new VerificationTokenNotFoundException("Link has been disabled"));
 		
 		// check if token expired => if expired, then flush out token and throw exception
 		if (verificationToken.getExpireDate().isEqual(LocalDateTime.now()) 

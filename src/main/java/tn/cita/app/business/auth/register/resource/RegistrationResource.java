@@ -30,17 +30,15 @@ public class RegistrationResource {
 	@PostMapping
 	public ResponseEntity<ApiResponse<RegisterResponse>> register(@RequestBody @Valid final RegisterRequest registerRequest) {
 		log.info("** Register user.. *\n");
-		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.registrationService.register(registerRequest));
-		return ResponseEntity.ok(apiPayloadResponse);
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.registrationService.register(registerRequest)));
 	}
 	
 	@GetMapping("/{token}")
 	public ResponseEntity<ApiResponse<String>> validateToken(@PathVariable final String token) {
 		log.info("** Validate token for register user.. *\n");
-		final var apiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.registrationService.validateToken(token));
-		return ResponseEntity.ok(apiPayloadResponse);
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.registrationService.validateToken(token)));
 	}
 	
 }

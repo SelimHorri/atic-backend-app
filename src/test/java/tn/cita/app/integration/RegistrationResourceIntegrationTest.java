@@ -60,7 +60,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enbale your account. "
+								+ "Check your email to enable  your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
 								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
@@ -101,7 +101,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enbale your account. "
+								+ "Check your email to enable  your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
 								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
@@ -142,7 +142,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enbale your account. "
+								+ "Check your email to enable  your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
 								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
@@ -183,7 +183,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
 				new RegisterResponse(String
 						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enbale your account. "
+								+ "Check your email to enable  your account. "
 								+ "Please consider that link will expire after %dmin from registration", 
 								registerRequest.username(), 
 								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
