@@ -117,7 +117,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 								.format("Customer with username %s not found", reservationRequest.username()))))
 				.saloon(this.saloonRepository
 						.findById(reservationRequest.saloonId())
-						.orElseThrow(() -> new SaloonNotFoundException("Saloon not found")))
+						.orElseThrow(SaloonNotFoundException::new))
 				.description(StringWrapperUtils
 						.trimIfBlank(reservationRequest.description()))
 				.build();
