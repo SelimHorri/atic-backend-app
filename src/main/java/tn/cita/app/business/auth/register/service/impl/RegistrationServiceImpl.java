@@ -10,14 +10,14 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.business.auth.register.model.RegisterRequest;
 import tn.cita.app.business.auth.register.model.RegisterResponse;
 import tn.cita.app.business.auth.register.service.RegistrationService;
-import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
+import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
 import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.mapper.EmployeeMapper;
@@ -45,37 +45,19 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private final PasswordEncoder passwordEncoder;
 	private final NotificationUtil notificationUtil;
 	
-	/**
-	 * @param RegisterRequest
-	 * @return RegisterResponse
-	 * This method contains 7 steps to achieve registration
-	 * 
-	 * Step1: check Role validation
-	 * 
-	 * Step2: check username duplication!
-	 * 
-	 * Step3: check password confirmation 
-	 * 
-	 * Step4: encode valid password and save User
-	 * 
-	 * Step5: check role type and process to the right roletype
-	 */
 	@Override
 	public RegisterResponse register(RegisterRequest registerRequest) {
-		
 		log.info("** Register..*\n");
 		
 		// Step1
-		if (!UserRoleUtils.isCustomerRole(registerRequest.role())
-				&& !UserRoleUtils.isWorkerRole(registerRequest.role())
-				&& !UserRoleUtils.isManagerRole(registerRequest.role())
-				&& !UserRoleUtils.isOwnerRole(registerRequest.role()))
+		if (isInvalidRole(registerRequest.role()))
 			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, "
 					+ "it should be Customer/Worker/Manager/Owner role");
 		log.info("** User role checked successfully! *\n");
 		
 		// Step2
-		this.credentialRepository.findByUsernameIgnoreCase(registerRequest.username()).ifPresent((c) -> {
+		this.credentialRepository
+				.findByUsernameIgnoreCase(registerRequest.username()).ifPresent(c -> {
 			throw new UsernameAlreadyExistsException("Account with username: %s already exists".formatted(c.getUsername()));
 		});
 		log.info("** User not exist by username checked successfully! *\n");
@@ -100,11 +82,18 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** User password encrypted successfully! *\n");
 		
 		// Step 5
-		return switch(UserRoleBasedAuthority.valueOf(registerRequest.role())) {
+		return switch (UserRoleBasedAuthority.valueOf(registerRequest.role())) {
 			case CUSTOMER -> this.registerCustomer(registerRequest);
 			case WORKER, MANAGER, OWNER -> this.registerEmployee(registerRequest);
-			case ADMIN -> null;
+			case ADMIN -> null; //new RegisterResponse(false, null);
 		};
+	}
+	
+	private static boolean isInvalidRole(final String role) {
+		return !UserRoleUtils.isCustomerRole(role)
+				&& !UserRoleUtils.isWorkerRole(role)
+				&& !UserRoleUtils.isManagerRole(role)
+				&& !UserRoleUtils.isOwnerRole(role);
 	}
 	
 	private RegisterResponse registerCustomer(final RegisterRequest registerRequest) {
@@ -128,12 +117,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 								savedVerificationToken.getToken()))));
 		log.info("** Mail sent successfully to: {}! *\n", savedCustomer.getEmail());
 		
-		return new RegisterResponse(String
-				.format("User with username %s has been saved successfully. "
-						+ "Check your email to enbale your account. "
-						+ "Please consider that link will expire after %dmin from registration", 
-						savedCustomer.getCredential().getUsername(), 
-						AppConstants.USER_EXPIRES_AFTER_MINUTES));
+		return new RegisterResponse("""
+				User with username %s has been saved successfully.
+				Check your email to enbale your account.
+				Please consider that link will expire after %dmin from registration.
+				""".formatted(savedCustomer.getCredential().getUsername(), AppConstants.USER_EXPIRES_AFTER_MINUTES));
 	}
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
@@ -158,12 +146,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 								savedVerificationToken.getToken()))));
 		log.info("** Mail sent successfully to {}! *\n", savedEmployee.getEmail());
 		
-		return new RegisterResponse(String
-				.format("User with username %s has been saved successfully. "
-						+ "Check your email to enbale your account. "
-						+ "Please consider that link will expire after %dmin from registration", 
-						savedEmployee.getCredential().getUsername(), 
-						AppConstants.USER_EXPIRES_AFTER_MINUTES));
+		return new RegisterResponse("""
+				User with username %s has been saved successfully.
+				Check your email to enbale your account.
+				Please consider that link will expire after %dmin from registration.
+				""".formatted(savedEmployee.getCredential().getUsername(), AppConstants.USER_EXPIRES_AFTER_MINUTES));
 	}
 	
 	@Override
@@ -173,8 +160,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		// fetch verificationToken by provided token
 		final var verificationToken = this.verificationTokenRepository.findByToken(token)
-				.orElseThrow(() -> new VerificationTokenNotFoundException(String
-						.format("Link has been disactivated")));
+				.orElseThrow(() -> new VerificationTokenNotFoundException("Link has been disactivated"));
 		
 		// check if token expired => if expired, then flush out token and throw exception
 		if (verificationToken.getExpireDate().isEqual(LocalDateTime.now()) 
@@ -188,8 +174,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		// activate user
 		final var credential = verificationToken.getCredential();
 		credential.setIsEnabled(true);
-		verificationToken.setCredential(credential);
-		this.verificationTokenRepository.save(verificationToken);
+		this.credentialRepository.save(credential);
 		log.info("** User enabled successfully! *\n");
 		
 		// token should be deleted also after activating user to prevent reaccess to url token

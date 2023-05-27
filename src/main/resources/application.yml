@@ -15,11 +15,12 @@ spring:
   profiles:
     active:
       - ${SPRING_PROFILES_ACTIVE:@activatedProperties@}
-  zipkin:
-    base-url: http://${SPRING_ZIPKIN_BASE_HOST:localhost}:9411/
-  redis:
-    host: ${SPRING_REDIS_HOST:localhost}
-    port: 6379
+  #zipkin:
+  #  base-url: http://${SPRING_ZIPKIN_BASE_HOST:localhost}:9411/
+  data:
+    redis:
+      host: ${SPRING_REDIS_HOST:localhost}
+      port: 6379
   jackson:
     serialization:
       indent-output: true

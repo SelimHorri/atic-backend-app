@@ -118,7 +118,9 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		final List<Task> assignedWorkers = new ArrayList<>();
 		final var task = new Task();
 		task.setReservationId(reservation.getId());
+		/*
 		task.setReservation(reservation);
+		*/
 		task.setManagerDescription(StringWrapperUtils
 				.trimIfBlank(reservationAssignWorkerRequest.managerDescription()));
 		
@@ -126,8 +128,10 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 			task.setTaskDate(LocalDateTime.now()); // added! cause object is persisted natively..
 			task.setIdentifier(UUID.randomUUID().toString());
 			task.setWorkerId(workerId);
+			/*
 			task.setWorker(this.employeeRepository.findById(workerId)
 					.orElseThrow(EmployeeNotFoundException::new));
+			*/
 			this.taskRepository.saveTask(task);
 			assignedWorkers.add(this.taskRepository.findById(new TaskId(task.getWorkerId(), task.getReservationId()))
 					.orElseThrow(TaskNotFoundException::new));

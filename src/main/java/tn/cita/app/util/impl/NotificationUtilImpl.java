@@ -23,9 +23,7 @@ public class NotificationUtilImpl implements NotificationUtil {
 	
 	@Async
 	@Override
-	public Boolean sendMail(final MailNotification mailNotification) {
-		
-		Boolean isSent = false;
+	public void sendMail(final MailNotification mailNotification) {
 		
 		final MimeMessagePreparator mimeMessagePreparator = mimeMessage -> {
 			final MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage);
@@ -37,20 +35,17 @@ public class NotificationUtilImpl implements NotificationUtil {
 		
 		try {
 			this.javaMailSender.send(mimeMessagePreparator);
-			isSent = true;
 		}
 		catch (MailException e) {
 			throw new MailNotificationNotProcessedException("Sending mail to %s not processed as expected"
 					.formatted(mailNotification.to()));
 		}
-		
-		return isSent;
 	}
 	
 	@Async
 	@Override
-	public Boolean sendSms() {
-		return false;
+	public void sendSms() {
+		
 	}
 	
 }

@@ -9,15 +9,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.business.reservation.ReservationCommonService;
 import tn.cita.app.business.reservation.customer.model.CustomerReservationResponse;
 import tn.cita.app.business.reservation.customer.service.CustomerReservationService;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.OutdatedStartDateReservationException;
 import tn.cita.app.exception.wrapper.ReservationAlreadyExistsException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
-import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.model.domain.ReservationStatus;
@@ -31,7 +30,6 @@ import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.OrderedDetailRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.SaloonRepository;
-import tn.cita.app.repository.ServiceDetailRepository;
 import tn.cita.app.util.ClientPageRequestUtils;
 import tn.cita.app.util.StringWrapperUtils;
 
@@ -45,7 +43,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	private final ReservationRepository reservationRepository;
 	private final ReservationCommonService reservationCommonService;
 	private final SaloonRepository saloonRepository;
-	private final ServiceDetailRepository serviceDetailRepository;
+	// private final ServiceDetailRepository serviceDetailRepository;
 	private final OrderedDetailRepository orderedDetailRepository;
 	
 	@Override
@@ -130,9 +128,11 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 			orderedDetail.setReservationId(savedReservation.getId());
 			orderedDetail.setServiceDetailId(serviceDetailId);
 			orderedDetail.setOrderedDate(LocalDateTime.now());
+			/*
 			orderedDetail.setReservation(savedReservation);
 			orderedDetail.setServiceDetail(this.serviceDetailRepository.findById(serviceDetailId)
 					.orElseThrow(ServiceDetailNotFoundException::new));
+			*/
 			// persist...
 			this.orderedDetailRepository.saveOrderedDetail(new OrderedDetailRequest(
 					orderedDetail.getReservationId(), 

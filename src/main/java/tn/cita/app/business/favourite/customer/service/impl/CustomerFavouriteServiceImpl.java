@@ -13,7 +13,6 @@ import tn.cita.app.business.favourite.customer.service.CustomerFavouriteService;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.FavouriteAlreadyExistsException;
 import tn.cita.app.exception.wrapper.FavouriteNotFoundException;
-import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.mapper.FavouriteMapper;
 import tn.cita.app.model.domain.entity.Favourite;
@@ -22,7 +21,6 @@ import tn.cita.app.model.dto.FavouriteDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.FavouriteRepository;
-import tn.cita.app.repository.SaloonRepository;
 import tn.cita.app.util.ClientPageRequestUtils;
 
 @Service
@@ -33,7 +31,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	
 	private final CustomerRepository customerRepository;
 	private final FavouriteRepository favouriteRepository;
-	private final SaloonRepository saloonRepository;
+	// private final SaloonRepository saloonRepository;
 	
 	@Override
 	public CustomerFavouriteResponse fetchAllFavourites(final String username, final ClientPageRequest clientPageRequest) {
@@ -82,13 +80,15 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 		
 		// persist..
 		this.favouriteRepository.saveFavourite(Favourite.builder()
-					.customerId(customer.getId())
-					.saloonId(saloonId)
+					.customerId(favouriteId.getCustomerId())
+					.saloonId(favouriteId.getSaloonId())
 					.favouriteDate(LocalDateTime.now())
 					.identifier(UUID.randomUUID().toString())
+					/*
 					.customer(customer)
-					.saloon(this.saloonRepository.findById(saloonId)
-							.orElseThrow(SaloonNotFoundException::new))
+					.saloon(this.saloonRepository.findById(favouriteId.getSaloonId())
+					 		.orElseThrow(SaloonNotFoundException::new))
+					 */
 					.build());
 		
 		return this.favouriteRepository.findById(favouriteId)
