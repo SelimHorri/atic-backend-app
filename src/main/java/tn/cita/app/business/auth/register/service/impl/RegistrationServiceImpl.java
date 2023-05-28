@@ -107,7 +107,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private static boolean isValidRole(final String role) {
 		return Arrays.stream(UserRoleBasedAuthority.values())
 				.map(UserRoleBasedAuthority::name)
-				.anyMatch(role::equals);
+				.anyMatch(roleName -> roleName.equals(role));
 	}
 	
 	private RegisterResponse registerCustomer(final RegisterRequest registerRequest) {
@@ -126,7 +126,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 									.password(this.passwordEncoder
 											.encode(registerRequest.password()))
 									.userRoleBasedAuthority(UserRoleUtils
-											.checkUserRoleBasedAuthority(registerRequest.role()))
+											.getUserRoleFrom(registerRequest.role()))
 									.isEnabled(false)
 									.isAccountNonExpired(true)
 									.isAccountNonLocked(true)
@@ -135,7 +135,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 						.build());
 		log.info("** Customer saved successfully! *");
 		
-		return this.commonProcess(savedCustomer.getCredential(), () -> UserRoleBasedAuthority.valueOf(registerRequest.role()));
+		return this.commonProcess(savedCustomer.getCredential(), () -> savedCustomer.getCredential().getUserRoleBasedAuthority());
 	}
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
@@ -154,7 +154,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 									.password(this.passwordEncoder
 											.encode(registerRequest.password()))
 									.userRoleBasedAuthority(UserRoleUtils
-											.checkUserRoleBasedAuthority(registerRequest.role()))
+											.getUserRoleFrom(registerRequest.role()))
 									.isEnabled(false)
 									.isAccountNonExpired(true)
 									.isAccountNonLocked(true)
@@ -163,31 +163,36 @@ public class RegistrationServiceImpl implements RegistrationService {
 						.build());
 		log.info("** Employee saved successfully! *");
 		
-		return this.commonProcess(savedEmployee.getCredential(), () -> UserRoleBasedAuthority.valueOf(registerRequest.role()));
+		return this.commonProcess(savedEmployee.getCredential(), () -> savedEmployee.getCredential().getUserRoleBasedAuthority());
 	}
 	
 	private RegisterResponse commonProcess(final Credential credential, final Supplier<UserRoleBasedAuthority> selector) {
-		final var verificationToken = new VerificationToken(UUID.randomUUID().toString(), 
+		final var verificationToken = new VerificationToken(
+				UUID.randomUUID().toString(),
 				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER_MINUTES), 
 				credential);
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *");
 		
-		if (UserRoleBasedAuthority.CUSTOMER.equals(selector.get())) {
-			this.notificationUtil.sendMail(new MailNotification(credential.getCustomer().getEmail(), 
+		if (selector.get().equals(UserRoleBasedAuthority.CUSTOMER)) {
+			this.notificationUtil.sendMail(new MailNotification(
+					credential.getCustomer().getEmail(),
 					"Registration", 
-					new MailBodyContentBuilder(credential.getUsername(), 
+					new MailBodyContentBuilder(
+							credential.getUsername(),
 							String.format("%s/%s", 
 									ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
 									savedVerificationToken.getToken()))));
 			log.info("** Mail sent successfully to: {}! *", credential.getCustomer().getEmail());
 		}
 		else {
-			this.notificationUtil.sendMail(new MailNotification(credential.getEmployee().getEmail(), 
+			this.notificationUtil.sendMail(new MailNotification(
+					credential.getEmployee().getEmail(),
 					"Registration", 
-					new MailBodyContentBuilder(credential.getUsername(), 
-							String.format("%s/%s", 
-									ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
+					new MailBodyContentBuilder(
+							credential.getUsername(),
+							String.format("%s/%s",
+									ServletUriComponentsBuilder.fromCurrentRequestUri().build(),
 									savedVerificationToken.getToken()))));
 			log.info("** Mail sent successfully to: {}! *", credential.getEmployee().getEmail());
 		}

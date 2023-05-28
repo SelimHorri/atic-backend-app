@@ -57,13 +57,12 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.CUSTOMER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
-				new RegisterResponse(String
-						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enable  your account. "
-								+ "Please consider that link will expire after %dmin from registration", 
-								registerRequest.username(), 
-								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true,
+				new RegisterResponse("""
+					User with username %s has been saved successfully.
+					Check your email to enable your account.
+					Please consider that link will expire after %dmin from registration.
+					""".formatted(registerRequest.username(), AppConstants.USER_EXPIRES_AFTER_MINUTES)));
 		
 		this.webTestClient
 				.post()
@@ -98,13 +97,12 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.WORKER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
-				new RegisterResponse(String
-						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enable  your account. "
-								+ "Please consider that link will expire after %dmin from registration", 
-								registerRequest.username(), 
-								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true,
+				new RegisterResponse("""
+					User with username %s has been saved successfully.
+					Check your email to enable your account.
+					Please consider that link will expire after %dmin from registration.
+					""".formatted(registerRequest.username(), AppConstants.USER_EXPIRES_AFTER_MINUTES)));
 		
 		this.webTestClient
 				.post()
@@ -139,13 +137,12 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.MANAGER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
-				new RegisterResponse(String
-						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enable  your account. "
-								+ "Please consider that link will expire after %dmin from registration", 
-								registerRequest.username(), 
-								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true,
+				new RegisterResponse("""
+					User with username %s has been saved successfully.
+					Check your email to enable your account.
+					Please consider that link will expire after %dmin from registration.
+					""".formatted(registerRequest.username(), AppConstants.USER_EXPIRES_AFTER_MINUTES)));
 		
 		this.webTestClient
 				.post()
@@ -180,13 +177,12 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.role(UserRoleBasedAuthority.OWNER.name().toUpperCase())
 				.build();
 		
-		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true, 
-				new RegisterResponse(String
-						.format("User with username %s has been saved successfully. "
-								+ "Check your email to enable  your account. "
-								+ "Please consider that link will expire after %dmin from registration", 
-								registerRequest.username(), 
-								AppConstants.USER_EXPIRES_AFTER_MINUTES)));
+		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.OK, true,
+				new RegisterResponse("""
+					User with username %s has been saved successfully.
+					Check your email to enable your account.
+					Please consider that link will expire after %dmin from registration.
+					""".formatted(registerRequest.username(), AppConstants.USER_EXPIRES_AFTER_MINUTES)));
 		
 		this.webTestClient
 				.post()
