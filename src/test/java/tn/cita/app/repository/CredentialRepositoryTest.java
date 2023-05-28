@@ -2,7 +2,6 @@ package tn.cita.app.repository;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
@@ -18,10 +17,8 @@ class CredentialRepositoryTest extends AbstractSharedMySQLTestContainer {
 	@Autowired
 	private CredentialRepository credentialRepository;
 	
-	@Disabled
 	@Test
 	void givenValidUsername_whenFindCredentialByUsernameIgnoringCase_thenCredentialShouldBeFound() {
-		
 		final var username = "selimhorri";
 		final var optionalCredential = this.credentialRepository.findByUsernameIgnoreCase(username.toUpperCase());
 		

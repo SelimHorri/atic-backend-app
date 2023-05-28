@@ -5,9 +5,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 
@@ -18,12 +18,12 @@ import tn.cita.app.model.domain.entity.Customer;
 import tn.cita.app.model.domain.entity.Reservation;
 
 @DataJpaTest(showSql = true)
+@AutoConfigureDataJpa
 class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 	
 	@Autowired
 	private ReservationRepository reservationRepository;
 	
-	@Disabled
 	@Test
 	void givenValidCustomerId_whenFindAllByCustomerId_thenCustomerShouldBeFound() {
 		
@@ -67,7 +67,6 @@ class ReservationRepositoryTest extends AbstractSharedMySQLTestContainer {
 				.hasSameSizeAs(expectedReservations);
 	}
 	
-	@Disabled
 	@Test
 	void givenValidCode_whenFindByCode_thenOptionalOfReservationShouldBeFound() {
 		
