@@ -39,7 +39,13 @@ public record ReservationRequest(
 		@Size(min = 1, message = "You must specify {min} service at least")
 		List<Integer> serviceDetailsIds,
 		
-		String description) implements Serializable {}
+		String description) implements Serializable {
+	
+	public ReservationRequest {
+		serviceDetailsIds = List.copyOf(serviceDetailsIds);
+	}
+	
+}
 
 
 

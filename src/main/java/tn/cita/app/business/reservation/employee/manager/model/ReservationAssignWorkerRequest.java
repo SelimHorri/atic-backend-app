@@ -18,6 +18,12 @@ public record ReservationAssignWorkerRequest(
 		List<Integer> assignedWorkersIds,
 		
 		@Size(max = 255, message = "Manager description must not be over {max} characters")
-		String managerDescription) implements Serializable {}
+		String managerDescription) implements Serializable {
+	
+	public ReservationAssignWorkerRequest {
+		assignedWorkersIds = List.copyOf(assignedWorkersIds);
+	}
+	
+}
 
 

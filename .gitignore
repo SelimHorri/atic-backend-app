@@ -32,7 +32,10 @@ build/
 ### VS Code ###
 .vscode/
 
+###################################################
+
 static/
 script/
 secrets/
+.DS_Store
 
