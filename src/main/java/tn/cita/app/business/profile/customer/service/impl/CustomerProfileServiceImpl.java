@@ -44,20 +44,23 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		final var customerDto = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+				.orElseThrow(CustomerNotFoundException::new);
 		
 		return CustomerProfileResponse.builder()
 				.customerDto(customerDto)
-				.reservationDtos(this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
-						ClientPageRequestUtils.from(clientPageRequest))
-					.map(ReservationMapper::toDto))
-				.favouriteDtos(this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
-						ClientPageRequestUtils.from(clientPageRequest))
-					.map(FavouriteMapper::toDto))
+				.reservationDtos(this.reservationRepository
+						.findAllByCustomerId(
+								customerDto.getId(),
+								ClientPageRequestUtils.from(clientPageRequest))
+						.map(ReservationMapper::toDto))
+				.favouriteDtos(this.favouriteRepository
+						.findAllByCustomerId(
+								customerDto.getId(),
+								ClientPageRequestUtils.from(clientPageRequest))
+						.map(FavouriteMapper::toDto))
 				.ratingDtos(new PageImpl<>(this.ratingRepository
 						.findAllByCustomerId(customerDto.getId()).stream()
 							.map(RatingMapper::toDto)
-							.distinct()
 							.toList()))
 				.build();
 	}
@@ -69,17 +72,20 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 		log.info("** Update customer profile.. *\n");
 		
 		this.customerRepository
-				.findByCredentialUsernameIgnoringCase(customerProfileRequest.username().strip()).ifPresent(c -> {
-			if (!c.getCredential().getUsername().equals(customerProfileRequest.authenticatedUsername()))
-				throw new UsernameAlreadyExistsException("Username already exists, please choose another");
+				.findByCredentialUsernameIgnoringCase(customerProfileRequest.username().strip())
+				.filter(c -> c.getCredential().getUsername()
+						.equals(customerProfileRequest.authenticatedUsername()))
+				.ifPresent(c -> {
+			throw new UsernameAlreadyExistsException("Username already exists, please choose another");
 		});
 		
 		if (!customerProfileRequest.password().equals(customerProfileRequest.confirmPassword()))
-			throw new PasswordNotMatchException("Passwords are not matched.. please confirm");
+			throw new PasswordNotMatchException("Passwords do not matched.. please confirm");
 		
 		final var authenticatedCustomer = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(customerProfileRequest.authenticatedUsername())
-				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found"
+						.formatted(customerProfileRequest.authenticatedUsername())));
 		authenticatedCustomer.setFirstname(customerProfileRequest.firstname().strip());
 		authenticatedCustomer.setLastname(customerProfileRequest.lastname().strip());
 		authenticatedCustomer.setEmail(customerProfileRequest.email().strip());
@@ -98,10 +104,6 @@ public class CustomerProfileServiceImpl implements CustomerProfileService {
 	}
 	
 }
-
-
-
-
 
 
 

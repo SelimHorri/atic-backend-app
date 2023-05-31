@@ -40,12 +40,10 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
 						.findAllByReservationId(reservationDto.getId()).stream()
 						.map(OrderedDetailMapper::toDto)
-						.distinct()
 						.toList()))
 				.taskDtos(new PageImpl<>(this.taskRepository
 						.findAllByReservationId(reservationDto.getId()).stream()
 						.map(TaskMapper::toDto)
-						.distinct()
 						.toList()))
 				.build();
 	}
@@ -53,7 +51,8 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final String reservationIdentifier) {
 		log.info("** Fetch reservation details by reservationIdentifier by customer.. *\n");
-		final var reservationDto = this.reservationRepository.findByIdentifier(reservationIdentifier.strip())
+		final var reservationDto = this.reservationRepository
+				.findByIdentifier(reservationIdentifier.strip())
 				.map(ReservationMapper::toDto)
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
 		return ReservationDetailResponse.builder()
@@ -61,12 +60,10 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
 						.findAllByReservationId(reservationDto.getId()).stream()
 						.map(OrderedDetailMapper::toDto)
-						.distinct()
 						.toList()))
 				.taskDtos(new PageImpl<>(this.taskRepository
 						.findAllByReservationId(reservationDto.getId()).stream()
 						.map(TaskMapper::toDto)
-						.distinct()
 						.toList()))
 				.build();
 	}
@@ -84,10 +81,6 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	}
 	
 }
-
-
-
-
 
 
 

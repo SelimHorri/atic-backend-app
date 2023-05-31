@@ -53,10 +53,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto updateDescription(final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
-		
 		log.info("** Update description by worker.. *\n");
 		
-		final var worker = this.employeeRepository
+		final var workerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(taskUpdateDescriptionRequest.username())
 				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
@@ -67,7 +66,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.orElseThrow(ReservationNotFoundException::new);
 		
 		final var task = this.taskRepository
-				.findById(new TaskId(worker.getId(), reservation.getId()))
+				.findById(new TaskId(workerDto.getId(), reservation.getId()))
 				.orElseThrow(TaskNotFoundException::new);
 		
 		if (Objects.nonNull(task.getEndDate()))
@@ -83,10 +82,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto beginTask(final TaskBeginEndRequest taskBeginRequest) {
-		
 		log.info("** Begin task by worker.. *\n");
 		
-		final var worker = this.employeeRepository
+		final var workerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(taskBeginRequest.username())
 				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
@@ -97,7 +95,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.orElseThrow(ReservationNotFoundException::new);
 		
 		final var task = this.taskRepository
-				.findById(new TaskId(worker.getId(), reservation.getId()))
+				.findById(new TaskId(workerDto.getId(), reservation.getId()))
 				.orElseThrow(TaskNotFoundException::new);
 		
 		if (Objects.nonNull(task.getEndDate()))
@@ -113,7 +111,7 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		// make reservation as in_progress..
 		if (!reservation.getStatus().equals(ReservationStatus.NOT_STARTED)
 				&& !reservation.getStatus().equals(ReservationStatus.IN_PROGRESS))
-			throw new IllegalArgumentException("Illegal reservation status when begining task");
+			throw new IllegalArgumentException("Illegal reservation status when beginning task");
 		
 		reservation.setStatus(ReservationStatus.IN_PROGRESS);
 		
@@ -128,7 +126,6 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto endTask(final TaskBeginEndRequest taskEndRequest) {
-		
 		log.info("** End task by worker.. *\n");
 		
 		final var workerDto = this.employeeRepository
@@ -156,18 +153,17 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 				.trimIfBlank(taskEndRequest.workerDescription()));
 		
 		// fetch all assigned workers to this reservation..
-		final var assignedOtherTaskDtos = this.taskRepository
+		final var assignedOtherTasks = this.taskRepository
 				.findAllByReservationId(taskEndRequest.reservationId()).stream()
 					.filter(t -> !t.getWorkerId().equals(workerDto.getId()))
-					.distinct()
 					.toList();
 		
-		final boolean isAllTasksEnded = assignedOtherTaskDtos.stream()
+		final boolean areAllTasksEnded = assignedOtherTasks.stream()
 					.map(Task::getEndDate)
 					.allMatch(Objects::nonNull);
 		
 		// update reservation as COMPLETED if match..
-		if (isAllTasksEnded) {
+		if (areAllTasksEnded) {
 			reservation.setStatus(ReservationStatus.COMPLETED);
 			reservation.setCompleteDate(LocalDateTime.now());
 			final var completedReservation = this.reservationRepository.save(reservation);
@@ -179,10 +175,6 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	}
 	
 }
-
-
-
-
 
 
 

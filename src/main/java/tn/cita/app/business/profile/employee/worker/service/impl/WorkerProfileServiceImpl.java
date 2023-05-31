@@ -34,23 +34,25 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 		final var workerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
+				.orElseThrow(EmployeeNotFoundException::new);
 		return new WorkerProfileResponse(
 				workerDto, 
 				workerDto.getCredentialDto(), 
-				new PageImpl<>(this.taskRepository.findAllByWorkerId(workerDto.getId())));
+				new PageImpl<>(this.taskRepository
+						.findAllByWorkerId(workerDto.getId())));
 	}
 	
 	@Transactional
 	@Override
 	public EmployeeDto updateProfileInfo(final WorkerProfileRequest workerProfileRequest) {
-		
 		log.info("** Update worker profile.. *\n");
 
 		this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(workerProfileRequest.username().strip()).ifPresent(c -> {
-			if (!c.getCredential().getUsername().equals(workerProfileRequest.authenticatedUsername()))
-				throw new UsernameAlreadyExistsException("Username already exists, please choose another");
+				.findByCredentialUsernameIgnoringCase(workerProfileRequest.username().strip())
+				.filter(c -> c.getCredential().getUsername()
+						.equals(workerProfileRequest.authenticatedUsername()))
+				.ifPresent(c -> {
+			throw new UsernameAlreadyExistsException("Username already exists, please choose another");
 		});
 		
 		if (!workerProfileRequest.password().equals(workerProfileRequest.confirmPassword()))
@@ -58,7 +60,8 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 		
 		final var authenticatedWorker = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(workerProfileRequest.authenticatedUsername().strip())
-				.orElseThrow(() -> new EmployeeNotFoundException("Worker not found"));
+				.orElseThrow(() -> new EmployeeNotFoundException("Employee with username: %s not found"
+						.formatted(workerProfileRequest.authenticatedUsername())));
 		authenticatedWorker.setFirstname(workerProfileRequest.firstname().strip());
 		authenticatedWorker.setLastname(workerProfileRequest.lastname().strip());
 		authenticatedWorker.setEmail(workerProfileRequest.email().strip());
@@ -72,9 +75,6 @@ public class WorkerProfileServiceImpl implements WorkerProfileService {
 	}
 	
 }
-
-
-
 
 
 

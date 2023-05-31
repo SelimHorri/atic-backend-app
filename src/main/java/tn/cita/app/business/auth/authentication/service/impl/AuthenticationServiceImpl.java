@@ -28,7 +28,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	@Override
 	public LoginResponse authenticate(final LoginRequest loginRequest) {
-		
 		log.info("** Authenticate user.. *\n");
 		
 		final var userDetails = this.userDetailsService.loadUserByUsername(loginRequest.username());
@@ -43,11 +42,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 	
 }
-
-
-
-
-
 
 
 

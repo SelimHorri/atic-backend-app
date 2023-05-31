@@ -34,19 +34,17 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	
 	@Override
 	public Page<CategoryDto> fetchAll(final String username) {
-		
 		log.info("** Fetch all categories by manager.. *\n");
 		
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() ->
+						new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
 		
 		return new PageImpl<>(this.categoryRepository
 				.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
 					.map(CategoryMapper::toDto)
-					.distinct()
 					.sorted(Comparator.comparing(CategoryDto::getName))
 					.toList());
 	}
@@ -70,11 +68,13 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	@Transactional
 	@Override
 	public CategoryDto saveCategory(final CategoryRequest categoryRequest) {
-		
 		log.info("** Save category by manager.. *\n");
 		
 		final var parentCategory = (categoryRequest.parentCategoryId() != null) ?
-				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
+				this.categoryRepository
+						.findById(categoryRequest.parentCategoryId())
+						.orElseGet(Category::new)
+				: null;
 		
 		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
 				.orElseThrow(SaloonNotFoundException::new);
@@ -91,11 +91,13 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	@Transactional
 	@Override
 	public CategoryDto updateCategory(final CategoryRequest categoryRequest) {
-		
 		log.info("** Update category by manager.. *\n");
 		
 		final var parentCategory = (categoryRequest.parentCategoryId() != null) ?
-				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
+				this.categoryRepository
+						.findById(categoryRequest.parentCategoryId())
+						.orElseGet(Category::new)
+				: null;
 		
 		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
 				.orElseThrow(SaloonNotFoundException::new);
@@ -111,10 +113,6 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	}
 	
 }
-
-
-
-
 
 
 

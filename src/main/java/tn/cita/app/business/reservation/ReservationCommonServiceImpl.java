@@ -74,7 +74,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		log.info("** Fetch all unassigned sub workers.. *\n");
 
-		final var managerDto = this.employeeRepository.findByCredentialUsernameIgnoringCase(username)
+		final var managerDto = this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException(String
 						.format("Employee with username: %s not found", username)));
@@ -90,7 +91,6 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 				.findAllByManagerId(managerDto.getId()).stream()
 					.map(EmployeeMapper::toDto)
 					.filter(w -> !assignedWorkersIds.contains(w.getId()))
-					.distinct()
 					.toList();
 		
 		return new ReservationSubWorkerResponse(
@@ -133,7 +133,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 					.orElseThrow(EmployeeNotFoundException::new));
 			*/
 			this.taskRepository.saveTask(task);
-			assignedWorkers.add(this.taskRepository.findById(new TaskId(task.getWorkerId(), task.getReservationId()))
+			assignedWorkers.add(this.taskRepository
+					.findById(new TaskId(task.getWorkerId(), task.getReservationId()))
 					.orElseThrow(TaskNotFoundException::new));
 		}
 		
@@ -142,16 +143,12 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 				.map(workerId -> this.employeeRepository.findById(workerId)
 						.map(EmployeeMapper::toDto)
 						.orElseThrow(EmployeeNotFoundException::new))
-				.distinct()
 				.toList();
 		
 		return new ReservationSubWorkerResponse(ReservationMapper.toDto(reservation), new PageImpl<>(savedAssignedWorkers));
 	}
 	
 }
-
-
-
 
 
 

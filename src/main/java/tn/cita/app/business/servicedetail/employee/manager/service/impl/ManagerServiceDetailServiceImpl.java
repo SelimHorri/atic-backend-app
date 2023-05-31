@@ -35,7 +35,6 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Override
 	public Page<ServiceDetailDto> fetchAll(final String username) {
-		
 		log.info("** Fetch all service details by manager.. *\n");
 		
 		final var managerDto = this.employeeRepository
@@ -47,8 +46,8 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 		return new PageImpl<>(this.serviceDetailRepository
 				.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()).stream()
 					.map(ServiceDetailMapper::toDto)
-					.distinct()
-					.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
+					.sorted(Comparator
+							.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
 							.thenComparing(ServiceDetailDto::getName))
 					.toList());
 	}
@@ -72,7 +71,6 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	@Transactional
 	@Override
 	public ServiceDetailDto saveServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
-		
 		log.info("** Save new service detail.. *\n");
 		
 		final var category = this.categoryRepository.findById(serviceDetailRequest.getCategoryId())
@@ -82,7 +80,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 				.name(serviceDetailRequest.getName().strip().toLowerCase())
 				.description(StringWrapperUtils
 						.trimIfBlank(serviceDetailRequest.getDescription()))
-					.isAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable())
+				.isAvailable(serviceDetailRequest.getIsAvailable() == null || serviceDetailRequest.getIsAvailable())
 				.duration(serviceDetailRequest.getDuration())
 				.priceUnit(serviceDetailRequest.getPriceUnit())
 				.category(category)
@@ -94,7 +92,6 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	@Transactional
 	@Override
 	public ServiceDetailDto updateServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
-		
 		log.info("** Update service detail.. *\n");
 		
 		final var category = this.categoryRepository.findById(serviceDetailRequest.getCategoryId())
@@ -106,7 +103,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
 		serviceDetail.setDescription(StringWrapperUtils
 				.trimIfBlank(serviceDetailRequest.getDescription()));
-		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable());
+		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable() == null || serviceDetailRequest.getIsAvailable());
 		serviceDetail.setDuration(serviceDetailRequest.getDuration());
 		serviceDetail.setPriceUnit(serviceDetailRequest.getPriceUnit());
 		serviceDetail.setCategory(category);

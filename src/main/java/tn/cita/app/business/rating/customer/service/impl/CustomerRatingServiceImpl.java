@@ -29,20 +29,17 @@ public class CustomerRatingServiceImpl implements CustomerRatingService {
 		final var customerDto = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
+				.orElseThrow(() ->
+						new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
 		return new CustomerRatingResponse(
 				customerDto,
 				new PageImpl<>(this.ratingRepository
 						.findAllByCustomerId(customerDto.getId()).stream()
 							.map(RatingMapper::toDto)
-							.distinct()
 							.toList()));
 	}
 	
 }
-
-
-
 
 
 

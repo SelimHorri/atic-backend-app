@@ -32,7 +32,6 @@ public class CategoryServiceImpl implements CategoryService {
 		log.info("** Find all categories.. *\n");
 		return this.categoryRepository.findAll().stream()
 				.map(CategoryMapper::toDto)
-				.distinct()
 				.toList();
 	}
 	
@@ -41,14 +40,14 @@ public class CategoryServiceImpl implements CategoryService {
 		log.info("** Find category by id.. *\n");
 		return this.categoryRepository.findById(id)
 				.map(CategoryMapper::toDto)
-				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+				.orElseThrow(CategoryNotFoundException::new);
 	}
 	
 	@Override
 	public CategoryDto findByIdentifier(final String identifier) {
 		return this.categoryRepository.findByIdentifier(identifier.strip())
 				.map(CategoryMapper::toDto)
-				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+				.orElseThrow(CategoryNotFoundException::new);
 	}
 	
 	@Override
@@ -56,7 +55,6 @@ public class CategoryServiceImpl implements CategoryService {
 		log.info("** Find all categories by saloonId.. *\n");
 		return this.categoryRepository.findAllBySaloonId(saloonId).stream()
 				.map(CategoryMapper::toDto)
-				.distinct()
 				.sorted(Comparator.comparing(CategoryDto::getName))
 				.toList();
 	}
@@ -64,14 +62,16 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	@Override
 	public CategoryDto save(final CategoryRequest categoryRequest) {
-		
 		log.info("** Save a category.. *\n");
 		
 		final var parentCategory = Optional.ofNullable(categoryRequest.parentCategoryId()).isPresent() ?
-				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
+				this.categoryRepository
+						.findById(categoryRequest.parentCategoryId())
+						.orElseGet(Category::new)
+				: null;
 		
 		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
-				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
+				.orElseThrow(SaloonNotFoundException::new);
 		
 		final var category = Category.builder()
 				.name(categoryRequest.name().strip().toLowerCase())
@@ -85,14 +85,16 @@ public class CategoryServiceImpl implements CategoryService {
 	@Transactional
 	@Override
 	public CategoryDto update(final CategoryRequest categoryRequest) {
-		
 		log.info("** Update a category.. *\n");
 		
 		final var parentCategory = Optional.ofNullable(categoryRequest.parentCategoryId()).isPresent() ?
-				this.categoryRepository.findById(categoryRequest.parentCategoryId()).orElseGet(Category::new) : null;
+				this.categoryRepository
+						.findById(categoryRequest.parentCategoryId())
+						.orElseGet(Category::new)
+				: null;
 		
 		final var saloon = this.saloonRepository.findById(categoryRequest.saloonId())
-				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
+				.orElseThrow(SaloonNotFoundException::new);
 		
 		final var category = this.categoryRepository.findById(categoryRequest.categoryId())
 				.orElseThrow(CategoryNotFoundException::new);

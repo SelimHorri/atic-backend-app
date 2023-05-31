@@ -66,22 +66,19 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	@Override
 	public Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids) {
 		log.info("** Find all service details by ids.. *\n");
-		final var list = this.serviceDetailRepository.findAllById(ids).stream()
+		return new PageImpl<>(this.serviceDetailRepository
+				.findAllById(ids).stream()
 				.map(ServiceDetailMapper::toDto)
-				.distinct()
-				.toList();
-		return new PageImpl<>(list);
+				.toList());
 	}
 	
 	@Override
 	public ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final Integer reservationId) {
-		
 		log.info("** Fetch ordered service details by reservationId.. *\n");
 		
 		final var orderedDetailDtos = this.orderedDetailRepository
 				.findAllByReservationId(reservationId).stream()
 					.map(OrderedDetailMapper::toDto)
-					.distinct()
 					.collect(Collectors.toList());
 		final var ids = orderedDetailDtos.stream()
 					.map(OrderedDetailDto::getServiceDetailId)
@@ -105,7 +102,6 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		final var orderedDetailDtos = this.orderedDetailRepository
 				.findAllByReservationId(reservationDto.getId()).stream()
 					.map(OrderedDetailMapper::toDto)
-					.distinct()
 					.toList();
 		final var ids = orderedDetailDtos.stream()
 					.map(OrderedDetailDto::getServiceDetailId)
@@ -123,19 +119,20 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		return new PageImpl<>(this.serviceDetailRepository
 				.findAllByCategoryId(categoryId).stream()
 					.map(ServiceDetailMapper::toDto)
-					.distinct()
 					.toList());
 	}
 	
 	@Override
 	public List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
 		log.info("** Find all service details by category saloonId.. *\n");
-		return this.serviceDetailRepository.findAllByCategorySaloonId(saloonId).stream()
-				.map(ServiceDetailMapper::toDto)
-				.distinct()
-				.sorted(Comparator.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
-						.thenComparing(ServiceDetailDto::getName))
-				.toList();
+		return this.serviceDetailRepository
+				.findAllByCategorySaloonId(saloonId).stream()
+					.map(ServiceDetailMapper::toDto)
+					.distinct()
+					.sorted(Comparator
+							.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
+							.thenComparing(ServiceDetailDto::getName))
+					.toList();
 	}
 	
 	@Transactional
@@ -145,14 +142,14 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		log.info("** Save new service detail.. *\n");
 		
 		final var category = this.categoryRepository.findById(serviceDetailRequest.getCategoryId())
-				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+				.orElseThrow(CategoryNotFoundException::new);
 		
 		final var serviceDetail = ServiceDetail.builder()
 				.name(serviceDetailRequest.getName().strip().toLowerCase())
 				.description((serviceDetailRequest.getDescription() == null 
 							|| serviceDetailRequest.getDescription().isBlank()) ?
 						null : serviceDetailRequest.getDescription().strip())
-				.isAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable())
+				.isAvailable(serviceDetailRequest.getIsAvailable() == null || serviceDetailRequest.getIsAvailable())
 				.duration(serviceDetailRequest.getDuration())
 				.priceUnit(serviceDetailRequest.getPriceUnit())
 				.category(category)
@@ -172,13 +169,13 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 		
 		final var serviceDetail = this.serviceDetailRepository
 				.findById(serviceDetailRequest.getServiceDetailId())
-					.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
+				.orElseThrow(ServiceDetailNotFoundException::new);
 		
 		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
 		serviceDetail.setDescription((serviceDetailRequest.getDescription() == null 
 					|| serviceDetailRequest.getDescription().isBlank()) ?
 				null : serviceDetailRequest.getDescription().strip());
-		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable() == null ? true : serviceDetailRequest.getIsAvailable());
+		serviceDetail.setIsAvailable(serviceDetailRequest.getIsAvailable() == null || serviceDetailRequest.getIsAvailable());
 		serviceDetail.setDuration(serviceDetailRequest.getDuration());
 		serviceDetail.setPriceUnit(serviceDetailRequest.getPriceUnit());
 		serviceDetail.setCategory(category);

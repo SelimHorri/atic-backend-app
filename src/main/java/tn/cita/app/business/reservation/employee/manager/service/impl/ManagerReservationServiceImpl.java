@@ -52,8 +52,9 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 					new PageImpl<>(this.reservationRepository
 							.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
 							.map(ReservationMapper::toDto)
-							.distinct()
-							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
+							.sorted(Comparator
+									.comparing(ReservationDto::getStartDate)
+									.reversed())
 							.toList()));
 	}
 	
@@ -76,8 +77,9 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 				new PageImpl<>(this.reservationRepository
 						.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase()).stream()
 							.map(ReservationMapper::toDto)
-							.distinct()
-							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
+							.sorted(Comparator
+									.comparing(ReservationDto::getStartDate)
+									.reversed())
 							.toList()));
 	}
 	

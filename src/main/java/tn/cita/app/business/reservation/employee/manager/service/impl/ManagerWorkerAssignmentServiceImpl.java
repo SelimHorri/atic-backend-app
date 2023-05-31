@@ -53,15 +53,10 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 				new PageImpl<>(this.taskRepository
 						.searchAllByWorkerIdLikeKey(workerId, key.strip().toLowerCase()).stream()
 							.map(TaskMapper::toDto)
-							.distinct()
 							.toList()));
 	}
 	
 }
-
-
-
-
 
 
 

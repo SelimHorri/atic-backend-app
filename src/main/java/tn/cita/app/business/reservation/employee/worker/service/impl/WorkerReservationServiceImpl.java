@@ -62,7 +62,6 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 		return new PageImpl<>(this.taskRepository
 				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.strip().toLowerCase()).stream()
 					.map(TaskMapper::toDto)
-					.distinct()
 					.toList());
 	}
 	

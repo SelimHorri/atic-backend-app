@@ -48,7 +48,6 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 						this.orderedDetailRepository
 								.findAllByReservationId(reservationDto.getId()).stream()
 								.map(OrderedDetailMapper::toDto)
-								.distinct()
 								.toList()))
 				.build();
 	}
@@ -61,7 +60,6 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 		final var taskDtos = this.taskRepository
 				.findAllByReservationId(reservationId).stream()
 					.map(TaskMapper::toDto)
-					.distinct()
 					.toList();
 		
 		final var firstTaskBegin = taskDtos.stream()

@@ -52,7 +52,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		final var customerDto = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
+				.orElseThrow(() ->
+						new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
 		return new CustomerReservationResponse(
 				customerDto,
 				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
@@ -70,10 +71,13 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		return new CustomerReservationResponse(
 				customerDto, 
 				new PageImpl<>(this.reservationRepository
-						.searchAllByCustomerIdLikeKey(customerDto.getId(), key.strip().toLowerCase()).stream()
+						.searchAllByCustomerIdLikeKey(
+								customerDto.getId(),
+								key.strip().toLowerCase()).stream()
 							.map(ReservationMapper::toDto)
-							.distinct()
-							.sorted(Comparator.comparing(ReservationDto::getStartDate).reversed())
+							.sorted(Comparator
+									.comparing(ReservationDto::getStartDate)
+									.reversed())
 							.toList()));
 	}
 	
@@ -94,10 +98,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
 		this.reservationRepository
-				.findByStartDateAndStatus(
-						reservationRequest.startDate(), 
-						ReservationStatus.NOT_STARTED)
-				.ifPresent(r -> {
+				.findByStartDateAndStatus(reservationRequest.startDate(), ReservationStatus.NOT_STARTED).ifPresent(r -> {
 			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		});
 		
@@ -144,9 +145,6 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	}
 	
 }
-
-
-
 
 
 

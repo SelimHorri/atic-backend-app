@@ -37,20 +37,15 @@ public class WorkerReservationDetailServiceImpl implements WorkerReservationDeta
 				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
 						.findAllByReservationId(reservationDto.getId()).stream()
 						.map(OrderedDetailMapper::toDto)
-						.distinct()
 						.toList()))
 				.taskDtos(new PageImpl<>(this.taskRepository
 						.findAllByReservationId(reservationDto.getId()).stream()
 						.map(TaskMapper::toDto)
-						.distinct()
 						.toList()))
 				.build();
 	}
 	
 }
-
-
-
 
 
 
