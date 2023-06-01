@@ -22,7 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(final String username) {
-		
 		log.info("** Load user by username.. *\n");
 		
 		final UserDetails userDetails = new CustomUserDetails(this.credentialRepository
@@ -47,9 +46,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 	}
 	
 }
-
-
-
 
 
 

@@ -28,8 +28,7 @@ public class ReservationResource {
 	private final ReservationService reservationService;
 	
 	@GetMapping("/{id}")
-	public ResponseEntity<ApiResponse<ReservationDto>> findById(final WebRequest request, 
-			@PathVariable final String id) {
+	public ResponseEntity<ApiResponse<ReservationDto>> findById(final WebRequest request, @PathVariable final String id) {
 		log.info("** Find a reservation by id.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findById(Integer.parseInt(id))));
@@ -43,26 +42,23 @@ public class ReservationResource {
 	}
 	
 	@GetMapping("/code/{code}")
-	public ResponseEntity<ApiResponse<ReservationDto>> findByCode(final WebRequest request,
-			@PathVariable final String code) {
+	public ResponseEntity<ApiResponse<ReservationDto>> findByCode(final WebRequest request, @PathVariable final String code) {
 		log.info("** Find a reservation by code.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.reservationService.findByCode(code)));
 	}
 	
 	@GetMapping("/saloonId/{saloonId}")
-	public ResponseEntity<ApiResponse<Page<ReservationDto>>> findAllBySaloonId(final WebRequest request,
+	public ResponseEntity<ApiResponse<Page<ReservationDto>>> findAllBySaloonId(
+			final WebRequest request,
 			@PathVariable final String saloonId, 
 			@RequestParam(required = false) final Map<String, String> params) {
 		log.info("** Find all reservations by saloonId.. *\n");
 		final var reservations = this.reservationService.findAllBySaloonId(Integer.parseInt(saloonId));
-		return ResponseEntity.ok(new ApiResponse<>((int)reservations.size(), 
-				HttpStatus.OK, true, new PageImpl<>(reservations)));
+		return ResponseEntity.ok(new ApiResponse<>((int)reservations.size(), HttpStatus.OK, true, new PageImpl<>(reservations)));
 	}
 	
 }
-
-
 
 
 

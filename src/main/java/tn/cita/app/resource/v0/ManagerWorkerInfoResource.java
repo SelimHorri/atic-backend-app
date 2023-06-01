@@ -31,8 +31,8 @@ public class ManagerWorkerInfoResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<ManagerWorkerInfoResponse>> fetchAllSubWorkers(final WebRequest webRequest) {
 		log.info("** Fetch all sub workers by manager.. *\n");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerWorkerInfoService
-				.fetchAllSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest))));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.managerWorkerInfoService.fetchAllSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
 	
 	@GetMapping("/{workerId}")
@@ -45,7 +45,6 @@ public class ManagerWorkerInfoResource {
 	}
 	
 }
-
 
 
 

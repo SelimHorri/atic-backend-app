@@ -43,8 +43,8 @@ public class ManagerServiceDetailResource {
 	}
 	
 	@GetMapping("/{serviceDetailId}")
-	public ResponseEntity<ApiResponse<ServiceDetailDto>> fetchById(final WebRequest webRequest, 
-			@PathVariable final String serviceDetailId) {
+	public ResponseEntity<ApiResponse<ServiceDetailDto>> fetchById(
+			final WebRequest webRequest, @PathVariable final String serviceDetailId) {
 		log.info("** Fetch service detail by id by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
@@ -52,8 +52,8 @@ public class ManagerServiceDetailResource {
 	}
 	
 	@PostMapping
-	public ResponseEntity<ApiResponse<ServiceDetailDto>> saveServiceDetail(final WebRequest webRequest, 
-			@RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
+	public ResponseEntity<ApiResponse<ServiceDetailDto>> saveServiceDetail(
+			final WebRequest webRequest, @RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
 		log.info("** Save service detail by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
@@ -61,8 +61,8 @@ public class ManagerServiceDetailResource {
 	}
 	
 	@PutMapping
-	public ResponseEntity<ApiResponse<ServiceDetailDto>> updateServiceDetail(final WebRequest webRequest, 
-			@RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
+	public ResponseEntity<ApiResponse<ServiceDetailDto>> updateServiceDetail(
+			final WebRequest webRequest, @RequestBody @Valid final ServiceDetailRequest serviceDetailRequest) {
 		log.info("** Update service detail by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
@@ -70,8 +70,7 @@ public class ManagerServiceDetailResource {
 	}
 	
 	@DeleteMapping("/{serviceDetailId}")
-	public ResponseEntity<ApiResponse<Boolean>> deleteServiceDetail(final WebRequest webRequest, 
-			@PathVariable final String serviceDetailId) {
+	public ResponseEntity<ApiResponse<Boolean>> deleteServiceDetail(final WebRequest webRequest, @PathVariable final String serviceDetailId) {
 		log.info("** Delete service detail by manager.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
@@ -79,8 +78,6 @@ public class ManagerServiceDetailResource {
 	}
 	
 }
-
-
 
 
 

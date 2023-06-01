@@ -35,8 +35,8 @@ public class ManagerReservationDetailResource {
 	private final ManagerReservationDetailService managerReservationDetailService;
 	
 	@GetMapping("/{reservationId}")
-	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(final WebRequest request,
-			@PathVariable final String reservationId) {
+	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(
+			final WebRequest request, @PathVariable final String reservationId) {
 		log.info("** Fetch manager reservation details.. *\n");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
@@ -44,8 +44,8 @@ public class ManagerReservationDetailResource {
 	}
 	
 	@GetMapping("/{reservationId}/tasks/info/beginEnd")
-	public ResponseEntity<ApiResponse<ReservationBeginEndTask>> fetchBeginEndTask(final WebRequest webRequest, 
-			@PathVariable final String reservationId) {
+	public ResponseEntity<ApiResponse<ReservationBeginEndTask>> fetchBeginEndTask(
+			final WebRequest webRequest, @PathVariable final String reservationId) {
 		log.info("** Fetch manager begin and end task.. *\n");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
@@ -53,27 +53,25 @@ public class ManagerReservationDetailResource {
 	}
 	
 	@GetMapping("/{reservationId}/tasks/unassigned")
-	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> fetchAllUnassignedSubWorkers(final WebRequest webRequest, 
-			@PathVariable final String reservationId) {
+	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> fetchAllUnassignedSubWorkers(
+			final WebRequest webRequest, @PathVariable final String reservationId) {
 		log.info("** Fetch all manager unassigned sub workers.. *\n");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationDetailService
-				.fetchAllUnassignedSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
-						Integer.parseInt(reservationId))));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.managerReservationDetailService.fetchAllUnassignedSubWorkers(
+						this.userRequestExtractorUtil.extractUsername(webRequest), Integer.parseInt(reservationId))));
 	}
 	
 	@PostMapping("/tasks/assign")
 	public ResponseEntity<ApiResponse<ReservationSubWorkerResponse>> assignReservationWorkers(final WebRequest webRequest, 
 			@RequestBody @Valid final ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
 		log.info("** Assign sub workers to a reservation by manager.. *\n");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerReservationDetailService
-				.assignReservationWorkers(this.userRequestExtractorUtil.extractUsername(webRequest), 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.managerReservationDetailService.assignReservationWorkers(
+						this.userRequestExtractorUtil.extractUsername(webRequest),
 						reservationAssignWorkerRequest)));
 	}
 	
 }
-
-
-
 
 
 

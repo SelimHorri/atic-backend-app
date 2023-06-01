@@ -37,8 +37,8 @@ public class WorkerReservationTaskResource {
 	public ResponseEntity<ApiResponse<TaskDto>> fetchAssignedTask(final WebRequest webRequest, @PathVariable final String reservationId) {
 		log.info("** Fetch worker assigned task.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.workerReservationTaskService.fetchAssignedTask(this.userRequestExtractorUtil.extractUsername(webRequest), 
-						Integer.parseInt(reservationId))));
+				this.workerReservationTaskService.fetchAssignedTask(
+						this.userRequestExtractorUtil.extractUsername(webRequest), Integer.parseInt(reservationId))));
 	}
 	
 	@PutMapping("/describe")
@@ -69,8 +69,6 @@ public class WorkerReservationTaskResource {
 	}
 	
 }
-
-
 
 
 

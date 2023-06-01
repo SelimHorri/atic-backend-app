@@ -41,7 +41,8 @@ public class CustomerProfileResource {
 			@RequestParam final Map<String, String> params) {
 		log.info("** Fetch customer profile info.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerProfileService.fetchProfile(this.userRequestExtractorUtil.extractUsername(request), 
+				this.customerProfileService.fetchProfile(
+						this.userRequestExtractorUtil.extractUsername(request),
 						ClientPageRequest.from(params))));
 	}
 	
@@ -55,8 +56,6 @@ public class CustomerProfileResource {
 	}
 	
 }
-
-
 
 
 

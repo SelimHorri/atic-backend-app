@@ -38,8 +38,9 @@ public class CustomerFavouriteResource {
 	public ResponseEntity<ApiResponse<CustomerFavouriteResponse>> fetchAllFavourites(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
 		log.info("** Fetch all customer favourites.. *\n");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.customerFavouriteService.fetchAllFavourites(this.userRequestExtractorUtil.extractUsername(request), 
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.customerFavouriteService.fetchAllFavourites(
+						this.userRequestExtractorUtil.extractUsername(request),
 						ClientPageRequest.from(params))));
 	}
 	
@@ -47,21 +48,19 @@ public class CustomerFavouriteResource {
 	public ResponseEntity<ApiResponse<Boolean>> deleteFavourite(final WebRequest request, 
 			@PathVariable final String saloonId) {
 		log.info("** Delete customer favourite.. *\n");
-		final Boolean isDeleted = this.customerFavouriteService.deleteFavourite(this.userRequestExtractorUtil.extractUsername(request), 
-				Integer.parseInt(saloonId));
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, isDeleted));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.customerFavouriteService.deleteFavourite(
+						this.userRequestExtractorUtil.extractUsername(request),
+						Integer.parseInt(saloonId))));
 	}
 	
 	@PostMapping
 	public ResponseEntity<ApiResponse<FavouriteDto>> addFavourite(final WebRequest webRequest, @RequestParam final Integer saloonId) {
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.customerFavouriteService
-				.addFavourite(this.userRequestExtractorUtil.extractUsername(webRequest), saloonId)));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.customerFavouriteService.addFavourite(this.userRequestExtractorUtil.extractUsername(webRequest), saloonId)));
 	}
 	
 }
-
-
-
 
 
 

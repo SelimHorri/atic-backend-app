@@ -29,17 +29,18 @@ public class ActuatorLiveness {
 	
 	@GetMapping("/health")
 	public ResponseEntity<ApiResponse<HealthActuatorResponse>> health() {
-		
 		log.info("** App health.. *\n");
 		
 		HealthActuatorResponse health = null;
 		try {
-			health = this.restTemplate.getForObject(String
-					.format("%s/%s/health", ServletUriComponentsBuilder.fromCurrentContextPath().toUriString(), 
-							actuatorEndpoint), HealthActuatorResponse.class);
+			health = this.restTemplate.getForObject(
+					"%s/%s/health".formatted(
+							ServletUriComponentsBuilder.fromCurrentContextPath().toUriString(),
+							actuatorEndpoint),
+					HealthActuatorResponse.class);
 		}
 		catch (RestClientException e) {
-			System.err.println(e.getMessage());
+			log.warn(e.getMessage());
 		}
 		finally {
 			if (health == null || !health.status().equalsIgnoreCase("UP"))
@@ -51,8 +52,6 @@ public class ActuatorLiveness {
 	}
 	
 }
-
-
 
 
 

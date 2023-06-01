@@ -34,7 +34,6 @@ public class ApiExceptionHandler {
 		ConstraintViolationException.class,
 	})
 	public <T extends BindException> ResponseEntity<ApiResponse<ExceptionMsg>> handleValidationException(final T e) {
-		
 		log.info("** Handle validation exception.. *\n");
 		
 		final var fieldError = Objects.requireNonNullElseGet(e.getBindingResult().getFieldError(), 
@@ -86,11 +85,6 @@ public class ApiExceptionHandler {
 	}
 	
 }
-
-
-
-
-
 
 
 

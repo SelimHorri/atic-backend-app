@@ -37,7 +37,8 @@ public class TagResource {
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<TagDto>> findById(@PathVariable final String id) {
 		log.info("** Find by id.. *\n");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.tagService.findById(Integer.parseInt(id))));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.tagService.findById(Integer.parseInt(id))));
 	}
 	
 	@GetMapping("/identifier/{identifier}")
@@ -48,9 +49,6 @@ public class TagResource {
 	}
 	
 }
-
-
-
 
 
 

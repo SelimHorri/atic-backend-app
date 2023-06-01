@@ -33,17 +33,14 @@ public class TaskResource {
 	}
 	
 	@GetMapping("/reservationId/{reservationId}")
-	public ResponseEntity<ApiResponse<Page<TaskDto>>> findAllByReservationId(final WebRequest webRequest, 
-			@PathVariable final String reservationId) {
+	public ResponseEntity<ApiResponse<Page<TaskDto>>> findAllByReservationId(
+			final WebRequest webRequest, @PathVariable final String reservationId) {
 		log.info("** Find all tasks by reservationId.. *\n");
 		final var taskDtos = this.taskService.findAllByReservationId(Integer.parseInt(reservationId));
 		return ResponseEntity.ok(new ApiResponse<>(taskDtos.size(), HttpStatus.OK, true, new PageImpl<>(taskDtos)));
 	}
 	
 }
-
-
-
 
 
 

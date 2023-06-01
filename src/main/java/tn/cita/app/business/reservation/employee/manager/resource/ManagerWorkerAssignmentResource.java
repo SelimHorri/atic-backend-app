@@ -36,9 +36,11 @@ public class ManagerWorkerAssignmentResource {
 			@PathVariable final String workerId, 
 			@RequestParam final Map<String, String> params) {
 		log.info("** Fetch all worker tasks by manager.. *\n");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,this.managerWorkerAssignmentService
-				.fetchAllWorkerTasks(this.userRequestExtractorUtil.extractUsername(webRequest), 
-						Integer.parseInt(workerId), ClientPageRequest.from(params))));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.managerWorkerAssignmentService.fetchAllWorkerTasks(
+						this.userRequestExtractorUtil.extractUsername(webRequest),
+						Integer.parseInt(workerId),
+						ClientPageRequest.from(params))));
 	}
 	
 	@GetMapping("/{workerId}/search/{key}")
@@ -46,13 +48,14 @@ public class ManagerWorkerAssignmentResource {
 			@PathVariable final String workerId, 
 			@PathVariable final String key) {
 		log.info("** Search all reservations like key by manager.. *\n");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, this.managerWorkerAssignmentService
-				.searchAllLikeKey(this.userRequestExtractorUtil.extractUsername(webRequest), Integer.parseInt(workerId), key)));
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.managerWorkerAssignmentService.searchAllLikeKey(
+						this.userRequestExtractorUtil.extractUsername(webRequest),
+						Integer.parseInt(workerId),
+						key)));
 	}
 	
 }
-
-
 
 
 
