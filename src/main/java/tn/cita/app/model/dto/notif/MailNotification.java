@@ -4,8 +4,7 @@ import java.io.Serializable;
 
 import lombok.Builder;
 
-@Builder
-public record MailNotification(String to, String subject, MailBodyContentBuilder body) implements Serializable {}
+public record MailNotification(String to, String subject, String body) implements Serializable {}
 
 
 

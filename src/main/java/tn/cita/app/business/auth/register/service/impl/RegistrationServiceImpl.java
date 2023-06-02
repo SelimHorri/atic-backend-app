@@ -2,9 +2,11 @@ package tn.cita.app.business.auth.register.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
+import java.util.Map;
 import java.util.UUID;
-import java.util.function.Supplier;
+import java.util.function.Predicate;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,7 +28,6 @@ import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Customer;
 import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.model.domain.entity.VerificationToken;
-import tn.cita.app.model.dto.notif.MailBodyContentBuilder;
 import tn.cita.app.model.dto.notif.MailNotification;
 import tn.cita.app.repository.CredentialRepository;
 import tn.cita.app.repository.CustomerRepository;
@@ -46,7 +47,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 	private final CredentialRepository credentialRepository;
 	private final VerificationTokenRepository verificationTokenRepository;
 	private final PasswordEncoder passwordEncoder;
-	private final NotificationUtil notificationUtil;
+	
+	@Qualifier("mailNotificationUtil")
+	private final NotificationUtil mailNotificationUtil;
 	
 	@Override
 	public RegisterResponse register(final RegisterRequest registerRequest) {
@@ -135,7 +138,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 						.build());
 		log.info("** Customer saved successfully! *");
 		
-		return this.commonProcess(savedCustomer.getCredential(), () -> savedCustomer.getCredential().getUserRoleBasedAuthority());
+		return this.commonProcess(savedCustomer.getCredential(),
+				role -> role.equals(savedCustomer.getCredential().getUserRoleBasedAuthority()));
 	}
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
@@ -163,37 +167,40 @@ public class RegistrationServiceImpl implements RegistrationService {
 						.build());
 		log.info("** Employee saved successfully! *");
 		
-		return this.commonProcess(savedEmployee.getCredential(), () -> savedEmployee.getCredential().getUserRoleBasedAuthority());
+		return this.commonProcess(savedEmployee.getCredential(),
+				role -> role.equals(savedEmployee.getCredential().getUserRoleBasedAuthority()));
 	}
 	
-	private RegisterResponse commonProcess(final Credential credential, final Supplier<UserRoleBasedAuthority> selector) {
+	private RegisterResponse commonProcess(final Credential credential, final Predicate<UserRoleBasedAuthority> selector) {
 		final var verificationToken = new VerificationToken(
 				UUID.randomUUID().toString(),
-				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER_MINUTES), 
+				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER_MINUTES),
 				credential);
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *");
 		
-		if (selector.get().equals(UserRoleBasedAuthority.CUSTOMER)) {
-			this.notificationUtil.sendMail(new MailNotification(
+		if (selector.test(UserRoleBasedAuthority.CUSTOMER)) {
+			this.mailNotificationUtil.sendHtmlMail(new MailNotification(
 					credential.getCustomer().getEmail(),
-					"Registration", 
-					new MailBodyContentBuilder(
-							credential.getUsername(),
-							String.format("%s/%s", 
-									ServletUriComponentsBuilder.fromCurrentRequestUri().build(), 
-									savedVerificationToken.getToken()))));
+					"Registration",
+					null),
+					Map.of(
+							"username", credential.getUsername(),
+							"confirmLink", String.format("%s/%s",
+									ServletUriComponentsBuilder.fromCurrentRequestUri().build(),
+									savedVerificationToken.getToken())));
 			log.info("** Mail sent successfully to: {}! *", credential.getCustomer().getEmail());
 		}
 		else {
-			this.notificationUtil.sendMail(new MailNotification(
+			this.mailNotificationUtil.sendHtmlMail(new MailNotification(
 					credential.getEmployee().getEmail(),
-					"Registration", 
-					new MailBodyContentBuilder(
-							credential.getUsername(),
-							String.format("%s/%s",
+					"Registration",
+					null),
+					Map.of(
+							"username", credential.getUsername(),
+							"confirmLink", String.format("%s/%s",
 									ServletUriComponentsBuilder.fromCurrentRequestUri().build(),
-									savedVerificationToken.getToken()))));
+									savedVerificationToken.getToken())));
 			log.info("** Mail sent successfully to: {}! *", credential.getEmployee().getEmail());
 		}
 		

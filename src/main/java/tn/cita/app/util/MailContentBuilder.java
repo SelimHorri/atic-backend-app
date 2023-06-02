@@ -5,7 +5,8 @@ import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
 
 import lombok.RequiredArgsConstructor;
-import tn.cita.app.model.dto.notif.MailBodyContentBuilder;
+
+import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -13,16 +14,13 @@ public class MailContentBuilder {
 	
 	private final SpringTemplateEngine templateEngine;
 	
-	public String build(final MailBodyContentBuilder mailBodyContentBuilder) {
+	public String build(final Map<String, Object> map) {
 		final Context context = new Context();
-		context.setVariable("m", mailBodyContentBuilder);
+		context.setVariable("map", map);
 		return this.templateEngine.process("confirm-register", context);
 	}
 	
 }
-
-
-
 
 
 
