@@ -1,20 +1,18 @@
 package tn.cita.app.business.auth;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestController
-@RequestMapping(AppConstants.API_CONTEXT_V0 + "/credentials")
+@RequestMapping("${app.api-version}" + "/credentials")
 @Slf4j
 @RequiredArgsConstructor
 public class CredentialResource {

@@ -50,5 +50,3 @@ public class VerificationToken extends AbstractMappedEntity implements Serializa
 
 
 
-
-

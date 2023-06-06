@@ -61,5 +61,3 @@ public final class RatingDto extends AbstractAuditingMappedDto implements Serial
 
 
 
-
-

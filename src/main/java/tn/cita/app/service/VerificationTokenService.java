@@ -10,7 +10,3 @@ public interface VerificationTokenService {
 }
 
 
-
-
-
-

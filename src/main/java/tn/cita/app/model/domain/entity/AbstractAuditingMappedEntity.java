@@ -55,5 +55,3 @@ public abstract class AbstractAuditingMappedEntity implements Serializable {
 
 
 
-
-

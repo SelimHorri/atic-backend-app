@@ -30,6 +30,3 @@ public interface ServiceDetailMapper {
 
 
 
-
-
-

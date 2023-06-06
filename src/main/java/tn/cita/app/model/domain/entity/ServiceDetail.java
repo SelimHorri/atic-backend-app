@@ -60,5 +60,3 @@ public class ServiceDetail extends AbstractMappedEntity implements Serializable 
 
 
 
-
-

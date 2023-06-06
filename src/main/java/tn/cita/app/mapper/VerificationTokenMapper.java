@@ -33,6 +33,3 @@ public interface VerificationTokenMapper {
 
 
 
-
-
-

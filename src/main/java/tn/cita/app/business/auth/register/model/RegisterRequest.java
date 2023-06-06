@@ -1,24 +1,21 @@
 package tn.cita.app.business.auth.register.model;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
 import tn.cita.app.constant.AppConstants;
+
+import java.io.Serializable;
+import java.time.LocalDate;
 
 @Builder
 public record RegisterRequest(
@@ -29,10 +26,11 @@ public record RegisterRequest(
 		@NotBlank(message = "Input lastname should not be blank")
 		String lastname,
 		
-		@Email(message = "Input email should be in email format")
 		@NotBlank(message = "Input email should not be blank")
+		@Email(message = "Input email should be in email format")
 		String email,
 		
+		@NotBlank(message = "Input phone should not be blank")
 		@Size(message = "Input phone should be in a phone number format", min = 8, max = 12)
 		String phone,
 		

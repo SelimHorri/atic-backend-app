@@ -39,7 +39,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 									final HttpServletResponse response, 
 									final FilterChain filterChain) throws ServletException, IOException {
 		
-		log.info("**JwtRequestFilter, once per request, validating and extracting token*\n");
+		log.debug("**JwtRequestFilter, once per request, validating and extracting token*\n");
 		
 		final var authorizationHeader = request.getHeader(AppConstants.AUTHORIZATION_HEADER);
 		
@@ -80,16 +80,10 @@ public class JwtRequestFilter extends OncePerRequestFilter {
 		}
 		
 		filterChain.doFilter(request, response);
-		log.info("**Jwt request filtered!*\n");
+		log.debug("**Jwt request filtered!*\n");
 	}
 	
 }
-
-
-
-
-
-
 
 
 

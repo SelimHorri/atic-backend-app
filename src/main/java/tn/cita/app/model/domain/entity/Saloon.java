@@ -104,4 +104,3 @@ public class Saloon extends AbstractMappedEntity implements Serializable {
 
 
 
-

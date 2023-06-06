@@ -25,5 +25,3 @@ public interface FavouriteRepository extends JpaRepository<Favourite, FavouriteI
 
 
 
-
-

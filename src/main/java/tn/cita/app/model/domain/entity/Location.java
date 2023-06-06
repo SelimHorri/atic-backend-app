@@ -39,4 +39,3 @@ public class Location extends AbstractMappedEntity implements Serializable {
 
 
 
-

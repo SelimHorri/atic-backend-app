@@ -1,5 +1,7 @@
 package tn.cita.app.business.reservation.employee.worker.resource;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -8,17 +10,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.context.request.WebRequest;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.business.reservation.employee.worker.service.WorkerReservationDetailService;
 import tn.cita.app.model.dto.response.ReservationDetailResponse;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
 @RestController
-@RequestMapping(AppConstants.API_CONTEXT_V0 + "/employees/workers/reservations/details")
+@RequestMapping("${app.api-version}" + "/employees/workers/reservations/details")
 @Slf4j
 @RequiredArgsConstructor
 public class WorkerReservationDetailResource {

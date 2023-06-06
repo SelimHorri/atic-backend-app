@@ -1,28 +1,19 @@
 package tn.cita.app.business.auth.register.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.Map;
-import java.util.UUID;
-import java.util.function.Predicate;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.util.UriComponentsBuilder;
 import tn.cita.app.business.auth.register.model.RegisterRequest;
 import tn.cita.app.business.auth.register.model.RegisterResponse;
 import tn.cita.app.business.auth.register.service.RegistrationService;
 import tn.cita.app.constant.AppConstants;
-import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
-import tn.cita.app.exception.wrapper.PasswordNotMatchException;
-import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
-import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
-import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
+import tn.cita.app.exception.wrapper.*;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Customer;
@@ -35,6 +26,11 @@ import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.util.NotificationUtil;
 import tn.cita.app.util.UserRoleUtils;
+
+import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.Map;
+import java.util.UUID;
 
 @Service
 @Transactional
@@ -51,6 +47,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 	@Qualifier("mailNotificationUtil")
 	private final NotificationUtil mailNotificationUtil;
 	
+	@Value("${app.api-version}")
+	private String apiVersion;
+	
 	@Override
 	public RegisterResponse register(final RegisterRequest registerRequest) {
 		log.info("** Register..*");
@@ -62,7 +61,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		this.credentialRepository
 				.findByUsernameIgnoreCase(registerRequest.username()).ifPresent(c -> {
-			throw new UsernameAlreadyExistsException("Account with username: %s already exists".formatted(c.getUsername()));
+			throw new UsernameAlreadyExistsException(
+					"Account with username: %s already exists".formatted(c.getUsername()));
 		});
 		log.info("** User not exist by username checked successfully! *");
 		
@@ -107,6 +107,31 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return "User has been activated successfully, go and login!";
 	}
 	
+	/**
+	 * Careful: Contruct validateToken API URL dynamically.<br>
+	 * if validateToken API URL changes, this contruction must be changed.
+	 * @param username
+	 * @return RegisterResponse
+	 */
+	@Override
+	public RegisterResponse resendToken(final String username) {
+		log.info("** resend token **");
+		
+		final var credential = this.credentialRepository.findByUsernameIgnoreCase(username)
+				.orElseThrow(() -> new CredentialNotFoundException(
+						"Account: %s is not registered".formatted(username)));
+		
+		if (credential.getIsEnabled())
+			throw new BusinessException("Account: '%s' is already enabled, go and login"
+					.formatted(credential.getUsername()));
+		
+		return this.sendAccountValidation(credential,
+				ServletUriComponentsBuilder.fromCurrentServletMapping()
+						.path(this.apiVersion)
+						.path("/register")
+						.path("/{token}"));
+	}
+	
 	private static boolean isValidRole(final String role) {
 		return Arrays.stream(UserRoleBasedAuthority.values())
 				.map(UserRoleBasedAuthority::name)
@@ -138,8 +163,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 						.build());
 		log.info("** Customer saved successfully! *");
 		
-		return this.commonProcess(savedCustomer.getCredential(),
-				role -> role.equals(savedCustomer.getCredential().getUserRoleBasedAuthority()));
+		return this.sendAccountValidation(savedCustomer.getCredential(),
+				ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{token}"));
 	}
 	
 	private RegisterResponse registerEmployee(final RegisterRequest registerRequest) {
@@ -167,11 +192,11 @@ public class RegistrationServiceImpl implements RegistrationService {
 						.build());
 		log.info("** Employee saved successfully! *");
 		
-		return this.commonProcess(savedEmployee.getCredential(),
-				role -> role.equals(savedEmployee.getCredential().getUserRoleBasedAuthority()));
+		return this.sendAccountValidation(savedEmployee.getCredential(),
+				ServletUriComponentsBuilder.fromCurrentRequestUri().path("/{token}"));
 	}
 	
-	private RegisterResponse commonProcess(final Credential credential, final Predicate<UserRoleBasedAuthority> selector) {
+	private RegisterResponse sendAccountValidation(final Credential credential, final UriComponentsBuilder uriBuilder) {
 		final var verificationToken = new VerificationToken(
 				UUID.randomUUID().toString(),
 				LocalDateTime.now().plusMinutes(AppConstants.USER_EXPIRES_AFTER_MINUTES),
@@ -179,30 +204,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		final var savedVerificationToken = this.verificationTokenRepository.save(verificationToken);
 		log.info("** Verification token saved successfully! *");
 		
-		if (selector.test(UserRoleBasedAuthority.CUSTOMER)) {
-			this.mailNotificationUtil.sendHtmlMail(new MailNotification(
-					credential.getCustomer().getEmail(),
-					"Registration",
-					null),
-					Map.of(
-							"username", credential.getUsername(),
-							"confirmLink", String.format("%s/%s",
-									ServletUriComponentsBuilder.fromCurrentRequestUri().build(),
-									savedVerificationToken.getToken())));
-			log.info("** Mail sent successfully to: {}! *", credential.getCustomer().getEmail());
-		}
-		else {
-			this.mailNotificationUtil.sendHtmlMail(new MailNotification(
-					credential.getEmployee().getEmail(),
-					"Registration",
-					null),
-					Map.of(
-							"username", credential.getUsername(),
-							"confirmLink", String.format("%s/%s",
-									ServletUriComponentsBuilder.fromCurrentRequestUri().build(),
-									savedVerificationToken.getToken())));
-			log.info("** Mail sent successfully to: {}! *", credential.getEmployee().getEmail());
-		}
+		this.sendValidationMail(savedVerificationToken, uriBuilder);
 		
 		return new RegisterResponse("""
 				User with username %s has been saved successfully.
@@ -211,11 +213,31 @@ public class RegistrationServiceImpl implements RegistrationService {
 				""".formatted(credential.getUsername(), AppConstants.USER_EXPIRES_AFTER_MINUTES));
 	}
 	
+	private void sendValidationMail(final VerificationToken verificationToken, final UriComponentsBuilder uriBuilder) {
+		if (verificationToken.getCredential()
+				.getUserRoleBasedAuthority().equals(UserRoleBasedAuthority.CUSTOMER)) {
+			this.mailNotificationUtil.sendHtmlMail(new MailNotification(
+					verificationToken.getCredential().getCustomer().getEmail(),
+					"Registration",
+					null),
+					Map.of(
+						"username", verificationToken.getCredential().getUsername(),
+						"confirmLink", uriBuilder.build(verificationToken.getToken()).toString()));
+			log.info("** Mail sent successfully to: {}! *", verificationToken.getCredential().getCustomer().getEmail());
+		}
+		else {
+			this.mailNotificationUtil.sendHtmlMail(new MailNotification(
+					verificationToken.getCredential().getEmployee().getEmail(),
+					"Registration",
+					null),
+					Map.of(
+						"username", verificationToken.getCredential().getUsername(),
+						"confirmLink", uriBuilder.build(verificationToken.getToken()).toString()));
+			log.info("** Mail sent successfully to: {}! *", verificationToken.getCredential().getEmployee().getEmail());
+		}
+	}
+	
 }
-
-
-
-
 
 
 

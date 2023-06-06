@@ -19,4 +19,3 @@ public class SaloonTagId implements Serializable {
 
 
 
-

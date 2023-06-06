@@ -89,6 +89,3 @@ public class RegistrationJobScheduler {
 
 
 
-
-
-

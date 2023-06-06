@@ -1,27 +1,21 @@
 package tn.cita.app.resource.v0;
 
-import java.util.List;
-import java.util.Map;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
+import org.springframework.web.bind.annotation.*;
 import tn.cita.app.model.dto.LocationDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.service.LocationService;
 
+import java.util.List;
+import java.util.Map;
+
 @RestController
-@RequestMapping(AppConstants.API_CONTEXT_V0 + "/locations")
+@RequestMapping("${app.api-version}" + "/locations")
 @Slf4j
 @RequiredArgsConstructor
 public class LocationResource {

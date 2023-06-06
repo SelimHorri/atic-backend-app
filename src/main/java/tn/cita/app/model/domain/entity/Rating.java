@@ -76,4 +76,3 @@ public class Rating extends AbstractAuditingMappedEntity implements Serializable
 
 
 
-

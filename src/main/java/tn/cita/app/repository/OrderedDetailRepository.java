@@ -29,6 +29,3 @@ public interface OrderedDetailRepository extends JpaRepository<OrderedDetail, Or
 
 
 
-
-
-

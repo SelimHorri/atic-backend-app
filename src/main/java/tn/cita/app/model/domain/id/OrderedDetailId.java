@@ -19,5 +19,3 @@ public class OrderedDetailId implements Serializable {
 
 
 
-
-

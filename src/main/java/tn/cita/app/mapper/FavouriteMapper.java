@@ -46,6 +46,3 @@ public interface FavouriteMapper {
 
 
 
-
-
-

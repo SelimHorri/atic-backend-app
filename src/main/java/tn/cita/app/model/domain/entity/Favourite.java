@@ -65,4 +65,3 @@ public class Favourite extends AbstractAuditingMappedEntity implements Serializa
 
 
 
-

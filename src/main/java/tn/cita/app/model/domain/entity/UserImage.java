@@ -56,4 +56,3 @@ public class UserImage extends AbstractMappedEntity implements Serializable {
 
 
 
-

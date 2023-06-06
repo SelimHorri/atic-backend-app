@@ -11,6 +11,3 @@ public interface RatingService {
 }
 
 
-
-
-

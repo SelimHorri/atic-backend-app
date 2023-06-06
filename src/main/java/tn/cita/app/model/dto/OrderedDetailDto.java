@@ -56,5 +56,3 @@ public final class OrderedDetailDto extends AbstractAuditingMappedDto implements
 
 
 
-
-

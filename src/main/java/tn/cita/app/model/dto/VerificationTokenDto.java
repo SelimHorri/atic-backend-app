@@ -50,4 +50,3 @@ public final class VerificationTokenDto extends AbstractMappedDto implements Ser
 
 
 
-

@@ -51,4 +51,3 @@ public class SaloonImage extends AbstractMappedEntity implements Serializable {
 
 
 
-

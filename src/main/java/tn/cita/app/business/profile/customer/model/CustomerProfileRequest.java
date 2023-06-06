@@ -1,25 +1,20 @@
 package tn.cita.app.business.profile.customer.model;
 
-import java.io.Serializable;
-import java.time.LocalDate;
-
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
-
-import lombok.Builder;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
+import org.springframework.format.annotation.DateTimeFormat;
 import tn.cita.app.constant.AppConstants;
 
-@Builder
+import java.io.Serializable;
+import java.time.LocalDate;
+
 public record CustomerProfileRequest(
 		
 		@NotBlank(message = "Must specify authenticated username")
@@ -57,7 +52,6 @@ public record CustomerProfileRequest(
 		
 		@NotBlank(message = "confirmPassword must not be blank")
 		String confirmPassword) implements Serializable {}
-
 
 
 

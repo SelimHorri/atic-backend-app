@@ -1,5 +1,7 @@
 package tn.cita.app.business.category;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
@@ -8,15 +10,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.CategoryDto;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestController
-@RequestMapping(AppConstants.API_CONTEXT_V0 + "/categories")
+@RequestMapping("${app.api-version}" + "/categories")
 @Slf4j
 @RequiredArgsConstructor
 public class CategoryResource {

@@ -8,5 +8,3 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record ClientConfigProps(List<String> domains) {}
 
 
-
-

@@ -64,5 +64,3 @@ public class SaloonTag extends AbstractAuditingMappedEntity implements Serializa
 
 
 
-
-

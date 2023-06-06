@@ -6,5 +6,3 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public record JwtConfigProps(long tokenExpiresAfter, String secretKey) {}
 
 
-
-

@@ -6,4 +6,3 @@ public record ExceptionMsg(String errorMsg) implements Serializable {}
 
 
 
-

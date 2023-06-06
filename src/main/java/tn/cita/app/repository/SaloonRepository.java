@@ -22,5 +22,3 @@ public interface SaloonRepository extends JpaRepository<Saloon, Integer> {
 
 
 
-
-

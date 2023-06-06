@@ -35,7 +35,3 @@ public interface SaloonImageMapper {
 
 
 
-
-
-
-

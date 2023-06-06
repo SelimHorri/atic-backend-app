@@ -59,5 +59,3 @@ public class Category extends AbstractMappedEntity implements Serializable {
 
 
 
-
-

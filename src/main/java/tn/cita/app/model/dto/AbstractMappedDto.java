@@ -23,4 +23,3 @@ public abstract class AbstractMappedDto extends AbstractAuditingMappedDto implem
 
 
 
-

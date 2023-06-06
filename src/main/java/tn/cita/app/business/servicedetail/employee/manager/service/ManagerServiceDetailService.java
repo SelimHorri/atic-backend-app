@@ -17,7 +17,3 @@ public interface ManagerServiceDetailService {
 
 
 
-
-
-
-
