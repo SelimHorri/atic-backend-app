@@ -1,22 +1,15 @@
 package tn.cita.app.business.auth.register.resource;
 
 import jakarta.validation.Valid;
-
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 import tn.cita.app.business.auth.register.model.RegisterRequest;
 import tn.cita.app.business.auth.register.model.RegisterResponse;
 import tn.cita.app.business.auth.register.service.RegistrationService;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestController
@@ -39,6 +32,12 @@ public class RegistrationResource {
 		log.info("** Validate token for register user.. *\n");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
 				this.registrationService.validateToken(token)));
+	}
+	
+	@GetMapping("/resend")
+	public ResponseEntity<ApiResponse<RegisterResponse>> resendToken(@RequestParam final String username) {
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.registrationService.resendToken(username)));
 	}
 	
 }
