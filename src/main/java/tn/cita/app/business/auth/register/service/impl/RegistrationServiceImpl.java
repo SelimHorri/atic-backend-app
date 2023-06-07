@@ -61,7 +61,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		
 		this.credentialRepository
 				.findByUsernameIgnoreCase(registerRequest.username()).ifPresent(c -> {
-			throw new UsernameAlreadyExistsException("Account with username: %s already exists".formatted(c.getUsername()));
+			throw new UsernameAlreadyExistsException(
+					"Account with username: %s already exists".formatted(c.getUsername()));
 		});
 		log.info("** User not exist by username checked successfully! *");
 		
@@ -106,6 +107,12 @@ public class RegistrationServiceImpl implements RegistrationService {
 		return "User has been activated successfully, go and login!";
 	}
 	
+	/**
+	 * Careful: Contruct validateToken API URL dynamically.<br>
+	 * if validateToken API URL changes, this contruction must be changed.
+	 * @param username
+	 * @return RegisterResponse
+	 */
 	@Override
 	public RegisterResponse resendToken(final String username) {
 		log.info("** resend token **");
@@ -123,11 +130,6 @@ public class RegistrationServiceImpl implements RegistrationService {
 						.path(this.apiVersion)
 						.path("/register")
 						.path("/{token}"));
-	}
-	
-	@Override
-	public String validateResentToken(final String token) {
-		return null;
 	}
 	
 	private static boolean isValidRole(final String role) {

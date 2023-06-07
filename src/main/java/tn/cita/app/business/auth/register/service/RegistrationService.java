@@ -8,7 +8,6 @@ public interface RegistrationService {
 	RegisterResponse register(final RegisterRequest registerRequest);
 	String validateToken(final String token);
 	RegisterResponse resendToken(final String username);
-	String validateResentToken(final String token);
 	
 }
 
