@@ -1,24 +1,21 @@
 package tn.cita.app.business.auth.authentication.resource;
 
 import jakarta.validation.Valid;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.business.auth.authentication.model.LoginRequest;
 import tn.cita.app.business.auth.authentication.model.LoginResponse;
 import tn.cita.app.business.auth.authentication.service.AuthenticationService;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestController
-@RequestMapping(AppConstants.API_CONTEXT_V0 + "/authenticate")
+@RequestMapping("${app.api-version}" + "/authenticate")
 @Slf4j
 @RequiredArgsConstructor
 public class AuthenticationResource {

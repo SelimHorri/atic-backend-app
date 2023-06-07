@@ -1,5 +1,7 @@
 package tn.cita.app.business.servicedetail;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
@@ -8,16 +10,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.ServiceDetailDto;
 import tn.cita.app.model.dto.response.ServiceDetailsReservationContainerResponse;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestController
-@RequestMapping(AppConstants.API_CONTEXT_V0 + "/service-details")
+@RequestMapping("${app.api-version}" + "/service-details")
 @Slf4j
 @RequiredArgsConstructor
 public class ServiceDetailResource {
