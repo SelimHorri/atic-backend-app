@@ -12,7 +12,6 @@ import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.business.profile.employee.manager.model.ManagerProfileRequest;
 import tn.cita.app.business.profile.employee.manager.model.ManagerProfileResponse;
 import tn.cita.app.business.profile.employee.manager.service.ManagerProfileService;
-import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
