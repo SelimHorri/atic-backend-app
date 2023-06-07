@@ -9,11 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import tn.cita.app.business.auth.register.model.RegisterRequest;
 import tn.cita.app.business.auth.register.model.RegisterResponse;
 import tn.cita.app.business.auth.register.service.RegistrationService;
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 
 @RestController
-@RequestMapping(AppConstants.API_CONTEXT_V0 + "/register")
+@RequestMapping("${app.api-version}" + "/register")
 @Slf4j
 @RequiredArgsConstructor
 public class RegistrationResource {

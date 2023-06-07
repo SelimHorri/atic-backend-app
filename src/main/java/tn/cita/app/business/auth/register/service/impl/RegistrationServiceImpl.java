@@ -3,6 +3,7 @@ package tn.cita.app.business.auth.register.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -45,6 +46,9 @@ public class RegistrationServiceImpl implements RegistrationService {
 	
 	@Qualifier("mailNotificationUtil")
 	private final NotificationUtil mailNotificationUtil;
+	
+	@Value("${app.api-version}")
+	private String apiVersion;
 	
 	@Override
 	public RegisterResponse register(final RegisterRequest registerRequest) {
@@ -115,11 +119,10 @@ public class RegistrationServiceImpl implements RegistrationService {
 					.formatted(credential.getUsername()));
 		
 		return this.sendAccountValidation(credential,
-				ServletUriComponentsBuilder.fromCurrentRequestUri()
-				/*
-				.path("/{token}")
-				*/
-				);
+				ServletUriComponentsBuilder.fromCurrentServletMapping()
+						.path(this.apiVersion)
+						.path("/register")
+						.path("/{token}"));
 	}
 	
 	@Override

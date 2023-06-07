@@ -3,6 +3,7 @@ server:
   port: ${SERVER_PORT:8400}
 
 app:
+  api-version: /api/v0
   security:
     jwt:
       token-expires-after: 604800000 # weak in millis
