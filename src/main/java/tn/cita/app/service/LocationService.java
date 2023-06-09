@@ -1,11 +1,10 @@
 package tn.cita.app.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
-
 import tn.cita.app.model.dto.LocationDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
+
+import java.util.List;
 
 public interface LocationService {
 	

@@ -1,28 +1,15 @@
 package tn.cita.app.model.domain.entity;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
+import tn.cita.app.constant.AppConstants;
+
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Set;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.validation.constraints.Email;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.SuperBuilder;
-import tn.cita.app.constant.AppConstants;
 
 @Entity
 @Table(name = "saloons")

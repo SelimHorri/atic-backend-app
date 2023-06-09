@@ -1,16 +1,15 @@
 package tn.cita.app.model.dto.response.api;
 
-import java.io.Serializable;
-import java.time.Instant;
-
-import org.springframework.http.HttpStatus;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.InstantDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.InstantSerializer;
+import org.springframework.http.HttpStatus;
+
+import java.io.Serializable;
+import java.time.Instant;
 
 public record ApiResponse<T>(
 		

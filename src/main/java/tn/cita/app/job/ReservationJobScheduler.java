@@ -1,22 +1,17 @@
 package tn.cita.app.job;
 
-import java.time.Instant;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-import java.time.ZoneId;
-import java.time.format.DateTimeFormatter;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.domain.ReservationStatus;
 import tn.cita.app.model.domain.entity.Reservation;
 import tn.cita.app.repository.ReservationRepository;
+
+import java.time.*;
+import java.time.format.DateTimeFormatter;
 
 @Component
 @Slf4j

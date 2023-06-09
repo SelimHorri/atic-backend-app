@@ -1,7 +1,6 @@
 package tn.cita.app.service;
 
 import org.springframework.data.domain.Page;
-
 import tn.cita.app.model.dto.SaloonDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 

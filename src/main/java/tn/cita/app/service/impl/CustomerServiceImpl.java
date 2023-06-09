@@ -1,20 +1,19 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.service.CustomerService;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)

@@ -1,11 +1,10 @@
 package tn.cita.app.constant;
 
-import java.time.Duration;
-
-import org.springframework.http.HttpHeaders;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpHeaders;
+
+import java.time.Duration;
 
 /**
  * Define all constants related to the App

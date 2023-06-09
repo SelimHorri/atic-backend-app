@@ -1,9 +1,8 @@
 package tn.cita.app.util;
 
+import lombok.NonNull;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-
-import lombok.NonNull;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 
 public interface ClientPageRequestUtils {

@@ -1,10 +1,9 @@
 package tn.cita.app.util;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.spring6.SpringTemplateEngine;
-
-import lombok.RequiredArgsConstructor;
 
 import java.util.Map;
 

@@ -1,19 +1,18 @@
 package tn.cita.app.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThrows;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
 import tn.cita.app.business.auth.authentication.model.LoginRequest;
 import tn.cita.app.business.auth.authentication.service.AuthenticationService;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.util.JwtUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class AuthenticationServiceImplTest {

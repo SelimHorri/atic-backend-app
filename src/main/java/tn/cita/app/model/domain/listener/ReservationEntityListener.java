@@ -1,11 +1,10 @@
 package tn.cita.app.model.domain.listener;
 
-import java.util.UUID;
-
 import jakarta.persistence.PrePersist;
-
 import tn.cita.app.model.domain.ReservationStatus;
 import tn.cita.app.model.domain.entity.Reservation;
+
+import java.util.UUID;
 
 public class ReservationEntityListener {
 	

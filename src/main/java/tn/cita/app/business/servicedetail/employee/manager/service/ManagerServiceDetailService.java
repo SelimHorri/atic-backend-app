@@ -1,7 +1,6 @@
 package tn.cita.app.business.servicedetail.employee.manager.service;
 
 import org.springframework.data.domain.Page;
-
 import tn.cita.app.business.servicedetail.employee.manager.model.ServiceDetailRequest;
 import tn.cita.app.model.dto.ServiceDetailDto;
 

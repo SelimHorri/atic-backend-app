@@ -1,14 +1,13 @@
 package tn.cita.app.model.domain.listener;
 
-import java.time.Instant;
-import java.util.UUID;
-
 import jakarta.persistence.PrePersist;
 import jakarta.persistence.PreUpdate;
-
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import tn.cita.app.model.domain.entity.AbstractAuditingMappedEntity;
+
+import java.time.Instant;
+import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class AuditingEntityListener {

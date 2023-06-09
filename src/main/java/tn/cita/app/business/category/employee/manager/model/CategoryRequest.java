@@ -1,11 +1,10 @@
 package tn.cita.app.business.category.employee.manager.model;
 
-import java.io.Serializable;
-
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
 import lombok.Builder;
+
+import java.io.Serializable;
 
 @Builder
 public record CategoryRequest(

@@ -1,14 +1,10 @@
 package tn.cita.app.business.reservation.customer.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.Comparator;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.business.reservation.ReservationCommonService;
 import tn.cita.app.business.reservation.customer.model.CustomerReservationResponse;
 import tn.cita.app.business.reservation.customer.service.CustomerReservationService;
@@ -32,6 +28,9 @@ import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.SaloonRepository;
 import tn.cita.app.util.ClientPageRequestUtils;
 import tn.cita.app.util.StringWrapperUtils;
+
+import java.time.LocalDateTime;
+import java.util.Comparator;
 
 @Service
 @Transactional(readOnly = true)

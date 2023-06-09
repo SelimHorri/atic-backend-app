@@ -1,13 +1,9 @@
 package tn.cita.app.business.favourite.customer.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.UUID;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.cita.app.business.favourite.customer.model.CustomerFavouriteResponse;
 import tn.cita.app.business.favourite.customer.service.CustomerFavouriteService;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
@@ -22,6 +18,9 @@ import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.FavouriteRepository;
 import tn.cita.app.util.ClientPageRequestUtils;
+
+import java.time.LocalDateTime;
+import java.util.UUID;
 
 @Service
 @Transactional(readOnly = true)

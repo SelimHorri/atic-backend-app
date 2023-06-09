@@ -1,26 +1,13 @@
 package tn.cita.app.model.domain.entity;
 
-import java.io.Serializable;
-import java.util.Set;
-
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.domain.listener.CredentialEntityListener;
+
+import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Table(name = "credentials")

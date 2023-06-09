@@ -1,7 +1,6 @@
 package tn.cita.app.service;
 
 import org.springframework.data.domain.Page;
-
 import tn.cita.app.model.domain.id.FavouriteId;
 import tn.cita.app.model.dto.FavouriteDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;

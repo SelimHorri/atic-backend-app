@@ -1,19 +1,13 @@
 package tn.cita.app.business.profile.employee.manager.model;
 
-import java.io.Serializable;
-
-import org.springframework.data.domain.Page;
-
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import lombok.Builder;
-import tn.cita.app.model.dto.CategoryDto;
-import tn.cita.app.model.dto.EmployeeDto;
-import tn.cita.app.model.dto.ReservationDto;
-import tn.cita.app.model.dto.SaloonTagDto;
-import tn.cita.app.model.dto.ServiceDetailDto;
+import org.springframework.data.domain.Page;
+import tn.cita.app.model.dto.*;
+
+import java.io.Serializable;
 
 @Builder
 public record ManagerProfileResponse(

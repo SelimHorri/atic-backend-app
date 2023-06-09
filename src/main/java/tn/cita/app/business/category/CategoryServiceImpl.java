@@ -1,14 +1,9 @@
 package tn.cita.app.business.category;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.cita.app.business.category.employee.manager.model.CategoryRequest;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
@@ -17,6 +12,10 @@ import tn.cita.app.model.domain.entity.Category;
 import tn.cita.app.model.dto.CategoryDto;
 import tn.cita.app.repository.CategoryRepository;
 import tn.cita.app.repository.SaloonRepository;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)

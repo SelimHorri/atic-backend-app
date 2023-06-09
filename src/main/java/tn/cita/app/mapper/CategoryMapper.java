@@ -1,11 +1,11 @@
 package tn.cita.app.mapper;
 
-import java.util.Objects;
-
 import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Category;
 import tn.cita.app.model.dto.CategoryDto;
 import tn.cita.app.model.dto.SaloonDto;
+
+import java.util.Objects;
 
 public interface CategoryMapper {
 	

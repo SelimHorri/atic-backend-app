@@ -1,31 +1,22 @@
 package tn.cita.app.business.profile.employee.manager.service.impl;
 
-import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.business.profile.employee.manager.model.ManagerProfileRequest;
 import tn.cita.app.business.profile.employee.manager.model.ManagerProfileResponse;
 import tn.cita.app.business.profile.employee.manager.service.ManagerProfileService;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
-import tn.cita.app.mapper.CategoryMapper;
-import tn.cita.app.mapper.EmployeeMapper;
-import tn.cita.app.mapper.ReservationMapper;
-import tn.cita.app.mapper.SaloonTagMapper;
-import tn.cita.app.mapper.ServiceDetailMapper;
+import tn.cita.app.mapper.*;
 import tn.cita.app.model.dto.EmployeeDto;
-import tn.cita.app.repository.CategoryRepository;
-import tn.cita.app.repository.EmployeeRepository;
-import tn.cita.app.repository.ReservationRepository;
-import tn.cita.app.repository.SaloonTagRepository;
-import tn.cita.app.repository.ServiceDetailRepository;
+import tn.cita.app.repository.*;
+
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
