@@ -21,30 +21,32 @@ import tn.cita.app.model.dto.response.api.ApiResponse;
 @RequiredArgsConstructor
 public class ActuatorLiveness {
 	
+	private final RestTemplate restTemplate;
+	
 	@Value("${management.endpoints.web.base-path:actuator}")
 	private String actuatorEndpoint;
-	private final RestTemplate restTemplate;
 	
 	@GetMapping("/health")
 	public ResponseEntity<ApiResponse<HealthActuatorResponse>> health() {
-		log.info("** App health.. *\n");
+		log.info("** App health.. *");
 		
-		HealthActuatorResponse health = null;
+		final var healthException = new ActuatorHealthException(
+				"We're running into an issue 😬 Will be FIXED very soon, stay tuned..🤗");
+		
+		final HealthActuatorResponse health;
+		
 		try {
-			health = this.restTemplate.getForObject(
-					"%s/%s/health".formatted(
-							ServletUriComponentsBuilder.fromCurrentContextPath().toUriString(),
-							actuatorEndpoint),
-					HealthActuatorResponse.class);
+			var url = "%s/%s/health".formatted(
+					ServletUriComponentsBuilder.fromCurrentContextPath().toUriString(), actuatorEndpoint);
+			health = this.restTemplate.getForObject(url, HealthActuatorResponse.class);
 		}
 		catch (RestClientException e) {
 			log.warn(e.getMessage());
+			throw healthException;
 		}
-		finally {
-			if (health == null || !health.status().equalsIgnoreCase("UP"))
-				throw new ActuatorHealthException("We're running into an issue 😬 \n"
-						+ "Will be FIXED very soon, stay tunned..🤗");
-		}
+		
+		if (health == null || !health.status().equalsIgnoreCase("UP"))
+			throw healthException;
 		
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, health));
 	}
