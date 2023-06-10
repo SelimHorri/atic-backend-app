@@ -1,13 +1,12 @@
 package tn.cita.app.business.profile.customer.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.business.profile.customer.model.CustomerProfileRequest;
 import tn.cita.app.business.profile.customer.model.CustomerProfileResponse;
 import tn.cita.app.business.profile.customer.service.CustomerProfileService;

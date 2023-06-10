@@ -1,13 +1,12 @@
 package tn.cita.app.model.dto.request;
 
-import java.io.Serializable;
-import java.util.Map;
-
-import org.springframework.data.domain.Sort;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import org.springframework.data.domain.Sort;
 import tn.cita.app.constant.AppConstants;
+
+import java.io.Serializable;
+import java.util.Map;
 
 @AllArgsConstructor
 @Data

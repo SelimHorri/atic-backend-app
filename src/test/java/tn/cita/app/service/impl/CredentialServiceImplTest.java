@@ -1,24 +1,23 @@
 package tn.cita.app.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.when;
-
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
 import tn.cita.app.business.auth.CredentialService;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.repository.CredentialRepository;
+
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CredentialServiceImplTest {

@@ -1,11 +1,10 @@
 package tn.cita.app.business.rating.customer.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.business.rating.customer.model.CustomerRatingResponse;
 import tn.cita.app.business.rating.customer.service.CustomerRatingService;
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;

@@ -1,9 +1,5 @@
 package tn.cita.app.resource.v0;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,12 +10,15 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import tn.cita.app.constant.AppConstants;
 import tn.cita.app.business.auth.authentication.model.LoginRequest;
 import tn.cita.app.business.auth.authentication.model.LoginResponse;
 import tn.cita.app.business.auth.authentication.service.AuthenticationService;
+import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.dto.response.api.ApiResponse;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.notNullValue;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient

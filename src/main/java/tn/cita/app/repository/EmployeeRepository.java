@@ -1,11 +1,10 @@
 package tn.cita.app.repository;
 
+import org.springframework.data.jpa.repository.JpaRepository;
+import tn.cita.app.model.domain.entity.Employee;
+
 import java.util.List;
 import java.util.Optional;
-
-import org.springframework.data.jpa.repository.JpaRepository;
-
-import tn.cita.app.model.domain.entity.Employee;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 	

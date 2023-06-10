@@ -1,30 +1,16 @@
 package tn.cita.app.model.domain.entity;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EntityListeners;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Id;
-import jakarta.persistence.IdClass;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import jakarta.persistence.*;
+import lombok.*;
 import lombok.experimental.SuperBuilder;
+import org.springframework.format.annotation.DateTimeFormat;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.domain.UserRating;
 import tn.cita.app.model.domain.id.RatingId;
 import tn.cita.app.model.domain.listener.RatingEntityListener;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "ratings")

@@ -1,12 +1,11 @@
 package tn.cita.app.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
-
 import tn.cita.app.model.domain.id.TaskId;
 import tn.cita.app.model.dto.TaskDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
+
+import java.util.List;
 
 public interface TaskService {
 	

@@ -1,9 +1,8 @@
 package tn.cita.app.util.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
-
-import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.UsernameNotMatchException;
 import tn.cita.app.util.JwtUtils;

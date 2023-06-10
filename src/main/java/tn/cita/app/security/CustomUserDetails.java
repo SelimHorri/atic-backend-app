@@ -1,13 +1,12 @@
 package tn.cita.app.security;
 
-import java.util.Collection;
-import java.util.Set;
-
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-
 import tn.cita.app.model.dto.CredentialDto;
+
+import java.util.Collection;
+import java.util.Set;
 
 public record CustomUserDetails(CredentialDto credentialDto) implements UserDetails {
 	

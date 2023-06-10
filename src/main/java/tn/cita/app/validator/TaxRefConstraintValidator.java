@@ -2,10 +2,8 @@ package tn.cita.app.validator;
 
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
-
-import org.springframework.stereotype.Component;
-
 import lombok.NonNull;
+import org.springframework.stereotype.Component;
 import tn.cita.app.config.annotation.TaxRefFormat;
 
 @Component

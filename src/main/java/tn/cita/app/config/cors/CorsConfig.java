@@ -1,16 +1,15 @@
 package tn.cita.app.config.cors;
 
-import java.util.Arrays;
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
-
-import lombok.RequiredArgsConstructor;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.props.ClientConfigProps;
+
+import java.util.Arrays;
 
 @Configuration
 @RequiredArgsConstructor

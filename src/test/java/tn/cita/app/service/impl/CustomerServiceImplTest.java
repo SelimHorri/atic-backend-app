@@ -1,13 +1,5 @@
 package tn.cita.app.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -18,7 +10,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-
 import tn.cita.app.exception.wrapper.CustomerNotFoundException;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.domain.entity.Credential;
@@ -30,6 +21,14 @@ import tn.cita.app.model.dto.UserImageDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.service.CustomerService;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CustomerServiceImplTest {

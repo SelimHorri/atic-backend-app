@@ -1,10 +1,9 @@
 package tn.cita.app.model.domain.listener;
 
-import java.time.LocalDateTime;
-
 import jakarta.persistence.PrePersist;
-
 import tn.cita.app.model.domain.entity.Favourite;
+
+import java.time.LocalDateTime;
 
 public class FavouriteEntityListener {
 	

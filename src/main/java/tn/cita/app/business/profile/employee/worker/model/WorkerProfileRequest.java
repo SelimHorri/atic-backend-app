@@ -9,12 +9,14 @@ import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateSerializer;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 import org.springframework.format.annotation.DateTimeFormat;
 import tn.cita.app.constant.AppConstants;
 
 import java.io.Serializable;
 import java.time.LocalDate;
 
+@Builder
 public record WorkerProfileRequest(
 		
 		@NotBlank(message = "Must specify authenticated username")

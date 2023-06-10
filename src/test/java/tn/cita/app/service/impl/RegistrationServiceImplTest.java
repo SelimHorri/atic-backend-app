@@ -1,30 +1,13 @@
 package tn.cita.app.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
-import static org.junit.Assert.assertThrows;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Mockito.doNothing;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Optional;
-import java.util.UUID;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
-
-import tn.cita.app.exception.wrapper.VerificationTokenExpiredException;
 import tn.cita.app.business.auth.register.model.RegisterRequest;
 import tn.cita.app.business.auth.register.service.RegistrationService;
-import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
-import tn.cita.app.exception.wrapper.PasswordNotMatchException;
-import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
-import tn.cita.app.exception.wrapper.VerificationTokenNotFoundException;
+import tn.cita.app.exception.wrapper.*;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.domain.entity.Credential;
 import tn.cita.app.model.domain.entity.Employee;
@@ -34,6 +17,18 @@ import tn.cita.app.repository.CustomerRepository;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.VerificationTokenRepository;
 import tn.cita.app.util.NotificationUtil;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.Assert.assertThrows;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class RegistrationServiceImplTest {

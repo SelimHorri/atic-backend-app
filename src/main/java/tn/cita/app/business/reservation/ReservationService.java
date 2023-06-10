@@ -1,11 +1,10 @@
 package tn.cita.app.business.reservation;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
-
 import tn.cita.app.model.dto.ReservationDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
+
+import java.util.List;
 
 public interface ReservationService {
 	

@@ -1,7 +1,5 @@
 package tn.cita.app.mapper;
 
-import java.util.Objects;
-
 import lombok.NonNull;
 import tn.cita.app.model.domain.entity.Employee;
 import tn.cita.app.model.domain.entity.Reservation;
@@ -9,6 +7,8 @@ import tn.cita.app.model.domain.entity.Task;
 import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.ReservationDto;
 import tn.cita.app.model.dto.TaskDto;
+
+import java.util.Objects;
 
 public interface TaskMapper {
 	

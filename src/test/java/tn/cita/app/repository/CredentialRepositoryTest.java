@@ -1,14 +1,13 @@
 package tn.cita.app.repository;
 
-import static org.assertj.core.api.Assertions.assertThat;
-
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.AutoConfigureDataJpa;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.model.domain.entity.Credential;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 @DataJpaTest(showSql = true)
 @AutoConfigureDataJpa

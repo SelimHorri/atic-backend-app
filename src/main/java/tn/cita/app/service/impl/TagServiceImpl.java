@@ -1,12 +1,11 @@
 package tn.cita.app.service.impl;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.exception.wrapper.TagNotFoundException;
 import tn.cita.app.mapper.TagMapper;
 import tn.cita.app.model.dto.TagDto;

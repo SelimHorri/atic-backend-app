@@ -1,10 +1,9 @@
 package tn.cita.app.model.domain.listener;
 
-import java.util.UUID;
-
 import jakarta.persistence.PrePersist;
-
 import tn.cita.app.model.domain.entity.VerificationToken;
+
+import java.util.UUID;
 
 public class VerificationTokenEntityListener {
 	

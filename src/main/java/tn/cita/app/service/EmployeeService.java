@@ -1,10 +1,9 @@
 package tn.cita.app.service;
 
-import java.util.List;
-
 import org.springframework.data.domain.Page;
-
 import tn.cita.app.model.dto.EmployeeDto;
+
+import java.util.List;
 
 public interface EmployeeService {
 	

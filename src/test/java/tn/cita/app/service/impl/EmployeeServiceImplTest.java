@@ -1,13 +1,5 @@
 package tn.cita.app.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.when;
-
-import java.time.LocalDate;
-import java.util.List;
-import java.util.Optional;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,7 +9,6 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
@@ -29,6 +20,14 @@ import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.UserImageDto;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.service.EmployeeService;
+
+import java.time.LocalDate;
+import java.util.List;
+import java.util.Optional;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class EmployeeServiceImplTest {

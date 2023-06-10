@@ -1,12 +1,5 @@
 package tn.cita.app.integration;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.hamcrest.CoreMatchers.containsStringIgnoringCase;
-import static org.hamcrest.CoreMatchers.endsWith;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.startsWith;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,15 +10,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.test.web.reactive.server.WebTestClient;
-
-import tn.cita.app.constant.AppConstants;
-import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.business.auth.authentication.model.LoginRequest;
 import tn.cita.app.business.auth.authentication.model.LoginResponse;
 import tn.cita.app.business.auth.authentication.service.AuthenticationService;
+import tn.cita.app.constant.AppConstants;
+import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.util.JwtUtils;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.hamcrest.CoreMatchers.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient

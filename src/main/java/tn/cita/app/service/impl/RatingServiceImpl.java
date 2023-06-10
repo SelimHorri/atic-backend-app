@@ -1,16 +1,15 @@
 package tn.cita.app.service.impl;
 
-import java.util.List;
-
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import tn.cita.app.mapper.RatingMapper;
 import tn.cita.app.model.dto.RatingDto;
 import tn.cita.app.repository.RatingRepository;
 import tn.cita.app.service.RatingService;
+
+import java.util.List;
 
 @Service
 @Transactional(readOnly = true)

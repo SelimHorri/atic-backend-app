@@ -1,17 +1,11 @@
 package tn.cita.app.business.servicedetail;
 
-import java.util.Comparator;
-import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
-
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import tn.cita.app.business.servicedetail.employee.manager.model.ServiceDetailRequest;
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.ReservationNotFoundException;
@@ -27,6 +21,11 @@ import tn.cita.app.repository.CategoryRepository;
 import tn.cita.app.repository.OrderedDetailRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.ServiceDetailRepository;
+
+import java.util.Comparator;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)

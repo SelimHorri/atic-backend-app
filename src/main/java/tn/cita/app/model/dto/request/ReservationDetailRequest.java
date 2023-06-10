@@ -1,11 +1,10 @@
 package tn.cita.app.model.dto.request;
 
-import java.io.Serializable;
-
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-
 import lombok.Builder;
+
+import java.io.Serializable;
 
 @Builder
 public record ReservationDetailRequest(

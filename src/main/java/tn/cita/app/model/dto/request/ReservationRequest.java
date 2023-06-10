@@ -1,24 +1,21 @@
 package tn.cita.app.model.dto.request;
 
-import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.util.List;
-
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonFormat.Shape;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
-
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
+import org.springframework.format.annotation.DateTimeFormat;
 import tn.cita.app.constant.AppConstants;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 public record ReservationRequest(

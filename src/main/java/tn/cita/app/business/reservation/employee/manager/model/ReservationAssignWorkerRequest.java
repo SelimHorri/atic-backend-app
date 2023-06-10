@@ -2,10 +2,12 @@ package tn.cita.app.business.reservation.employee.manager.model;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
+import lombok.Builder;
 
 import java.io.Serializable;
 import java.util.List;
 
+@Builder
 public record ReservationAssignWorkerRequest(
 		
 		Integer reservationId,
@@ -22,6 +24,5 @@ public record ReservationAssignWorkerRequest(
 	}
 	
 }
-
 
 

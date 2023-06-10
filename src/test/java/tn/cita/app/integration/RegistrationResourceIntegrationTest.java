@@ -1,13 +1,5 @@
 package tn.cita.app.integration;
 
-import static org.hamcrest.CoreMatchers.endsWith;
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.notNullValue;
-import static org.hamcrest.CoreMatchers.startsWith;
-
-import java.time.LocalDate;
-import java.util.UUID;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,14 +12,18 @@ import org.springframework.mock.web.MockHttpServletRequest;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
-import tn.cita.app.constant.AppConstants;
-import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.business.auth.register.model.RegisterRequest;
 import tn.cita.app.business.auth.register.model.RegisterResponse;
+import tn.cita.app.constant.AppConstants;
+import tn.cita.app.container.AbstractSharedMySQLTestContainer;
 import tn.cita.app.exception.payload.ExceptionMsg;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.dto.response.api.ApiResponse;
+
+import java.time.LocalDate;
+import java.util.UUID;
+
+import static org.hamcrest.CoreMatchers.*;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @AutoConfigureWebTestClient

@@ -1,9 +1,5 @@
 package tn.cita.app.service.impl;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.Assert.assertThrows;
-import static org.mockito.Mockito.when;
-
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,13 +8,16 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-
 import tn.cita.app.business.auth.CredentialService;
 import tn.cita.app.exception.wrapper.CredentialNotFoundException;
 import tn.cita.app.exception.wrapper.IllegalUserDetailsStateException;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
 import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.security.CustomUserDetails;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.assertThrows;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class CustomUserDetailsServiceTest {
