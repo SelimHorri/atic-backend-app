@@ -37,8 +37,8 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 		if (clientPageRequest != null)
 			return new ManagerReservationResponse(
 					managerDto, 
@@ -69,8 +69,8 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 		return new ManagerReservationResponse(
 				managerDto, 
 				new PageImpl<>(this.reservationRepository

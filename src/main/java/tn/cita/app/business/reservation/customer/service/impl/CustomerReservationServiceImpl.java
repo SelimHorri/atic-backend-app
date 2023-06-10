@@ -51,8 +51,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		final var customerDto = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() ->
-						new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
+				.orElseThrow(() -> new CustomerNotFoundException(
+						"Customer with username: %s not found".formatted(username)));
 		return new CustomerReservationResponse(
 				customerDto,
 				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
@@ -66,7 +66,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		final var customerDto = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
+				.orElseThrow(() -> new CustomerNotFoundException(
+						"Customer with username: %s not found".formatted(username)));
 		return new CustomerReservationResponse(
 				customerDto, 
 				new PageImpl<>(this.reservationRepository
@@ -111,8 +112,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				.startDate(reservationRequest.startDate())
 				.customer(this.customerRepository
 						.findByCredentialUsernameIgnoringCase(reservationRequest.username().strip())
-						.orElseThrow(() -> new CustomerNotFoundException(String
-								.format("Customer with username %s not found", reservationRequest.username()))))
+						.orElseThrow(() -> new CustomerNotFoundException(
+								"Customer with username %s not found".formatted(reservationRequest.username()))))
 				.saloon(this.saloonRepository
 						.findById(reservationRequest.saloonId())
 						.orElseThrow(SaloonNotFoundException::new))

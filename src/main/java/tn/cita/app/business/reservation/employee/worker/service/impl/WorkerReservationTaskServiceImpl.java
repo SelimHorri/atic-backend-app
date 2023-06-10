@@ -38,8 +38,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		return this.taskRepository.findById(new TaskId(this.employeeRepository
 					.findByCredentialUsernameIgnoringCase(username)
 					.map(EmployeeMapper::toDto)
-					.orElseThrow(() -> new EmployeeNotFoundException(String
-							.format("Employee with username: %s not found", username))).getId(), reservationId))
+					.orElseThrow(() -> new EmployeeNotFoundException(
+							"Employee with username: %s not found".formatted(username))).getId(), reservationId))
 				.map(TaskMapper::toDto)
 				.orElseThrow(TaskNotFoundException::new);
 	}
@@ -52,8 +52,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		final var workerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(taskUpdateDescriptionRequest.username())
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", taskUpdateDescriptionRequest.username())));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(taskUpdateDescriptionRequest.username())));
 		
 		final var reservation = this.reservationRepository
 				.findById(taskUpdateDescriptionRequest.reservationId())
@@ -81,8 +81,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		final var workerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(taskBeginRequest.username())
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", taskBeginRequest.username())));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(taskBeginRequest.username())));
 		
 		final var reservation = this.reservationRepository
 				.findById(taskBeginRequest.reservationId())
@@ -125,8 +125,8 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		final var workerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(taskEndRequest.username())
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", taskEndRequest.username())));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(taskEndRequest.username())));
 		
 		final var reservation = this.reservationRepository
 				.findById(taskEndRequest.reservationId())

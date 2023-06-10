@@ -40,7 +40,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 	@Override
 	public ReservationDto cancelReservation(final Integer reservationId) {
 		
-		log.info("** Cancelling reservation.. *\n");
+		log.info("** Cancelling reservation.. *");
 		
 		final var reservation = this.reservationRepository.findById(reservationId)
 				.orElseThrow(ReservationNotFoundException::new);
@@ -63,14 +63,13 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 	
 	@Override
 	public ReservationSubWorkerResponse fetchAllUnassignedSubWorkers(final String username, final Integer reservationId) {
+		log.info("** Fetch all unassigned sub workers.. *");
 		
-		log.info("** Fetch all unassigned sub workers.. *\n");
-
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 		
 		final var assignedWorkersIds = this.taskRepository
 				.findAllByReservationId(reservationId).stream()
@@ -96,8 +95,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 	@Override
 	public ReservationSubWorkerResponse assignReservationWorkers(final String username, 
 			final ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
-		
-		log.info("** Assign workers to a reservation.. *\n");
+		log.info("** Assign workers to a reservation.. *");
 		
 		final var reservation = this.reservationRepository.findById(reservationAssignWorkerRequest.reservationId())
 				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));

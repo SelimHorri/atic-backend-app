@@ -53,7 +53,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 		final var reservationDto = this.reservationRepository
 				.findByIdentifier(reservationIdentifier.strip())
 				.map(ReservationMapper::toDto)
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
 				.orderedDetailDtos(new PageImpl<>(this.orderedDetailRepository
@@ -72,7 +72,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
 		log.info("** Update reservation details by customer.. *\n");
 		final var reservation = this.reservationRepository.findById(reservationDetailRequest.reservationId())
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation with id: %s not found"));
+				.orElseThrow(ReservationNotFoundException::new);
 		reservation.setDescription(StringWrapperUtils
 				.trimIfBlank(reservationDetailRequest.description()));
 		

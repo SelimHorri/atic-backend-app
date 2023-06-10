@@ -31,8 +31,8 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 		return this.taskRepository.findAllByWorkerId(this.employeeRepository
 					.findByCredentialUsernameIgnoringCase(username.strip())
 					.map(EmployeeMapper::toDto)
-					.orElseThrow(() -> new EmployeeNotFoundException(String
-							.format("Employee with username: %s not found", username))).getId(), 
+					.orElseThrow(() -> new EmployeeNotFoundException(
+							"Employee with username: %s not found".formatted(username))).getId(),
 					ClientPageRequestUtils.from(clientPageRequest))
 				.map(TaskMapper::toDto);
 	}

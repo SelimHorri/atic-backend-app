@@ -31,8 +31,8 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> 
-						new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 		return new ManagerWorkerAssignmentResponse(
 				managerDto, 
 				this.taskRepository.findAllByWorkerId(workerId, 
@@ -47,8 +47,8 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 				this.employeeRepository
 						.findByCredentialUsernameIgnoringCase(username)
 						.map(EmployeeMapper::toDto)
-						.orElseThrow(() -> new EmployeeNotFoundException(String
-								.format("Employee with username: %s not found", username))), 
+						.orElseThrow(() -> new EmployeeNotFoundException(
+								"Employee with username: %s not found".formatted(username))),
 				new PageImpl<>(this.taskRepository
 						.searchAllByWorkerIdLikeKey(workerId, key.strip().toLowerCase()).stream()
 							.map(TaskMapper::toDto)

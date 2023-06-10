@@ -26,6 +26,7 @@ public record ReservationRequest(
 		@NotNull(message = "Reservation must belong to a specific Saloon")
 		Integer saloonId,
 		
+		@NotNull(message = "Specify a date to book a reservation")
 		@JsonFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT, shape = Shape.STRING)
 		@DateTimeFormat(pattern = AppConstants.LOCAL_DATE_TIME_FORMAT)
 		@JsonSerialize(using = LocalDateTimeSerializer.class)

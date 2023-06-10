@@ -34,12 +34,12 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	
 	@Override
 	public CustomerFavouriteResponse fetchAllFavourites(final String username, final ClientPageRequest clientPageRequest) {
-		log.info("** Fetch all favourites by customer.. *\n");
+		log.info("** Fetch all favourites by customer.. *");
 		final var customerDto = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException(String
-						.format("Customer with username: %s not found", username)));
+				.orElseThrow(() -> new CustomerNotFoundException(
+						"Customer with username: %s not found".formatted(username)));
 		return new CustomerFavouriteResponse(
 				customerDto,
 				this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
@@ -50,12 +50,12 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	@Transactional
 	@Override
 	public Boolean deleteFavourite(final String username, final Integer saloonId) {
-		log.info("** Delete favourite by customer.. *\n");
+		log.info("** Delete favourite by customer.. *");
 		final var customer = this.customerRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException(String
-						.format("Customer with username: %s not found", username)));
+				.orElseThrow(() -> new CustomerNotFoundException(
+						"Customer with username: %s not found".formatted(username)));
 		final var favouriteId = new FavouriteId(customer.getId(), saloonId);
 		
 		this.favouriteRepository.deleteById(favouriteId);
@@ -65,16 +65,16 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	@Transactional
 	@Override
 	public FavouriteDto addFavourite(final String username, final Integer saloonId) {
-		
-		log.info("** Add new favourite by customer.. *\n");
+		log.info("** Add new favourite by customer.. *");
 		
 		final var customer = this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username %s not found".formatted(username)));
 		
 		// Check if this favourite already exists..
 		final var favouriteId = new FavouriteId(customer.getId(), saloonId);
-		this.favouriteRepository.findById(favouriteId).ifPresent(f -> {
-				throw new FavouriteAlreadyExistsException("This is already part of your favourites");
+		this.favouriteRepository
+				.findById(favouriteId).ifPresent(f -> {
+			throw new FavouriteAlreadyExistsException("This is already part of your favourites");
 		});
 		
 		// persist..
