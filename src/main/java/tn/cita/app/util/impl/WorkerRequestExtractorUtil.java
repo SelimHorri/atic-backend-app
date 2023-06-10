@@ -8,6 +8,8 @@ import tn.cita.app.exception.wrapper.UsernameNotMatchException;
 import tn.cita.app.util.JwtUtils;
 import tn.cita.app.util.UserRequestExtractorUtil;
 
+import java.util.Objects;
+
 @Component
 @RequiredArgsConstructor
 public class WorkerRequestExtractorUtil implements UserRequestExtractorUtil {
@@ -17,16 +19,16 @@ public class WorkerRequestExtractorUtil implements UserRequestExtractorUtil {
 	@Override
 	public String extractUsername(final WebRequest request) {
 		
-		final var usernameAuthHeader = (request.getHeader(AppConstants.USERNAME_AUTH_HEADER) != null) ? 
-				request.getHeader(AppConstants.USERNAME_AUTH_HEADER) : "";
-		
-		final var authenticatedUsername = this.jwtUtils
-				.extractUsername(request.getHeader(AppConstants.AUTHORIZATION_HEADER).substring(7));
+		final var usernameAuthHeader = Objects.requireNonNullElse(
+				request.getHeader(AppConstants.USERNAME_AUTH_HEADER), "");
+		final var authenticatedUsername = this.jwtUtils.extractUsername(Objects.requireNonNullElse(
+						request.getHeader(AppConstants.AUTHORIZATION_HEADER), "")
+				.substring(7)
+				.strip());
 		
 		if (!usernameAuthHeader.isBlank())
 			if (!authenticatedUsername.equalsIgnoreCase(usernameAuthHeader))
-				throw new UsernameNotMatchException(String
-						.format("Authenticated user is not allowed to access another user resources"));
+				throw new UsernameNotMatchException("Authenticated user is not allowed to access another user resources");
 		
 		return authenticatedUsername;
 	}
