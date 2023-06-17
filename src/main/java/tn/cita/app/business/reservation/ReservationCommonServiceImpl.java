@@ -24,6 +24,7 @@ import tn.cita.app.util.StringWrapperUtils;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -131,6 +132,7 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		}
 		
 		final var savedAssignedWorkers = assignedWorkers.stream()
+				.filter(Objects::nonNull)
 				.map(Task::getWorkerId)
 				.map(workerId -> this.employeeRepository.findById(workerId)
 						.map(EmployeeMapper::toDto)
