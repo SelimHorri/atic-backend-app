@@ -18,6 +18,7 @@ import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.model.domain.ReservationStatus;
 import tn.cita.app.model.domain.entity.OrderedDetail;
 import tn.cita.app.model.domain.entity.Reservation;
+import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.ReservationDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.model.dto.request.OrderedDetailRequest;
@@ -47,12 +48,8 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	@Override
 	public CustomerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
-		log.info("** Fetch all reservations by customer.. *\n");
-		final var customerDto = this.customerRepository
-				.findByCredentialUsernameIgnoringCase(username)
-				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException(
-						"Customer with username: %s not found".formatted(username)));
+		log.info("** Fetch all reservations by customer.. *");
+		final var customerDto = this.retrieveCustomerByUsername(username);
 		return new CustomerReservationResponse(
 				customerDto,
 				this.reservationRepository.findAllByCustomerId(customerDto.getId(), 
@@ -62,18 +59,13 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	
 	@Override
 	public CustomerReservationResponse searchAllByCustomerIdLikeKey(final String username, final String key) {
-		log.info("** Search all reservations by customerId like key by customer.. *\n");
-		final var customerDto = this.customerRepository
-				.findByCredentialUsernameIgnoringCase(username)
-				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException(
-						"Customer with username: %s not found".formatted(username)));
+		log.info("** Search all reservations by customerId like key by customer.. *");
+		final var customerDto = this.retrieveCustomerByUsername(username);
 		return new CustomerReservationResponse(
 				customerDto, 
 				new PageImpl<>(this.reservationRepository
 						.searchAllByCustomerIdLikeKey(
-								customerDto.getId(),
-								key.strip().toLowerCase()).stream()
+								customerDto.getId(), key.strip().toLowerCase()).stream()
 							.map(ReservationMapper::toDto)
 							.sorted(Comparator
 									.comparing(ReservationDto::getStartDate)
@@ -90,15 +82,16 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	@Transactional
 	@Override
 	public ReservationDto createReservation(final ReservationRequest reservationRequest) {
-		
-		log.info("** Create new reservation by customer.. *\n");
+		log.info("** Create new reservation by customer.. *");
 		
 		if (reservationRequest.startDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER_MINUTES))
 				|| reservationRequest.startDate().getMinute() != 0 && reservationRequest.startDate().getMinute() != 30)
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
 		this.reservationRepository
-				.findByStartDateAndStatus(reservationRequest.startDate(), ReservationStatus.NOT_STARTED).ifPresent(r -> {
+				.findByStartDateAndStatus(
+						reservationRequest.startDate(),
+						ReservationStatus.NOT_STARTED).ifPresent(r -> {
 			throw new ReservationAlreadyExistsException("Time requested is occupied! please choose another time");
 		});
 		
@@ -142,6 +135,14 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 		}
 		
 		return ReservationMapper.toDto(savedReservation);
+	}
+	
+	private CustomerDto retrieveCustomerByUsername(final String username) {
+		return this.customerRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::toDto)
+				.orElseThrow(() -> new CustomerNotFoundException(
+						"Customer with username: %s not found".formatted(username)));
 	}
 	
 }

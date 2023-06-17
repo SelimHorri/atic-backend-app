@@ -48,7 +48,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** User not exist by username checked successfully! *");
 		
 		if (!registerRequest.password().equals(registerRequest.confirmPassword()))
-			throw new PasswordNotMatchException("Unmatched passwords! please check again");
+			throw new PasswordNotMatchException("Passwords do not match! please check again");
 		log.info("** User password confirmation checked successfully! *");
 		
 		return switch (UserRoleBasedAuthority.valueOf(registerRequest.role())) {
@@ -76,9 +76,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		if (verificationToken.getExpireDate().isEqual(LocalDateTime.now()) 
 				|| verificationToken.getExpireDate().isBefore(LocalDateTime.now())) {
 			
-			// TODO: instead of just removing the verification token, we need to remove the whole user chain on cascade: User->Credential->VerificationToken
 			this.verificationTokenRepository.deleteByToken(token);
-			throw new VerificationTokenExpiredException("Verification token has been expired");
+			throw new VerificationTokenExpiredException("Link has been expired");
 		}
 		
 		// activate user
@@ -87,7 +86,7 @@ public class RegistrationServiceImpl implements RegistrationService {
 		this.credentialRepository.save(credential);
 		log.info("** User enabled successfully! *");
 		
-		// token should be deleted also after activating user to prevent reaccess to url token
+		// token should be deleted also after activating user to prevent re-access to url token
 		this.verificationTokenRepository.deleteByToken(token);
 		log.info("** User token has been deleted! *");
 		

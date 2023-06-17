@@ -29,7 +29,7 @@ public class CustomerFavouriteResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<CustomerFavouriteResponse>> fetchAllFavourites(final WebRequest request, 
 			@RequestParam final Map<String, String> params) {
-		log.info("** Fetch all customer favourites.. *\n");
+		log.info("** Fetch all customer favourites.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
 				this.customerFavouriteService.fetchAllFavourites(
 						this.userRequestExtractorUtil.extractUsername(request),
@@ -39,7 +39,7 @@ public class CustomerFavouriteResource {
 	@DeleteMapping("/{saloonId}")
 	public ResponseEntity<ApiResponse<Boolean>> deleteFavourite(final WebRequest request, 
 			@PathVariable final String saloonId) {
-		log.info("** Delete customer favourite.. *\n");
+		log.info("** Delete customer favourite.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
 				this.customerFavouriteService.deleteFavourite(
 						this.userRequestExtractorUtil.extractUsername(request),

@@ -2,6 +2,7 @@ package tn.cita.app.business.reservation.employee.manager.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +14,7 @@ import tn.cita.app.business.reservation.employee.manager.service.ManagerReservat
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ReservationMapper;
+import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.ReservationDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.EmployeeRepository;
@@ -33,28 +35,24 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	@Override
 	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
-		log.info("** Fetch all paged reservations by manager.. *\n");
-		final var managerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(username)
-				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(
-						"Employee with username: %s not found".formatted(username)));
-		if (clientPageRequest != null)
-			return new ManagerReservationResponse(
-					managerDto, 
-					this.reservationRepository
-						.findAllBySaloonId(managerDto.getSaloonDto().getId(), ClientPageRequestUtils.from(clientPageRequest))
-						.map(ReservationMapper::toDto));
-		else
-			return new ManagerReservationResponse(
-					managerDto, 
-					new PageImpl<>(this.reservationRepository
-							.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
-							.map(ReservationMapper::toDto)
-							.sorted(Comparator
-									.comparing(ReservationDto::getStartDate)
-									.reversed())
-							.toList()));
+		log.info("** Fetch all reservations by manager.. *");
+		final var managerDto = this.retrieveManagerByUsername(username);
+		return new ManagerReservationResponse(managerDto,
+				this.retrieveReservationsBySaloonId(managerDto.getSaloonDto().getId(), clientPageRequest));
+	}
+	
+	private Page<ReservationDto> retrieveReservationsBySaloonId(final int saloonId, final ClientPageRequest clientPageRequest) {
+		return (clientPageRequest != null) ?
+				this.reservationRepository
+						.findAllBySaloonId(saloonId, ClientPageRequestUtils.from(clientPageRequest))
+						.map(ReservationMapper::toDto)
+				:
+				new PageImpl<>(this.reservationRepository.findAllBySaloonId(saloonId).stream()
+						.map(ReservationMapper::toDto)
+						.sorted(Comparator
+								.comparing(ReservationDto::getStartDate)
+								.reversed())
+						.toList());
 	}
 	
 	@Transactional
@@ -65,21 +63,16 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	
 	@Override
 	public ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key) {
-		log.info("** Search all reservations by saloonId like key by manager.. *\n");
-		final var managerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(username)
-				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(
-						"Employee with username: %s not found".formatted(username)));
-		return new ManagerReservationResponse(
-				managerDto, 
-				new PageImpl<>(this.reservationRepository
-						.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase()).stream()
-							.map(ReservationMapper::toDto)
-							.sorted(Comparator
-									.comparing(ReservationDto::getStartDate)
-									.reversed())
-							.toList()));
+		log.info("** Search all reservations by saloonId like key by manager.. *");
+		final var managerDto = this.retrieveManagerByUsername(username);
+		final var foundReservations = this.reservationRepository
+				.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase()).stream()
+					.map(ReservationMapper::toDto)
+					.sorted(Comparator
+							.comparing(ReservationDto::getStartDate)
+							.reversed())
+					.toList();
+		return new ManagerReservationResponse(managerDto, new PageImpl<>(foundReservations));
 	}
 	
 	@Override
@@ -92,6 +85,14 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	public ReservationSubWorkerResponse assignReservationWorkers(final String username, 
 			final ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
 		return this.reservationCommonService.assignReservationWorkers(username, reservationAssignWorkerRequest);
+	}
+	
+	private EmployeeDto retrieveManagerByUsername(final String username) {
+		return this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::toDto)
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 	}
 	
 }

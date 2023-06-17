@@ -39,7 +39,6 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 	@Transactional
 	@Override
 	public ReservationDto cancelReservation(final Integer reservationId) {
-		
 		log.info("** Cancelling reservation.. *");
 		
 		final var reservation = this.reservationRepository.findById(reservationId)

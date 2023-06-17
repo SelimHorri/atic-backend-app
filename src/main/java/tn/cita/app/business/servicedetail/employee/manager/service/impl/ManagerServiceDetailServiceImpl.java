@@ -34,13 +34,13 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Override
 	public Page<ServiceDetailDto> fetchAll(final String username) {
-		log.info("** Fetch all service details by manager.. *\n");
+		log.info("** Fetch all service details by manager.. *");
 		
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> 
-						new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 		
 		return new PageImpl<>(this.serviceDetailRepository
 				.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()).stream()
@@ -53,7 +53,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	
 	@Override
 	public ServiceDetailDto fetchById(final Integer serviceDetailId) {
-		log.info("** Fetch service detail by id by manager.. *\n");
+		log.info("** Fetch service detail by id by manager.. *");
 		return this.serviceDetailRepository.findById(serviceDetailId)
 				.map(ServiceDetailMapper::toDto)
 				.orElseThrow(ServiceDetailNotFoundException::new);
@@ -62,7 +62,7 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	@Transactional
 	@Override
 	public Boolean deleteServiceDetail(final Integer serviceDetailId) {
-		log.info("** Delete service detail by id by manager.. *\n");
+		log.info("** Delete service detail by id by manager.. *");
 		this.serviceDetailRepository.deleteById(serviceDetailId);
 		return !this.serviceDetailRepository.existsById(serviceDetailId);
 	}
@@ -70,10 +70,10 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	@Transactional
 	@Override
 	public ServiceDetailDto saveServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
-		log.info("** Save new service detail.. *\n");
+		log.info("** Save new service detail.. *");
 		
 		final var category = this.categoryRepository.findById(serviceDetailRequest.getCategoryId())
-				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+				.orElseThrow(CategoryNotFoundException::new);
 		
 		final var serviceDetail = ServiceDetail.builder()
 				.name(serviceDetailRequest.getName().strip().toLowerCase())
@@ -91,13 +91,12 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	@Transactional
 	@Override
 	public ServiceDetailDto updateServiceDetail(final ServiceDetailRequest serviceDetailRequest) {
-		log.info("** Update service detail.. *\n");
+		log.info("** Update service detail.. *");
 		
 		final var category = this.categoryRepository.findById(serviceDetailRequest.getCategoryId())
-				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
-		
+				.orElseThrow(CategoryNotFoundException::new);
 		final var serviceDetail = this.serviceDetailRepository.findById(serviceDetailRequest.getServiceDetailId())
-				.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
+				.orElseThrow(ServiceDetailNotFoundException::new);
 		
 		serviceDetail.setName(serviceDetailRequest.getName().strip().toLowerCase());
 		serviceDetail.setDescription(StringWrapperUtils

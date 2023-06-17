@@ -36,25 +36,24 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
-		log.info("** Fetch reservation details by reservationId by manager.. *\n");
+		log.info("** Fetch reservation details by reservationId by manager.. *");
 		final var reservationDto = this.reservationRepository
 				.findById(reservationId)
 				.map(ReservationMapper::toDto)
 				.orElseThrow(ReservationNotFoundException::new);
+		final var orderedDetailDtoList = this.orderedDetailRepository
+				.findAllByReservationId(reservationDto.getId()).stream()
+					.map(OrderedDetailMapper::toDto)
+					.toList();
 		return ReservationDetailResponse.builder()
 				.reservationDto(reservationDto)
-				.orderedDetailDtos(new PageImpl<>(
-						this.orderedDetailRepository
-								.findAllByReservationId(reservationDto.getId()).stream()
-								.map(OrderedDetailMapper::toDto)
-								.toList()))
+				.orderedDetailDtos(new PageImpl<>(orderedDetailDtoList))
 				.build();
 	}
 	
 	@Override
 	public ReservationBeginEndTask fetchBeginEndTask(final Integer reservationId) {
-		
-		log.info("** Fetch begin end task by manager.. *\n");
+		log.info("** Fetch begin end task by manager.. *");
 		
 		final var taskDtos = this.taskRepository
 				.findAllByReservationId(reservationId).stream()

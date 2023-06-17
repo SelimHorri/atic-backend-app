@@ -10,6 +10,7 @@ import tn.cita.app.business.reservation.employee.manager.service.ManagerWorkerAs
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.TaskRepository;
@@ -25,14 +26,10 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 	private final TaskRepository taskRepository;
 	
 	@Override
-	public ManagerWorkerAssignmentResponse fetchAllWorkerTasks(final String username, 
-			final Integer workerId, final ClientPageRequest clientPageRequest) {
-		log.info("** Fetch all worker tasks by manager.. *\n");
-		final var managerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(username)
-				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(
-						"Employee with username: %s not found".formatted(username)));
+	public ManagerWorkerAssignmentResponse fetchAllWorkerTasks(
+			final String username, final Integer workerId, final ClientPageRequest clientPageRequest) {
+		log.info("** Fetch all worker tasks by manager.. *");
+		final var managerDto = this.retrieveManagerByUsername(username);
 		return new ManagerWorkerAssignmentResponse(
 				managerDto, 
 				this.taskRepository.findAllByWorkerId(workerId, 
@@ -42,17 +39,21 @@ public class ManagerWorkerAssignmentServiceImpl implements ManagerWorkerAssignme
 	
 	@Override
 	public ManagerWorkerAssignmentResponse searchAllLikeKey(final String username, final Integer workerId, final String key) {
-		log.info("** Search all worker tasks like key by manager.. *\n");
+		log.info("** Search all worker tasks like key by manager.. *");
 		return new ManagerWorkerAssignmentResponse(
-				this.employeeRepository
-						.findByCredentialUsernameIgnoringCase(username)
-						.map(EmployeeMapper::toDto)
-						.orElseThrow(() -> new EmployeeNotFoundException(
-								"Employee with username: %s not found".formatted(username))),
+				this.retrieveManagerByUsername(username),
 				new PageImpl<>(this.taskRepository
 						.searchAllByWorkerIdLikeKey(workerId, key.strip().toLowerCase()).stream()
 							.map(TaskMapper::toDto)
 							.toList()));
+	}
+	
+	private EmployeeDto retrieveManagerByUsername(String username) {
+		return this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::toDto)
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 	}
 	
 }

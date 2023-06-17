@@ -33,13 +33,13 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	
 	@Override
 	public Page<CategoryDto> fetchAll(final String username) {
-		log.info("** Fetch all categories by manager.. *\n");
+		log.info("** Fetch all categories by manager.. *");
 		
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username.strip())
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() ->
-						new EmployeeNotFoundException("Employee with username: %s not found".formatted(username)));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 		
 		return new PageImpl<>(this.categoryRepository
 				.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
@@ -50,7 +50,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	
 	@Override
 	public CategoryDto fetchById(final Integer categoryId) {
-		log.info("** Fetch category by id by manager.. *\n");
+		log.info("** Fetch category by id by manager.. *");
 		return this.categoryRepository.findById(categoryId)
 				.map(CategoryMapper::toDto)
 				.orElseThrow(CategoryNotFoundException::new);
@@ -59,7 +59,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	@Transactional
 	@Override
 	public Boolean deleteCategory(final Integer categoryId) {
-		log.info("** Delete category by id by manager.. *\n");
+		log.info("** Delete category by id by manager.. *");
 		this.categoryRepository.deleteById(categoryId);
 		return !this.categoryRepository.existsById(categoryId);
 	}
@@ -67,7 +67,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	@Transactional
 	@Override
 	public CategoryDto saveCategory(final CategoryRequest categoryRequest) {
-		log.info("** Save category by manager.. *\n");
+		log.info("** Save category by manager.. *");
 		
 		final var parentCategory = (categoryRequest.parentCategoryId() != null) ?
 				this.categoryRepository
@@ -90,7 +90,7 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	@Transactional
 	@Override
 	public CategoryDto updateCategory(final CategoryRequest categoryRequest) {
-		log.info("** Update category by manager.. *\n");
+		log.info("** Update category by manager.. *");
 		
 		final var parentCategory = (categoryRequest.parentCategoryId() != null) ?
 				this.categoryRepository

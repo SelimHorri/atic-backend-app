@@ -40,7 +40,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public List<ServiceDetailDto> findAll() {
-		log.info("** Find all service details.. *\n");
+		log.info("** Find all service details.. *");
 		return this.serviceDetailRepository.findAll().stream()
 				.map(ServiceDetailMapper::toDto)
 				.distinct()
@@ -49,22 +49,22 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public ServiceDetailDto findById(final Integer id) {
-		log.info("** Find service detail by id.. *\n");
+		log.info("** Find service detail by id.. *");
 		return this.serviceDetailRepository.findById(id)
 				.map(ServiceDetailMapper::toDto)
-				.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
+				.orElseThrow(ServiceDetailNotFoundException::new);
 	}
 	
 	@Override
 	public ServiceDetailDto findByIdentifier(final String identifier) {
 		return this.serviceDetailRepository.findByIdentifier(identifier.strip())
 				.map(ServiceDetailMapper::toDto)
-				.orElseThrow(() -> new ServiceDetailNotFoundException("ServiceDetail not found"));
+				.orElseThrow(ServiceDetailNotFoundException::new);
 	}
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByIds(final Set<Integer> ids) {
-		log.info("** Find all service details by ids.. *\n");
+		log.info("** Find all service details by ids.. *");
 		return new PageImpl<>(this.serviceDetailRepository
 				.findAllById(ids).stream()
 				.map(ServiceDetailMapper::toDto)
@@ -73,7 +73,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final Integer reservationId) {
-		log.info("** Fetch ordered service details by reservationId.. *\n");
+		log.info("** Fetch ordered service details by reservationId.. *");
 		
 		final var orderedDetailDtos = this.orderedDetailRepository
 				.findAllByReservationId(reservationId).stream()
@@ -91,12 +91,12 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public ServiceDetailsReservationContainerResponse fetchOrderedServiceDetails(final String reservationIdentifier) {
+		log.info("** Fetch ordered service details by reservationIdentifier.. *");
 		
-		log.info("** Fetch ordered service details by reservationIdentifier.. *\n");
-		
-		final var reservationDto = this.reservationRepository.findByIdentifier(reservationIdentifier)
+		final var reservationDto = this.reservationRepository
+				.findByIdentifier(reservationIdentifier)
 				.map(ReservationMapper::toDto)
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
+				.orElseThrow(ReservationNotFoundException::new);
 		
 		final var orderedDetailDtos = this.orderedDetailRepository
 				.findAllByReservationId(reservationDto.getId()).stream()
@@ -114,7 +114,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public Page<ServiceDetailDto> findAllByCategoryId(final Integer categoryId) {
-		log.info("** Find all service details by categoryId.. *\n");
+		log.info("** Find all service details by categoryId.. *");
 		return new PageImpl<>(this.serviceDetailRepository
 				.findAllByCategoryId(categoryId).stream()
 					.map(ServiceDetailMapper::toDto)
@@ -123,7 +123,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	
 	@Override
 	public List<ServiceDetailDto> findAllByCategorySaloonId(final Integer saloonId) {
-		log.info("** Find all service details by category saloonId.. *\n");
+		log.info("** Find all service details by category saloonId.. *");
 		return this.serviceDetailRepository
 				.findAllByCategorySaloonId(saloonId).stream()
 					.map(ServiceDetailMapper::toDto)
@@ -137,8 +137,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	@Transactional
 	@Override
 	public ServiceDetailDto save(final ServiceDetailRequest serviceDetailRequest) {
-		
-		log.info("** Save new service detail.. *\n");
+		log.info("** Save new service detail.. *");
 		
 		final var category = this.categoryRepository.findById(serviceDetailRequest.getCategoryId())
 				.orElseThrow(CategoryNotFoundException::new);
@@ -160,11 +159,10 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 	@Transactional
 	@Override
 	public ServiceDetailDto update(final ServiceDetailRequest serviceDetailRequest) {
-		
-		log.info("** Update a service detail.. *\n");
+		log.info("** Update a service detail.. *");
 		
 		final var category = this.categoryRepository.findById(serviceDetailRequest.getCategoryId())
-				.orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+				.orElseThrow(CategoryNotFoundException::new);
 		
 		final var serviceDetail = this.serviceDetailRepository
 				.findById(serviceDetailRequest.getServiceDetailId())

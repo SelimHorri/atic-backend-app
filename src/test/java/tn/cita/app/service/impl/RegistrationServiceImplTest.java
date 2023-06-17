@@ -138,9 +138,7 @@ class RegistrationServiceImplTest {
 		
 		assertThatExceptionOfType(PasswordNotMatchException.class)
 				.isThrownBy(() -> this.registrationService.register(registerRequest))
-				.withMessageStartingWith("Unmatched ")
-				.withMessageEndingWith(" check again")
-				.withMessage("Unmatched passwords! please check again");
+				.withMessage("Passwords do not match! please check again");
 	}
 	
 	@Test
@@ -193,8 +191,6 @@ class RegistrationServiceImplTest {
 		
 		assertThat(verificationTokenNotFoundException).isNotNull();
 		assertThat(verificationTokenNotFoundException.getMessage())
-				.startsWith("Link ")
-				.endsWith(" disabled")
 				.isEqualTo("Link has been disabled");
 	}
 	
@@ -232,9 +228,7 @@ class RegistrationServiceImplTest {
 		
 		assertThat(expiredVerificationTokenException).isNotNull();
 		assertThat(expiredVerificationTokenException.getMessage())
-				.startsWith("Verification ")
-				.endsWith(" expired")
-				.isEqualTo("Verification token has been expired");
+				.isEqualTo("Link has been expired");
 	}
 	
 }

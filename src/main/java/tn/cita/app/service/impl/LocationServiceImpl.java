@@ -26,7 +26,7 @@ public class LocationServiceImpl implements LocationService {
 	
 	@Override
 	public Page<LocationDto> findAll(final ClientPageRequest clientPageRequest) {
-		log.info("** Find all paged locations.. *\n");
+		log.info("** Find all paged locations.. *");
 		return this.locationRepository.findAll(PageRequest
 					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(LocationMapper::toDto);
@@ -34,7 +34,7 @@ public class LocationServiceImpl implements LocationService {
 	
 	@Override
 	public LocationDto findById(final Integer id) {
-		log.info("** Find location by id.. *\n");
+		log.info("** Find location by id.. *");
 		return this.locationRepository.findById(id)
 				.map(LocationMapper::toDto)
 				.orElseThrow(() -> new LocationNotFoundException("Location with id: %d not found"));
@@ -42,7 +42,7 @@ public class LocationServiceImpl implements LocationService {
 	
 	@Override
 	public List<String> fetchAllCities() {
-		log.info("** Fetch all cities.. *\n");
+		log.info("** Fetch all cities.. *");
 		return this.locationRepository.findAll().stream()
 				.map(Location::getCity)
 				.map(String::toLowerCase)
@@ -52,7 +52,7 @@ public class LocationServiceImpl implements LocationService {
 	
 	@Override
 	public List<String> fetchAllStates() {
-		log.info("** Fetch all states.. *\n");
+		log.info("** Fetch all states.. *");
 		return this.locationRepository.findAll().stream()
 				.map(Location::getState)
 				.map(String::toLowerCase)

@@ -23,7 +23,7 @@ public class TagServiceImpl implements TagService {
 	
 	@Override
 	public Page<TagDto> findAll(final ClientPageRequest clientPageRequest) {
-		log.info("** Find all paged tags.. *\n");
+		log.info("** Find all paged tags.. *");
 		return this.tagRepository.findAll(PageRequest
 					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(TagMapper::toDto);
@@ -31,7 +31,7 @@ public class TagServiceImpl implements TagService {
 	
 	@Override
 	public TagDto findById(final Integer id) {
-		log.info("** Find tag by id.. *\n");
+		log.info("** Find tag by id.. *");
 		return this.tagRepository.findById(id)
 				.map(TagMapper::toDto)
 				.orElseThrow(() -> new TagNotFoundException("Tag not found"));

@@ -21,12 +21,13 @@ public class CustomUserDetailsService implements UserDetailsService {
 	
 	@Override
 	public UserDetails loadUserByUsername(final String username) {
-		log.info("** Load user by username.. *\n");
+		log.info("** Load user by username.. *");
 		
-		final UserDetails userDetails = new CustomUserDetails(this.credentialRepository
-				.findByUsernameIgnoreCase(username.strip().toLowerCase())
-				.map(CredentialMapper::toDto)
-				.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
+		final UserDetails userDetails = new CustomUserDetails(
+				this.credentialRepository
+						.findByUsernameIgnoreCase(username.strip().toLowerCase())
+						.map(CredentialMapper::toDto)
+						.orElseThrow(() -> new IllegalCredentialsException("Username is not registered")));
 		
 		if (!userDetails.isEnabled())
 			throw new IllegalUserDetailsStateException(String

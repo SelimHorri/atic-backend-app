@@ -13,6 +13,7 @@ import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.model.domain.ReservationStatus;
 import tn.cita.app.model.domain.entity.Task;
 import tn.cita.app.model.domain.id.TaskId;
+import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.TaskDto;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ReservationRepository;
@@ -34,12 +35,10 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	
 	@Override
 	public TaskDto fetchAssignedTask(final String username, final Integer reservationId) {
-		log.info("** Fetch assigned task by worker.. *\n");
-		return this.taskRepository.findById(new TaskId(this.employeeRepository
-					.findByCredentialUsernameIgnoringCase(username)
-					.map(EmployeeMapper::toDto)
-					.orElseThrow(() -> new EmployeeNotFoundException(
-							"Employee with username: %s not found".formatted(username))).getId(), reservationId))
+		log.info("** Fetch assigned task by worker.. *");
+		final var workerDto = this.retrieveWorkerByUsername(username);
+		return this.taskRepository
+				.findById(new TaskId(workerDto.getId(), reservationId))
 				.map(TaskMapper::toDto)
 				.orElseThrow(TaskNotFoundException::new);
 	}
@@ -47,13 +46,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto updateDescription(final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
-		log.info("** Update description by worker.. *\n");
+		log.info("** Update description by worker.. *");
 		
-		final var workerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(taskUpdateDescriptionRequest.username())
-				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(
-						"Employee with username: %s not found".formatted(taskUpdateDescriptionRequest.username())));
+		final var workerDto = this.retrieveWorkerByUsername(taskUpdateDescriptionRequest.username());
 		
 		final var reservation = this.reservationRepository
 				.findById(taskUpdateDescriptionRequest.reservationId())
@@ -76,13 +71,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto beginTask(final TaskBeginEndRequest taskBeginRequest) {
-		log.info("** Begin task by worker.. *\n");
+		log.info("** Begin task by worker.. *");
 		
-		final var workerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(taskBeginRequest.username())
-				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(
-						"Employee with username: %s not found".formatted(taskBeginRequest.username())));
+		final var workerDto = this.retrieveWorkerByUsername(taskBeginRequest.username());
 		
 		final var reservation = this.reservationRepository
 				.findById(taskBeginRequest.reservationId())
@@ -120,13 +111,9 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 	@Transactional
 	@Override
 	public TaskDto endTask(final TaskBeginEndRequest taskEndRequest) {
-		log.info("** End task by worker.. *\n");
+		log.info("** End task by worker.. *");
 		
-		final var workerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(taskEndRequest.username())
-				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(
-						"Employee with username: %s not found".formatted(taskEndRequest.username())));
+		final var workerDto = this.retrieveWorkerByUsername(taskEndRequest.username());
 		
 		final var reservation = this.reservationRepository
 				.findById(taskEndRequest.reservationId())
@@ -166,6 +153,14 @@ public class WorkerReservationTaskServiceImpl implements WorkerReservationTaskSe
 		}
 		
 		return TaskMapper.toDto(this.taskRepository.save(task));
+	}
+	
+	private EmployeeDto retrieveWorkerByUsername(final String username) {
+		return this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::toDto)
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 	}
 	
 }

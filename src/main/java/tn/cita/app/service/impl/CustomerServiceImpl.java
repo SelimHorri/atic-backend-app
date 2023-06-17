@@ -25,7 +25,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public Page<CustomerDto> findAll(final ClientPageRequest clientPageRequest) {
-		log.info("** Find All paged customers.. *\n");
+		log.info("** Find All paged customers.. *");
 		return this.customerRepository.findAll(PageRequest
 					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(CustomerMapper::toDto);
@@ -33,7 +33,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public CustomerDto findById(final Integer id) {
-		log.info("** Find customer by id.. *\n");
+		log.info("** Find customer by id.. *");
 		return this.customerRepository.findById(id)
 				.map(CustomerMapper::toDto)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
@@ -41,7 +41,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public CustomerDto findByIdentifier(final String identifier) {
-		log.info("** Find customer by identifier.. *\n");
+		log.info("** Find customer by identifier.. *");
 		return this.customerRepository.findByIdentifier(identifier.strip())
 				.map(CustomerMapper::toDto)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
@@ -49,7 +49,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public CustomerDto findByCredentialUsername(final String username) {
-		log.info("** Find customer by credential username.. *\n");
+		log.info("** Find customer by credential username.. *");
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
 				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
@@ -57,7 +57,7 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	@Override
 	public List<CustomerDto> findAllBySsn(final String ssn) {
-		log.info("** Find customer(s) by ssn.. *\n");
+		log.info("** Find customer(s) by ssn.. *");
 		return this.customerRepository.findAllBySsn(ssn.strip()).stream()
 				.map(CustomerMapper::toDto)
 				.distinct()
@@ -67,7 +67,7 @@ public class CustomerServiceImpl implements CustomerService {
 	@Transactional
 	@Override
 	public boolean deleteById(final Integer id) {
-		log.info("** Delete customer by id..*\n");
+		log.info("** Delete customer by id..*");
 		this.customerRepository.deleteById(id);
 		return !this.customerRepository.existsById(id);
 	}

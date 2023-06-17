@@ -28,7 +28,7 @@ public class CustomerReservationDetailResource {
 	@GetMapping("/{reservationId}")
 	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
-		log.info("** Fetch customer reservation details.. *\n");
+		log.info("** Fetch customer reservation details.. *");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));
@@ -37,7 +37,7 @@ public class CustomerReservationDetailResource {
 	@GetMapping("/identifier/{reservationIdentifier}")
 	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetailsWithIdentifier(final WebRequest request,
 			@PathVariable final String reservationIdentifier) {
-		log.info("** Fetch customer reservation details.. *\n");
+		log.info("** Fetch customer reservation details.. *");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationDetailService.fetchReservationDetails(reservationIdentifier.strip())));
@@ -46,7 +46,7 @@ public class CustomerReservationDetailResource {
 	@PutMapping
 	public ResponseEntity<ApiResponse<ReservationDto>> updateReservationDetails(final WebRequest request, 
 			@RequestBody @Valid final ReservationDetailRequest reservationDetailRequest) {
-		log.info("** Update customer reservation details.. *\n");
+		log.info("** Update customer reservation details.. *");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationDetailService.updateReservationDetails(reservationDetailRequest)));

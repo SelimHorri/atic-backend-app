@@ -25,7 +25,7 @@ public class TaskResource {
 	
 	@GetMapping("/identifier/{identifier}")
 	public ResponseEntity<ApiResponse<TaskDto>> findByIdentifier(@PathVariable final String identifier) {
-		log.info("** Find by identifier.. *\n");
+		log.info("** Find by identifier.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.taskService.findByIdentifier(identifier.strip())));
 	}
@@ -33,7 +33,7 @@ public class TaskResource {
 	@GetMapping("/reservationId/{reservationId}")
 	public ResponseEntity<ApiResponse<Page<TaskDto>>> findAllByReservationId(
 			final WebRequest webRequest, @PathVariable final String reservationId) {
-		log.info("** Find all tasks by reservationId.. *\n");
+		log.info("** Find all tasks by reservationId.. *");
 		final var taskDtos = this.taskService.findAllByReservationId(Integer.parseInt(reservationId));
 		return ResponseEntity.ok(new ApiResponse<>(taskDtos.size(), HttpStatus.OK, true, new PageImpl<>(taskDtos)));
 	}

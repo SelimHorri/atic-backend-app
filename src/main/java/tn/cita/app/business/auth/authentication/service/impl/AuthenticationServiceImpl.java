@@ -27,22 +27,20 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	
 	@Override
 	public LoginResponse authenticate(final LoginRequest loginRequest) {
-		log.info("** Authenticate user.. *\n");
+		log.info("** Authenticate user.. *");
 		
 		final var userDetails = this.userDetailsService.loadUserByUsername(loginRequest.username());
 		
 		if (userDetails == null || !this.passwordEncoder.matches(loginRequest.password(), userDetails.getPassword()))
 			throw new PasswordNotMatchException("Incorrect password");
 		
-		final var authentication = this.authenticationManager
-				.authenticate(new UsernamePasswordAuthenticationToken(userDetails.getUsername(), loginRequest.password()));
+		final var authentication = this.authenticationManager.authenticate(
+				new UsernamePasswordAuthenticationToken(userDetails.getUsername(), loginRequest.password()));
 		
 		return new LoginResponse(authentication.getName(), this.jwtUtils.generateToken(userDetails));
 	}
 	
 }
-
-
 
 
 

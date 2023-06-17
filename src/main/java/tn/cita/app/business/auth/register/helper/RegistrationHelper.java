@@ -121,8 +121,7 @@ public class RegistrationHelper {
 			this.mailNotificationUtil.sendHtmlMail(
 					new MailNotification(
 							verificationToken.getCredential().getCustomer().getEmail(),
-							"Registration",
-							null),
+							"Registration"),
 					Map.of(
 							"username", verificationToken.getCredential().getUsername(),
 							"confirmLink", uriBuilder.build(verificationToken.getToken()).toString()));
@@ -132,8 +131,7 @@ public class RegistrationHelper {
 			this.mailNotificationUtil.sendHtmlMail(
 					new MailNotification(
 							verificationToken.getCredential().getEmployee().getEmail(),
-							"Registration",
-							null),
+							"Registration"),
 					Map.of(
 							"username", verificationToken.getCredential().getUsername(),
 							"confirmLink", uriBuilder.build(verificationToken.getToken()).toString()));

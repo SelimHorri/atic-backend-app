@@ -28,7 +28,7 @@ public class ManagerWorkerInfoResource {
 	
 	@GetMapping
 	public ResponseEntity<ApiResponse<ManagerWorkerInfoResponse>> fetchAllSubWorkers(final WebRequest webRequest) {
-		log.info("** Fetch all sub workers by manager.. *\n");
+		log.info("** Fetch all sub workers by manager.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
 				this.managerWorkerInfoService.fetchAllSubWorkers(this.userRequestExtractorUtil.extractUsername(webRequest))));
 	}
@@ -36,7 +36,7 @@ public class ManagerWorkerInfoResource {
 	@GetMapping("/{workerId}")
 	public ResponseEntity<ApiResponse<EmployeeDto>> fetchWorkerInfo(final WebRequest webRequest, 
 			@PathVariable final String workerId) {
-		log.info("** Fetch worker info by manager.. *\n");
+		log.info("** Fetch worker info by manager.. *");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerWorkerInfoService.fetchWorkerInfo(Integer.parseInt(workerId))));

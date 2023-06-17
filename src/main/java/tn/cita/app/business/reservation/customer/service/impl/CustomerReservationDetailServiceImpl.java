@@ -30,7 +30,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final Integer reservationId) {
-		log.info("** Fetch reservation details by reservationId by customer.. *\n");
+		log.info("** Fetch reservation details by reservationId by customer.. *");
 		final var reservationDto = this.reservationRepository.findById(reservationId)
 				.map(ReservationMapper::toDto)
 				.orElseThrow(ReservationNotFoundException::new);
@@ -49,7 +49,7 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	
 	@Override
 	public ReservationDetailResponse fetchReservationDetails(final String reservationIdentifier) {
-		log.info("** Fetch reservation details by reservationIdentifier by customer.. *\n");
+		log.info("** Fetch reservation details by reservationIdentifier by customer.. *");
 		final var reservationDto = this.reservationRepository
 				.findByIdentifier(reservationIdentifier.strip())
 				.map(ReservationMapper::toDto)
@@ -70,8 +70,9 @@ public class CustomerReservationDetailServiceImpl implements CustomerReservation
 	@Transactional
 	@Override
 	public ReservationDto updateReservationDetails(final ReservationDetailRequest reservationDetailRequest) {
-		log.info("** Update reservation details by customer.. *\n");
-		final var reservation = this.reservationRepository.findById(reservationDetailRequest.reservationId())
+		log.info("** Update reservation details by customer.. *");
+		final var reservation = this.reservationRepository
+				.findById(reservationDetailRequest.reservationId())
 				.orElseThrow(ReservationNotFoundException::new);
 		reservation.setDescription(StringWrapperUtils
 				.trimIfBlank(reservationDetailRequest.description()));

@@ -26,10 +26,9 @@ public class ManagerWorkerAssignmentResource {
 	private final ManagerWorkerAssignmentService managerWorkerAssignmentService;
 	
 	@GetMapping("/{workerId}")
-	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> fetchAllWorkerTasks(final WebRequest webRequest, 
-			@PathVariable final String workerId, 
-			@RequestParam final Map<String, String> params) {
-		log.info("** Fetch all worker tasks by manager.. *\n");
+	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> fetchAllWorkerTasks(
+			final WebRequest webRequest, @PathVariable final String workerId, @RequestParam final Map<String, String> params) {
+		log.info("** Fetch all worker tasks by manager.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
 				this.managerWorkerAssignmentService.fetchAllWorkerTasks(
 						this.userRequestExtractorUtil.extractUsername(webRequest),
@@ -38,10 +37,9 @@ public class ManagerWorkerAssignmentResource {
 	}
 	
 	@GetMapping("/{workerId}/search/{key}")
-	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> searchAllReservationsLikeKey(final WebRequest webRequest, 
-			@PathVariable final String workerId, 
-			@PathVariable final String key) {
-		log.info("** Search all reservations like key by manager.. *\n");
+	public ResponseEntity<ApiResponse<ManagerWorkerAssignmentResponse>> searchAllReservationsLikeKey(
+			final WebRequest webRequest, @PathVariable final String workerId, @PathVariable final String key) {
+		log.info("** Search all reservations like key by manager.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
 				this.managerWorkerAssignmentService.searchAllLikeKey(
 						this.userRequestExtractorUtil.extractUsername(webRequest),

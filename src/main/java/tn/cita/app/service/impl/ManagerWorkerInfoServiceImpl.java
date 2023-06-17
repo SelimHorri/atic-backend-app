@@ -22,24 +22,23 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	
 	@Override
 	public ManagerWorkerInfoResponse fetchAllSubWorkers(final String username) {
-		log.info("** Fetch all sub workers by manager.. *\n");
+		log.info("** Fetch all sub workers by manager.. *");
 		final var managerDto = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username)
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 		
 		return new ManagerWorkerInfoResponse(managerDto, 
 				new PageImpl<>(this.employeeRepository
 						.findAllByManagerId(managerDto.getId()).stream()
 						.map(EmployeeMapper::toDto)
-						.distinct()
 						.toList()));
 	}
 	
 	@Override
 	public EmployeeDto fetchWorkerInfo(final Integer workerId) {
-		log.info("** Fetch worker infos by manager.. *\n");
+		log.info("** Fetch worker infos by manager.. *");
 		return this.employeeRepository.findById(workerId)
 				.map(EmployeeMapper::toDto)
 				.orElseThrow(EmployeeNotFoundException::new);

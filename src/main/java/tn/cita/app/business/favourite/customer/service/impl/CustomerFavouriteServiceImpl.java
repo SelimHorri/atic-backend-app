@@ -13,6 +13,7 @@ import tn.cita.app.mapper.CustomerMapper;
 import tn.cita.app.mapper.FavouriteMapper;
 import tn.cita.app.model.domain.entity.Favourite;
 import tn.cita.app.model.domain.id.FavouriteId;
+import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.FavouriteDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.CustomerRepository;
@@ -35,11 +36,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	@Override
 	public CustomerFavouriteResponse fetchAllFavourites(final String username, final ClientPageRequest clientPageRequest) {
 		log.info("** Fetch all favourites by customer.. *");
-		final var customerDto = this.customerRepository
-				.findByCredentialUsernameIgnoringCase(username)
-				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException(
-						"Customer with username: %s not found".formatted(username)));
+		final var customerDto = this.retrieveCustomerByUsername(username);
 		return new CustomerFavouriteResponse(
 				customerDto,
 				this.favouriteRepository.findAllByCustomerId(customerDto.getId(), 
@@ -51,13 +48,7 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 	@Override
 	public Boolean deleteFavourite(final String username, final Integer saloonId) {
 		log.info("** Delete favourite by customer.. *");
-		final var customer = this.customerRepository
-				.findByCredentialUsernameIgnoringCase(username)
-				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException(
-						"Customer with username: %s not found".formatted(username)));
-		final var favouriteId = new FavouriteId(customer.getId(), saloonId);
-		
+		final var favouriteId = new FavouriteId(this.retrieveCustomerByUsername(username).getId(), saloonId);
 		this.favouriteRepository.deleteById(favouriteId);
 		return !this.favouriteRepository.existsById(favouriteId);
 	}
@@ -93,6 +84,14 @@ public class CustomerFavouriteServiceImpl implements CustomerFavouriteService {
 		return this.favouriteRepository.findById(favouriteId)
 				.map(FavouriteMapper::toDto)
 				.orElseThrow(FavouriteNotFoundException::new);
+	}
+	
+	private CustomerDto retrieveCustomerByUsername(final String username) {
+		return this.customerRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(CustomerMapper::toDto)
+				.orElseThrow(() -> new CustomerNotFoundException(
+						"Customer with username: %s not found".formatted(username)));
 	}
 	
 }

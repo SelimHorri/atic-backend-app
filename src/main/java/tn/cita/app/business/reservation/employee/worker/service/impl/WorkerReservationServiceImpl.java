@@ -10,6 +10,7 @@ import tn.cita.app.business.reservation.employee.worker.service.WorkerReservatio
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.TaskMapper;
+import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.TaskDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.EmployeeRepository;
@@ -27,41 +28,37 @@ public class WorkerReservationServiceImpl implements WorkerReservationService {
 	
 	@Override
 	public Page<TaskDto> fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
-		log.info("** Fetch all paged reservations by worker.. *\n");
-		return this.taskRepository.findAllByWorkerId(this.employeeRepository
-					.findByCredentialUsernameIgnoringCase(username.strip())
-					.map(EmployeeMapper::toDto)
-					.orElseThrow(() -> new EmployeeNotFoundException(
-							"Employee with username: %s not found".formatted(username))).getId(),
-					ClientPageRequestUtils.from(clientPageRequest))
+		log.info("** Fetch all paged reservations by worker.. *");
+		final var workerDto = this.retrieveWorkerByUsername(username.strip());
+		return this.taskRepository
+				.findAllByWorkerId(workerDto.getId(), ClientPageRequestUtils.from(clientPageRequest))
 				.map(TaskMapper::toDto);
 	}
 	
 	@Override
 	public Page<TaskDto> fetchAllReservations(final String username) {
-		log.info("** Fetch all reservations by worker.. *\n");
-		final var workerDto = this.employeeRepository
-					.findByCredentialUsernameIgnoringCase(username.strip())
-					.map(EmployeeMapper::toDto)
-					.orElseThrow(() -> new EmployeeNotFoundException(String
-							.format("Employee with username: %s not found", username)));
-		return new PageImpl<>(this.taskRepository
-					.findAllByWorkerId(workerDto.getId()))
+		log.info("** Fetch all reservations by worker.. *");
+		final var workerDto = this.retrieveWorkerByUsername(username.strip());
+		return new PageImpl<>(this.taskRepository.findAllByWorkerId(workerDto.getId()))
 				.map(TaskMapper::toDto);
 	}
 	
 	@Override
 	public Page<TaskDto> searchAllLikeKey(final String username, final String key) {
-		log.info("** Search all reservations like key by worker.. *\n");
-		final var workerDto = this.employeeRepository
-				.findByCredentialUsernameIgnoringCase(username.strip())
-				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException(String
-						.format("Employee with username: %s not found", username)));
+		log.info("** Search all reservations like key by worker.. *");
+		final var workerDto = this.retrieveWorkerByUsername(username.strip());
 		return new PageImpl<>(this.taskRepository
 				.searchAllByWorkerIdLikeKey(workerDto.getId(), key.strip().toLowerCase()).stream()
 					.map(TaskMapper::toDto)
 					.toList());
+	}
+	
+	private EmployeeDto retrieveWorkerByUsername(final String username) {
+		return this.employeeRepository
+				.findByCredentialUsernameIgnoringCase(username)
+				.map(EmployeeMapper::toDto)
+				.orElseThrow(() -> new EmployeeNotFoundException(
+						"Employee with username: %s not found".formatted(username)));
 	}
 	
 }

@@ -27,7 +27,7 @@ public class WorkerReservationTaskResource {
 	
 	@GetMapping("/{reservationId}")
 	public ResponseEntity<ApiResponse<TaskDto>> fetchAssignedTask(final WebRequest webRequest, @PathVariable final String reservationId) {
-		log.info("** Fetch worker assigned task.. *\n");
+		log.info("** Fetch worker assigned task.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationTaskService.fetchAssignedTask(
 						this.userRequestExtractorUtil.extractUsername(webRequest), Integer.parseInt(reservationId))));
@@ -36,7 +36,7 @@ public class WorkerReservationTaskResource {
 	@PutMapping("/describe")
 	public ResponseEntity<ApiResponse<TaskDto>> updateDescription(final WebRequest webRequest, 
 			@RequestBody @Valid final TaskUpdateDescriptionRequest taskUpdateDescriptionRequest) {
-		log.info("** Update worker description on a reservation details.. *\n");
+		log.info("** Update worker description on a reservation details.. *");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationTaskService.updateDescription(taskUpdateDescriptionRequest)));
@@ -45,7 +45,7 @@ public class WorkerReservationTaskResource {
 	@PutMapping("/begin")
 	public ResponseEntity<ApiResponse<TaskDto>> beginTask(final WebRequest webRequest, 
 			@RequestBody @Valid final TaskBeginEndRequest taskBeginRequest) {
-		log.info("** Begin a worker task.. *\n");
+		log.info("** Begin a worker task.. *");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationTaskService.beginTask(taskBeginRequest)));
@@ -54,7 +54,7 @@ public class WorkerReservationTaskResource {
 	@PutMapping("/end")
 	public ResponseEntity<ApiResponse<TaskDto>> endTask(final WebRequest webRequest, 
 			@RequestBody @Valid final TaskBeginEndRequest taskEndRequest) {
-		log.info("** End a worker task.. *\n");
+		log.info("** End a worker task.. *");
 		this.userRequestExtractorUtil.extractUsername(webRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationTaskService.endTask(taskEndRequest)));

@@ -24,28 +24,28 @@ public class CustomerResource {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<ApiResponse<CustomerDto>> findById(@PathVariable final String id) {
-		log.info("** Find customer by id.. *\n");
+		log.info("** Find customer by id.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.findById(Integer.parseInt(id))));
 	}
 	
 	@GetMapping("/identifier/{identifier}")
 	public ResponseEntity<ApiResponse<CustomerDto>> findByIdentifier(@PathVariable final String identifier) {
-		log.info("** Find customer by identifier.. *\n");
+		log.info("** Find customer by identifier.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.findByIdentifier(identifier)));
 	}
 	
 	@GetMapping("/username/{username}")
 	public ResponseEntity<ApiResponse<CustomerDto>> findByCredentialUsername(@PathVariable final String username) {
-		log.info("** Find customer by credential username.. *\n");
+		log.info("** Find customer by credential username.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerService.findByCredentialUsername(username)));
 	}
 	
 	@GetMapping("/ssn/{ssn}")
 	public ResponseEntity<ApiResponse<Page<CustomerDto>>> findAllBySsn(@PathVariable final String ssn) {
-		log.info("** Find customer(s) by ssn.. *\n");
+		log.info("** Find customer(s) by ssn.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				new PageImpl<>(this.customerService.findAllBySsn(ssn))));
 	}

@@ -33,7 +33,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	
 	@Override
 	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
-		log.info("** Find all ordered detail by reservationId.. *\n");
+		log.info("** Find all ordered detail by reservationId.. *");
 		return this.orderedDetailRepository.findAllByReservationId(reservationId).stream()
 				.map(OrderedDetailMapper::toDto)
 				.distinct()
@@ -43,7 +43,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	@Transactional
 	@Override
 	public Boolean deleteById(final OrderedDetailId orderedDetailId) {
-		log.info("** Delete ordered detail by id.. *\n");
+		log.info("** Delete ordered detail by id.. *");
 		this.orderedDetailRepository.deleteById(orderedDetailId);
 		return !this.orderedDetailRepository.existsById(orderedDetailId);
 	}
@@ -52,7 +52,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	@Override
 	public OrderedDetailDto save(OrderedDetailRequest orderedDetailRequest) {
 		
-		log.info("** Save ordered detail.. *\n");
+		log.info("** Save ordered detail.. *");
 		
 		final var orderedDetailId = new OrderedDetailId(orderedDetailRequest.reservationId(), 
 				orderedDetailRequest.serviceDetailId());

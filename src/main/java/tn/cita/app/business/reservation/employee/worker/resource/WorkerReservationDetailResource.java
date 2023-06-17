@@ -28,7 +28,7 @@ public class WorkerReservationDetailResource {
 	@GetMapping("/{reservationId}")
 	public ResponseEntity<ApiResponse<ReservationDetailResponse>> fetchReservationDetails(final WebRequest request,
 			@PathVariable final String reservationId) {
-		log.info("** Fetch worker reservation details.. *\n");
+		log.info("** Fetch worker reservation details.. *");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.workerReservationDetailService.fetchReservationDetails(Integer.parseInt(reservationId))));

@@ -32,7 +32,7 @@ public class CustomerReservationResource {
 	@GetMapping
 	public ResponseEntity<ApiResponse<CustomerReservationResponse>> fetchAllReservations(
 			final WebRequest request, @RequestParam final Map<String, String> params) {
-		log.info("** Fetch all customer reservations.. *\n");
+		log.info("** Fetch all customer reservations.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.fetchAllReservations(
 						this.userRequestExtractorUtil.extractUsername(request), ClientPageRequest.from(params))));
@@ -41,7 +41,7 @@ public class CustomerReservationResource {
 	@PutMapping("/cancel/{reservationId}")
 	public ResponseEntity<ApiResponse<ReservationDto>> cancelReservation(
 			final WebRequest request, @PathVariable final String reservationId) {
-		log.info("** Cancel customer reservation.. *\n");
+		log.info("** Cancel customer reservation.. *");
 		this.userRequestExtractorUtil.extractUsername(request);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.cancelReservation(Integer.parseInt(reservationId))));
@@ -50,7 +50,7 @@ public class CustomerReservationResource {
 	@PostMapping
 	public ResponseEntity<ApiResponse<ReservationDto>> createReservation(
 			final WebRequest request, @RequestBody @NotNull @Valid final ReservationRequest reservationRequest) {
-		log.info("** Create customer reservation.. *\n");
+		log.info("** Create customer reservation.. *");
 		this.userRequestExtractorUtil.extractUsername(request);
 		final var reservationDto = this.customerReservationService.createReservation(reservationRequest);
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, reservationDto));
@@ -59,7 +59,7 @@ public class CustomerReservationResource {
 	@GetMapping("/search/{key}")
 	public ResponseEntity<ApiResponse<CustomerReservationResponse>> searchAllBySaloonIdLikeKey(
 			final WebRequest webRequest, @PathVariable final String key) {
-		log.info("** Search all customer reservations by saloonId like key.. *\n");
+		log.info("** Search all customer reservations by saloonId like key.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.customerReservationService.searchAllByCustomerIdLikeKey(
 						this.userRequestExtractorUtil.extractUsername(webRequest), key)));

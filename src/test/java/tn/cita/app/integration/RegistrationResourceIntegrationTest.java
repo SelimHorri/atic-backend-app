@@ -288,7 +288,7 @@ class RegistrationResourceIntegrationTest extends AbstractSharedMySQLTestContain
 				.build();
 		
 		final var expectedApiPayloadResponse = new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false,
-				new ExceptionMsg("#### Unmatched passwords! please check again! ####"));
+				new ExceptionMsg("#### Passwords do not match! please check again! ####"));
 		
 		this.webTestClient
 				.post()

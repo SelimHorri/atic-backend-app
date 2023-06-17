@@ -25,7 +25,7 @@ public class OrderedDetailResource {
 	
 	@GetMapping("/identifier/{identifier}")
 	public ResponseEntity<ApiResponse<OrderedDetailDto>> findByIdentifier(@PathVariable final String identifier) {
-		log.info("** Find by identifier.. *\n");
+		log.info("** Find by identifier.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.orderedDetailService.findByIdentifier(identifier.strip())));
 	}
@@ -33,7 +33,7 @@ public class OrderedDetailResource {
 	@GetMapping("/reservationId/{reservationId}")
 	public ResponseEntity<ApiResponse<Page<OrderedDetailDto>>> findAllByReservationId(
 			final WebRequest request, @PathVariable final String reservationId) {
-		log.info("** Find all ordered details by reservationId.. *\n");
+		log.info("** Find all ordered details by reservationId.. *");
 		final var orderedDetailDtos = this.orderedDetailService.findAllByReservationId(Integer.parseInt(reservationId));
 		return ResponseEntity.ok(new ApiResponse<>(orderedDetailDtos.size(), HttpStatus.OK, true, new PageImpl<>(orderedDetailDtos)));
 	}
@@ -41,7 +41,7 @@ public class OrderedDetailResource {
 	@DeleteMapping
 	public ResponseEntity<ApiResponse<Boolean>> deleteById(
 			final WebRequest request, @RequestBody @Valid final OrderedDetailId orderedDetailId) {
-		log.info("** Delete an ordered detail by id.. *\n");
+		log.info("** Delete an ordered detail by id.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.orderedDetailService.deleteById(orderedDetailId)));
 	}
@@ -49,7 +49,7 @@ public class OrderedDetailResource {
 	@PostMapping
 	public ResponseEntity<ApiResponse<OrderedDetailDto>> save(
 			final WebRequest request, @RequestBody @Valid final OrderedDetailRequest orderedDetailRequest) {
-		log.info("** Save an ordered detail.. *\n");
+		log.info("** Save an ordered detail.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
 				this.orderedDetailService.save(orderedDetailRequest)));
 	}

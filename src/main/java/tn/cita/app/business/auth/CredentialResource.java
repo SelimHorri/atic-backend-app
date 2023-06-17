@@ -21,14 +21,14 @@ public class CredentialResource {
 	
 	@GetMapping("/identifier/{identifier}")
 	public ResponseEntity<ApiResponse<CredentialDto>> findByIdentifier(@PathVariable final String identifier) {
-		log.info("** Find by identifier.. *\n");
+		log.info("** Find by identifier.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.credentialService.findByIdentifier(identifier.strip())));
 	}
 	
 	@GetMapping("/username/{username}")
 	public ResponseEntity<ApiResponse<CredentialDto>> findByUsername(@PathVariable final String username) {
-		log.info("** Find by username.. *\n");
+		log.info("** Find by username.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.credentialService.findByUsername(username)));
 	}

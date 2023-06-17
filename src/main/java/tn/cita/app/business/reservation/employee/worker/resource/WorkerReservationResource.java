@@ -29,7 +29,7 @@ public class WorkerReservationResource {
 	@GetMapping("/paged")
 	public ResponseEntity<ApiResponse<Page<TaskDto>>> fetchAllReservations(final WebRequest webRequest, 
 			@RequestParam final Map<String, String> params) {
-		log.info("** Fetch all paged worker reservations.. *\n");
+		log.info("** Fetch all paged worker reservations.. *");
 		final var reservations = this.workerReservationService.fetchAllReservations(
 				this.userRequestExtractorUtil.extractUsername(webRequest), ClientPageRequest.from(params));
 		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
@@ -37,7 +37,7 @@ public class WorkerReservationResource {
 	
 	@GetMapping({"", "/all"})
 	public ResponseEntity<ApiResponse<Page<TaskDto>>> fetchAllReservations(final WebRequest webRequest) {
-		log.info("** Fetch all worker reservations.. *\n");
+		log.info("** Fetch all worker reservations.. *");
 		final var reservations = this.workerReservationService
 				.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest));
 		return ResponseEntity.ok(new ApiResponse<>(reservations.getSize(), HttpStatus.OK, true, reservations));
@@ -46,7 +46,7 @@ public class WorkerReservationResource {
 	@GetMapping("/search/{key}")
 	public ResponseEntity<ApiResponse<Page<TaskDto>>> searchAllReservationsLikeKey(
 			final WebRequest webRequest, @PathVariable final String key) {
-		log.info("** Search all worker reservations like key.. *\n");
+		log.info("** Search all worker reservations like key.. *");
 		return ResponseEntity.ok(new ApiResponse<>(0, HttpStatus.OK, true, 
 				this.workerReservationService.searchAllLikeKey(
 						this.userRequestExtractorUtil.extractUsername(webRequest), key)));
