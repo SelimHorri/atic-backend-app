@@ -8,6 +8,7 @@ import tn.cita.app.model.dto.request.ClientPageRequest;
 
 public interface ManagerReservationService {
 	
+	ManagerReservationResponse fetchAllReservations(final String username);
 	ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest);
 	ReservationDto cancelReservation(final Integer reservationId);
 	ManagerReservationResponse searchAllBySaloonIdLikeKey(final String username, final String key);

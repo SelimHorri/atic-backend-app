@@ -2,7 +2,6 @@ package tn.cita.app.business.reservation.employee.manager.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,12 +15,14 @@ import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.ReservationDto;
+import tn.cita.app.model.dto.SaloonDto;
 import tn.cita.app.model.dto.request.ClientPageRequest;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.util.ClientPageRequestUtils;
 
 import java.util.Comparator;
+import java.util.Objects;
 
 @Service
 @Transactional(readOnly = true)
@@ -33,26 +34,43 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 	private final ReservationRepository reservationRepository;
 	private final ReservationCommonService reservationCommonService;
 	
+	/**
+	 * Bug: When a new user is registered, this API produce NullPointerException <br>
+	 * cause this new user is not assigned to any saloon yet. (due to nullable saloonId)
+	 * @param username
+	 * @return ManagerReservationResponse
+	 */
 	@Override
-	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
+	public ManagerReservationResponse fetchAllReservations(final String username) {
 		log.info("** Fetch all reservations by manager.. *");
 		final var managerDto = this.retrieveManagerByUsername(username);
-		return new ManagerReservationResponse(managerDto,
-				this.retrieveReservationsBySaloonId(managerDto.getSaloonDto().getId(), clientPageRequest));
+		final var foundReservations = this.reservationRepository.findAllBySaloonId(
+						Objects.requireNonNullElse(managerDto.getSaloonDto(), new SaloonDto()).getId()).stream()
+					.map(ReservationMapper::toDto)
+					.sorted(Comparator
+							.comparing(ReservationDto::getStartDate)
+							.reversed())
+					.toList();
+		return new ManagerReservationResponse(managerDto, new PageImpl<>(foundReservations));
 	}
 	
-	private Page<ReservationDto> retrieveReservationsBySaloonId(final int saloonId, final ClientPageRequest clientPageRequest) {
-		return (clientPageRequest != null) ?
-				this.reservationRepository
-						.findAllBySaloonId(saloonId, ClientPageRequestUtils.from(clientPageRequest))
-						.map(ReservationMapper::toDto)
-				:
-				new PageImpl<>(this.reservationRepository.findAllBySaloonId(saloonId).stream()
-						.map(ReservationMapper::toDto)
-						.sorted(Comparator
-								.comparing(ReservationDto::getStartDate)
-								.reversed())
-						.toList());
+	/**
+	 * Bug: When a new user is registered, this API produce NullPointerException <br>
+	 * cause this new user is not assigned to any saloon yet. (due to nullable saloonId)
+	 * @param username
+	 * @param clientPageRequest
+	 * @return ManagerReservationResponse
+	 */
+	@Override
+	public ManagerReservationResponse fetchAllReservations(final String username, final ClientPageRequest clientPageRequest) {
+		log.info("** Fetch paged reservations by manager.. *");
+		final var managerDto = this.retrieveManagerByUsername(username);
+		return new ManagerReservationResponse(
+				managerDto,
+				this.reservationRepository.findAllBySaloonId(
+								Objects.requireNonNullElse(managerDto.getSaloonDto(), new SaloonDto()).getId(),
+								ClientPageRequestUtils.from(clientPageRequest))
+						.map(ReservationMapper::toDto));
 	}
 	
 	@Transactional
@@ -66,7 +84,8 @@ public class ManagerReservationServiceImpl implements ManagerReservationService 
 		log.info("** Search all reservations by saloonId like key by manager.. *");
 		final var managerDto = this.retrieveManagerByUsername(username);
 		final var foundReservations = this.reservationRepository
-				.searchAllBySaloonIdLikeKey(managerDto.getSaloonDto().getId(), key.strip().toLowerCase()).stream()
+				.searchAllBySaloonIdLikeKey(
+						managerDto.getSaloonDto().getId(), key.strip().toLowerCase()).stream()
 					.map(ReservationMapper::toDto)
 					.sorted(Comparator
 							.comparing(ReservationDto::getStartDate)

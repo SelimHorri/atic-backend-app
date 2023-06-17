@@ -29,21 +29,21 @@ public class ManagerReservationResource {
 	private final UserRequestExtractorUtil userRequestExtractorUtil;
 	private final ManagerReservationService managerReservationService;
 	
+	@GetMapping("/all")
+	public ResponseEntity<ApiResponse<ManagerReservationResponse>> fetchAllReservations(final WebRequest webRequest) {
+		log.info("** Fetch all reservations by manager.. *");
+		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true,
+				this.managerReservationService.fetchAllReservations(
+						this.userRequestExtractorUtil.extractUsername(webRequest))));
+	}
+	
 	@GetMapping("/paged")
 	public ResponseEntity<ApiResponse<ManagerReservationResponse>> fetchAllReservations(
 			final WebRequest webRequest, @RequestParam final Map<String, String> params) {
 		log.info("** Fetch all paged reservations by manager.. *");
 		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
-				this.managerReservationService.fetchAllReservations(this.userRequestExtractorUtil.extractUsername(webRequest), 
-						ClientPageRequest.from(params))));
-	}
-	
-	@GetMapping("/all")
-	public ResponseEntity<ApiResponse<ManagerReservationResponse>> fetchAllReservations(final WebRequest webRequest) {
-		log.info("** Fetch all reservations by manager.. *");
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, 
 				this.managerReservationService.fetchAllReservations(
-						this.userRequestExtractorUtil.extractUsername(webRequest), null)));
+						this.userRequestExtractorUtil.extractUsername(webRequest), ClientPageRequest.from(params))));
 	}
 	
 	@PutMapping("/cancel/{reservationId}")

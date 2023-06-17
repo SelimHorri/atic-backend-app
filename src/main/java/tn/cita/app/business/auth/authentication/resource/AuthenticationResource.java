@@ -24,7 +24,7 @@ public class AuthenticationResource {
 	
 	@PostMapping
 	public ResponseEntity<ApiResponse<LoginResponse>> authenticate(@RequestBody @Valid final LoginRequest loginRequest) {
-		log.info("** Authenticate user...*\n");
+		log.info("** Authenticate user...*");
 		return ResponseEntity.status(HttpStatus.OK)
 				.body(new ApiResponse<>(1, HttpStatus.OK, true, 
 						this.authenticationService.authenticate(loginRequest)));
