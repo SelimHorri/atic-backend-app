@@ -28,8 +28,7 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException(
 						"Employee with username: %s not found".formatted(username)));
-		
-		return new ManagerWorkerInfoResponse(managerDto, 
+		return new ManagerWorkerInfoResponse(managerDto,
 				new PageImpl<>(this.employeeRepository
 						.findAllByManagerId(managerDto.getId()).stream()
 						.map(EmployeeMapper::toDto)
@@ -38,7 +37,7 @@ public class ManagerWorkerInfoServiceImpl implements ManagerWorkerInfoService {
 	
 	@Override
 	public EmployeeDto fetchWorkerInfo(final Integer workerId) {
-		log.info("** Fetch worker infos by manager.. *");
+		log.info("** Fetch worker info.. *");
 		return this.employeeRepository.findById(workerId)
 				.map(EmployeeMapper::toDto)
 				.orElseThrow(EmployeeNotFoundException::new);

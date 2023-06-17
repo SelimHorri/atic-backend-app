@@ -27,8 +27,9 @@ public class LocationServiceImpl implements LocationService {
 	@Override
 	public Page<LocationDto> findAll(final ClientPageRequest clientPageRequest) {
 		log.info("** Find all paged locations.. *");
-		return this.locationRepository.findAll(PageRequest
-					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+		return this.locationRepository
+				.findAll(PageRequest.of(
+						clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(LocationMapper::toDto);
 	}
 	
@@ -37,7 +38,7 @@ public class LocationServiceImpl implements LocationService {
 		log.info("** Find location by id.. *");
 		return this.locationRepository.findById(id)
 				.map(LocationMapper::toDto)
-				.orElseThrow(() -> new LocationNotFoundException("Location with id: %d not found"));
+				.orElseThrow(LocationNotFoundException::new);
 	}
 	
 	@Override

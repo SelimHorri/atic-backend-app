@@ -26,7 +26,7 @@ public class FavouriteServiceImpl implements FavouriteService {
 	public FavouriteDto findById(final FavouriteId favouriteId) {
 		return this.favouriteRepository.findById(favouriteId)
 				.map(FavouriteMapper::toDto)
-				.orElseThrow(() -> new FavouriteNotFoundException("Favourite not found"));
+				.orElseThrow(FavouriteNotFoundException::new);
 	}
 	
 	@Override

@@ -28,16 +28,16 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	public OrderedDetailDto findByIdentifier(final String identifier) {
 		return this.orderedDetailRepository.findByIdentifier(identifier)
 				.map(OrderedDetailMapper::toDto)
-				.orElseThrow(() -> new OrderedDetailNotFoundException("OrderDetail not found"));
+				.orElseThrow(OrderedDetailNotFoundException::new);
 	}
 	
 	@Override
 	public List<OrderedDetailDto> findAllByReservationId(final Integer reservationId) {
 		log.info("** Find all ordered detail by reservationId.. *");
-		return this.orderedDetailRepository.findAllByReservationId(reservationId).stream()
-				.map(OrderedDetailMapper::toDto)
-				.distinct()
-				.toList();
+		return this.orderedDetailRepository
+				.findAllByReservationId(reservationId).stream()
+					.map(OrderedDetailMapper::toDto)
+					.toList();
 	}
 	
 	@Transactional
@@ -51,7 +51,6 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 	@Transactional
 	@Override
 	public OrderedDetailDto save(OrderedDetailRequest orderedDetailRequest) {
-		
 		log.info("** Save ordered detail.. *");
 		
 		final var orderedDetailId = new OrderedDetailId(orderedDetailRequest.reservationId(), 
@@ -60,6 +59,7 @@ public class OrderedDetailServiceImpl implements OrderedDetailService {
 		if (this.orderedDetailRepository.existsById(orderedDetailId))
 			throw new OrderedDetailAlreadyExistsException("Service is already ordered");
 		
+		// Smell..
 		if (orderedDetailRequest.orderedDate() == null)
 			orderedDetailRequest = new OrderedDetailRequest(
 					orderedDetailId.getReservationId(), 

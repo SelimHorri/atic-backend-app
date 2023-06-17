@@ -26,7 +26,8 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public Page<EmployeeDto> findAll(final int pageOffset) {
 		log.info("** Find all employees offset paged..*");
-		return this.employeeRepository.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE))
+		return this.employeeRepository
+				.findAll(PageRequest.of(pageOffset - 1, AppConstants.PAGE_SIZE))
 				.map(EmployeeMapper::toDto);
 	}
 	
@@ -35,7 +36,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.info("** Find employee by id..*");
 		return this.employeeRepository.findById(id)
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
+				.orElseThrow(EmployeeNotFoundException::new);
 	}
 	
 	@Override
@@ -43,7 +44,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.info("** Find employee by identifier.. *");
 		return this.employeeRepository.findByIdentifier(identifier.strip())
 				.map(EmployeeMapper::toDto)
-				.orElseThrow(() -> new EmployeeNotFoundException("Employee not found"));
+				.orElseThrow(EmployeeNotFoundException::new);
 	}
 	
 	@Override
@@ -58,10 +59,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 	@Override
 	public List<EmployeeDto> findAllBySsn(final String ssn) {
 		log.info("** Find employee(s) by ssn.. *");
-		return this.employeeRepository.findAllBySsn(ssn.strip()).stream()
-				.map(EmployeeMapper::toDto)
-				.distinct()
-				.toList();
+		return this.employeeRepository
+				.findAllBySsn(ssn.strip()).stream()
+					.map(EmployeeMapper::toDto)
+					.toList();
 	}
 	
 	@Transactional
@@ -77,7 +78,6 @@ public class EmployeeServiceImpl implements EmployeeService {
 		log.info("** Find all employees by managerId.. *");
 		return this.employeeRepository.findAllByManagerId(managerId).stream()
 				.map(EmployeeMapper::toDto)
-				.distinct()
 				.toList();
 	}
 	

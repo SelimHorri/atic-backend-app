@@ -96,9 +96,12 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 			final ReservationAssignWorkerRequest reservationAssignWorkerRequest) {
 		log.info("** Assign workers to a reservation.. *");
 		
-		final var reservation = this.reservationRepository.findById(reservationAssignWorkerRequest.reservationId())
-				.orElseThrow(() -> new ReservationNotFoundException("Reservation not found"));
-		final boolean isAlreadyAssigned = reservationAssignWorkerRequest.assignedWorkersIds().stream()
+		final var reservation = this.reservationRepository
+				.findById(reservationAssignWorkerRequest.reservationId())
+				.orElseThrow(ReservationNotFoundException::new);
+		final boolean isAlreadyAssigned =
+				reservationAssignWorkerRequest.assignedWorkersIds().stream()
+						.distinct()
 						.map(workerId -> new TaskId(workerId, reservation.getId()))
 						.anyMatch(this.taskRepository::existsById);
 		if (isAlreadyAssigned)

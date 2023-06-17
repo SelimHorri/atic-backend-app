@@ -29,39 +29,39 @@ public class TaskServiceImpl implements TaskService {
 		log.info("** Find task by id.. *");
 		return this.taskRepository.findById(taskId)
 				.map(TaskMapper::toDto)
-				.orElseThrow(() -> new TaskNotFoundException("Task not found"));
+				.orElseThrow(TaskNotFoundException::new);
 	}
 	
 	@Override
 	public TaskDto findByIdentifier(final String identifier) {
 		return this.taskRepository.findByIdentifier(identifier.strip())
 				.map(TaskMapper::toDto)
-				.orElseThrow(() -> new TaskNotFoundException("Task not found"));
+				.orElseThrow(TaskNotFoundException::new);
 	}
 	
 	@Override
 	public List<TaskDto> findAllByReservationId(final Integer reservationId) {
 		log.info("** Find all tasks by reservationId.. *");
-		return this.taskRepository.findAllByReservationId(reservationId).stream()
-				.map(TaskMapper::toDto)
-				.distinct()
-				.toList();
+		return this.taskRepository
+				.findAllByReservationId(reservationId).stream()
+					.map(TaskMapper::toDto)
+					.toList();
 	}
 	
 	@Override
 	public List<TaskDto> findAllByWorkerId(final Integer workerId) {
 		log.info("** Find all tasls by workerId.. *");
-		return this.taskRepository.findAllByWorkerId(workerId).stream()
-				.map(TaskMapper::toDto)
-				.distinct()
-				.toList();
+		return this.taskRepository
+				.findAllByWorkerId(workerId).stream()
+					.map(TaskMapper::toDto)
+					.toList();
 	}
 	
 	@Override
 	public Page<TaskDto> findAllByWorkerId(final Integer workerId, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all paged tasks by workerId.. *");
-		return this.taskRepository.findAllByWorkerId(workerId, 
-					ClientPageRequestUtils.from(clientPageRequest))
+		return this.taskRepository.findAllByWorkerId(
+					workerId, ClientPageRequestUtils.from(clientPageRequest))
 				.map(TaskMapper::toDto);
 	}
 	

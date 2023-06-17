@@ -25,16 +25,19 @@ public class SaloonServiceImpl implements SaloonService {
 	@Override
 	public Page<SaloonDto> findAll(final ClientPageRequest clientPageRequest) {
 		log.info("** Find all paged saloons.. *");
-		return this.saloonRepository.findAll(PageRequest
-					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+		return this.saloonRepository
+				.findAll(PageRequest.of(
+						clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(SaloonMapper::toDto);
 	}
 	
 	@Override
 	public Page<SaloonDto> findAllByLocationState(final String state, final ClientPageRequest clientPageRequest) {
 		log.info("** Find all saloons by location state.. *");
-		return this.saloonRepository.findAllByLocationStateIgnoringCase(state.strip(), 
-					PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+		return this.saloonRepository
+				.findAllByLocationStateIgnoringCase(
+						state.strip(),
+						PageRequest.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(SaloonMapper::toDto);
 	}
 	
@@ -43,23 +46,23 @@ public class SaloonServiceImpl implements SaloonService {
 		log.info("** Find saloon by id.. *");
 		return this.saloonRepository.findById(id)
 				.map(SaloonMapper::toDto)
-				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
+				.orElseThrow(SaloonNotFoundException::new);
 	}
 	
 	@Override
 	public SaloonDto findByIdentifier(final String identifier) {
 		return this.saloonRepository.findByIdentifier(identifier.strip())
 				.map(SaloonMapper::toDto)
-				.orElseThrow(() -> new SaloonNotFoundException("Saloon not found"));
+				.orElseThrow(SaloonNotFoundException::new);
 	}
 	
 	@Override
 	public Page<SaloonDto> findAllByCode(final String code) {
 		log.info("** Find all saloons by code.. *");
-		return new PageImpl<>(this.saloonRepository.findAllByCode(code).stream()
-				.map(SaloonMapper::toDto)
-				.distinct()
-				.toList());
+		return new PageImpl<>(this.saloonRepository.
+				findAllByCode(code).stream()
+					.map(SaloonMapper::toDto)
+					.toList());
 	}
 	
 }

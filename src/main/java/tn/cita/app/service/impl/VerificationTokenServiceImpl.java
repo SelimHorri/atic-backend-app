@@ -23,8 +23,8 @@ public class VerificationTokenServiceImpl implements VerificationTokenService {
 		log.info("** Find verificationToken by token.. *");
 		return this.verificationTokenRepository.findByToken(token)
 				.map(VerificationTokenMapper::toDto)
-				.orElseThrow(() -> new VerificationTokenNotFoundException(String
-						.format("VerificationToken with token: %s is not found", token)));
+				.orElseThrow(() -> new VerificationTokenNotFoundException(
+						"VerificationToken with token: %s is not found".formatted(token)));
 	}
 	
 	@Transactional

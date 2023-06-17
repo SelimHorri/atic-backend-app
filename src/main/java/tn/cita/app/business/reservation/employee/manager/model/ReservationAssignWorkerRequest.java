@@ -7,7 +7,6 @@ import java.io.Serializable;
 import java.util.List;
 
 public record ReservationAssignWorkerRequest(
-		
 		Integer reservationId,
 		
 		@Size(min = 1, message = "You must assign at least {min} worker")

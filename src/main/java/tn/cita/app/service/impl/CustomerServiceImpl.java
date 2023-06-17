@@ -26,8 +26,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Override
 	public Page<CustomerDto> findAll(final ClientPageRequest clientPageRequest) {
 		log.info("** Find All paged customers.. *");
-		return this.customerRepository.findAll(PageRequest
-					.of(clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
+		return this.customerRepository
+				.findAll(PageRequest.of(
+						clientPageRequest.getOffset() - 1, clientPageRequest.getSize()))
 				.map(CustomerMapper::toDto);
 	}
 	
@@ -36,7 +37,7 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** Find customer by id.. *");
 		return this.customerRepository.findById(id)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+				.orElseThrow(CustomerNotFoundException::new);
 	}
 	
 	@Override
@@ -44,7 +45,7 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** Find customer by identifier.. *");
 		return this.customerRepository.findByIdentifier(identifier.strip())
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer not found"));
+				.orElseThrow(CustomerNotFoundException::new);
 	}
 	
 	@Override
@@ -52,7 +53,8 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** Find customer by credential username.. *");
 		return this.customerRepository.findByCredentialUsernameIgnoringCase(username)
 				.map(CustomerMapper::toDto)
-				.orElseThrow(() -> new CustomerNotFoundException("Customer with username: %s not found".formatted(username)));
+				.orElseThrow(() -> new CustomerNotFoundException(
+						"Customer with username: %s not found".formatted(username)));
 	}
 	
 	@Override
@@ -60,7 +62,6 @@ public class CustomerServiceImpl implements CustomerService {
 		log.info("** Find customer(s) by ssn.. *");
 		return this.customerRepository.findAllBySsn(ssn.strip()).stream()
 				.map(CustomerMapper::toDto)
-				.distinct()
 				.toList();
 	}
 	
