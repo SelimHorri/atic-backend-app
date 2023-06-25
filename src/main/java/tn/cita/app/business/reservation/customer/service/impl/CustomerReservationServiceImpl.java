@@ -84,8 +84,7 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 	public ReservationDto createReservation(final ReservationRequest reservationRequest) {
 		log.info("** Create new reservation by customer.. *");
 		
-		if (reservationRequest.startDate().isBefore(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER_MINUTES))
-				|| reservationRequest.startDate().getMinute() != 0 && reservationRequest.startDate().getMinute() != 30)
+		if (!isReservationStartDateValid(reservationRequest))
 			throw new OutdatedStartDateReservationException("Illegal Starting date reservation, plz choose a valid date");
 		
 		this.reservationRepository
@@ -143,6 +142,12 @@ public class CustomerReservationServiceImpl implements CustomerReservationServic
 				.map(CustomerMapper::toDto)
 				.orElseThrow(() -> new CustomerNotFoundException(
 						"Customer with username: %s not found".formatted(username)));
+	}
+	
+	private static boolean isReservationStartDateValid(final ReservationRequest reservationRequest) {
+		return reservationRequest.startDate()
+					   .isAfter(LocalDateTime.now().plusMinutes(AppConstants.VALID_START_DATE_AFTER_MINUTES))
+			   && reservationRequest.startDate().getMinute() == 0 || reservationRequest.startDate().getMinute() == 30;
 	}
 	
 }

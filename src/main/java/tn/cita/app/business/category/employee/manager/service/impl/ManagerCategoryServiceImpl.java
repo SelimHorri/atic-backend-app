@@ -12,7 +12,6 @@ import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.SaloonNotFoundException;
 import tn.cita.app.mapper.CategoryMapper;
-import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.model.domain.entity.Category;
 import tn.cita.app.model.dto.CategoryDto;
 import tn.cita.app.repository.CategoryRepository;
@@ -35,14 +34,13 @@ public class ManagerCategoryServiceImpl implements ManagerCategoryService {
 	public Page<CategoryDto> fetchAll(final String username) {
 		log.info("** Fetch all categories by manager.. *");
 		
-		final var managerDto = this.employeeRepository
+		final var manager = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username.strip())
-				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException(
 						"Employee with username: %s not found".formatted(username)));
 		
 		return new PageImpl<>(this.categoryRepository
-				.findAllBySaloonId(managerDto.getSaloonDto().getId()).stream()
+				.findAllBySaloonId(manager.getSaloon().getId()).stream()
 					.map(CategoryMapper::toDto)
 					.sorted(Comparator.comparing(CategoryDto::getName))
 					.toList());

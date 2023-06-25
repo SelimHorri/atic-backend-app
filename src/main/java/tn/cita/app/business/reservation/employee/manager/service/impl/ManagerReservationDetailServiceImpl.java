@@ -14,6 +14,7 @@ import tn.cita.app.mapper.OrderedDetailMapper;
 import tn.cita.app.mapper.ReservationMapper;
 import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.model.domain.ReservationStatus;
+import tn.cita.app.model.domain.entity.Task;
 import tn.cita.app.model.dto.TaskDto;
 import tn.cita.app.model.dto.response.ReservationBeginEndTask;
 import tn.cita.app.model.dto.response.ReservationDetailResponse;
@@ -55,20 +56,19 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	public ReservationBeginEndTask fetchBeginEndTask(final Integer reservationId) {
 		log.info("** Fetch begin end task by manager.. *");
 		
-		final var taskDtos = this.taskRepository
-				.findAllByReservationId(reservationId).stream()
-					.map(TaskMapper::toDto)
-					.toList();
+		final var tasks = this.taskRepository.findAllByReservationId(reservationId);
 		
-		final var firstTaskBegin = taskDtos.stream()
+		final var firstTaskBegin = tasks.stream()
 				.filter(t -> t.getStartDate() != null)
 				// .filter(t -> t.getReservationDto().getStatus().equals(ReservationStatus.IN_PROGRESS))
-				.min(Comparator.comparing(TaskDto::getStartDate))
+				.min(Comparator.comparing(Task::getStartDate))
+				.map(TaskMapper::toDto)
 				.orElseGet(TaskDto::new);
-		final var lastTaskEnd = taskDtos.stream()
+		final var lastTaskEnd = tasks.stream()
 				.filter(t -> t.getEndDate() != null)
-				.filter(t -> t.getReservationDto().getStatus().equals(ReservationStatus.COMPLETED))
-				.max(Comparator.comparing(TaskDto::getEndDate))
+				.filter(t -> t.getReservation().getStatus().equals(ReservationStatus.COMPLETED))
+				.max(Comparator.comparing(Task::getEndDate))
+				.map(TaskMapper::toDto)
 				.orElseGet(TaskDto::new);
 		
 		return new ReservationBeginEndTask(firstTaskBegin, lastTaskEnd);

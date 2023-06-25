@@ -11,7 +11,6 @@ import tn.cita.app.business.servicedetail.employee.manager.service.ManagerServic
 import tn.cita.app.exception.wrapper.CategoryNotFoundException;
 import tn.cita.app.exception.wrapper.EmployeeNotFoundException;
 import tn.cita.app.exception.wrapper.ServiceDetailNotFoundException;
-import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ServiceDetailMapper;
 import tn.cita.app.model.domain.entity.ServiceDetail;
 import tn.cita.app.model.dto.ServiceDetailDto;
@@ -36,14 +35,13 @@ public class ManagerServiceDetailServiceImpl implements ManagerServiceDetailServ
 	public Page<ServiceDetailDto> fetchAll(final String username) {
 		log.info("** Fetch all service details by manager.. *");
 		
-		final var managerDto = this.employeeRepository
+		final var manager = this.employeeRepository
 				.findByCredentialUsernameIgnoringCase(username.strip())
-				.map(EmployeeMapper::toDto)
 				.orElseThrow(() -> new EmployeeNotFoundException(
 						"Employee with username: %s not found".formatted(username)));
 		
 		return new PageImpl<>(this.serviceDetailRepository
-				.findAllByCategorySaloonId(managerDto.getSaloonDto().getId()).stream()
+				.findAllByCategorySaloonId(manager.getSaloon().getId()).stream()
 					.map(ServiceDetailMapper::toDto)
 					.sorted(Comparator
 							.comparing((final ServiceDetailDto sd) -> sd.getCategoryDto().getName())
