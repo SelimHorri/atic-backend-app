@@ -10,12 +10,10 @@ import tn.cita.app.business.reservation.employee.manager.model.ReservationSubWor
 import tn.cita.app.exception.wrapper.*;
 import tn.cita.app.mapper.EmployeeMapper;
 import tn.cita.app.mapper.ReservationMapper;
-import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.model.domain.ReservationStatus;
 import tn.cita.app.model.domain.entity.Task;
 import tn.cita.app.model.domain.id.TaskId;
 import tn.cita.app.model.dto.ReservationDto;
-import tn.cita.app.model.dto.TaskDto;
 import tn.cita.app.repository.EmployeeRepository;
 import tn.cita.app.repository.ReservationRepository;
 import tn.cita.app.repository.TaskRepository;
@@ -26,6 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -48,13 +47,13 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		// TODO: check if reservation has been completed, should not be cancelled (or changed) anymore
 		// Add completeDate of reservation along with COMPLETED status to this check
 		switch (reservation.getStatus()) {
-			case COMPLETED -> throw new ReservationAlreadyCompletedException("Reservation is already completed");
-			case CANCELLED -> throw new ReservationAlreadyCancelledException("Reservation is already cancelled");
-			case OUTDATED -> throw new ReservationAlreadyOutdatedException("Reservation is already outdated");
-			case NOT_CLOSED -> throw new ReservationAlreadyNotClosedException("Reservation is already not-closed");
+			case COMPLETED -> throw new IllegalReservationStatusException("Reservation is already completed");
+			case CANCELLED -> throw new IllegalReservationStatusException("Reservation is already cancelled");
+			case OUTDATED -> throw new IllegalReservationStatusException("Reservation is already outdated");
+			case NOT_CLOSED -> throw new IllegalReservationStatusException("Reservation is already not-closed");
 			case NOT_STARTED, IN_PROGRESS -> {
-				reservation.setCancelDate(LocalDateTime.now());
 				reservation.setStatus(ReservationStatus.CANCELLED);
+				reservation.setCancelDate(LocalDateTime.now());
 			}
 		};
 		
@@ -73,10 +72,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		final var assignedWorkersIds = this.taskRepository
 				.findAllByReservationId(reservationId).stream()
-					.map(TaskMapper::toDto)
-					.map(TaskDto::getWorkerId)
-					.distinct()
-					.toList();
+					.map(Task::getWorkerId)
+					.collect(Collectors.toUnmodifiableSet());
 		
 		final var unassignedWorkerDtos = this.employeeRepository
 				.findAllByManagerId(managerDto.getId()).stream()

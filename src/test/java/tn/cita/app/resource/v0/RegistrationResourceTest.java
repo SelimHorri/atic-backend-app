@@ -18,7 +18,7 @@ import tn.cita.app.business.auth.register.model.RegisterResponse;
 import tn.cita.app.business.auth.register.service.RegistrationService;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.exception.payload.ExceptionMsg;
-import tn.cita.app.exception.wrapper.IllegalRegistrationRoleTypeException;
+import tn.cita.app.exception.wrapper.IllegalRoleTypeException;
 import tn.cita.app.exception.wrapper.PasswordNotMatchException;
 import tn.cita.app.exception.wrapper.UsernameAlreadyExistsException;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
@@ -245,7 +245,7 @@ class RegistrationResourceTest {
 				new ExceptionMsg("#### Wrong role type for registration, it should be Customer/Worker/Manager/Owner role! ####"));
 		
 		when(this.registrationService.register(registerRequest))
-				.thenThrow(new IllegalRegistrationRoleTypeException("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role"));
+				.thenThrow(new IllegalRoleTypeException("Wrong role type for registration, it should be Customer/Worker/Manager/Owner role"));
 		
 		this.webTestClient
 				.post()

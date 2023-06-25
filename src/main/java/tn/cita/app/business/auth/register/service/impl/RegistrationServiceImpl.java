@@ -36,8 +36,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		log.info("** Register..*");
 		
 		if (!isValidRole(registerRequest.role()))
-			throw new IllegalRegistrationRoleTypeException("Wrong role type for registration, "
-					+ "it should be Customer/Worker/Manager/Owner role");
+			throw new IllegalRoleTypeException("Wrong role type for registration, "
+											   + "it should be Customer/Worker/Manager/Owner role");
 		log.info("** User role checked successfully! *");
 		
 		this.credentialRepository

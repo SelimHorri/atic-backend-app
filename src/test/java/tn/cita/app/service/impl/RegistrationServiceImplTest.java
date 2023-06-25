@@ -87,7 +87,7 @@ class RegistrationServiceImplTest {
 				.role("XXX")
 				.build();
 		
-		assertThatExceptionOfType(IllegalRegistrationRoleTypeException.class)
+		assertThatExceptionOfType(IllegalRoleTypeException.class)
 				.isThrownBy(() -> this.registrationService.register(registerRequest))
 				.withMessageStartingWith("Wrong role ")
 				.withMessageEndingWith(" role")
