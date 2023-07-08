@@ -7,8 +7,6 @@ import lombok.Builder;
 import org.springframework.data.domain.Page;
 import tn.cita.app.model.dto.*;
 
-import java.io.Serializable;
-
 @Builder
 public record CustomerProfileResponse(
 		
@@ -29,7 +27,7 @@ public record CustomerProfileResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("ratings")
-		Page<RatingDto> ratingDtos) implements Serializable {}
+		Page<RatingDto> ratingDtos) {}
 
 
 

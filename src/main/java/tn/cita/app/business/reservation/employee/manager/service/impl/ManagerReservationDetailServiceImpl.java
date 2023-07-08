@@ -16,7 +16,7 @@ import tn.cita.app.mapper.TaskMapper;
 import tn.cita.app.model.domain.ReservationStatus;
 import tn.cita.app.model.domain.entity.Task;
 import tn.cita.app.model.dto.TaskDto;
-import tn.cita.app.model.dto.response.ReservationBeginEndTask;
+import tn.cita.app.model.dto.response.ReservationBeginEndTaskResponse;
 import tn.cita.app.model.dto.response.ReservationDetailResponse;
 import tn.cita.app.repository.OrderedDetailRepository;
 import tn.cita.app.repository.ReservationRepository;
@@ -53,7 +53,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 	}
 	
 	@Override
-	public ReservationBeginEndTask fetchBeginEndTask(final Integer reservationId) {
+	public ReservationBeginEndTaskResponse fetchBeginEndTask(final Integer reservationId) {
 		log.info("** Fetch begin end task by manager.. *");
 		
 		final var tasks = this.taskRepository.findAllByReservationId(reservationId);
@@ -71,7 +71,7 @@ public class ManagerReservationDetailServiceImpl implements ManagerReservationDe
 				.map(TaskMapper::toDto)
 				.orElseGet(TaskDto::new);
 		
-		return new ReservationBeginEndTask(firstTaskBegin, lastTaskEnd);
+		return new ReservationBeginEndTaskResponse(firstTaskBegin, lastTaskEnd);
 	}
 	
 	@Override

@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class CustomerNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class CustomerNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = -2515356372938824307L;
 	
 	public CustomerNotFoundException() {
-		super("Customer not found");
-	}
-	
-	public CustomerNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(CustomerNotFoundException.class);
 	}
 	
 	public CustomerNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class CustomerNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

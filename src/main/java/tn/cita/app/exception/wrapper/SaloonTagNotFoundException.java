@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class SaloonTagNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class SaloonTagNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = -1948567129776942280L;
 	
 	public SaloonTagNotFoundException() {
-		super("SaloonTag not found");
-	}
-	
-	public SaloonTagNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(SaloonTagNotFoundException.class);
 	}
 	
 	public SaloonTagNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class SaloonTagNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

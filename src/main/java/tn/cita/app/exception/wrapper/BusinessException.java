@@ -2,9 +2,12 @@ package tn.cita.app.exception.wrapper;
 
 import lombok.Getter;
 
+import java.io.Serial;
+
 @Getter
 public class BusinessException extends RuntimeException {
 	
+	@Serial
 	private static final long serialVersionUID = -2376018748031261902L;
 	private final String message;
 	

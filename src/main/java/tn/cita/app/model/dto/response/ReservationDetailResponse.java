@@ -10,8 +10,6 @@ import tn.cita.app.model.dto.OrderedDetailDto;
 import tn.cita.app.model.dto.ReservationDto;
 import tn.cita.app.model.dto.TaskDto;
 
-import java.io.Serializable;
-
 @Builder
 public record ReservationDetailResponse(
 		
@@ -27,6 +25,7 @@ public record ReservationDetailResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("tasks")
-		Page<TaskDto> taskDtos) implements Serializable {}
+		Page<TaskDto> taskDtos) {}
+
 
 

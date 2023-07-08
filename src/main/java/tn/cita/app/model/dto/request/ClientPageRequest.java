@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.data.domain.Sort;
 import tn.cita.app.constant.AppConstants;
 
+import java.io.Serial;
 import java.io.Serializable;
 import java.util.Map;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 @Data
 public final class ClientPageRequest implements Serializable {
 	
+	@Serial
 	private static final long serialVersionUID = 6428616552006298688L;
 	
 	private int offset = 1;
@@ -45,7 +47,6 @@ public final class ClientPageRequest implements Serializable {
 	}
 	
 }
-
 
 
 

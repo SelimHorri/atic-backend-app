@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class EmployeeNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class EmployeeNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = 2821524102084201685L;
 	
 	public EmployeeNotFoundException() {
-		super("Employee not found");
-	}
-	
-	public EmployeeNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(EmployeeNotFoundException.class);
 	}
 	
 	public EmployeeNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class EmployeeNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

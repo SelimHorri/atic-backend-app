@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class VerificationTokenNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class VerificationTokenNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = -8147403488111373072L;
 	
 	public VerificationTokenNotFoundException() {
-		super("VerificationToken not found");
-	}
-	
-	public VerificationTokenNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(VerificationTokenNotFoundException.class);
 	}
 	
 	public VerificationTokenNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class VerificationTokenNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

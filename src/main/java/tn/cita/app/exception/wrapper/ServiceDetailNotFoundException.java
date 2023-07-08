@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class ServiceDetailNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class ServiceDetailNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = -7758474423049391283L;
 	
 	public ServiceDetailNotFoundException() {
-		super("ServiceDetail not found");
-	}
-	
-	public ServiceDetailNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(ServiceDetailNotFoundException.class);
 	}
 	
 	public ServiceDetailNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class ServiceDetailNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

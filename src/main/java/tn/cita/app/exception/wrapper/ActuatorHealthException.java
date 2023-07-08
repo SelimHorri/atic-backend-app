@@ -1,7 +1,10 @@
 package tn.cita.app.exception.wrapper;
 
+import java.io.Serial;
+
 public class ActuatorHealthException extends RuntimeException {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 
 	public ActuatorHealthException() {
@@ -20,10 +23,7 @@ public class ActuatorHealthException extends RuntimeException {
 		super(cause);
 	}
 	
-	
-	
 }
-
 
 
 

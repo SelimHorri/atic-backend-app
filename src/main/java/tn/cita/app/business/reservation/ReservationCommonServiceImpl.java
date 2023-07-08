@@ -77,8 +77,8 @@ public class ReservationCommonServiceImpl implements ReservationCommonService {
 		
 		final var unassignedWorkerDtos = this.employeeRepository
 				.findAllByManagerId(managerDto.getId()).stream()
-					.map(EmployeeMapper::toDto)
 					.filter(w -> !assignedWorkersIds.contains(w.getId()))
+					.map(EmployeeMapper::toDto)
 					.toList();
 		
 		return new ReservationSubWorkerResponse(

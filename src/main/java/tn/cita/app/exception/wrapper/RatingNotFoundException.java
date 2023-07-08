@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class RatingNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class RatingNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = -1556209975174886493L;
 	
 	public RatingNotFoundException() {
-		super("Rating not found");
-	}
-	
-	public RatingNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(RatingNotFoundException.class);
 	}
 	
 	public RatingNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class RatingNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

@@ -19,9 +19,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import tn.cita.app.config.filter.JwtRequestFilter;
 import tn.cita.app.constant.AppConstants;
 import tn.cita.app.model.domain.UserRoleBasedAuthority;
+
+import java.util.Arrays;
+
+import static org.springframework.security.web.util.matcher.AntPathRequestMatcher.antMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -41,34 +46,34 @@ public class SecurityConfig {
 	}
 	
 	@Bean
-	SecurityFilterChain securityFilterChain(final HttpSecurity http) throws Exception {
+	SecurityFilterChain securityFilterChain(final HttpSecurity http, final AuthenticationProvider authenticationProvider) throws Exception {
 		return http
 				.cors(CorsConfigurer<HttpSecurity>::disable)
 				.csrf(CsrfConfigurer<HttpSecurity>::disable)
 				.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-						.requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-						.requestMatchers(AppConstants.WHITELIST_URLS).permitAll()
-						.requestMatchers(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET).authenticated()
-						.requestMatchers(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET).permitAll()
-						.requestMatchers("/api/v*/customers/**")
+						.requestMatchers(antMatcher(HttpMethod.OPTIONS, "/**")).permitAll()
+						.requestMatchers(mapUrls(AppConstants.WHITELIST_URLS)).permitAll()
+						.requestMatchers(mapUrls(HttpMethod.GET, AppConstants.WHITE_BLACKLISTED_URLS_GET)).authenticated()
+						.requestMatchers(mapUrls(HttpMethod.GET, AppConstants.WHITELIST_URLS_GET)).permitAll()
+						.requestMatchers(antMatcher("/api/v*/customers/**"))
 							.hasRole(UserRoleBasedAuthority.CUSTOMER.name())
-						.requestMatchers("/api/v*/employees/workers/**")
+						.requestMatchers(antMatcher("/api/v*/employees/workers/**"))
 							.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
 									UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.requestMatchers("/api/v*/employees/managers/**")
+						.requestMatchers(antMatcher("/api/v*/employees/managers/**"))
 							.hasAnyRole(UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.requestMatchers("/api/v*/employees/owners/**")
+						.requestMatchers(antMatcher("/api/v*/employees/owners/**"))
 							.hasRole(UserRoleBasedAuthority.OWNER.name())
-						.requestMatchers("/api/v*/employees/**")
+						.requestMatchers(antMatcher("/api/v*/employees/**"))
 							.hasAnyRole(UserRoleBasedAuthority.WORKER.name(),
 									UserRoleBasedAuthority.MANAGER.name(),
 									UserRoleBasedAuthority.OWNER.name())
-						.requestMatchers("/api/v*/admins/**")
+						.requestMatchers(antMatcher("/api/v*/admins/**"))
 							.hasRole(UserRoleBasedAuthority.ADMIN.name())
 						.anyRequest().authenticated())
-				.authenticationProvider(this.authenticationProvider())
+				.authenticationProvider(authenticationProvider)
 				.exceptionHandling(e -> e.authenticationEntryPoint((request, response, authException) -> response
 						.sendError(HttpServletResponse.SC_FORBIDDEN, 
 							"Error: Forbidden request, unauthorized access point")))
@@ -85,8 +90,19 @@ public class SecurityConfig {
 		return authenticationConfiguration.getAuthenticationManager();
 	}
 	
+	private static RequestMatcher[] mapUrls(final HttpMethod httpMethod, final String[] paths) {
+		return Arrays.stream(paths)
+				.map(path -> (RequestMatcher) antMatcher(httpMethod, path))
+				.toArray(RequestMatcher[]::new);
+	}
+	
+	private static RequestMatcher[] mapUrls(final String[] paths) {
+		return Arrays.stream(paths)
+				.map(path -> (RequestMatcher) antMatcher(path))
+				.toArray(RequestMatcher[]::new);
+	}
+	
 }
-
 
 
 

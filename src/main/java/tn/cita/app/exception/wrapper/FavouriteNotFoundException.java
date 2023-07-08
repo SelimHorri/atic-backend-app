@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class FavouriteNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class FavouriteNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = 6526680450755325192L;
 	
 	public FavouriteNotFoundException() {
-		super("Favourite not found");
-	}
-	
-	public FavouriteNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(FavouriteNotFoundException.class);
 	}
 	
 	public FavouriteNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class FavouriteNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

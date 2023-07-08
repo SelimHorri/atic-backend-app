@@ -9,8 +9,6 @@ import tn.cita.app.model.dto.CredentialDto;
 import tn.cita.app.model.dto.EmployeeDto;
 import tn.cita.app.model.dto.TaskDto;
 
-import java.io.Serializable;
-
 @Builder
 public record WorkerProfileResponse(
 		
@@ -23,6 +21,7 @@ public record WorkerProfileResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("tasks")
-		Page<TaskDto> taskDtos) implements Serializable {}
+		Page<TaskDto> taskDtos) {}
+
 
 

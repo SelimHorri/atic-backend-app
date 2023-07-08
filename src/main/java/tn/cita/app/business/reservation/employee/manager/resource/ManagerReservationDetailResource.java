@@ -11,7 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import tn.cita.app.business.reservation.employee.manager.model.ReservationAssignWorkerRequest;
 import tn.cita.app.business.reservation.employee.manager.model.ReservationSubWorkerResponse;
 import tn.cita.app.business.reservation.employee.manager.service.ManagerReservationDetailService;
-import tn.cita.app.model.dto.response.ReservationBeginEndTask;
+import tn.cita.app.model.dto.response.ReservationBeginEndTaskResponse;
 import tn.cita.app.model.dto.response.ReservationDetailResponse;
 import tn.cita.app.model.dto.response.api.ApiResponse;
 import tn.cita.app.util.UserRequestExtractorUtil;
@@ -36,7 +36,7 @@ public class ManagerReservationDetailResource {
 	}
 	
 	@GetMapping("/{reservationId}/tasks/info/beginEnd")
-	public ResponseEntity<ApiResponse<ReservationBeginEndTask>> fetchBeginEndTask(
+	public ResponseEntity<ApiResponse<ReservationBeginEndTaskResponse>> fetchBeginEndTask(
 			final WebRequest webRequest, @PathVariable final String reservationId) {
 		log.info("** Fetch manager begin and end task.. *");
 		this.userRequestExtractorUtil.extractUsername(webRequest);

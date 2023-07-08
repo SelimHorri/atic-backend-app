@@ -3,7 +3,6 @@ package tn.cita.app.resource;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,8 +11,9 @@ import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tn.cita.app.exception.wrapper.ActuatorHealthException;
-import tn.cita.app.model.dto.response.actuator.HealthActuatorResponse;
 import tn.cita.app.model.dto.response.api.ApiResponse;
+
+import java.io.Serializable;
 
 @RestController
 @RequestMapping("${app.api-version}" + "/actuator")
@@ -48,11 +48,13 @@ public class ActuatorLiveness {
 		if (health == null || !health.status().equalsIgnoreCase("UP"))
 			throw healthException;
 		
-		return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, health));
+		// return ResponseEntity.ok(new ApiResponse<>(1, HttpStatus.OK, true, health));
+		return ResponseEntity.ok(ApiResponse.ofSuccessfulMono(health));
 	}
 	
 }
 
+record HealthActuatorResponse(String status, String[] groups) implements Serializable {}
 
 
 

@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class CredentialNotFoundException extends RuntimeException {
+import java.io.Serial;
+
+public class CredentialNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = -3068886750882968002L;
 	
 	public CredentialNotFoundException() {
-		super("Credential not found");
-	}
-	
-	public CredentialNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(CredentialNotFoundException.class);
 	}
 	
 	public CredentialNotFoundException(String message) {
@@ -17,11 +16,6 @@ public class CredentialNotFoundException extends RuntimeException {
 	}
 	
 }
-
-
-
-
-
 
 
 

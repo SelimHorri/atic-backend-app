@@ -8,3 +8,4 @@ import java.util.List;
 public record ClientConfigProps(List<String> domains) {}
 
 
+

@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.util.Objects;
 
 public record ApiResponse<T>(
 		
@@ -22,6 +23,10 @@ public record ApiResponse<T>(
 		boolean acknowledge,
 		T responseBody) implements Serializable {
 	
+	public ApiResponse {
+		timestamp = Objects.requireNonNullElseGet(timestamp, Instant::now);
+	}
+	
 	/**
 	 * CAREFUL: <strong>"responseBody"</strong> generic type parameter MUST be an immutable object! <br>
 	 * for List: we may use Java9+ factory methods of List interface <br>
@@ -32,9 +37,23 @@ public record ApiResponse<T>(
 		this(Instant.now(), totalResult, httpStatus, acknowledge, responseBody);
 	}
 	
+	public static <T> ApiResponse<T> ofSuccessfulMono(final T responseBody) {
+		return new ApiResponse<>(1, HttpStatus.OK, true, responseBody);
+	}
+	
+	public static <T> ApiResponse<T> ofFailureMono(final T responseBody) {
+		return new ApiResponse<>(1, HttpStatus.BAD_REQUEST, false, responseBody);
+	}
+	
+	public static <T> ApiResponse<T> ofSuccessfulPoly(final Integer totalResult, final T responseBody) {
+		return new ApiResponse<>(totalResult, HttpStatus.OK, true, responseBody);
+	}
+	
+	public static <T> ApiResponse<T> ofFailurePoly(final Integer totalResult, final T responseBody) {
+		return new ApiResponse<>(totalResult, HttpStatus.BAD_REQUEST, false, responseBody);
+	}
+	
 }
-
-
 
 
 

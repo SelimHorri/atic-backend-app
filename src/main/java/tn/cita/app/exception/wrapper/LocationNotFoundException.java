@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class LocationNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class LocationNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = -991158339716479285L;
 	
 	public LocationNotFoundException() {
-		super("Location not found");
-	}
-	
-	public LocationNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(LocationNotFoundException.class);
 	}
 	
 	public LocationNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class LocationNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 

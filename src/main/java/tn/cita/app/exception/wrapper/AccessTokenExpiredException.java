@@ -1,7 +1,10 @@
 package tn.cita.app.exception.wrapper;
 
+import java.io.Serial;
+
 public class AccessTokenExpiredException extends RuntimeException {
 	
+	@Serial
 	private static final long serialVersionUID = 1L;
 	
 	public AccessTokenExpiredException() {
@@ -23,7 +26,6 @@ public class AccessTokenExpiredException extends RuntimeException {
 	
 	
 }
-
 
 
 

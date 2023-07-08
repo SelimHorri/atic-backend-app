@@ -83,10 +83,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 					.map(OrderedDetailDto::getServiceDetailId)
 					.collect(Collectors.toUnmodifiableSet());
 		
-		return ServiceDetailsReservationContainerResponse.builder()
-				.serviceDetailDtos(this.findAllByIds(ids))
-				.orderedDetailDtos(new PageImpl<>(orderedDetailDtos))
-				.build();
+		return new ServiceDetailsReservationContainerResponse(this.findAllByIds(ids), new PageImpl<>(orderedDetailDtos));
 	}
 	
 	@Override
@@ -106,10 +103,7 @@ public class ServiceDetailServiceImpl implements ServiceDetailService {
 					.map(OrderedDetailDto::getServiceDetailId)
 					.collect(Collectors.toUnmodifiableSet());
 		
-		return ServiceDetailsReservationContainerResponse.builder()
-				.serviceDetailDtos(this.findAllByIds(ids))
-				.orderedDetailDtos(new PageImpl<>(orderedDetailDtos))
-				.build();
+		return new ServiceDetailsReservationContainerResponse(this.findAllByIds(ids), new PageImpl<>(orderedDetailDtos));
 	}
 	
 	@Override

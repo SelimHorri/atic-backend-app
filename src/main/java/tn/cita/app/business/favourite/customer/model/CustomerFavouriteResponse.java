@@ -7,8 +7,6 @@ import org.springframework.data.domain.Page;
 import tn.cita.app.model.dto.CustomerDto;
 import tn.cita.app.model.dto.FavouriteDto;
 
-import java.io.Serializable;
-
 public record CustomerFavouriteResponse(
 		
 		@JsonProperty("customer")
@@ -16,6 +14,7 @@ public record CustomerFavouriteResponse(
 		
 		@JsonInclude(value = Include.NON_NULL)
 		@JsonProperty("favourites")
-		Page<FavouriteDto> favouriteDtos) implements Serializable {}
+		Page<FavouriteDto> favouriteDtos) {}
+
 
 

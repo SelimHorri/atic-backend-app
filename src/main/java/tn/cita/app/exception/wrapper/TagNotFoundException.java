@@ -1,15 +1,14 @@
 package tn.cita.app.exception.wrapper;
 
-public class TagNotFoundException extends BusinessException {
+import java.io.Serial;
+
+public class TagNotFoundException extends ObjectNotFoundException {
 	
+	@Serial
 	private static final long serialVersionUID = 5200220936244874787L;
 	
 	public TagNotFoundException() {
-		super("Tag not found");
-	}
-	
-	public TagNotFoundException(String message, Throwable cause) {
-		super(message, cause);
+		super(TagNotFoundException.class);
 	}
 	
 	public TagNotFoundException(String message) {
@@ -17,10 +16,6 @@ public class TagNotFoundException extends BusinessException {
 	}
 	
 }
-
-
-
-
 
 
 
